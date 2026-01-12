@@ -263,12 +263,15 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
       // --- 1. HANDLE SINGLE TRANSACTION CLUSTERS ---
       if (clusterTx.length === 1) {
         if (isKnown) {
-          frequency = 'Yearly';
+          const amount = clusterTx[0].amount;
+          // Most digital subs < $50 are monthly (Netflix, SiriusXM promo, etc)
+          // Subs > $50 are more likely to be yearly (Amazon Prime, etc)
+          frequency = amount < 50 ? 'Monthly' : 'Yearly';
           confidence = 'Low'; // Definitely Low if only 1 transaction seen
 
-          // Special hardening for Google One / Storage
+          // Special hardening for Google One / Storage - often yearly even at low prices
           if (name.toUpperCase().includes('GOOGLE') && (name.toUpperCase().includes('STORAGE') || name.toUpperCase().includes('ONE'))) {
-            confidence = 'Low';
+            if (amount > 15 && amount < 40) frequency = 'Yearly';
           }
         } else {
           // Unknown single items are rejected

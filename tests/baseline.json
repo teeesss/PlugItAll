@@ -8,7 +8,7 @@
   {
     "name": "GOOGLE NYT GAMES WORD",
     "amount": 18,
-    "frequency": "Yearly",
+    "frequency": "Monthly",
     "confidence": "Low"
   },
   {
@@ -26,7 +26,7 @@
   {
     "name": "SIRIUSXM",
     "amount": 5,
-    "frequency": "Yearly",
+    "frequency": "Monthly",
     "confidence": "Low"
   },
   {

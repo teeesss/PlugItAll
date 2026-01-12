@@ -9,8 +9,9 @@ A privacy-first, client-side subscription detection tool that analyzes bank stat
 - 🔒 **100% Client-Side** - All processing happens in your browser. No data sent to servers.
 - 📊 **PDF & CSV Support** - Upload bank statements in either format
 - 🎯 **Smart Detection** - Identifies subscriptions using pattern matching, **median-based clustering**, and **shopping pattern rejection**.
-- ✅ **Verified vs Review** - Known subscriptions are marked "Verified", others marked for "Review" (Low confidence).
-- 🚫 **False Positive Filtering** - Extensive blacklist (eBay, Amazon, restaurants) prevents random retail visits from appearing.
+- 🌍 **Robust Parsing** - Handles European/US date formats, `CR`/`DR` markers, and varied number formats automatically.
+- ✅ **Verified vs Review** - Known subscriptions are marked "Verified". **3+ consistent charges** from any merchant are automatically promoted to Verified.
+- 🚫 **False Positive Filtering** - Extensive blacklist (eBay, Amazon, restaurants) with **fuzzy matching** for variations (e.g., 'Taco Bell' vs 'TACOBELL').
 - 💰 **Price Validation** - High-risk merchants (Amazon, Walmart, Fabletics) require exact price match or known subscription markers.
 
 ## Quick Start

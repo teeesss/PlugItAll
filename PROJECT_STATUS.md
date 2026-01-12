@@ -16,19 +16,18 @@ The subscription detection engine is stable and the codebase has pre-commit hook
 - **CSV + PDF Deduplication**: Fixed 0-day interval bugs when combining sources
 - **Median-Based Interval Analysis**: Made detector robust against outlier statement dates
 - **Aggressive Shopping Rejection**: eBay/Amazon random purchases (3+ price points) blocked
-- **Retail Blacklisting**: Added 60+ retail/fast-food keywords
-- **Subscription DB Updates**: Added Fabletics, Walmart+, LiveOak Fiber, Google Play
-- **Feature**: Added PDF Export functionality for subscription reports
+- **Retail Blacklisting**: Added 60+ retail/fast-food keywords with fuzzy variations
+- **Subscription DB Updates**: Added Fabletics, Walmart+, LiveOak Fiber, Google Play, Grubhub+
+- **Parser Robustness**: Refined `parseDate` and `parseAmount` for European formats, CR/DR markers
+- **Test Fixes**: Resolved Amazon Prime/Walmart+ detection and expanded unit tests
 
 ## 🟡 In Progress
 
-- [x] Refined `parseDate` and `parseAmount` for extreme robustness (European formats, CR/DR markers, space/apostrophe thousand separators).
-- [x] Fixed `tests/user_complaints.test.ts` regarding Amazon Prime and Walmart+.
-- [x] Expanded unit tests in `parser.test.ts`.
+- [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Partially implemented*
+- [ ] **TASK-017**: Implement "Bill View" / Linear List page.
 - [ ] Improved logo handling (some logos missing/broken).
 - **CI/CD Pipeline**: Added GitHub Actions workflow for automated testing
-- **High Risk Merchants**: Added support/validation for Target, Costco, Sams Club, Lyft
-- Refining instruction quality for physical gym cancellations.
+- **High Risk Merchants**: Added support/validation for Target, Costco, Sams Club, Lyft, Uber Eats
 
 ## 🔴 Blockers
 
@@ -36,7 +35,7 @@ The subscription detection engine is stable and the codebase has pre-commit hook
 
 ## 📊 Stats
 
-- **Test Coverage**: 47 Passing Tests (8 files)
-- **Supported Merchants**: 155
+- **Test Coverage**: 48 Passing Tests (8 files)
+- **Supported Merchants**: 158
 - **Confidence Levels**: High (Verified), Medium (Irregular/Range), Low (Review/Unknown)
 - **Pre-Commit Hooks**: 11 hooks active
