@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+coverage
+.git
+.cache
+*.log
+package-lock.json
+.eslintcache

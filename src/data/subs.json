@@ -1,0 +1,2100 @@
+[
+  {
+    "id": "visible_mobile",
+    "name": "Visible Mobile",
+    "regex_keywords": [
+      "VISIBLE",
+      "VISIBLE WIRELESS",
+      "VISIBLE MOBILE",
+      "VISIBLESERV",
+      "PAYPAL *VISIBLE"
+    ],
+    "logo": "/logos/visible_mobile.png",
+    "cancel_url": "https://www.visible.com/account",
+    "instructions": "Log in > Account > Cancel Service."
+  },
+  {
+    "id": "liveoak_fiber",
+    "name": "LiveOak Fiber",
+    "regex_keywords": [
+      "LIVEOAK",
+      "LIVEOAK FIBER",
+      "LIVE OAK FIBER",
+      "PY LIVEOAK"
+    ],
+    "logo": "/logos/liveoak_fiber.png",
+    "cancel_url": "https://portal.liveoakfiber.com/",
+    "instructions": "Log in to LiveOak Portal > Account Settings > Cancel Service."
+  },
+  {
+    "id": "youtube_tv",
+    "name": "YouTube TV",
+    "regex_keywords": [
+      "YOUTUBE TV",
+      "GOOGLE*YOUTUBE TV",
+      "GOOGLE *YOUTUBE TV",
+      "YOUTUBETV"
+    ],
+    "logo": "/logos/youtube_tv.png",
+    "cancel_url": "https://tv.youtube.com/membership",
+    "instructions": "tv.youtube.com > Settings > Pause/Cancel membership."
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "regex_keywords": [
+      "NETFLIX"
+    ],
+    "logo": "/logos/netflix.png",
+    "cancel_url": "https://www.netflix.com/cancelplan",
+    "instructions": "Go to Account > Membership & Billing > Cancel Membership."
+  },
+  {
+    "id": "spotify",
+    "name": "Spotify",
+    "regex_keywords": [
+      "SPOTIFY"
+    ],
+    "logo": "/logos/spotify.png",
+    "cancel_url": "https://www.spotify.com/account/change-plan/",
+    "instructions": "Log in > Account > Available Plans > Cancel Premium."
+  },
+  {
+    "id": "hulu",
+    "name": "Hulu",
+    "regex_keywords": [
+      "HULU"
+    ],
+    "logo": "/logos/hulu.png",
+    "cancel_url": "https://secure.hulu.com/account",
+    "instructions": "Account > Your Subscription > Cancel."
+  },
+  {
+    "id": "disneyplus",
+    "name": "Disney+",
+    "regex_keywords": [
+      "DISNEY PLUS",
+      "DISNEY+"
+    ],
+    "logo": "/logos/disney_.png",
+    "cancel_url": "https://www.disneyplus.com/account/subscription",
+    "instructions": "Profile > Account > Subscription > Cancel Subscription."
+  },
+  {
+    "id": "amazon_prime",
+    "name": "Amazon Prime",
+    "regex_keywords": [
+      "AMAZON PRIME",
+      "AMZN MKT",
+      "AMAZON VIDEO",
+      "PRIME VIDEO"
+    ],
+    "logo": "/logos/amazon_prime.png",
+    "cancel_url": "https://www.amazon.com/gp/primecentral",
+    "instructions": "Account > Prime Membership > Manage Membership > End Membership."
+  },
+  {
+    "id": "youtube_premium",
+    "name": "YouTube Premium",
+    "regex_keywords": [
+      "YOUTUBE PREM",
+      "GOOGLE *YOUTUBE"
+    ],
+    "logo": "/logos/youtube_premium.png",
+    "cancel_url": "https://www.youtube.com/paid_memberships",
+    "instructions": "Profile > Purchases and memberships > Manage membership > Deactivate."
+  },
+  {
+    "id": "apple_services",
+    "name": "Apple Services",
+    "regex_keywords": [
+      "APPLE.COM/BILL",
+      "ITUNES"
+    ],
+    "logo": "/logos/apple_services.png",
+    "cancel_url": "https://support.apple.com/en-us/HT202039",
+    "instructions": "Settings > Apple ID > Subscriptions."
+  },
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT Plus",
+    "regex_keywords": [
+      "OPENAI",
+      "CHATGPT"
+    ],
+    "logo": "/logos/chatgpt_plus.png",
+    "cancel_url": "https://chat.openai.com/#/settings/billing",
+    "instructions": "My Plan > Manage my subscription > Cancel Plan."
+  },
+  {
+    "id": "visible",
+    "name": "Visible Mobile",
+    "regex_keywords": [
+      "VISIBLE",
+      "VISIBLE CO"
+    ],
+    "logo": "/logos/visible_mobile.png",
+    "cancel_url": "https://www.visible.com/account/overview",
+    "instructions": "Account > Overview > Cancel Service."
+  },
+  {
+    "id": "liveoak",
+    "name": "LiveOak Fiber",
+    "regex_keywords": [
+      "LIVEOAK",
+      "LIVEOAK FIBER"
+    ],
+    "logo": "/logos/liveoak_fiber.png",
+    "cancel_url": "https://liveoakfiber.com/contact-us/",
+    "instructions": "Call Customer Service to cancel."
+  },
+  {
+    "id": "fabletics",
+    "name": "Fabletics",
+    "regex_keywords": [
+      "FABLETICS"
+    ],
+    "logo": "/logos/fabletics.png",
+    "cancel_url": "https://www.fabletics.com/account/memberships",
+    "instructions": "Log in and go to Membership settings."
+  },
+  {
+    "id": "walmart_plus",
+    "name": "Walmart+",
+    "regex_keywords": [
+      "WALMART PLUS",
+      "WALMART.COM",
+      "WALMART",
+      "WALMART+"
+    ],
+    "logo": "/logos/walmart_plus.png",
+    "cancel_url": "https://www.walmart.com/account/plus",
+    "instructions": "Go to Account > Walmart+ > Manage Membership."
+  },
+  {
+    "id": "siriusxm",
+    "name": "SiriusXM",
+    "regex_keywords": [
+      "SIRIUSXM",
+      "SXM",
+      "SIRIUS XM"
+    ],
+    "logo": "/logos/siriusxm.png",
+    "cancel_url": "https://care.siriusxm.com/",
+    "instructions": "Chat with an agent or call to cancel."
+  },
+  {
+    "id": "adobe",
+    "name": "Adobe Creative Cloud",
+    "regex_keywords": [
+      "ADOBE",
+      "CREATIVE CLOUD"
+    ],
+    "logo": "/logos/adobe_creative_cloud.png",
+    "cancel_url": "https://account.adobe.com/plans",
+    "instructions": "Manage Plan > Cancel Plan."
+  },
+  {
+    "id": "planet_fitness",
+    "name": "Planet Fitness",
+    "regex_keywords": [
+      "PLANET FITNESS",
+      "PLANET FIT"
+    ],
+    "logo": "/logos/planet_fitness.png",
+    "cancel_url": "https://www.planetfitness.com/about-planet-fitness/customer-service/membership-faqs",
+    "instructions": "Must visit home club logic or send certified letter."
+  },
+  {
+    "id": "crunch_fitness",
+    "name": "Crunch Fitness",
+    "regex_keywords": [
+      "CRUNCH FITNESS",
+      "CRUNCH"
+    ],
+    "logo": "/logos/crunch_fitness.png",
+    "cancel_url": "https://www.crunch.com/contact",
+    "instructions": "Contact local club."
+  },
+  {
+    "id": "la_fitness",
+    "name": "LA Fitness",
+    "regex_keywords": [
+      "LA FITNESS"
+    ],
+    "logo": "/logos/la_fitness.png",
+    "cancel_url": "https://www.lafitness.com/Pages/login.aspx",
+    "instructions": "Log in and print cancellation form."
+  },
+  {
+    "id": "equinox",
+    "name": "Equinox",
+    "regex_keywords": [
+      "EQUINOX"
+    ],
+    "logo": "/logos/equinox.png",
+    "cancel_url": "https://www.equinox.com/contactus",
+    "instructions": "Contact club manager or email concierge."
+  },
+  {
+    "id": "gold_gym",
+    "name": "Gold's Gym",
+    "regex_keywords": [
+      "GOLDS GYM"
+    ],
+    "logo": "/logos/gold_s_gym.png",
+    "cancel_url": "https://www.goldsgym.com/contact/",
+    "instructions": "Visit gym in person."
+  },
+  {
+    "id": "orange_theory",
+    "name": "OrangeTheory",
+    "regex_keywords": [
+      "ORANGETHEORY",
+      "ORANGE THEORY"
+    ],
+    "logo": "/logos/orangetheory.png",
+    "cancel_url": "https://www.orangetheory.com/",
+    "instructions": "Visit studio in person (30 days notice)."
+  },
+  {
+    "id": "dropbox",
+    "name": "Dropbox",
+    "regex_keywords": [
+      "DROPBOX"
+    ],
+    "logo": "/logos/dropbox.png",
+    "cancel_url": "https://www.dropbox.com/account/plan",
+    "instructions": "Settings > Plan > Cancel plan."
+  },
+  {
+    "id": "google_play",
+    "name": "Google Play",
+    "regex_keywords": [
+      "GOOGLE *PLAY",
+      "GOOGLE *APP",
+      "GPAY",
+      "GOOGLE PLAY"
+    ],
+    "logo": "/logos/google_play.png",
+    "cancel_url": "https://play.google.com/store/account/subscriptions",
+    "instructions": "Log in to Play Store > Payments & subscriptions > Subscriptions."
+  },
+  {
+    "id": "google_storage",
+    "name": "Google One",
+    "regex_keywords": [
+      "GOOGLE *STORAGE",
+      "GOOGLE ONE"
+    ],
+    "logo": "/logos/google_one.png",
+    "cancel_url": "https://one.google.com/settings",
+    "instructions": "Settings > Cancel membership."
+  },
+  {
+    "id": "icloud",
+    "name": "iCloud+",
+    "regex_keywords": [
+      "ICLOUD"
+    ],
+    "logo": "/logos/icloud_.png",
+    "cancel_url": "https://support.apple.com/en-us/HT202039",
+    "instructions": "Settings > Apple ID > iCloud > Manage Storage."
+  },
+  {
+    "id": "microsoft_365",
+    "name": "Microsoft 365",
+    "regex_keywords": [
+      "MICROSOFT",
+      "MS BILL",
+      "MICROSOFT*365"
+    ],
+    "logo": "/logos/microsoft_365.png",
+    "cancel_url": "https://account.microsoft.com/services",
+    "instructions": "Manage > Cancel subscription."
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "regex_keywords": [
+      "GITHUB"
+    ],
+    "logo": "/logos/github.png",
+    "cancel_url": "https://github.com/settings/billing",
+    "instructions": "Settings > Billing > Cancel."
+  },
+  {
+    "id": "heroku",
+    "name": "Heroku",
+    "regex_keywords": [
+      "HEROKU"
+    ],
+    "logo": "/logos/heroku.png",
+    "cancel_url": "https://dashboard.heroku.com/account/billing",
+    "instructions": "Resources > Delete App or Downgrade."
+  },
+  {
+    "id": "digitalocean",
+    "name": "DigitalOcean",
+    "regex_keywords": [
+      "DIGITALOCEAN"
+    ],
+    "logo": "/logos/digitalocean.png",
+    "cancel_url": "https://cloud.digitalocean.com/settings/billing",
+    "instructions": "Destroy all Droplets/Resources."
+  },
+  {
+    "id": "aws",
+    "name": "AWS",
+    "regex_keywords": [
+      "AWS",
+      "AMAZON WEB SERVICES"
+    ],
+    "logo": "/logos/aws.png",
+    "cancel_url": "https://console.aws.amazon.com/billing/home?#/account",
+    "instructions": "Close Account."
+  },
+  {
+    "id": "vultr",
+    "name": "Vultr",
+    "regex_keywords": [
+      "VULTR"
+    ],
+    "logo": "/logos/vultr.png",
+    "cancel_url": "https://my.vultr.com/",
+    "instructions": "Destroy instances."
+  },
+  {
+    "id": "linode",
+    "name": "Linode / Akamai",
+    "regex_keywords": [
+      "LINODE",
+      "AKAMAI"
+    ],
+    "logo": "/logos/linode___akamai.png",
+    "cancel_url": "https://cloud.linode.com/account/settings",
+    "instructions": "Close Account."
+  },
+  {
+    "id": "godaddy",
+    "name": "GoDaddy",
+    "regex_keywords": [
+      "GODADDY"
+    ],
+    "logo": "/logos/godaddy.png",
+    "cancel_url": "https://account.godaddy.com/renewals",
+    "instructions": "Renewals & Billing > Cancel Renewal."
+  },
+  {
+    "id": "namecheap",
+    "name": "Namecheap",
+    "regex_keywords": [
+      "NAMECHEAP"
+    ],
+    "logo": "/logos/namecheap.png",
+    "cancel_url": "https://ap.www.namecheap.com/",
+    "instructions": "Domain List > Manage > Auto-Renew OFF."
+  },
+  {
+    "id": "squarespace",
+    "name": "Squarespace",
+    "regex_keywords": [
+      "SQUARESPACE"
+    ],
+    "logo": "/logos/squarespace.png",
+    "cancel_url": "https://account.squarespace.com/",
+    "instructions": "Billing > Subscriptions > Cancel."
+  },
+  {
+    "id": "wix",
+    "name": "Wix",
+    "regex_keywords": [
+      "WIX.COM",
+      "WIX"
+    ],
+    "logo": "/logos/wix.png",
+    "cancel_url": "https://users.wix.com/wix-billing/subscriptions",
+    "instructions": "Premium Subscriptions > Cancel."
+  },
+  {
+    "id": "shopify_sub",
+    "name": "Shopify",
+    "regex_keywords": [
+      "SHOPIFY"
+    ],
+    "logo": "/logos/shopify.png",
+    "cancel_url": "https://admin.shopify.com/settings/plan",
+    "instructions": "Settings > Plan > Deactivate store."
+  },
+  {
+    "id": "clickfunnels",
+    "name": "ClickFunnels",
+    "regex_keywords": [
+      "CLICKFUNNELS"
+    ],
+    "logo": "/logos/clickfunnels.png",
+    "cancel_url": "https://app.clickfunnels.com/users/account_details",
+    "instructions": "Account Settings > Account Billing > Cancel Account."
+  },
+  {
+    "id": "kajabi",
+    "name": "Kajabi",
+    "regex_keywords": [
+      "KAJABI"
+    ],
+    "logo": "/logos/kajabi.png",
+    "cancel_url": "https://app.kajabi.com/admin/settings/billing",
+    "instructions": "Settings > Billing > Cancel Subscription."
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "regex_keywords": [
+      "ZOOM.US"
+    ],
+    "logo": "/logos/zoom.png",
+    "cancel_url": "https://zoom.us/billing/subscription",
+    "instructions": "Account Management > Billing > Cancel Subscription."
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "regex_keywords": [
+      "SLACK"
+    ],
+    "logo": "/logos/slack.png",
+    "cancel_url": "https://my.slack.com/admin/billing",
+    "instructions": "Billing > Settings > Cancel Subscription."
+  },
+  {
+    "id": "atlassian",
+    "name": "Atlassian / Jira",
+    "regex_keywords": [
+      "ATLASSIAN"
+    ],
+    "logo": "/logos/atlassian___jira.png",
+    "cancel_url": "https://admin.atlassian.com/",
+    "instructions": "Billing > Manage subscription > Cancel."
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "regex_keywords": [
+      "NOTION"
+    ],
+    "logo": "/logos/notion.png",
+    "cancel_url": "https://www.notion.so/settings/billing",
+    "instructions": "Settings & Members > Billing > Downgrade."
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "regex_keywords": [
+      "FIGMA"
+    ],
+    "logo": "/logos/figma.png",
+    "cancel_url": "https://www.figma.com/settings/billing",
+    "instructions": "Admin Settings > Billing > Cancel."
+  },
+  {
+    "id": "canva",
+    "name": "Canva",
+    "regex_keywords": [
+      "CANVA"
+    ],
+    "logo": "/logos/canva.png",
+    "cancel_url": "https://www.canva.com/settings/billing",
+    "instructions": "Billing & Teams > Subscriptions > Cancel."
+  },
+  {
+    "id": "midjourney",
+    "name": "Midjourney",
+    "regex_keywords": [
+      "MIDJOURNEY"
+    ],
+    "logo": "/logos/midjourney.png",
+    "cancel_url": "https://www.midjourney.com/account/",
+    "instructions": "Manage Purchase > Cancel Plan."
+  },
+  {
+    "id": "patreon",
+    "name": "Patreon",
+    "regex_keywords": [
+      "PATREON"
+    ],
+    "logo": "/logos/patreon.png",
+    "cancel_url": "https://www.patreon.com/settings/memberships",
+    "instructions": "Manage Memberships > Edit > Cancel Payment."
+  },
+  {
+    "id": "onlyfans",
+    "name": "OnlyFans",
+    "regex_keywords": [
+      "ONLYFANS"
+    ],
+    "logo": "/logos/onlyfans.png",
+    "cancel_url": "https://onlyfans.com/my/subscriptions/active",
+    "instructions": "Subscriptions > Unsubscribe."
+  },
+  {
+    "id": "tinder",
+    "name": "Tinder",
+    "regex_keywords": [
+      "TINDER"
+    ],
+    "logo": "/logos/tinder.png",
+    "cancel_url": "https://tinder.com/",
+    "instructions": "My Profile > Manage Payment Account > Cancel."
+  },
+  {
+    "id": "bumble",
+    "name": "Bumble",
+    "regex_keywords": [
+      "BUMBLE"
+    ],
+    "logo": "/logos/bumble.png",
+    "cancel_url": "https://bumble.com/",
+    "instructions": "Profile Settings > Manage Boost/Premium."
+  },
+  {
+    "id": "hinge",
+    "name": "Hinge",
+    "regex_keywords": [
+      "HINGE"
+    ],
+    "logo": "/logos/hinge.png",
+    "cancel_url": "https://hinge.co/",
+    "instructions": "App Store or Play Store Subscription settings."
+  },
+  {
+    "id": "hellofresh",
+    "name": "HelloFresh",
+    "regex_keywords": [
+      "HELLOFRESH"
+    ],
+    "logo": "/logos/hellofresh.png",
+    "cancel_url": "https://www.hellofresh.com/account-settings/account_info",
+    "instructions": "Account Settings > Cancel Plan."
+  },
+  {
+    "id": "blueapron",
+    "name": "Blue Apron",
+    "regex_keywords": [
+      "BLUE APRON",
+      "BLUEAPRON"
+    ],
+    "logo": "/logos/blue_apron.png",
+    "cancel_url": "https://www.blueapron.com/account/settings",
+    "instructions": "Manage Account > Cancel."
+  },
+  {
+    "id": "peacock",
+    "name": "Peacock",
+    "regex_keywords": [
+      "PEACOCK",
+      "NBCU PEACOCK"
+    ],
+    "logo": "/logos/peacock.png",
+    "cancel_url": "https://www.peacocktv.com/account/plans",
+    "instructions": "Account > Plans & Payment > Change or Cancel Plan."
+  },
+  {
+    "id": "paramount_plus",
+    "name": "Paramount+",
+    "regex_keywords": [
+      "PARAMOUNT+",
+      "PARAMOUNT PLUS"
+    ],
+    "logo": "/logos/paramount_.png",
+    "cancel_url": "https://www.paramountplus.com/account/",
+    "instructions": "Account > Subscription > Cancel Subscription."
+  },
+  {
+    "id": "discovery_plus",
+    "name": "Discovery+",
+    "regex_keywords": [
+      "DISCOVERY+",
+      "DISCOVERYPLUS"
+    ],
+    "logo": "/logos/discovery_.png",
+    "cancel_url": "https://www.discoveryplus.com/my-account",
+    "instructions": "Account > Manage > Cancel."
+  },
+  {
+    "id": "appletv_plus",
+    "name": "Apple TV+",
+    "regex_keywords": [
+      "APPLE TV"
+    ],
+    "logo": "/logos/apple_tv_.png",
+    "cancel_url": "https://tv.apple.com/settings",
+    "instructions": "Settings > Subscriptions > Manage."
+  },
+  {
+    "id": "hbo_max",
+    "name": "Max (HBO)",
+    "regex_keywords": [
+      "HBO MAX",
+      "HBOMAX",
+      "WARNERMEDIA"
+    ],
+    "logo": "/logos/max__hbo_.png",
+    "cancel_url": "https://auth.max.com/subscription",
+    "instructions": "Profile > Subscription > Manage Subscription."
+  },
+  {
+    "id": "starz",
+    "name": "Starz",
+    "regex_keywords": [
+      "STARZ"
+    ],
+    "logo": "/logos/starz.png",
+    "cancel_url": "https://www.starz.com/settings/subscription",
+    "instructions": "Settings > Subscription > Cancel."
+  },
+  {
+    "id": "sling_tv",
+    "name": "Sling TV",
+    "regex_keywords": [
+      "SLING TV",
+      "SLING.COM"
+    ],
+    "logo": "/logos/sling_tv.png",
+    "cancel_url": "https://www.sling.com/account",
+    "instructions": "My Account > Cancel Subscription."
+  },
+  {
+    "id": "fubo_tv",
+    "name": "FuboTV",
+    "regex_keywords": [
+      "FUBOTV",
+      "FUBO TV"
+    ],
+    "logo": "/logos/fubotv.png",
+    "cancel_url": "https://www.fubo.tv/account",
+    "instructions": "My Account > Subscription and Billing > Cancel."
+  },
+  {
+    "id": "crunchyroll",
+    "name": "Crunchyroll",
+    "regex_keywords": [
+      "CRUNCHYROLL"
+    ],
+    "logo": "/logos/crunchyroll.png",
+    "cancel_url": "https://www.crunchyroll.com/account/membership",
+    "instructions": "Account > Membership Info > Cancel Membership."
+  },
+  {
+    "id": "funimation",
+    "name": "Funimation",
+    "regex_keywords": [
+      "FUNIMATION"
+    ],
+    "logo": "/logos/funimation.png",
+    "cancel_url": "https://www.funimation.com/account/#/subscription",
+    "instructions": "My Account > Subscription > Cancel."
+  },
+  {
+    "id": "pandora",
+    "name": "Pandora",
+    "regex_keywords": [
+      "PANDORA"
+    ],
+    "logo": "/logos/pandora.png",
+    "cancel_url": "https://www.pandora.com/account/subscription",
+    "instructions": "Profile > Settings > Subscription > Switch Plans/Cancel."
+  },
+  {
+    "id": "soundcloud",
+    "name": "SoundCloud",
+    "regex_keywords": [
+      "SOUNDCLOUD"
+    ],
+    "logo": "/logos/soundcloud.png",
+    "cancel_url": "https://soundcloud.com/you/subscriptions",
+    "instructions": "Subscription > Edit > Opt out of renewal."
+  },
+  {
+    "id": "audible",
+    "name": "Audible",
+    "regex_keywords": [
+      "AUDIBLE",
+      "AUDIBLE*"
+    ],
+    "logo": "/logos/audible.png",
+    "cancel_url": "https://www.audible.com/account/overview",
+    "instructions": "Account Details > Membership details > Cancel membership."
+  },
+  {
+    "id": "tidal",
+    "name": "Tidal",
+    "regex_keywords": [
+      "TIDAL"
+    ],
+    "logo": "/logos/tidal.png",
+    "cancel_url": "https://account.tidal.com/subscription",
+    "instructions": "Subscription > Cancel Subscription."
+  },
+  {
+    "id": "deezer",
+    "name": "Deezer",
+    "regex_keywords": [
+      "DEEZER"
+    ],
+    "logo": "/logos/deezer.png",
+    "cancel_url": "https://www.deezer.com/account/subscription",
+    "instructions": "Account Settings > Manage my subscription > Cancel."
+  },
+  {
+    "id": "scribd",
+    "name": "Scribd",
+    "regex_keywords": [
+      "SCRIBD"
+    ],
+    "logo": "/logos/scribd.png",
+    "cancel_url": "https://www.scribd.com/account-settings",
+    "instructions": "Account Settings > End Your Membership."
+  },
+  {
+    "id": "xbox_game_pass",
+    "name": "Xbox Game Pass",
+    "regex_keywords": [
+      "MICROSOFT*XBOX",
+      "XBOX GAME PASS"
+    ],
+    "logo": "/logos/xbox_game_pass.png",
+    "cancel_url": "https://account.microsoft.com/services",
+    "instructions": "Services & Subscriptions > Manage > Cancel."
+  },
+  {
+    "id": "playstation_plus",
+    "name": "PlayStation Plus",
+    "regex_keywords": [
+      "PLAYSTATION",
+      "SONY PLAYSTATION",
+      "PSN"
+    ],
+    "logo": "/logos/playstation_plus.png",
+    "cancel_url": "https://store.playstation.com/subscriptions",
+    "instructions": "Subscription Management > Turn Off Auto-Renew."
+  },
+  {
+    "id": "nintendo_online",
+    "name": "Nintendo Switch Online",
+    "regex_keywords": [
+      "NINTENDO"
+    ],
+    "logo": "/logos/nintendo_switch_online.png",
+    "cancel_url": "https://ec.nintendo.com/my/membership",
+    "instructions": "Nintendo eShop > User Icon > Nintendo Switch Online > Terminate Automatic Renewal."
+  },
+  {
+    "id": "steam",
+    "name": "Steam",
+    "regex_keywords": [
+      "STEAM GAMES",
+      "STEAMPOWERED"
+    ],
+    "logo": "/logos/steam.png",
+    "cancel_url": "https://store.steampowered.com/account/subscriptions/",
+    "instructions": "Account Details > Manage Subscriptions > Edit."
+  },
+  {
+    "id": "ea_play",
+    "name": "EA Play",
+    "regex_keywords": [
+      "EA *PLAY",
+      "ELECTRONIC ARTS"
+    ],
+    "logo": "/logos/ea_play.png",
+    "cancel_url": "https://myaccount.ea.com/cp-ui/subscription/index",
+    "instructions": "Account Settings > Memberships > Cancel Membership."
+  },
+  {
+    "id": "ubisoft_plus",
+    "name": "Ubisoft+",
+    "regex_keywords": [
+      "UBISOFT"
+    ],
+    "logo": "/logos/ubisoft_.png",
+    "cancel_url": "https://store.ubisoft.com/my-account",
+    "instructions": "My Account > My Subscription > Cancel Subscription."
+  },
+  {
+    "id": "roblox",
+    "name": "Roblox Premium",
+    "regex_keywords": [
+      "ROBLOX"
+    ],
+    "logo": "/logos/roblox_premium.png",
+    "cancel_url": "https://www.roblox.com/my/account?tab=billing",
+    "instructions": "Settings > Billing > Cancel Renewal."
+  },
+  {
+    "id": "humble_bundle",
+    "name": "Humble Choice",
+    "regex_keywords": [
+      "HUMBLE BUNDLE",
+      "HUMBLEBUNDLE"
+    ],
+    "logo": "/logos/humble_choice.png",
+    "cancel_url": "https://www.humblebundle.com/user/settings",
+    "instructions": "Settings > Manage Humble Choice > Manage Your Plan > Cancel Membership."
+  },
+  {
+    "id": "twitch",
+    "name": "Twitch Sub",
+    "regex_keywords": [
+      "TWITCH",
+      "TWITCH.TV"
+    ],
+    "logo": "/logos/twitch_sub.png",
+    "cancel_url": "https://www.twitch.tv/subscriptions",
+    "instructions": "Subscriptions > Cog Icon > Don't Renew Subscription."
+  },
+  {
+    "id": "nytimes",
+    "name": "NY Times",
+    "regex_keywords": [
+      "NYTIMES",
+      "NEW YORK TIMES"
+    ],
+    "logo": "/logos/ny_times.png",
+    "cancel_url": "https://www.nytimes.com/my-account",
+    "instructions": "Account > Subscription Overview > Cancel Subscription."
+  },
+  {
+    "id": "wsj",
+    "name": "Wall Street Journal",
+    "regex_keywords": [
+      "WSJ",
+      "WALL ST JOURNAL"
+    ],
+    "logo": "/logos/wall_street_journal.png",
+    "cancel_url": "https://customercenter.wsj.com/dashboard",
+    "instructions": "Manage Subscription > Cancel."
+  },
+  {
+    "id": "washington_post",
+    "name": "Washington Post",
+    "regex_keywords": [
+      "WASHPOST",
+      "WASHINGTON POST"
+    ],
+    "logo": "/logos/washington_post.png",
+    "cancel_url": "https://subscribe.washingtonpost.com/myaccount",
+    "instructions": "My Account > Subscription & Billing > Cancel Subscription."
+  },
+  {
+    "id": "medium",
+    "name": "Medium",
+    "regex_keywords": [
+      "MEDIUM.COM"
+    ],
+    "logo": "/logos/medium.png",
+    "cancel_url": "https://medium.com/me/settings",
+    "instructions": "Settings > Membership > Cancel membership."
+  },
+  {
+    "id": "economist",
+    "name": "The Economist",
+    "regex_keywords": [
+      "THE ECONOMIST"
+    ],
+    "logo": "/logos/the_economist.png",
+    "cancel_url": "https://myaccount.economist.com/s/subscription",
+    "instructions": "My Account > Subscription > Cancel."
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "regex_keywords": [
+      "ASANA"
+    ],
+    "logo": "/logos/asana.png",
+    "cancel_url": "https://app.asana.com/-/billing",
+    "instructions": "Admin Console > Billing > Cancel Subscription."
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "regex_keywords": [
+      "TRELLO"
+    ],
+    "logo": "/logos/trello.png",
+    "cancel_url": "https://trello.com/workspace-billing",
+    "instructions": "Workspace Settings > Billing > Cancel."
+  },
+  {
+    "id": "monday_com",
+    "name": "Monday.com",
+    "regex_keywords": [
+      "MONDAY.COM"
+    ],
+    "logo": "/logos/monday_com.png",
+    "cancel_url": "https://monday.com/admin/billing",
+    "instructions": "Admin > Billing > Close Account."
+  },
+  {
+    "id": "evernote",
+    "name": "Evernote",
+    "regex_keywords": [
+      "EVERNOTE"
+    ],
+    "logo": "/logos/evernote.png",
+    "cancel_url": "https://www.evernote.com/Billing.action",
+    "instructions": "Account Settings > Billing > Cancel Subscription."
+  },
+  {
+    "id": "salesforce",
+    "name": "Salesforce",
+    "regex_keywords": [
+      "SALESFORCE"
+    ],
+    "logo": "/logos/salesforce.png",
+    "cancel_url": "https://help.salesforce.com/",
+    "instructions": "Contact Account Executive."
+  },
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "regex_keywords": [
+      "HUBSPOT"
+    ],
+    "logo": "/logos/hubspot.png",
+    "cancel_url": "https://app.hubspot.com/setting/",
+    "instructions": "Account & Billing > Delete Account."
+  },
+  {
+    "id": "zendesk",
+    "name": "Zendesk",
+    "regex_keywords": [
+      "ZENDESK"
+    ],
+    "logo": "/logos/zendesk.png",
+    "cancel_url": "https://admin.zendesk.com/settings/account/subscription",
+    "instructions": "Admin Center > Account > Billing > Subscription > Cancel."
+  },
+  {
+    "id": "intuit_quickbooks",
+    "name": "QuickBooks",
+    "regex_keywords": [
+      "INTUIT",
+      "QUICKBOOKS",
+      "QBO"
+    ],
+    "logo": "/logos/quickbooks.png",
+    "cancel_url": "https://qbo.intuit.com/app/accountsettings",
+    "instructions": "Gear Icon > Account and Settings > Billing & Subscription > Cancel."
+  },
+  {
+    "id": "xero",
+    "name": "Xero",
+    "regex_keywords": [
+      "XERO"
+    ],
+    "logo": "/logos/xero.png",
+    "cancel_url": "https://go.xero.com/Subscription/Manage/",
+    "instructions": "Subscription and billing > Manage Subscription > Cancel Subscription."
+  },
+  {
+    "id": "nordvpn",
+    "name": "NordVPN",
+    "regex_keywords": [
+      "NORDVPN",
+      "NORD VPN"
+    ],
+    "logo": "/logos/nordvpn.png",
+    "cancel_url": "https://my.nordaccount.com/billing/",
+    "instructions": "Billing > Subscriptions > Manage > Cancel auto-renewal."
+  },
+  {
+    "id": "expressvpn",
+    "name": "ExpressVPN",
+    "regex_keywords": [
+      "EXPRESSVPN"
+    ],
+    "logo": "/logos/expressvpn.png",
+    "cancel_url": "https://www.expressvpn.com/users/subscription",
+    "instructions": "My Subscription > Manage Settings > Turn off automatic renewal."
+  },
+  {
+    "id": "surfshark",
+    "name": "Surfshark",
+    "regex_keywords": [
+      "SURFSHARK"
+    ],
+    "logo": "/logos/surfshark.png",
+    "cancel_url": "https://my.surfshark.com/billing/subscriptions",
+    "instructions": "Contact Support Chat to cancel."
+  },
+  {
+    "id": "proton",
+    "name": "Proton Mail/VPN",
+    "regex_keywords": [
+      "PROTONVPN",
+      "PROTONMAIL",
+      "PROTON AG"
+    ],
+    "logo": "/logos/proton_mail_vpn.png",
+    "cancel_url": "https://account.proton.me/u/0/dashboard",
+    "instructions": "Dashboard > Downgrade to Free."
+  },
+  {
+    "id": "comcast_xfinity",
+    "name": "Xfinity",
+    "regex_keywords": [
+      "COMCAST",
+      "XFINITY"
+    ],
+    "logo": "/logos/xfinity.png",
+    "cancel_url": "https://www.xfinity.com/buy/plan/internet/stream",
+    "instructions": "Usually requires a call or chat to cancel."
+  },
+  {
+    "id": "verizon",
+    "name": "Verizon",
+    "regex_keywords": [
+      "VERIZON"
+    ],
+    "logo": "/logos/verizon.png",
+    "cancel_url": "https://www.verizon.com/support/contact-us/",
+    "instructions": "Call Customer Service."
+  },
+  {
+    "id": "att",
+    "name": "AT&T",
+    "regex_keywords": [
+      "AT&T",
+      "ATT*BILL"
+    ],
+    "logo": "/logos/at_t.png",
+    "cancel_url": "https://www.att.com/support/contact-us/",
+    "instructions": "Call Customer Service."
+  },
+  {
+    "id": "tmobile",
+    "name": "T-Mobile",
+    "regex_keywords": [
+      "T-MOBILE",
+      "TMOBILE"
+    ],
+    "logo": "/logos/t_mobile.png",
+    "cancel_url": "https://www.t-mobile.com/contact-us",
+    "instructions": "Call 611 from your phone."
+  },
+  {
+    "id": "instacart",
+    "name": "Instacart+",
+    "regex_keywords": [
+      "INSTACART"
+    ],
+    "logo": "/logos/instacart_.png",
+    "cancel_url": "https://www.instacart.com/store/account/instacart_plus",
+    "instructions": "Account > Instacart+ > Cancel Membership."
+  },
+  {
+    "id": "doordash_pass",
+    "name": "DashPass",
+    "regex_keywords": [
+      "DOORDASH",
+      "DASHPASS"
+    ],
+    "logo": "/logos/dashpass.png",
+    "cancel_url": "https://www.doordash.com/dashpass",
+    "instructions": "Manage DashPass > End Subscription."
+  },
+  {
+    "id": "uber_one",
+    "name": "Uber One",
+    "regex_keywords": [
+      "UBER ONE",
+      "UBER*TRIP"
+    ],
+    "logo": "/logos/uber_one.png",
+    "cancel_url": "https://m.uber.com/",
+    "instructions": "Account > Uber One > Manage Membership > End Membership."
+  },
+  {
+    "id": "shipt",
+    "name": "Shipt",
+    "regex_keywords": [
+      "SHIPT"
+    ],
+    "logo": "/logos/shipt.png",
+    "cancel_url": "https://www.shipt.com/account/subscription",
+    "instructions": "Account > Subscription > Cancel Membership."
+  },
+  {
+    "id": "walmart_plus",
+    "name": "Walmart+",
+    "regex_keywords": [
+      "WALMART+"
+    ],
+    "logo": "/logos/walmart_.png",
+    "cancel_url": "https://www.walmart.com/account/plus",
+    "instructions": "Account > Walmart+ > Manage membership > Cancel."
+  },
+  {
+    "id": "chewy",
+    "name": "Chewy Autoship",
+    "regex_keywords": [
+      "CHEWY"
+    ],
+    "logo": "/logos/chewy_autoship.png",
+    "cancel_url": "https://www.chewy.com/app/account/autoship",
+    "instructions": "Autoship > Cancel This Autoship."
+  },
+  {
+    "id": "peloton",
+    "name": "Peloton",
+    "regex_keywords": [
+      "PELOTON"
+    ],
+    "logo": "/logos/peloton.png",
+    "cancel_url": "https://www.onepeloton.com/preferences/subscriptions",
+    "instructions": "Profile > Memberships > Cancel."
+  },
+  {
+    "id": "strava",
+    "name": "Strava",
+    "regex_keywords": [
+      "STRAVA"
+    ],
+    "logo": "/logos/strava.png",
+    "cancel_url": "https://www.strava.com/settings/billing",
+    "instructions": "Settings > My Account > Downgrade to Free."
+  },
+  {
+    "id": "myfitnesspal",
+    "name": "MyFitnessPal",
+    "regex_keywords": [
+      "MYFITNESSPAL"
+    ],
+    "logo": "/logos/myfitnesspal.png",
+    "cancel_url": "https://www.myfitnesspal.com/account/premium",
+    "instructions": "Premium > Subscription Settings > Turn Off Auto-Renewal."
+  },
+  {
+    "id": "fitbit",
+    "name": "Fitbit Premium",
+    "regex_keywords": [
+      "FITBIT"
+    ],
+    "logo": "/logos/fitbit_premium.png",
+    "cancel_url": "https://www.fitbit.com/settings",
+    "instructions": "Google Play/App Store subscriptions usually."
+  },
+  {
+    "id": "adobe_lightroom",
+    "name": "Adobe Lightroom",
+    "regex_keywords": [
+      "ADOBE *LIGHTROOM"
+    ],
+    "logo": "/logos/adobe_lightroom.png",
+    "cancel_url": "https://account.adobe.com/plans",
+    "instructions": "Manage Plan > Cancel Plan."
+  },
+  {
+    "id": "match_com",
+    "name": "Match.com",
+    "regex_keywords": [
+      "MATCH.COM"
+    ],
+    "logo": "/logos/match_com.png",
+    "cancel_url": "https://www.match.com/account/subscription",
+    "instructions": "Settings > Manage Subscription > Cancel Subscription."
+  },
+  {
+    "id": "okcupid",
+    "name": "OkCupid",
+    "regex_keywords": [
+      "OKCUPID"
+    ],
+    "logo": "/logos/okcupid.png",
+    "cancel_url": "https://www.okcupid.com/settings",
+    "instructions": "Settings > Subscriptions > Turn off automatic billing."
+  },
+  {
+    "id": "grindr",
+    "name": "Grindr",
+    "regex_keywords": [
+      "GRINDR"
+    ],
+    "logo": "/logos/grindr.png",
+    "cancel_url": "https://help.grindr.com/",
+    "instructions": "Manage via App Store / Google Play."
+  },
+  {
+    "id": "eharmony",
+    "name": "eHarmony",
+    "regex_keywords": [
+      "EHARMONY"
+    ],
+    "logo": "/logos/eharmony.png",
+    "cancel_url": "https://www.eharmony.com/settings",
+    "instructions": "Account Settings > Billing > Cancel Subscription."
+  },
+  {
+    "id": "coursera",
+    "name": "Coursera",
+    "regex_keywords": [
+      "COURSERA"
+    ],
+    "logo": "/logos/coursera.png",
+    "cancel_url": "https://www.coursera.org/my-purchases",
+    "instructions": "My Purchases > Manage Subscriptions > Cancel."
+  },
+  {
+    "id": "udemy",
+    "name": "Udemy",
+    "regex_keywords": [
+      "UDEMY"
+    ],
+    "logo": "/logos/udemy.png",
+    "cancel_url": "https://www.udemy.com/user/edit-payment-methods/",
+    "instructions": "Account Settings > Subscriptions > Cancel."
+  },
+  {
+    "id": "skillshare",
+    "name": "Skillshare",
+    "regex_keywords": [
+      "SKILLSHARE"
+    ],
+    "logo": "/logos/skillshare.png",
+    "cancel_url": "https://www.skillshare.com/settings/payments",
+    "instructions": "Account Settings > Payments > Cancel Membership."
+  },
+  {
+    "id": "duolingo",
+    "name": "Duolingo Plus",
+    "regex_keywords": [
+      "DUOLINGO"
+    ],
+    "logo": "/logos/duolingo_plus.png",
+    "cancel_url": "https://www.duolingo.com/settings/plus",
+    "instructions": "Settings > Manage Subscription > Cancel."
+  },
+  {
+    "id": "linkedin_learning",
+    "name": "LinkedIn Learning",
+    "regex_keywords": [
+      "LINKEDIN LEARNING",
+      "LINKEDIN*PREMIUM"
+    ],
+    "logo": "/logos/linkedin_learning.png",
+    "cancel_url": "https://www.linkedin.com/premium/manage",
+    "instructions": "Premium > Manage Subscription > Cancel subscription."
+  },
+  {
+    "id": "chegg",
+    "name": "Chegg",
+    "regex_keywords": [
+      "CHEGG"
+    ],
+    "logo": "/logos/chegg.png",
+    "cancel_url": "https://www.chegg.com/my/account",
+    "instructions": "My Account > Orders > Subscriptions > Cancel."
+  },
+  {
+    "id": "norton",
+    "name": "Norton",
+    "regex_keywords": [
+      "NORTON"
+    ],
+    "logo": "/logos/norton.png",
+    "cancel_url": "https://my.norton.com/p/my-subscription",
+    "instructions": "My Subscriptions > Cancel Subscription Renewal."
+  },
+  {
+    "id": "mcafee",
+    "name": "McAfee",
+    "regex_keywords": [
+      "MCAFEE"
+    ],
+    "logo": "/logos/mcafee.png",
+    "cancel_url": "https://home.mcafee.com/secure/protected/login.aspx",
+    "instructions": "My Account > Auto-Renewal Settings > Turn Off."
+  },
+  {
+    "id": "malwarebytes",
+    "name": "Malwarebytes",
+    "regex_keywords": [
+      "MALWAREBYTES"
+    ],
+    "logo": "/logos/malwarebytes.png",
+    "cancel_url": "https://my.malwarebytes.com/en/details",
+    "instructions": "Subscriptions > Deactivate."
+  },
+  {
+    "id": "avast",
+    "name": "Avast",
+    "regex_keywords": [
+      "AVAST"
+    ],
+    "logo": "/logos/avast.png",
+    "cancel_url": "https://id.avast.com/subscriptions",
+    "instructions": "Subscriptions > Unsubscribe."
+  },
+  {
+    "id": "stitch_fix",
+    "name": "Stitch Fix",
+    "regex_keywords": [
+      "STITCH FIX",
+      "STITCHFIX"
+    ],
+    "logo": "/logos/stitch_fix.png",
+    "cancel_url": "https://www.stitchfix.com/account/frequency",
+    "instructions": "Manage Autoship > Stop receiving Fixes."
+  },
+  {
+    "id": "dollar_shave_club",
+    "name": "Dollar Shave Club",
+    "regex_keywords": [
+      "DOLLAR SHAVE"
+    ],
+    "logo": "/logos/dollar_shave_club.png",
+    "cancel_url": "https://www.dollarshaveclub.com/account/settings/membership",
+    "instructions": "Membership Settings > Cancel Membership."
+  },
+  {
+    "id": "ipsy",
+    "name": "Ipsy",
+    "regex_keywords": [
+      "IPSY"
+    ],
+    "logo": "/logos/ipsy.png",
+    "cancel_url": "https://www.ipsy.com/account/membership",
+    "instructions": "Account > Membership > Cancel Subscription."
+  },
+  {
+    "id": "barkbox",
+    "name": "BarkBox",
+    "regex_keywords": [
+      "BARKBOX"
+    ],
+    "logo": "/logos/barkbox.png",
+    "cancel_url": "https://www.barkbox.com/account",
+    "instructions": "Account > Subscription > Disable Auto-Renewal."
+  },
+  {
+    "id": "jasper_ai",
+    "name": "Jasper.ai",
+    "regex_keywords": [
+      "JASPER"
+    ],
+    "logo": "/logos/jasper_ai.png",
+    "cancel_url": "https://app.jasper.ai/settings/billing",
+    "instructions": "Settings > Billing > Cancel Account."
+  },
+  {
+    "id": "copy_ai",
+    "name": "Copy.ai",
+    "regex_keywords": [
+      "COPY.AI"
+    ],
+    "logo": "/logos/copy_ai.png",
+    "cancel_url": "https://app.copy.ai/settings/subscription",
+    "instructions": "Settings > Subscription > Cancel."
+  },
+  {
+    "id": "siteground",
+    "name": "SiteGround",
+    "regex_keywords": [
+      "SITEGROUND"
+    ],
+    "logo": "/logos/siteground.png",
+    "cancel_url": "https://ua.siteground.com/",
+    "instructions": "Services > Manage > Cancel."
+  },
+  {
+    "id": "hostgator",
+    "name": "HostGator",
+    "regex_keywords": [
+      "HOSTGATOR"
+    ],
+    "logo": "/logos/hostgator.png",
+    "cancel_url": "https://portal.hostgator.com/",
+    "instructions": "Dashboard > Hosting > Cancel."
+  },
+  {
+    "id": "bluehost",
+    "name": "Bluehost",
+    "regex_keywords": [
+      "BLUEHOST"
+    ],
+    "logo": "/logos/bluehost.png",
+    "cancel_url": "https://my.bluehost.com/cgi/account",
+    "instructions": "Products > Renewals > Do Not Renew."
+  },
+  {
+    "id": "wpengine",
+    "name": "WP Engine",
+    "regex_keywords": [
+      "WP ENGINE",
+      "WPENGINE"
+    ],
+    "logo": "/logos/wp_engine.png",
+    "cancel_url": "https://my.wpengine.com/",
+    "instructions": "Billing > Invoice > Cancel Account."
+  },
+  {
+    "id": "cloudfront",
+    "name": "CloudFront",
+    "regex_keywords": [
+      "CLOUDFRONT",
+      "AWS CLOUDFRONT"
+    ],
+    "logo": "/logos/cloudfront.png",
+    "cancel_url": "https://console.aws.amazon.com/cloudfront",
+    "instructions": "Delete Distributions."
+  },
+  {
+    "id": "britbox",
+    "name": "BritBox",
+    "regex_keywords": [
+      "BRITBOX"
+    ],
+    "logo": "/logos/britbox.png",
+    "cancel_url": "https://www.britbox.com/account/subscription",
+    "instructions": "Account > Subscription > Cancel."
+  },
+  {
+    "id": "acorn_tv",
+    "name": "Acorn TV",
+    "regex_keywords": [
+      "ACORN TV"
+    ],
+    "logo": "/logos/acorn_tv.png",
+    "cancel_url": "https://acorn.tv/account/status",
+    "instructions": "My Acorn TV > Manage > Cancel."
+  },
+  {
+    "id": "viki",
+    "name": "Viki",
+    "regex_keywords": [
+      "VIKI",
+      "RAKUTEN VIKI"
+    ],
+    "logo": "/logos/viki.png",
+    "cancel_url": "https://www.viki.com/account-settings",
+    "instructions": "Subscription & Settings > Cancel Plan."
+  },
+  {
+    "id": "fabletics",
+    "name": "Fabletics",
+    "regex_keywords": [
+      "FABLETICS"
+    ],
+    "logo": "/logos/fabletics.png",
+    "cancel_url": "https://www.fabletics.com/account/vip",
+    "instructions": "Call customer service or Chat to cancel VIP."
+  },
+  {
+    "id": "savage_x_fenty",
+    "name": "Savage X Fenty",
+    "regex_keywords": [
+      "SAVAGE X FENTY"
+    ],
+    "logo": "/logos/savage_x_fenty.png",
+    "cancel_url": "https://www.savagex.com/account",
+    "instructions": "Call or Chat to cancel membership."
+  },
+  {
+    "id": "minecraft_realms",
+    "name": "Minecraft Realms",
+    "regex_keywords": [
+      "MINECRAFT",
+      "MOJANG"
+    ],
+    "logo": "/logos/minecraft_realms.png",
+    "cancel_url": "https://account.microsoft.com/services",
+    "instructions": "Manage Subscription > Cancel."
+  },
+  {
+    "id": "runescape",
+    "name": "RuneScape",
+    "regex_keywords": [
+      "JAGEX",
+      "RUNESCAPE"
+    ],
+    "logo": "/logos/runescape.png",
+    "cancel_url": "https://secure.runescape.com/m=billing_core/manage_subscription.ws",
+    "instructions": "Manage Subscription > Cancel."
+  },
+  {
+    "id": "wow_sub",
+    "name": "World of Warcraft",
+    "regex_keywords": [
+      "BLIZZARD",
+      "WORLD OF WARCRAFT"
+    ],
+    "logo": "/logos/world_of_warcraft.png",
+    "cancel_url": "https://account.battle.net/games",
+    "instructions": "Games & Subscriptions > Manage > Cancel."
+  },
+  {
+    "id": "ffxiv",
+    "name": "FFXIV Sub",
+    "regex_keywords": [
+      "SQUARE ENIX",
+      "FINAL FANTASY"
+    ],
+    "logo": "/logos/ffxiv_sub.png",
+    "cancel_url": "https://secure.square-enix.com/",
+    "instructions": "Mog Station > Service Account Status > Cancel Subscription."
+  },
+  {
+    "id": "substack",
+    "name": "Substack",
+    "regex_keywords": [
+      "SUBSTACK"
+    ],
+    "logo": "/logos/substack.png",
+    "cancel_url": "https://substack.com/settings",
+    "instructions": "Click on publication > To unsubscribe, click on \"Subscribed\"."
+  },
+  {
+    "id": "morning_brew",
+    "name": "Morning Brew",
+    "regex_keywords": [
+      "MORNING BREW"
+    ],
+    "logo": "/logos/morning_brew.png",
+    "cancel_url": "https://www.morningbrew.com/profile",
+    "instructions": "Manage Preferences > Unsubscribe."
+  },
+  {
+    "id": "zapier",
+    "name": "Zapier",
+    "regex_keywords": [
+      "ZAPIER"
+    ],
+    "logo": "/logos/zapier.png",
+    "cancel_url": "https://zapier.com/app/billing/plans",
+    "instructions": "Settings > Billing > Downgrade to Free."
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "regex_keywords": [
+      "AIRTABLE"
+    ],
+    "logo": "/logos/airtable.png",
+    "cancel_url": "https://airtable.com/account",
+    "instructions": "Workspace Settings > Billing > Downgrade."
+  },
+  {
+    "id": "webflow",
+    "name": "Webflow",
+    "regex_keywords": [
+      "WEBFLOW"
+    ],
+    "logo": "/logos/webflow.png",
+    "cancel_url": "https://webflow.com/dashboard/account/billing",
+    "instructions": "Account Settings > Billing > Cancel."
+  },
+  {
+    "id": "framer",
+    "name": "Framer",
+    "regex_keywords": [
+      "FRAMER"
+    ],
+    "logo": "/logos/framer.png",
+    "cancel_url": "https://framer.com/account/subscription",
+    "instructions": "Plan > Cancel Subscription."
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "regex_keywords": [
+      "LINEAR"
+    ],
+    "logo": "/logos/linear.png",
+    "cancel_url": "https://linear.app/settings/billing",
+    "instructions": "Settings > Billing > Cancel."
+  },
+  {
+    "id": "spectrum",
+    "name": "Spectrum",
+    "regex_keywords": [
+      "SPECTRUM"
+    ],
+    "logo": "/logos/spectrum.png",
+    "cancel_url": "https://www.spectrum.net/support/cancellation",
+    "instructions": "Call 1-833-267-6094."
+  },
+  {
+    "id": "cox",
+    "name": "Cox",
+    "regex_keywords": [
+      "COX COMM"
+    ],
+    "logo": "/logos/cox.png",
+    "cancel_url": "https://www.cox.com/residential/contactus.html",
+    "instructions": "Call retention department."
+  },
+  {
+    "id": "directv",
+    "name": "DirecTV",
+    "regex_keywords": [
+      "DIRECTV"
+    ],
+    "logo": "/logos/directv.png",
+    "cancel_url": "https://www.directv.com/support/cancel/",
+    "instructions": "Call 1-800-531-5000."
+  },
+  {
+    "id": "dish",
+    "name": "Dish Network",
+    "regex_keywords": [
+      "DISH NETWORK"
+    ],
+    "logo": "/logos/dish_network.png",
+    "cancel_url": "https://www.dish.com/contact/",
+    "instructions": "Call 1-800-333-3474."
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "regex_keywords": [
+      "VERCEL"
+    ],
+    "logo": "/logos/vercel.png",
+    "cancel_url": "https://vercel.com/dashboard",
+    "instructions": "Settings > Billing > Cancel."
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "regex_keywords": [
+      "NETLIFY"
+    ],
+    "logo": "/logos/netlify.png",
+    "cancel_url": "https://app.netlify.com/teams/settings/billing",
+    "instructions": "Team Settings > Billing > Cancel Plan."
+  },
+  {
+    "id": "jetbrains",
+    "name": "JetBrains",
+    "regex_keywords": [
+      "JETBRAINS"
+    ],
+    "logo": "/logos/jetbrains.png",
+    "cancel_url": "https://account.jetbrains.com/licenses",
+    "instructions": "Licenses > Manage > Cancel Subscription."
+  },
+  {
+    "id": "render",
+    "name": "Render",
+    "regex_keywords": [
+      "RENDER"
+    ],
+    "logo": "/logos/render.png",
+    "cancel_url": "https://dashboard.render.com/billing",
+    "instructions": "Billing > Downgrade/Cancel."
+  },
+  {
+    "id": "fly_io",
+    "name": "Fly.io",
+    "regex_keywords": [
+      "FLY.IO"
+    ],
+    "logo": "/logos/fly_io.png",
+    "cancel_url": "https://fly.io/dashboard",
+    "instructions": "Dashboard > Billing > Cancel."
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "regex_keywords": [
+      "SENTRY"
+    ],
+    "logo": "/logos/sentry.png",
+    "cancel_url": "https://sentry.io/settings/billing",
+    "instructions": "Settings > Billing > Subscription > Cancel."
+  },
+  {
+    "id": "datadog",
+    "name": "Datadog",
+    "regex_keywords": [
+      "DATADOG"
+    ],
+    "logo": "/logos/datadog.png",
+    "cancel_url": "https://app.datadoghq.com/billing",
+    "instructions": "Plan & Usage > Cancel."
+  },
+  {
+    "id": "1password",
+    "name": "1Password",
+    "regex_keywords": [
+      "1PASSWORD"
+    ],
+    "logo": "/logos/1password.png",
+    "cancel_url": "https://my.1password.com/billing",
+    "instructions": "Billing > Delete Account or Unsubscribe."
+  },
+  {
+    "id": "lastpass",
+    "name": "LastPass",
+    "regex_keywords": [
+      "LASTPASS"
+    ],
+    "logo": "/logos/lastpass.png",
+    "cancel_url": "https://lastpass.com/my.php",
+    "instructions": "Account Settings > My Account > Cancel Renewal."
+  },
+  {
+    "id": "dashlane",
+    "name": "Dashlane",
+    "regex_keywords": [
+      "DASHLANE"
+    ],
+    "logo": "/logos/dashlane.png",
+    "cancel_url": "https://www.dashlane.com/account/summary",
+    "instructions": "My Account > Subscription > Cancel."
+  },
+  {
+    "id": "bitwarden",
+    "name": "Bitwarden",
+    "regex_keywords": [
+      "BITWARDEN"
+    ],
+    "logo": "/logos/bitwarden.png",
+    "cancel_url": "https://vault.bitwarden.com/#/settings/billing",
+    "instructions": "Settings > Billing > Cancel Subscription."
+  },
+  {
+    "id": "new_yorker",
+    "name": "The New Yorker",
+    "regex_keywords": [
+      "NEW YORKER"
+    ],
+    "logo": "/logos/the_new_yorker.png",
+    "cancel_url": "https://www.newyorker.com/account/subscription",
+    "instructions": "Account > Subscription > Cancel."
+  },
+  {
+    "id": "the_atlantic",
+    "name": "The Atlantic",
+    "regex_keywords": [
+      "THE ATLANTIC",
+      "ATLANTIC MONTHLY"
+    ],
+    "logo": "/logos/the_atlantic.png",
+    "cancel_url": "https://accounts.theatlantic.com/settings",
+    "instructions": "Settings > Cancel Subscription."
+  },
+  {
+    "id": "wired",
+    "name": "Wired",
+    "regex_keywords": [
+      "WIRED MAGAZINE",
+      "WIRED"
+    ],
+    "logo": "/logos/wired.png",
+    "cancel_url": "https://www.wired.com/account",
+    "instructions": "Account > Subscription > Cancel."
+  },
+  {
+    "id": "bloomberg",
+    "name": "Bloomberg",
+    "regex_keywords": [
+      "BLOOMBERG"
+    ],
+    "logo": "/logos/bloomberg.png",
+    "cancel_url": "https://www.bloomberg.com/account/subscription",
+    "instructions": "Account > Subscription > Cancel."
+  },
+  {
+    "id": "ft",
+    "name": "Financial Times",
+    "regex_keywords": [
+      "FINANCIAL TIMES",
+      "FT.COM"
+    ],
+    "logo": "/logos/financial_times.png",
+    "cancel_url": "https://www.ft.com/myaccount",
+    "instructions": "My Account > Manage Subscription > Cancel."
+  },
+  {
+    "id": "headspace",
+    "name": "Headspace",
+    "regex_keywords": [
+      "HEADSPACE"
+    ],
+    "logo": "/logos/headspace.png",
+    "cancel_url": "https://www.headspace.com/subscription/manage",
+    "instructions": "Account > Subscription > Turn off auto-renewal."
+  },
+  {
+    "id": "calm",
+    "name": "Calm",
+    "regex_keywords": [
+      "CALM.COM",
+      "CALM APP"
+    ],
+    "logo": "/logos/calm.png",
+    "cancel_url": "https://www.calm.com/profile",
+    "instructions": "Profile > Manage Subscription > Cancel."
+  },
+  {
+    "id": "noom",
+    "name": "Noom",
+    "regex_keywords": [
+      "NOOM"
+    ],
+    "logo": "/logos/noom.png",
+    "cancel_url": "https://www.noom.com/#/settings",
+    "instructions": "Settings > Manage Subscription > Cancel."
+  },
+  {
+    "id": "weightwatchers",
+    "name": "WeightWatchers",
+    "regex_keywords": [
+      "WEIGHT WATCHERS",
+      "WW INTL"
+    ],
+    "logo": "/logos/weightwatchers.png",
+    "cancel_url": "https://cmx.weightwatchers.com/settings",
+    "instructions": "Account > Cancel My Account."
+  },
+  {
+    "id": "whoop",
+    "name": "Whoop",
+    "regex_keywords": [
+      "WHOOP"
+    ],
+    "logo": "/logos/whoop.png",
+    "cancel_url": "https://app.whoop.com/membership",
+    "instructions": "Membership > Cancel Membership."
+  },
+  {
+    "id": "twitter_blue",
+    "name": "X Premium (Twitter)",
+    "regex_keywords": [
+      "TWITTER",
+      "X PREMIUM"
+    ],
+    "logo": "/logos/x_premium__twitter_.png",
+    "cancel_url": "https://twitter.com/settings/monetization",
+    "instructions": "Premium > Preferences > Cancel."
+  },
+  {
+    "id": "feeld",
+    "name": "Feeld",
+    "regex_keywords": [
+      "FEELD"
+    ],
+    "logo": "/logos/feeld.png",
+    "cancel_url": "https://feeld.co/",
+    "instructions": "Manage via App Store / Google Play."
+  },
+  {
+    "id": "her",
+    "name": "Her",
+    "regex_keywords": [
+      "HER APP"
+    ],
+    "logo": "/logos/her.png",
+    "cancel_url": "https://weareher.com/",
+    "instructions": "Manage via App Store / Google Play."
+  },
+  {
+    "id": "gofundme",
+    "name": "GoFundMe",
+    "regex_keywords": [
+      "GOFUNDME"
+    ],
+    "logo": "/logos/gofundme.png",
+    "cancel_url": "https://www.gofundme.com/sign-in",
+    "instructions": "Recurring donation management."
+  },
+  {
+    "id": "actblue",
+    "name": "ActBlue",
+    "regex_keywords": [
+      "ACTBLUE"
+    ],
+    "logo": "/logos/actblue.png",
+    "cancel_url": "https://secure.actblue.com/my-express",
+    "instructions": "Account > Recurring Donations > Cancel."
+  },
+  {
+    "id": "winred",
+    "name": "WinRed",
+    "regex_keywords": [
+      "WINRED"
+    ],
+    "logo": "/logos/winred.png",
+    "cancel_url": "https://winred.com/profile",
+    "instructions": "Profile > Subscriptions > Cancel."
+  },
+  {
+    "id": "kofi",
+    "name": "Ko-fi",
+    "regex_keywords": [
+      "KO-FI"
+    ],
+    "logo": "/logos/ko_fi.png",
+    "cancel_url": "https://ko-fi.com/account/payments",
+    "instructions": "More > Account > Payment History > Cancel."
+  },
+  {
+    "id": "twilio",
+    "name": "Twilio",
+    "regex_keywords": [
+      "TWILIO"
+    ],
+    "logo": "/logos/twilio.png",
+    "cancel_url": "https://www.twilio.com/console",
+    "instructions": "Release numbers / Close Project."
+  },
+  {
+    "id": "zoom_phone",
+    "name": "Zoom Phone",
+    "regex_keywords": [
+      "ZOOM PHONE"
+    ],
+    "logo": "/logos/zoom_phone.png",
+    "cancel_url": "https://zoom.us/billing",
+    "instructions": "Billing > Plans > Cancel."
+  },
+  {
+    "id": "opencnam",
+    "name": "OpenCNAM",
+    "regex_keywords": [
+      "OPENCNAM"
+    ],
+    "logo": "https://logo.clearbit.com/opencnam.com",
+    "cancel_url": "https://www.opencnam.com/",
+    "instructions": "Dashboard > Settings."
+  },
+  {
+    "id": "box",
+    "name": "Box",
+    "regex_keywords": [
+      "BOX.COM",
+      "BOX *STORAGE"
+    ],
+    "logo": "/logos/box.png",
+    "cancel_url": "https://app.box.com/billing",
+    "instructions": "Admin Console > Billing > Cancel Account."
+  },
+  {
+    "id": "onedrive",
+    "name": "OneDrive",
+    "regex_keywords": [
+      "MICROSOFT*ONEDRIVE",
+      "ONEDRIVE"
+    ],
+    "logo": "/logos/onedrive.png",
+    "cancel_url": "https://onedrive.live.com/options",
+    "instructions": "Options > Plans and upgrades > Manage."
+  },
+  {
+    "id": "classpass",
+    "name": "ClassPass",
+    "regex_keywords": [
+      "CLASSPASS"
+    ],
+    "logo": "/logos/classpass.png",
+    "cancel_url": "https://classpass.com/account/settings",
+    "instructions": "Account > Manage Plan > Cancel."
+  },
+  {
+    "id": "carbonite",
+    "name": "Carbonite",
+    "regex_keywords": [
+      "CARBONITE"
+    ],
+    "logo": "/logos/carbonite.png",
+    "cancel_url": "https://my.carbonite.com/billing",
+    "instructions": "Account > Billing > Turn off auto-renew."
+  },
+  {
+    "id": "backblaze",
+    "name": "Backblaze",
+    "regex_keywords": [
+      "BACKBLAZE"
+    ],
+    "logo": "/logos/backblaze.png",
+    "cancel_url": "https://secure.backblaze.com/user_signin.htm",
+    "instructions": "Preferences > Billing > Cancel."
+  },
+  {
+    "id": "protonmail",
+    "name": "ProtonMail",
+    "regex_keywords": [
+      "PROTONMAIL"
+    ],
+    "logo": "/logos/protonmail.png",
+    "cancel_url": "https://account.proton.me/u/0/dashboard",
+    "instructions": "Dashboard > Downgrade."
+  },
+  {
+    "id": "fastmail",
+    "name": "Fastmail",
+    "regex_keywords": [
+      "FASTMAIL"
+    ],
+    "logo": "/logos/fastmail.png",
+    "cancel_url": "https://www.fastmail.com/settings/billing",
+    "instructions": "Settings > Billing > Cancel."
+  },
+  {
+    "id": "name_com",
+    "name": "Name.com",
+    "regex_keywords": [
+      "NAME.COM"
+    ],
+    "logo": "/logos/name_com.png",
+    "cancel_url": "https://www.name.com/account/settings",
+    "instructions": "Account > Billing > Cancel."
+  },
+  {
+    "id": "target_circle",
+    "name": "Target Circle 360",
+    "regex_keywords": [
+      "TARGET",
+      "TARGET CIRCLE",
+      "SUB-TARGET.COM"
+    ],
+    "logo": "/logos/target.png",
+    "cancel_url": "https://www.target.com/circle/settings",
+    "instructions": "Account > Circle > Manage Subscription."
+  },
+  {
+    "id": "costco",
+    "name": "Costco Membership",
+    "regex_keywords": [
+      "COSTCO MBR",
+      "COSTCO WHSE"
+    ],
+    "logo": "/logos/costco.png",
+    "cancel_url": "https://customerservice.costco.com/app/answers/detail/a_id/1203/",
+    "instructions": "Must speak with a team member at any warehouse membership counter."
+  },
+  {
+    "id": "sams_club",
+    "name": "Sam's Club",
+    "regex_keywords": [
+      "SAMS CLUB",
+      "SAMSCLUB"
+    ],
+    "logo": "/logos/sams_club.png",
+    "cancel_url": "https://www.samsclub.com/content/terms-and-conditions",
+    "instructions": "Visit Membership Desk or call 1-888-746-7726."
+  },
+  {
+    "id": "lyft_pink",
+    "name": "Lyft Pink",
+    "regex_keywords": [
+      "LYFT PINK",
+      "LYFT *PINK"
+    ],
+    "logo": "/logos/lyft.png",
+    "cancel_url": "https://www.lyft.com/pink",
+    "instructions": "App > Menu > Lyft Pink > Manage Plan > Cancel."
+  }
+]

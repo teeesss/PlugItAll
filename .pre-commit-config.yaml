@@ -1,0 +1,59 @@
+repos:
+  # Basic universal checks (lightweight and useful)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # Checkov – official hook, fixed rev to a real tag
+  - repo: https://github.com/bridgecrewio/checkov
+    rev: 3.2.266 # Valid tag (no "v" prefix)
+    hooks:
+      - id: checkov
+        name: Checkov Security Scan
+        args: [--quiet, --compact] # Optional: quieter output
+        # files: \.(tf|yaml|yml|json|Dockerfile)$  # Uncomment to limit scanning
+
+  # Gitleaks – secret detection
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.24.2
+    hooks:
+      - id: gitleaks
+        verbose: false
+
+  # Prettier – code formatting (runs before ESLint)
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier
+        entry: npx prettier --write
+        language: system
+        files: \.(js|jsx|ts|tsx|json|md|yml|yaml)$
+        pass_filenames: true
+
+  # ESLint – JavaScript/JSX linting (with auto-fix)
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: npx eslint --fix
+        language: system
+        files: \.(js|jsx|ts|tsx)$
+        pass_filenames: true
+
+      # PRE-PUSH TESTS DISABLED: WSL uses Linux node_modules but we install for Windows
+      # To run tests before push, run: npm test -- --run
+      # Then push manually after tests pass.
+      # - id: npm-test
+      #   name: Run Tests
+      #   entry: npm test -- --run
+      #   language: system
+      #   stages: [push]
+      #   pass_filenames: false
+      #   always_run: true

@@ -1,0 +1,510 @@
+[
+  {
+    "id": "fabletics",
+    "name": "Fabletics VIP",
+    "merchant_keywords": [
+      "FABLETICS"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Users make one-off sportswear purchases. Only VIP membership prices are valid.",
+    "variance_allowed": false,
+    "min_amount": 50,
+    "plans": [
+      {
+        "amount": 59.95,
+        "interval": "monthly",
+        "label": "VIP Credits Standard"
+      },
+      {
+        "amount": 69.95,
+        "interval": "monthly",
+        "label": "VIP Credits Premium"
+      },
+      {
+        "amount": 49.95,
+        "interval": "monthly",
+        "label": "VIP Credits Discount"
+      }
+    ]
+  },
+  {
+    "id": "amazon_prime",
+    "name": "Amazon Prime",
+    "merchant_keywords": [
+      "AMAZON",
+      "AMZN",
+      "PRIME MEMBER",
+      "AMAZON MKTPLACE PMTS"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Users make daily one-off purchases here. Only exact price matches confirm a sub.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Prime Standard"
+      },
+      {
+        "amount": 139.0,
+        "interval": "yearly",
+        "label": "Prime Annual"
+      },
+      {
+        "amount": 7.49,
+        "interval": "monthly",
+        "label": "Prime Student"
+      },
+      {
+        "amount": 8.99,
+        "interval": "monthly",
+        "label": "Prime Video Only"
+      }
+    ]
+  },
+  {
+    "id": "walmart_plus",
+    "name": "Walmart+",
+    "merchant_keywords": [
+      "WALMART",
+      "WALMART.COM",
+      "WM COM"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Indistinguishable from grocery bills except by price.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.95,
+        "interval": "monthly",
+        "label": "Standard Monthly"
+      },
+      {
+        "amount": 98.0,
+        "interval": "yearly",
+        "label": "Standard Annual"
+      }
+    ]
+  },
+  {
+    "id": "uber_one",
+    "name": "Uber One",
+    "merchant_keywords": [
+      "UBER",
+      "UBER EATS",
+      "UBER*"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Often confused with a standard ride or meal cost.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Uber One Monthly"
+      },
+      {
+        "amount": 96.0,
+        "interval": "yearly",
+        "label": "Uber One Annual"
+      }
+    ]
+  },
+  {
+    "id": "doordash_dashpass",
+    "name": "DoorDash DashPass",
+    "merchant_keywords": [
+      "DOORDASH",
+      "DASH*"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Confused with food orders.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "DashPass Monthly"
+      },
+      {
+        "amount": 96.0,
+        "interval": "yearly",
+        "label": "DashPass Annual"
+      },
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "DashPass Student"
+      }
+    ]
+  },
+  {
+    "id": "instacart_plus",
+    "name": "Instacart+",
+    "merchant_keywords": [
+      "INSTACART",
+      "MAPLEBEAR"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Confused with grocery delivery fees.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly Plan"
+      },
+      {
+        "amount": 99.0,
+        "interval": "yearly",
+        "label": "Annual Plan"
+      }
+    ]
+  },
+  {
+    "id": "youtube_premium",
+    "name": "YouTube Premium",
+    "merchant_keywords": [
+      "GOOGLE*YOUTUBE",
+      "YOUTUBE",
+      "GOOGLE * YOUTUBE"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Confused with movie rentals or Superchats.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 22.99,
+        "interval": "monthly",
+        "label": "Family"
+      },
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Student"
+      }
+    ]
+  },
+  {
+    "id": "youtube_tv",
+    "name": "YouTube TV",
+    "merchant_keywords": [
+      "YOUTUBE TV"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Price varies with add-ons. Anything over $50 is likely YouTube TV.",
+    "variance_allowed": true,
+    "min_amount": 50,
+    "consolidate": true,
+    "plans": [
+      {
+        "amount": 72.99,
+        "interval": "monthly",
+        "label": "Base Plan"
+      },
+      {
+        "amount": 82.99,
+        "interval": "monthly",
+        "label": "Base + Spanish Plan"
+      },
+      {
+        "amount": 94.99,
+        "interval": "monthly",
+        "label": "Base + Add-ons"
+      }
+    ]
+  },
+  {
+    "id": "playstation_plus",
+    "name": "PlayStation Plus",
+    "merchant_keywords": [
+      "PLAYSTATION",
+      "SONY",
+      "PSN"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Confused with buying games.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Essential Monthly"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Extra Monthly"
+      },
+      {
+        "amount": 17.99,
+        "interval": "monthly",
+        "label": "Premium Monthly"
+      },
+      {
+        "amount": 79.99,
+        "interval": "yearly",
+        "label": "Essential Annual"
+      },
+      {
+        "amount": 134.99,
+        "interval": "yearly",
+        "label": "Extra Annual"
+      },
+      {
+        "amount": 159.99,
+        "interval": "yearly",
+        "label": "Premium Annual"
+      }
+    ]
+  },
+  {
+    "id": "xbox_gamepass",
+    "name": "Xbox Game Pass",
+    "merchant_keywords": [
+      "MICROSOFT",
+      "XBOX"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Confused with game purchases or Office 365.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Core"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "PC"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Ultimate"
+      }
+    ]
+  },
+  {
+    "id": "apple_one",
+    "name": "Apple One / Services",
+    "merchant_keywords": [
+      "APPLE.COM/BILL",
+      "ITUNES"
+    ],
+    "risk_level": "EXTREME",
+    "risk_reason": "Apple bundles everything under 'apple.com/bill'. Only price identifies the service.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Apple Music Indiv"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Apple Music Family"
+      },
+      {
+        "amount": 19.95,
+        "interval": "monthly",
+        "label": "Apple One Individual"
+      },
+      {
+        "amount": 25.95,
+        "interval": "monthly",
+        "label": "Apple One Family"
+      },
+      {
+        "amount": 37.95,
+        "interval": "monthly",
+        "label": "Apple One Premier"
+      },
+      {
+        "amount": 0.99,
+        "interval": "monthly",
+        "label": "iCloud+ 50GB"
+      },
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "iCloud+ 200GB"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "iCloud+ 2TB"
+      }
+    ]
+  },
+  {
+    "id": "disney_bundle",
+    "name": "Disney Bundle",
+    "merchant_keywords": [
+      "DISNEY PLUS",
+      "DISNEY+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Usually distinct, but bundle pricing varies.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Disney+ Basic"
+      },
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Disney+ Premium"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Duo Basic (Hulu)"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Duo Premium"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Trio Basic (ESPN)"
+      },
+      {
+        "amount": 24.99,
+        "interval": "monthly",
+        "label": "Trio Premium"
+      }
+    ]
+  },
+  {
+    "id": "planet_fitness",
+    "name": "Planet Fitness",
+    "merchant_keywords": [
+      "PLANET FIT",
+      "PLANET FITNESS"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Annual fees and signup fees appear randomly.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.0,
+        "interval": "monthly",
+        "label": "Classic"
+      },
+      {
+        "amount": 24.99,
+        "interval": "monthly",
+        "label": "Black Card"
+      },
+      {
+        "amount": 49.0,
+        "interval": "yearly",
+        "label": "Annual Fee"
+      }
+    ]
+  },
+  {
+    "id": "target_circle",
+    "name": "Target Circle 360",
+    "merchant_keywords": [
+      "TARGET",
+      "TARGET.COM"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Confused with retail purchases.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 99.0,
+        "interval": "yearly",
+        "label": "Annual Plan"
+      },
+      {
+        "amount": 49.0,
+        "interval": "yearly",
+        "label": "Promo Annual"
+      }
+    ]
+  },
+  {
+    "id": "costco_membership",
+    "name": "Costco Membership",
+    "merchant_keywords": [
+      "COSTCO",
+      "COSTCO WHSE"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Confused with grocery trips.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 60.0,
+        "interval": "yearly",
+        "label": "Gold Star"
+      },
+      {
+        "amount": 120.0,
+        "interval": "yearly",
+        "label": "Executive"
+      }
+    ]
+  },
+  {
+    "id": "sams_club_membership",
+    "name": "Sam's Club",
+    "merchant_keywords": [
+      "SAMS CLUB",
+      "SAMSCLUB"
+    ],
+    "risk_level": "HIGH",
+    "risk_reason": "Confused with wholesale purchases.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 50.0,
+        "interval": "yearly",
+        "label": "Club"
+      },
+      {
+        "amount": 110.0,
+        "interval": "yearly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "lyft_pink",
+    "name": "Lyft Pink",
+    "merchant_keywords": [
+      "LYFT",
+      "LYFT *PINK"
+    ],
+    "risk_level": "MEDIUM",
+    "risk_reason": "Confused with ride payments.",
+    "variance_allowed": false,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Lyft Pink Monthly"
+      },
+      {
+        "amount": 99.0,
+        "interval": "yearly",
+        "label": "Lyft Pink Annual"
+      }
+    ]
+  }
+]

@@ -1,0 +1,97 @@
+# Project Rules (.cursorrules)
+
+You must follow these rules at all times.
+
+## 1. Issue Tracking
+- **ALWAYS** check `issues.md` before starting a task to be aware of known pitfalls.
+- **IMMEDIATELY** log any new error or blocker in `issues.md` as soon as it is identified.
+- **UPDATE** `issues.md` with the resolution once fixed, including the "Cause" to prevent recurrence.
+
+## 2. Testing
+- Run `npm run test:run` before marking any logic task as complete.
+- Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI.
+- When a test fails after code changes, check if the blacklist or detection logic needs adjustment.
+
+## 3. File Safety
+- When using `replace_file_content`, check the surrounding lines to ensure you are not accidentally deleting imports or adjacent logic.
+- Use specific, small chunks for replacements rather than large blocks if possible.
+
+## 4. Environment
+- Ensure `postcss.config.js` exists for Tailwind to work.
+- Use `import type` for all TypeScript interfaces.
+
+## 5. Environment Maintenance
+- **ALWAYS** Kill stale terminals/processes before starting a new server.
+- **ENSURE** the server runs on Port 5173 (default). If usage blocked, `kill` the blocker, don't just increment the port.
+- **READ** console errors carefully; if a dependency complains about missing plugins (e.g. PostCSS), fix the config immediately.
+
+---
+
+## 6. Subscription Detection Logic (Lessons Learned)
+
+### Normalization (`src/utils/normalizer.ts`)
+- Add special case overrides for services with multiple description formats (e.g., `PAYPAL *VISIBLESERV` → `VISIBLE`)
+- Always normalize to UPPERCASE for consistent matching
+
+### Blacklist (`src/utils/analyzer.ts`)
+- **Move `isKnown` check ABOVE `BLACKLIST` check**. This allows known subscriptions (Amazon Prime) to bypass the retail blacklist.
+- The BLACKLIST array is the first line of defense against false positives.
+- **Add general retail** (EBAY, AMAZON, Etsy) to the blacklist to block one-off purchases while allowing their subscription plans.
+- Check user screenshots for new false positives and add them to the blacklist.
+
+### Clustering & Shopping Patterns
+- Transactions are grouped by amount ($1 tolerance).
+- **Shopping Pattern (isShoppingPattern)**: Defined as `clusters.length >= 3` (3+ different price points).
+- **REJECT** shopping patterns unless it's a verified consolidation service (e.g., YouTube TV).
+- This prevents eBay/Amazon's varying purchase amounts from being detected as subscriptions.
+
+### Interval Classification
+- **Use MEDIAN interval** instead of Average for metric calculation. This is more robust against outliers from old PDF data.
+- **Consecutive Months Rule**: If `!isKnown`, require at least one 25-35 day interval for Monthly detection.
+- **Span Check**: If `!isKnown`, reject Yearly unless the total statement span is > 300 days.
+- If avg/median interval doesn't match any bucket, transaction is discarded as "Irregular".
+- **Confidence**: Set to "Low" (Review) for all unknown merchants.
+
+### High-Risk Price Validation (`subscription_pricing.json`)
+- HIGH/EXTREME risk merchants require exact price match (Amazon, Walmart, Fabletics)
+- MEDIUM/LOW risk merchants accept flexible pricing (YouTube TV, Netflix)
+- Use `min_amount` to filter invalid charges (e.g., YouTube TV < $50 = wrong charge)
+- Use `consolidate: true` for variable-price subs to merge into one card
+
+### App State & Deduplication (`src/App.tsx`)
+- Use REPLACE instead of MERGE when processing new uploads to avoid stale data persistence.
+- **Dedupe inputs**: Create a unique key `date + amount + description.substring(0,20)` to prevent CSV+PDF overlaps from creating 0-day intervals.
+
+---
+
+## 7. Pre-Commit Hooks
+
+Pre-commit is installed and runs automatically on every `git commit`.
+
+### Installed Hooks
+- **check-added-large-files**, **check-case-conflict**, **check-json**, **check-yaml**, **check-merge-conflict**
+- **end-of-file-fixer**, **trailing-whitespace**
+- **Checkov** — Security scanning (Terraform/K8s)
+- **Gitleaks** — Secret/credential detection
+- **Prettier** — Code formatting (.ts, .tsx, .json, .md, .yaml)
+- **ESLint** — TypeScript/React linting
+
+### Running Manually
+```bash
+python -m pre_commit run --all-files
+```
+
+### Common Issues
+- **@ts-ignore forbidden**: Use `@ts-expect-error` instead
+- **Unused @ts-expect-error**: Remove directive if TypeScript resolves the type
+- **`any` types**: Add `// eslint-disable-next-line @typescript-eslint/no-explicit-any` for pdfjs-dist items
+- **JSON comments**: `tsconfig.app.json` and `tsconfig.node.json` cannot have `/* ... */` comments
+- **Useless escapes**: In regex character classes `[...]`, don't escape `/` or `.`
+
+---
+
+## 8. GitHub Repository
+
+- **Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+- **Credentials**: `.gitcreds` is in `.gitignore` — never commit secrets
+- **Product Name**: Plug It — "Find the leaks in your bank account"
