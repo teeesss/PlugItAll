@@ -153,7 +153,7 @@ describe('Real User Data: CSV + PDF Combined', () => {
 
     const nyt = subs.find((s) => s.name.toUpperCase().includes('NYT'));
     if (nyt) {
-      expect(nyt.confidence).toBe('Low'); // Unknown merchant
+      expect(nyt.confidence).toBe('High'); // Consistently charged unknown merchant promoted to High
     }
 
     const ebay = subs.find((s) => s.name.toUpperCase().includes('EBAY'));

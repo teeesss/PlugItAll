@@ -857,7 +857,9 @@
     "name": "NY Times",
     "regex_keywords": [
       "NYTIMES",
-      "NEW YORK TIMES"
+      "NEW YORK TIMES",
+      "NYT",
+      "NY TIMES"
     ],
     "logo": "/logos/ny_times.png",
     "cancel_url": "https://www.nytimes.com/my-account",
@@ -2096,5 +2098,30 @@
     "logo": "/logos/lyft.png",
     "cancel_url": "https://www.lyft.com/pink",
     "instructions": "App > Menu > Lyft Pink > Manage Plan > Cancel."
+  },
+  {
+    "id": "grubhub_plus",
+    "name": "Grubhub+",
+    "regex_keywords": [
+      "GRUBHUB",
+      "GRUBHUB PLUS",
+      "GRUBHUB+"
+    ],
+    "logo": "/logos/grubhub.png",
+    "cancel_url": "https://www.grubhub.com/help/contact-us",
+    "instructions": "Account > Grubhub+ Membership > Cancel Membership."
+  },
+  {
+    "id": "uber_eats",
+    "name": "Uber Eats / One",
+    "regex_keywords": [
+      "UBER EATS",
+      "UBER ONE",
+      "UBEREATS",
+      "UBER *ONE"
+    ],
+    "logo": "/logos/uber_one.png",
+    "cancel_url": "https://m.uber.com/",
+    "instructions": "Account > Uber One > Manage Membership > End Membership."
   }
 ]

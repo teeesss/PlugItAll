@@ -11,6 +11,7 @@ export interface SubscriptionCandidate {
   confidence: 'High' | 'Medium' | 'Low';
   nextPaymentDate?: string;
   description?: string; // Add description for UI context if needed
+  transactions: Transaction[]; // Source transactions for drill-down
 }
 
 /**
@@ -70,6 +71,42 @@ function validateHighRiskPrice(name: string, amount: number): 'MATCH' | 'REJECT'
   return 'NEUTRAL';
 }
 
+function isRefund(t: Transaction): boolean {
+  // Standard convention: charges are positive, refunds are negative.
+  return t.amount < 0;
+}
+
+/**
+ * Filters out balanced pairs of charges and refunds (Pair Cancellation).
+ */
+function filterRefundPairs(transactions: Transaction[]): Transaction[] {
+  const result: Transaction[] = [...transactions];
+  const toRemove = new Set<number>();
+
+  for (let i = 0; i < result.length; i++) {
+    if (toRemove.has(i)) continue;
+
+    for (let j = i + 1; j < result.length; j++) {
+      if (toRemove.has(j)) continue;
+
+      // Check if they are exactly opposite and within 30 days
+      if (Math.abs(result[i].amount + result[j].amount) < 0.01) {
+        const dateI = new Date(result[i].date).getTime();
+        const dateJ = new Date(result[j].date).getTime();
+        const diffDays = Math.abs(dateI - dateJ) / (1000 * 60 * 60 * 24);
+
+        if (diffDays <= 30) {
+          toRemove.add(i);
+          toRemove.add(j);
+          break;
+        }
+      }
+    }
+  }
+
+  return result.filter((_, index) => !toRemove.has(index));
+}
+
 /**
  * Core Logic Engine: Detects recurring payments from a list of transactions.
  */
@@ -86,115 +123,70 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
   const candidates: SubscriptionCandidate[] = [];
 
   groups.forEach((transactions, name) => {
+    // 1.5 Refund/Pair Cancellation (Task-004)
+    // Filter out pairs that exactly cancel each other out (Charge + Refund)
+    const filteredTxs = filterRefundPairs(transactions);
+
+    // If no transactions left after refund filtering, skip cluster
+    if (filteredTxs.length === 0) return;
+
+    // Filter out remaining individual refunds and ensure positive amounts
+    const absoluteTxs = filteredTxs
+      .filter(t => !isRefund(t))
+      .map(t => ({ ...t, amount: Math.abs(t.amount) }));
+
+    if (absoluteTxs.length === 0) return;
+
     // EXCEPTION: If it is a KNOWN subscription pattern, allow even 1 instance.
-    // This supports users uploading a Single PDF (1 month) to see what they have.
     const isKnown = matchSubscription(name);
+
 
     // Negative filter for keywords
     const BLACKLIST = [
-      // Retail / Marketplaces (Known to have many one-off purchases)
-      'AMAZON',
-      'EBAY',
-      'ETSY',
-      'WALMART',
-      'TARGET',
-      'SHELL',
-      'EXXON',
-      'CHEVRON',
-      '7-ELEVEN',
-      'COSTCO',
+      // Retail / Marketplaces (Frequent False Positives - NOT current sub vendors)
+      'EBAY', 'ETSY', 'SHELL', 'EXXON', 'CHEVRON', '7-ELEVEN', '7 ELEVEN', '7ELEVEN',
+
       // Financial/Utilities
-      'INTEREST',
-      'FEE',
-      'AUTOPAY',
-      'PAYMENT',
-      'TRANSFER',
-      'ATM',
-      'DEPOSIT',
-      'CREDIT CARD',
-      'BANK',
-      'LOAN',
-      'MORTGAGE',
-      'RENT',
-      // Fast Food / Restaurants (Common False Positives)
-      'PIZZA',
-      'BURGER',
-      'DOORDASH',
-      'UBER EATS',
-      'GRUBHUB',
-      'MCDONALDS',
-      "MCDONALD'S",
-      'DOMINO',
-      'STARBUCKS',
-      'CHICK-FIL-A',
-      'CHICK FIL A',
-      'CHICKFILA', // All variants
-      'TACO BELL',
-      'DUNKIN',
-      'WENDY',
-      'PANDA EXPRESS',
-      'LITTLE CAES',
-      'SONIC',
-      'ARBYS',
-      'POPEYES',
-      'CHIPOTLE',
-      'PANERA',
-      'SUBWAY',
-      'FIVE GUYS',
-      // Gas Stations
-      'CIRCLE K',
-      'MARATHON',
-      'BP ',
-      'TEXACO',
-      'VALERO',
-      'SPEEDWAY',
-      'QUIKTRIP',
-      'WAWA',
-      'SHEETZ',
-      'RACETRAC',
-      'CEFCO',
-      'MURPHY',
+      'INTEREST', 'FEE', 'AUTOPAY', 'PAYMENT', 'TRANSFER', 'ATM', 'DEPOSIT', 'CREDIT CARD', 'BANK', 'LOAN', 'MORTGAGE', 'RENT', 'CITI FLEX',
+
+      // Gas Stations & One-offs
+      'CIRCLE K', 'CIRCLEK', 'MARATHON', 'BP ', 'TEXACO', 'VALERO', 'SPEEDWAY', 'QUIKTRIP', 'WAWA', 'SHEETZ', 'RACETRAC', 'CEFCO', 'MURPHY', 'TRACTOR SUPPLY',
+
       // General Retail / Dollar Stores
-      'DOLLAR GENERAL',
-      'DOLLAR TREE',
-      'DOLLARTREE',
-      'FAMILY DOLLAR',
-      'WALMART SUPERCENTER',
-      'WM SUPERCENTER',
-      'KROGER',
-      'SAFEWAY',
-      'PUBLIX',
-      'ALDI',
-      'HOME DEPOT',
-      'LOWES',
-      'MENARDS',
-      'CVS',
-      'WALGREENS',
-      'RITE AID',
+      'DOLLAR GENERAL', 'DOLLAR TREE', 'DOLLARTREE', 'FAMILY DOLLAR', 'FAMILYDOLLAR', 'WALMART SUPERCENTER', 'WM SUPERCENTER',
+      'KROGER', 'SAFEWAY', 'PUBLIX', 'ALDI', 'HOME DEPOT', 'HOMEDEPOT', 'LOWES', 'MENARDS', 'CVS', 'WALGREENS', 'RITE AID', 'RITEAID',
+
+      // Fast Food / Restaurants (Common False Positives - NOT delivery subs)
+      'PIZZA', 'BURGER', 'MCDONALDS', "MCDONALD'S", 'DOMINO', 'STARBUCKS', 'CHICK-FIL-A', 'CHICK FIL A', 'CHICKFILA',
+      'TACO BELL', 'TACOBELL', 'DUNKIN', 'WENDY', 'PANDA EXPRESS', 'PANDAEXPRESS', 'SONIC', 'ARBYS', 'POPEYES', 'CHIPOTLE',
+      'PANERA', 'SUBWAY', 'FIVE GUYS', 'FIVEGUYS', 'BURGER KING', 'BURGERKING', 'PIZZA HUT', 'PIZZAHUT',
+      'DAIRY QUEEN', 'DAIRYQUEEN', 'KRISPY KREME', 'KRISPYKREME', 'LITTLE CAES', 'LITTLE CAESARS', 'LITTLECEASARS', 'LITTLE CESARS',
+
       // Travel / One-off
-      'PINK JEEP',
-      'PARKING',
-      'HOTEL',
-      'AIRBNB',
-      'VRBO',
+      'PINK JEEP', 'PARKING', 'HOTEL', 'AIRBNB', 'VRBO',
       // Specific false positives from user data (2026-01-12)
-      'WWMC PA FT',
-      'SP ULC VH',
-      'THE DISTRICT',
-      'SARAZONA',
-      'HUDSON',
-      'MARIPOSA',
-      'G2G',
-      'TST ',
+      'SP ULC VH', 'THE DISTRICT', 'HUDSON', 'MARIPOSA', 'SARAZONA', 'G2G', 'BOLTON ', 'TST ',
+      'WWMC', 'PENSAC', 'PENSACOLA', 'MEDICAL', 'CENTER', 'FT WALTON', 'DOCTOR', 'PA FT ',
     ];
 
-    // Only apply blacklist if it is NOT a known subscription
-    if (!isKnown && BLACKLIST.some((b) => name.toUpperCase().includes(b))) return;
+    // STICKY BLACKLIST: These terms are ALWAYS rejected for unknown merchants.
+    // We check both spaced and non-spaced versions for maximum hit rate on variations.
+    const upperName = name.toUpperCase();
+    const noSpaceName = upperName.replace(/\s+/g, '');
 
-    if (transactions.length < 2 && !isKnown) return;
+    if (!isKnown && BLACKLIST.some((b) => {
+      const bUpper = b.toUpperCase();
+      const bNoSpace = bUpper.replace(/\s+/g, '');
+      return upperName.includes(bUpper) || noSpaceName.includes(bNoSpace);
+    })) return;
+
+    if (absoluteTxs.length < 2 && !isKnown) return;
+
+    // Final check for very generic names
+    if (name.length < 4 && !isKnown) return;
 
     // Sort by date
-    transactions.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    absoluteTxs.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     // --- SUB-GROUPING LOGIC (Price Clustering) ---
     // If we have multiple different price points (e.g. Visible $25 and $35), strict variance check will fail.
@@ -204,18 +196,18 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
     const processed = new Set<number>();
 
     // Naive clustering: Group by exact amount (or very close)
-    for (let i = 0; i < transactions.length; i++) {
+    for (let i = 0; i < absoluteTxs.length; i++) {
       if (processed.has(i)) continue;
 
-      const currentCluster = [transactions[i]];
+      const currentCluster = [absoluteTxs[i]];
       processed.add(i);
-      const baseAmount = transactions[i].amount;
+      const baseAmount = absoluteTxs[i].amount;
 
-      for (let j = i + 1; j < transactions.length; j++) {
+      for (let j = i + 1; j < absoluteTxs.length; j++) {
         if (processed.has(j)) continue;
         // Allow very small deviation ($0.50) for currency fluctuation, but generally distinct plans are fixed.
-        if (Math.abs(transactions[j].amount - baseAmount) < 1.0) {
-          currentCluster.push(transactions[j]);
+        if (Math.abs(absoluteTxs[j].amount - baseAmount) < 1.0) {
+          currentCluster.push(absoluteTxs[j]);
           processed.add(j);
         }
       }
@@ -238,7 +230,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
 
     // If consolidate mode: create ONE candidate with highest price, skip individual cluster analysis
     if (shouldConsolidate && clusters.length > 1) {
-      const allAmounts = transactions.map((t) => t.amount);
+      const allAmounts = absoluteTxs.map((t) => t.amount);
       const highestAmount = Math.max(...allAmounts);
 
       // Validate the highest price
@@ -249,6 +241,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
           averageAmount: highestAmount,
           frequency: 'Monthly',
           confidence: 'High',
+          transactions: absoluteTxs, // All transactions for consolidated items
         });
       }
       return; // Skip individual cluster processing
@@ -263,57 +256,26 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
         );
       }
 
-      // Reject unknown single transactions
-      if (clusterTx.length < 2 && !isKnown) {
-        if (name.toUpperCase().includes('VISIBLE')) console.log(`  -> REJECTED: single unknown`);
-        return;
-      }
-
-      // Reject subscriptions that look like shopping (3+ variable prices)
-      // UNLESS it's a special consolidation merchant (YouTube TV)
-      if (isShoppingPattern && !shouldConsolidate) {
-        if (name.toUpperCase().includes('VISIBLE')) console.log(`  -> REJECTED: shopping pattern`);
-        return;
-      }
-
-      // Recalculate metrics for this cluster
-      const amounts = clusterTx.map((t) => t.amount);
-      const averageAmount = amounts.reduce((a, b) => a + b, 0) / amounts.length;
-      const maxAmount = Math.max(...amounts);
-      const minAmount = Math.min(...amounts);
-      const amountVariance = (maxAmount - minAmount) / averageAmount;
-
-      // --- HIGH RISK PRICE VALIDATION (Amazon, Walmart, Apple, etc) ---
-      const priceCheck = validateHighRiskPrice(name, averageAmount);
-
-      if (priceCheck === 'REJECT') {
-        if (name.toUpperCase().includes('VISIBLE')) console.log(`  -> REJECTED: high risk price`);
-        // It matched a High Risk provider (Amazon/Walmart) but NOT a valid subscription price.
-        // Assuming it's a purchase. REJECT.
-        // console.log(`Rejected High Risk Item: ${name} @ $${averageAmount}`);
-        return;
-      }
-
-      // If explicit price match, we treat it as known and verified
-      const isVerifiedPrice = priceCheck === 'MATCH';
-
-      // Strict Variance Rules apply to the CLUSTER now (only if >= 2)
-      if (clusterTx.length === 2 && amountVariance > 0.01) return;
-      if (clusterTx.length >= 3 && amountVariance > 0.1) return;
-
+      // Initialize variables
       let frequency: SubscriptionCandidate['frequency'] = 'Irregular';
       let confidence: SubscriptionCandidate['confidence'] = 'Low';
 
-      // For single-item clusters of known subscriptions, assume Monthly
-      // This supports single-PDF uploads where user has multiple family plans
-      if (clusterTx.length === 1 && (isKnown || isVerifiedPrice)) {
-        frequency = 'Monthly';
-        confidence = 'High';
-      } else if (clusterTx.length < 2) {
-        // Unknown single items are rejected upstream, but double-check here
-        return;
+      // --- 1. HANDLE SINGLE TRANSACTION CLUSTERS ---
+      if (clusterTx.length === 1) {
+        if (isKnown) {
+          frequency = 'Yearly';
+          confidence = 'Low'; // Definitely Low if only 1 transaction seen
+
+          // Special hardening for Google One / Storage
+          if (name.toUpperCase().includes('GOOGLE') && (name.toUpperCase().includes('STORAGE') || name.toUpperCase().includes('ONE'))) {
+            confidence = 'Low';
+          }
+        } else {
+          // Unknown single items are rejected
+          return;
+        }
       } else {
-        // Date Analysis for Cluster
+        // --- 2. ANALYZE INTERVALS FOR MULTIPLE TRANSACTIONS ---
         let totalIntervalDays = 0;
         let intervalsCount = 0;
         let previousDate = new Date(clusterTx[0].date);
@@ -322,14 +284,12 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
           const currentDate = new Date(clusterTx[i].date);
           const diffTime = Math.abs(currentDate.getTime() - previousDate.getTime());
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
           totalIntervalDays += diffDays;
           intervalsCount++;
           previousDate = currentDate;
         }
 
         const averageInterval = totalIntervalDays / intervalsCount;
-        // Interval Consistency
         const intervals: number[] = [];
         let tempPrev = new Date(clusterTx[0].date);
         for (let j = 1; j < clusterTx.length; j++) {
@@ -341,85 +301,78 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
           tempPrev = curr;
         }
 
-        // For known subs, use median interval (more robust to outliers from old PDF data)
         const sortedIntervals = [...intervals].sort((a, b) => a - b);
         const medianInterval = sortedIntervals[Math.floor(sortedIntervals.length / 2)];
-
-        // Use median for known subs, average for unknown
         const referenceInterval = isKnown ? medianInterval : averageInterval;
-
-        // For known subs: allow intervals within 3x of median (handles skipped months)
-        // For unknown: stricter 50% variance
         const toleranceMultiplier = isKnown ? 3.0 : 0.5;
+
         const isConsistent = intervals.every((d) =>
           isKnown
-            ? d >= referenceInterval / toleranceMultiplier &&
-              d <= referenceInterval * toleranceMultiplier
+            ? d >= referenceInterval / toleranceMultiplier && d <= referenceInterval * toleranceMultiplier
             : Math.abs(d - referenceInterval) < referenceInterval * toleranceMultiplier
         );
 
-        if (!isConsistent && !isKnown) {
-          // For unknown subs, strict rejection
-          return;
-        }
+        if (!isConsistent && !isKnown) return;
 
-        // --- STRICT RULES FOR UNKNOWN SUBSCRIPTIONS ---
+        // Gap checks
+        const hasIdealMonthly = intervals.some((d) => d >= 25 && d <= 35);
+        const hasIdealWeekly = intervals.some((d) => d >= 6 && d <= 8);
+
         if (!isKnown) {
-          // Rule 1: For Monthly/Weekly, at least one interval must be "ideal" (consecutive months/weeks)
-          const hasIdealMonthly = intervals.some((d) => d >= 25 && d <= 35);
-          const hasIdealWeekly = intervals.some((d) => d >= 6 && d <= 8);
-
-          // Classification - stricter for unknown
-          if (hasIdealMonthly) {
-            frequency = 'Monthly';
-          } else if (hasIdealWeekly) {
-            frequency = 'Weekly';
-          } else if (medianInterval >= 360 && medianInterval <= 370) {
-            // Rule 2: Yearly must actually span a year
-            const totalSpan =
-              (new Date(clusterTx[clusterTx.length - 1].date).getTime() -
-                new Date(clusterTx[0].date).getTime()) /
-              (1000 * 60 * 60 * 24);
-            if (totalSpan > 300) {
-              frequency = 'Yearly';
-            }
-          }
-
-          // Rule 3: Always Low confidence if unknown
+          // Unknown subs must have ideal gaps for frequency detection
+          if (hasIdealMonthly) frequency = 'Monthly';
+          else if (hasIdealWeekly) frequency = 'Weekly';
+          else if (medianInterval >= 360 && medianInterval <= 375) frequency = 'Yearly';
           confidence = 'Low';
-
-          // If still Irregular, it was an outlier that didn't meet strict rules
-          if (frequency === 'Irregular') return;
         } else {
-          // --- NORMAL RULES FOR KNOWN SUBSCRIPTIONS ---
+          // Known subs: use median interval for detection
           if (medianInterval >= 25 && medianInterval <= 35) {
             frequency = 'Monthly';
             confidence = 'High';
-          } else if (medianInterval >= 360 && medianInterval <= 370) {
+          } else if (medianInterval >= 360 && medianInterval <= 375) {
             frequency = 'Yearly';
             confidence = 'High';
           } else if (medianInterval >= 6 && medianInterval <= 8) {
             frequency = 'Weekly';
             confidence = 'High';
           } else if (medianInterval >= 20 && medianInterval <= 70) {
-            // Known subscriptions with irregular intervals - assume Monthly
             frequency = 'Monthly';
             confidence = 'Medium';
           }
-        }
 
-        // Override confidence if price is verified
-        if (isVerifiedPrice) {
+          // Strict rule: If "Monthly" but NO single ideal gap (e.g. 2 months apart only), reduce confidence
+          if (frequency === 'Monthly' && !hasIdealMonthly) {
+            confidence = 'Medium';
+          }
+        }
+      }
+
+      // Reject shopping combinations
+      if (isShoppingPattern && !shouldConsolidate) return;
+
+      // Price verification override
+      const averageAmount = clusterTx.map(t => t.amount).reduce((a, b) => a + b, 0) / clusterTx.length;
+      const priceCheck = validateHighRiskPrice(name, averageAmount);
+      if (priceCheck === 'MATCH') confidence = 'High';
+
+      // Promotion logic: 3+ consistent charges = Verified
+      if (clusterTx.length >= 3 && confidence !== 'High') {
+        // if frequency is detected (not Irregular), it's a strong recurring pattern
+        if (frequency !== 'Irregular') {
           confidence = 'High';
         }
       }
 
+      if (priceCheck === 'REJECT') return;
+
+      // Final Candidate logic
       if (frequency !== 'Irregular') {
         candidates.push({
           name,
           averageAmount,
           frequency,
           confidence,
+          transactions: clusterTx, // Store source transactions
         });
       }
     });

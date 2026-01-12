@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, XCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, XCircle, History, List } from 'lucide-react';
 import { cn } from '../utils/cn';
 import type { EnrichedSubscription } from '../utils/matcher';
 
@@ -16,6 +16,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   onDismiss,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Safety check for displayName
   const displayName = subscription.displayName || subscription.name || 'Unknown Subscription';
@@ -44,6 +45,21 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
       className="glass-card rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:shadow-2xl hover:border-indigo-500/30"
     >
+      {/* Transaction History Toggle (Top Left on Hover) */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowHistory(!showHistory);
+        }}
+        className={cn(
+          "absolute top-3 left-3 p-1.5 rounded-lg transition-all z-30",
+          showHistory ? "bg-indigo-500 text-white" : "bg-slate-800 text-slate-400 opacity-0 group-hover:opacity-100 hover:text-white"
+        )}
+        title="View transaction history"
+      >
+        <History className="w-4 h-4" />
+      </button>
+
       {/* Dismiss Button (Visible on Hover) */}
       {onDismiss && (
         <button
@@ -82,6 +98,11 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
           ) : (
             <span className="text-xl font-bold text-white drop-shadow-md">{firstChar}</span>
           )}
+
+          {/* Transaction Count Badge */}
+          <div className="absolute -bottom-1 -right-1 bg-slate-800 text-slate-100 text-[10px] font-bold px-1.5 py-0.5 rounded-md border border-white/10 shadow-lg z-10">
+            {subscription.transactions.length}
+          </div>
         </div>
 
         {/* Content */}
@@ -140,6 +161,50 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
           )}
         </a>
       </motion.div>
+
+      {/* Transaction History Overlay */}
+      <AnimatePresence>
+        {showHistory && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute top-0 left-0 right-0 min-h-full z-40 bg-slate-900 border border-indigo-500/30 shadow-2xl rounded-2xl p-6 overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-sm font-bold text-slate-100 uppercase tracking-widest flex items-center">
+                <List className="w-4 h-4 mr-2 text-indigo-400" />
+                History
+              </h4>
+              <button
+                onClick={() => setShowHistory(false)}
+                className="text-slate-500 hover:text-white"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {subscription.transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((t, i) => (
+                <div key={i} className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                  <div className="text-slate-400 font-mono">
+                    {new Date(t.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </div>
+                  <div className="text-slate-100 font-bold">
+                    ${t.amount.toFixed(2)}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {subscription.transactions.length === 1 && (
+              <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-[10px] text-yellow-300">
+                ⚠️ Only one transaction found. This may not be a recurring subscription.
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

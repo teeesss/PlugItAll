@@ -244,4 +244,14 @@ When a false positive appears:
 ### 📊 Test Status
 
 - **47 Tests Passing** across 8 test files
-- All tests remain green after lint fixes
+- **47+ Tests Passing** including expanded parser unit tests.
+
+### 🆕 Fixed in v1.1.0-i (2026-01-12)
+- **Extreme Robustness Refactor**: `parseDate` and `parseAmount` rewritten to handle European formats (`DD/MM`, `1.234,56`), CR/DR markers, and varied thousand separators.
+- **Future Date Bug**: Fixed "Dec 2026" appearing in Jan 2026. `parseDate` now intelligently rolls back the year for MM/DD formats if the result is in the far future.
+- **Verification Promotion**: Subscriptions with 3+ consistent charges are now automatically promoted to "Verified" (High confidence).
+- **Amazon & Walmart Regression**: Fixed sticky blacklist that was blocking Walmart+ and Amazon Prime. These are now handled by the high-risk pricing validation engine.
+- **UI Enhancement**: Added "Transaction Count" badge to subscription cards so users can see charge history depth at a glance.
+- **CSV Robustness**: Implemented automatic header detection and fallback guessing (finds headers even with leading junk rows).
+- **Expanded Restaurant Blacklist**: Added comprehensive list of fast-food and restaurant keywords (including 'Little Caesars', 'Burger King', 'Pizza Hut', etc.) with fuzzy matching support for spaced/non-spaced variations (e.g., 'TACO BELL' vs 'TACOBELL').
+- **Delivery Subs Supported**: Explicitly excluded DoorDash, Uber Eats, and Grubhub from the blacklist (and added to `subs.json`) to support detection of their membership plans (DashPass, etc.).

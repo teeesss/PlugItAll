@@ -211,12 +211,12 @@ function App() {
               </div>
 
               {/* Right: subscriptions Grid */}
-              <div className="lg:col-span-3">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-slate-100">
+              <div className="lg:col-span-3 space-y-12">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-slate-100 flex items-center">
                     Active Subscriptions
-                    <span className="ml-3 bg-indigo-500/20 text-indigo-300 text-xs px-2 py-1 rounded-full border border-indigo-500/30">
-                      {visibleCandidates.length} Detected
+                    <span className="ml-3 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30">
+                      {visibleCandidates.filter(s => s.confidence === 'High').length} Verified
                     </span>
                   </h2>
                   <button
@@ -227,6 +227,60 @@ function App() {
                     <span>Download Report</span>
                   </button>
                 </div>
+
+                {/* VERIFIED SECTION */}
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <AnimatePresence>
+                    {visibleCandidates
+                      .filter(s => s.confidence === 'High')
+                      .map((sub, i) => (
+                        <SubscriptionCard
+                          key={`${sub.name}-${i}`}
+                          subscription={sub}
+                          index={i}
+                          onDismiss={handleDismiss}
+                        />
+                      ))}
+                  </AnimatePresence>
+                </div>
+
+                {/* REVIEW SECTION */}
+                {visibleCandidates.some(s => s.confidence !== 'High') && (
+                  <div className="space-y-6 pt-8 border-t border-white/5">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1">
+                        <h3 className="text-lg font-medium text-slate-300">Items for Review</h3>
+                        <p className="text-sm text-slate-500">
+                          These items appeared only once or have uncertain frequencies.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          visibleCandidates
+                            .filter(s => s.confidence !== 'High')
+                            .forEach(s => handleDismiss(s.name));
+                        }}
+                        className="text-xs font-medium text-slate-400 hover:text-red-400 transition-colors uppercase tracking-wider"
+                      >
+                        Ignore All
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 opacity-80">
+                      <AnimatePresence>
+                        {visibleCandidates
+                          .filter(s => s.confidence !== 'High')
+                          .map((sub, i) => (
+                            <SubscriptionCard
+                              key={`${sub.name}-${i}-review`}
+                              subscription={sub}
+                              index={i}
+                              onDismiss={handleDismiss}
+                            />
+                          ))}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                )}
 
                 {visibleCandidates.length === 0 && candidates.length > 0 && (
                   <div className="text-center py-12 border border-dashed border-slate-700 rounded-xl">
@@ -239,23 +293,18 @@ function App() {
                     </button>
                   </div>
                 )}
-
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  <AnimatePresence>
-                    {visibleCandidates.map((sub, i) => (
-                      <SubscriptionCard
-                        key={`${sub.name}-${i}`}
-                        subscription={sub}
-                        index={i}
-                        onDismiss={handleDismiss}
-                      />
-                    ))}
-                  </AnimatePresence>
-                </div>
               </div>
             </div>
           </motion.div>
         )}
+
+        {/* Footer / Version Marker */}
+        <div className="mt-20 text-center space-y-4">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/5 text-xs text-slate-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2 animate-pulse" />
+            System Secure & Encrypted • v1.1.0-h
+          </div>
+        </div>
       </main>
     </div>
   );

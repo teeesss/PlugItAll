@@ -9,6 +9,7 @@ describe('Subscription Matcher Services', () => {
       averageAmount: 15.99,
       frequency: 'Monthly',
       confidence: 'High',
+      transactions: [],
     };
 
     const result = enrichSubscription(candidate);
@@ -23,6 +24,7 @@ describe('Subscription Matcher Services', () => {
       averageAmount: 50,
       frequency: 'Monthly',
       confidence: 'High',
+      transactions: [],
     };
 
     const result = enrichSubscription(candidate);
@@ -37,6 +39,7 @@ describe('Subscription Matcher Services', () => {
       averageAmount: 10.99,
       frequency: 'Monthly',
       confidence: 'High',
+      transactions: [],
     };
 
     const result = enrichSubscription(candidate);

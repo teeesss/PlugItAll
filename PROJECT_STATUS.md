@@ -22,7 +22,10 @@ The subscription detection engine is stable and the codebase has pre-commit hook
 
 ## 🟡 In Progress
 
-- **Improved Logo Handling**: Added deterministic color gradients for unknown merchants
+- [x] Refined `parseDate` and `parseAmount` for extreme robustness (European formats, CR/DR markers, space/apostrophe thousand separators).
+- [x] Fixed `tests/user_complaints.test.ts` regarding Amazon Prime and Walmart+.
+- [x] Expanded unit tests in `parser.test.ts`.
+- [ ] Improved logo handling (some logos missing/broken).
 - **CI/CD Pipeline**: Added GitHub Actions workflow for automated testing
 - **High Risk Merchants**: Added support/validation for Target, Costco, Sams Club, Lyft
 - Refining instruction quality for physical gym cancellations.

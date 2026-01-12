@@ -28,7 +28,7 @@ async function deploy() {
       secure: creds.secure,
     });
 
-    const remotePath = creds.remotePath || '/public_html/unsub';
+    const remotePath = creds.remotePath || '/public_html/plugit';
     const localPath = path.join(__dirname, '../dist');
 
     if (!fs.existsSync(localPath)) {
@@ -39,11 +39,36 @@ async function deploy() {
     console.log(`📂 Ensuring remote directory exists: ${remotePath}`);
     await client.ensureDir(remotePath);
 
-    console.log('🧹 Clearing remote directory...');
-    await client.clearWorkingDir();
+    // Get list of existing logos to skip them
+    const remoteLogosPath = path.posix.join(remotePath, 'logos');
+    const existingLogos = new Set();
+    try {
+      const list = await client.list(remoteLogosPath);
+      list.forEach(item => existingLogos.add(item.name));
+      console.log(`🔍 Found ${existingLogos.size} existing logos on server.`);
+    } catch (e) {
+      console.log('ℹ️ Logos directory empty or not found.');
+    }
 
-    console.log(`🚀 Uploading '${localPath}' to current directory...`);
-    await client.uploadFromDir(localPath);
+    console.log(`🚀 Starting Incremental Sync to ${remotePath}...`);
+    await client.uploadFromDir(localPath, remotePath, (file) => {
+      const relativePath = path.relative(localPath, file).replace(/\\/g, '/');
+
+      // ALWAYS upload core files (index.html) and hashed assets
+      if (relativePath === 'index.html' || relativePath.startsWith('assets/')) {
+        return true;
+      }
+
+      // SKIP logos that already exist
+      if (relativePath.startsWith('logos/')) {
+        const fileName = path.basename(file);
+        if (existingLogos.has(fileName)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     console.log('✅ Deployment complete!');
   } catch (err) {

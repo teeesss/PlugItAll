@@ -1,29 +1,35 @@
-import { describe, it, expect } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { normalizeDescription } from '../src/utils/normalizer';
 
-describe('Normalization Engine', () => {
-  it('should normalize standard merchant names', () => {
-    expect(normalizeDescription('NETFLIX.COM')).toBe('NETFLIX');
-    expect(normalizeDescription('SPOTIFY USA')).toBe('SPOTIFY');
+describe('Description Normalizer', () => {
+  test('strips category prefixes', () => {
+    expect(normalizeDescription('ENTERTAINMENT - NETFLIX')).toBe('NETFLIX');
+    expect(normalizeDescription('UTILITIES: GOOGLE STORAGE')).toBe('GOOGLE STORAGE');
   });
 
-  it('should remove "POS DEBIT" and "ACH" noise', () => {
-    expect(normalizeDescription('POS DEBIT STARBUCKS')).toBe('STARBUCKS');
-    expect(normalizeDescription('ACH WITHDRAWAL GYM')).toBe('GYM');
+  test('strips phone numbers', () => {
+    expect(normalizeDescription('NETFLIX 866-555-0199 CA')).toBe('NETFLIX');
+    expect(normalizeDescription('SIRIUSXM 8005550199')).toBe('SIRIUSXM');
   });
 
-  it('should remove dates and random numbers', () => {
-    expect(normalizeDescription('UBER *12903 OCT24')).toBe('UBER');
-    expect(normalizeDescription('AMZN MKTP US *29382')).toBe('AMAZON');
+  test('handles pending transaction markers', () => {
+    expect(normalizeDescription('PENDING: NETFLIX')).toBe('NETFLIX');
+    expect(normalizeDescription('*NETFLIX.COM')).toBe('NETFLIX');
   });
 
-  it('should handle special case overrides', () => {
-    // e.g. "NFLX" -> "NETFLIX" if we had that rule,
-    // currently standard rules just uppercase and clean.
-    expect(normalizeDescription('netflix.com')).toBe('NETFLIX');
+  test('strips city/state suffixes', () => {
+    expect(normalizeDescription('NETFLIX.COM LOS GATOS CA')).toBe('NETFLIX');
+    expect(normalizeDescription('SIRIUSXM NEW YORK NY')).toBe('SIRIUSXM');
+    expect(normalizeDescription('GOOGLE *STORAGE MOUNTAIN VIEW CA')).toBe('GOOGLE STORAGE');
   });
 
-  it('should return original string if already clean', () => {
-    expect(normalizeDescription('TARGET')).toBe('TARGET');
+  test('strips random transaction IDs', () => {
+    expect(normalizeDescription('NETFLIX *92837482')).toBe('NETFLIX');
+    expect(normalizeDescription('SXM#123456789')).toBe('SIRIUSXM');
+  });
+
+  test('handles merchant special cases', () => {
+    expect(normalizeDescription('AMZN PRIME MEMBER')).toBe('AMAZON PRIME');
+    expect(normalizeDescription('VISIBLESERV 4029357733')).toBe('VISIBLE');
   });
 });

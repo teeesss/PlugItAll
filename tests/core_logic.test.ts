@@ -43,12 +43,14 @@ describe('Core Logic Regression Tests', () => {
         averageAmount: 35,
         frequency: 'Monthly' as const,
         confidence: 'High' as const,
+        transactions: [],
       };
       const sub2 = {
         name: 'VISIBLE WIRELESS',
         averageAmount: 25,
         frequency: 'Monthly' as const,
         confidence: 'High' as const,
+        transactions: [],
       };
 
       const enriched = [enrichSubscription(sub1), enrichSubscription(sub2)];
