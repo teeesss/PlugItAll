@@ -100,7 +100,38 @@ python -m pre_commit run --all-files
 
 ---
 
-## 8. GitHub Repository
+## 8. Subscription Database
+
+### Data Files (`src/data/`)
+- **`subs.json`** (292 entries) — Primary subscription database for detection/matching
+- **`subscription_pricing.json`** (193 entries) — Pricing validation and risk assessment
+- **`subscriptions_master.json`** — Source master database (~500+ services)
+- **`subscriptions_master_sup_url.json`** — Fallback URL updates
+
+### Field Schema (`subs.json`)
+| Field | Description |
+|-------|-------------|
+| `id` | Unique identifier (lowercase, underscores) |
+| `name` | Display name |
+| `regex_keywords` | Array of patterns to match descriptions |
+| `logo` | Clearbit URL or local path |
+| `cancel_url` | Primary cancellation URL |
+| `fallback_url` | Backup URL if primary fails |
+| `instructions` | Human-readable cancellation steps |
+
+### Migration Script
+Run `node scripts/migrate_master_data.cjs` to:
+1. Merge new subscriptions from master files into `subs.json`
+2. Extract pricing data to `subscription_pricing.json`
+3. Apply fallback URLs
+
+### Logo URLs
+- Use Clearbit for logos: `https://logo.clearbit.com/{domain}`
+- Example: `https://logo.clearbit.com/netflix.com`
+
+---
+
+## 9. GitHub Repository
 
 - **Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
 - **Credentials**: `.gitcreds` is in `.gitignore` — never commit secrets
@@ -108,7 +139,7 @@ python -m pre_commit run --all-files
 
 ---
 
-## 9. Uploading to Web Server
+## 10. Uploading to Web Server
 
 - **MANDATORY**: After every successful local logic/UI verification, you **MUST** deploy to the live server.
 - **PROCESS**:
