@@ -33,6 +33,39 @@
 
 ---
 
+### 🔧 CI Fixes (2026-01-13)
+
+#### [Issue #19] False Positive: "STAN" Matching "STANDARD"
+**Symptom**: "Interest Charged" descriptions were not being filtered by blacklist.
+
+**Root Cause**: The "Stan" streaming service had regex keywords `["Stan", "STAN"]` which matched "STANDARD" in "INTEREST CHARGED TO STANDARD PURCH" via simple substring matching.
+
+**Fix**: Added word boundary regex matching in `matcher.ts` for short keywords (≤5 chars):
+```typescript
+if (keyword.length <= 5) {
+  const wordBoundaryRegex = new RegExp(`\\b${keyword}\\b`, 'i');
+  return wordBoundaryRegex.test(normalized);
+}
+```
+
+**Lesson Learned**: Short keywords should use word boundaries to prevent false substring matches.
+
+---
+
+#### [Issue #20] DOMMatrix Not Defined in Node.js CI
+**Symptom**: CI failing on Node 18.x with "ReferenceError: DOMMatrix is not defined".
+
+**Root Cause**: `pdfjs-dist` requires DOM APIs (`DOMMatrix`, `Path2D`) not available in Node.js.
+
+**Fix**: Created `tests/setup.ts` with polyfills and added to `vitest.config.ts`:
+```typescript
+setupFiles: ['./tests/setup.ts']
+```
+
+**Lesson Learned**: PDF parsing libraries often need DOM polyfills for Node.js testing.
+
+---
+
 ## Session: 2026-01-11/12 (Major Debugging)
 
 ### 🔴 Critical Issues Resolved
