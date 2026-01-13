@@ -301,9 +301,9 @@ When a false positive appears:
 ### 🆕 Product Rename: **Plug It All**
 
 - **Tagline**: "Find the leaks in your bank account"
-- **GitHub Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+- **GitHub Repo**: [https://github.com/teeesss/PlugItAll](https://github.com/teeesss/PlugItAll)
 - **Header Updated**: `App.tsx` now shows "Plug It All" with processing indicator
-- **Page Title Updated**: `index.html` → "Plug It All - Find financial leaks"
+- **Page Title Updated**: `index.html` → "Plug It All - Find the leaks in your bank account"
 
 ---
 

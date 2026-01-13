@@ -4,7 +4,7 @@
 
 **Plug It All** — Find the leaks in your bank account
 
-GitHub: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+GitHub: [https://github.com/teeesss/PlugItAll](https://github.com/teeesss/PlugItAll)
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ GitHub: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
 ## Setup
 
 ```bash
-git clone https://github.com/teeesss/plug-it.git
-cd plug-it
+git clone https://github.com/teeesss/PlugItAll.git
+cd PlugItAll
 npm install
 python -m pip install pre-commit
 python -m pre_commit install

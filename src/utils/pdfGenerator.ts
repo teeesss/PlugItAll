@@ -117,5 +117,5 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
         doc.text('Plug It All - Privacy-First Subscription Manager', 105, 290, { align: 'center' });
     }
 
-    doc.save('plug-it-report.pdf');
+    doc.save('plug-it-all-report.pdf');
 };

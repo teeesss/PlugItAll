@@ -133,9 +133,9 @@ Run `node scripts/migrate_master_data.cjs` to:
 
 ## 9. GitHub Repository
 
-- **Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+- **Repo**: [https://github.com/teeesss/PlugItAll](https://github.com/teeesss/PlugItAll)
 - **Credentials**: `.gitcreds` is in `.gitignore` — never commit secrets
-- **Product Name**: Plug It — "Find the leaks in your bank account"
+- **Product Name**: Plug It All — "Find the leaks in your bank account"
 
 ---
 

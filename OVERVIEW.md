@@ -35,7 +35,7 @@ Tagline: _"Find the leaks in your bank account"_
 ### FTP Deployment
 - **Method**: Direct FTP upload via `scripts/deploy.js`.
 - **Credentials**: Stored in `deploy_creds.json` (gitignored) or `.credentials` (legacy).
-- **Target**: `bimmerinfo.com` (user: `nughaud`) -> `/bmwseals.com/plugit`
+- **Target**: `bimmerinfo.com` (user: `nughaud`) -> `/bmwseals.com/PlugItAll`
 - **Security Check**: Deployment script verifies SSL/TLS settings (currently insecure/plain FTP allowed for this host).
 - **Process**:
   1. Run `npm run build` locally.

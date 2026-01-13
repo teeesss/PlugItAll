@@ -2,7 +2,7 @@
 
 A privacy-first, client-side subscription detection tool that analyzes bank statements (PDF/CSV) to identify recurring charges.
 
-**GitHub**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+**GitHub**: [https://github.com/teeesss/PlugItAll](https://github.com/teeesss/PlugItAll)
 
 ## Features
 

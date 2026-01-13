@@ -17,7 +17,7 @@
 - [x] Update test suite to 47 passing tests.
 - [x] Set up pre-commit hooks (Prettier, ESLint, Gitleaks, Checkov).
 - [x] Rename product to "Plug It All" and update UI.
-- [x] Push codebase to GitHub ([teeesss/plug-it](https://github.com/teeesss/plug-it)).
+- [x] Push codebase to GitHub ([teeesss/PlugItAll](https://github.com/teeesss/PlugItAll)).
 - [x] Fix all lint errors (@ts-ignore, unused imports, regex escapes).
 - [x] **TASK-001**: Implement robust `parseDate` (ISO, European, abbreviated formats)
 - [x] **TASK-002**: Implement robust `parseAmount` (parentheticals, trailing signs)

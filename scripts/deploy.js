@@ -28,7 +28,7 @@ async function deploy() {
       secure: creds.secure,
     });
 
-    const remotePath = creds.remotePath || '/public_html/plugit';
+    const remotePath = creds.remotePath || '/public_html/PlugItAll';
     const localPath = path.join(__dirname, '../dist');
 
     if (!fs.existsSync(localPath)) {
