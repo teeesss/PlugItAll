@@ -18,10 +18,22 @@
     "confidence": "High"
   },
   {
+    "name": "PAYPAL WWWBRUMATEC WW CO NULL",
+    "amount": 82,
+    "frequency": "Yearly",
+    "confidence": "Low"
+  },
+  {
     "name": "PY LIVEOAK",
     "amount": 109,
     "frequency": "Monthly",
     "confidence": "High"
+  },
+  {
+    "name": "REVOLUT ME/JOZEFBRXX LIPTOVSKY HRA SVK",
+    "amount": 43,
+    "frequency": "Monthly",
+    "confidence": "Low"
   },
   {
     "name": "SIRIUSXM",
@@ -46,6 +58,18 @@
     "amount": 35,
     "frequency": "Monthly",
     "confidence": "High"
+  },
+  {
+    "name": "WWMC PA",
+    "amount": 39,
+    "frequency": "Monthly",
+    "confidence": "Low"
+  },
+  {
+    "name": "WWW G2G COM SINGAPORE SGP",
+    "amount": 2,
+    "frequency": "Monthly",
+    "confidence": "Low"
   },
   {
     "name": "YOUTUBE TV",

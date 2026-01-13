@@ -4,7 +4,7 @@ For a detailed technical breakdown, see [project_overview.md](./project_overview
 
 ## Core Purpose
 
-**Plug It** is a client-side tool to find and cancel subscriptions without sharing your financial data with any server.
+**Plug It All** is a client-side tool to find and cancel subscriptions without sharing your financial data with any server.
 
 Tagline: _"Find the leaks in your bank account"_
 

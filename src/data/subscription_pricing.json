@@ -46,7 +46,7 @@
         "label": "Prime Standard"
       },
       {
-        "amount": 139.0,
+        "amount": 139,
         "interval": "yearly",
         "label": "Prime Annual"
       },
@@ -80,7 +80,7 @@
         "label": "Standard Monthly"
       },
       {
-        "amount": 98.0,
+        "amount": 98,
         "interval": "yearly",
         "label": "Standard Annual"
       }
@@ -104,7 +104,7 @@
         "label": "Uber One Monthly"
       },
       {
-        "amount": 96.0,
+        "amount": 96,
         "interval": "yearly",
         "label": "Uber One Annual"
       }
@@ -127,7 +127,7 @@
         "label": "DashPass Monthly"
       },
       {
-        "amount": 96.0,
+        "amount": 96,
         "interval": "yearly",
         "label": "DashPass Annual"
       },
@@ -155,7 +155,7 @@
         "label": "Monthly Plan"
       },
       {
-        "amount": 99.0,
+        "amount": 99,
         "interval": "yearly",
         "label": "Annual Plan"
       }
@@ -399,7 +399,7 @@
     "variance_allowed": true,
     "plans": [
       {
-        "amount": 10.0,
+        "amount": 10,
         "interval": "monthly",
         "label": "Classic"
       },
@@ -409,7 +409,7 @@
         "label": "Black Card"
       },
       {
-        "amount": 49.0,
+        "amount": 49,
         "interval": "yearly",
         "label": "Annual Fee"
       }
@@ -427,12 +427,12 @@
     "variance_allowed": false,
     "plans": [
       {
-        "amount": 99.0,
+        "amount": 99,
         "interval": "yearly",
         "label": "Annual Plan"
       },
       {
-        "amount": 49.0,
+        "amount": 49,
         "interval": "yearly",
         "label": "Promo Annual"
       }
@@ -450,12 +450,12 @@
     "variance_allowed": false,
     "plans": [
       {
-        "amount": 60.0,
+        "amount": 60,
         "interval": "yearly",
         "label": "Gold Star"
       },
       {
-        "amount": 120.0,
+        "amount": 120,
         "interval": "yearly",
         "label": "Executive"
       }
@@ -473,12 +473,12 @@
     "variance_allowed": false,
     "plans": [
       {
-        "amount": 50.0,
+        "amount": 50,
         "interval": "yearly",
         "label": "Club"
       },
       {
-        "amount": 110.0,
+        "amount": 110,
         "interval": "yearly",
         "label": "Plus"
       }
@@ -501,9 +501,4606 @@
         "label": "Lyft Pink Monthly"
       },
       {
-        "amount": 99.0,
+        "amount": 99,
         "interval": "yearly",
         "label": "Lyft Pink Annual"
+      }
+    ]
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "merchant_keywords": [
+      "Netflix",
+      "NETFLIX",
+      "NETFLIX.COM",
+      "NETFLIX INTL BV",
+      "NETFLIX GMBH"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6.99,
+        "interval": "monthly",
+        "label": "Standard with Ads"
+      },
+      {
+        "amount": 15.49,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 22.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "spotify",
+    "name": "Spotify",
+    "merchant_keywords": [
+      "Spotify",
+      "SPOTIFY",
+      "SPOTIFY USA",
+      "SPOTIFY AB",
+      "SPOTIFY AB STOCKHOLM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Duo"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      },
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Student"
+      }
+    ]
+  },
+  {
+    "id": "amazon_prime_video",
+    "name": "Amazon Prime Video",
+    "merchant_keywords": [
+      "Amazon Prime Video",
+      "AMAZON.COM*PRIME VIDEO",
+      "AMAZON PRIME VIDEO",
+      "AMZ*PRIME VIDEO",
+      "AMZN Prime Video"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 8.99,
+        "interval": "monthly",
+        "label": "Standalone"
+      }
+    ]
+  },
+  {
+    "id": "disney_plus",
+    "name": "Disney+",
+    "merchant_keywords": [
+      "Disney+",
+      "DisneyPlus",
+      "DISNEY+",
+      "DISNEY PLUS",
+      "DISNEYPLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Basic with Ads"
+      },
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 139.99,
+        "interval": "yearly",
+        "label": "Premium Annual"
+      }
+    ]
+  },
+  {
+    "id": "disney_hotstar",
+    "name": "Disney+ Hotstar",
+    "merchant_keywords": [
+      "Disney+ Hotstar",
+      "DISNEY+ HOTSTAR",
+      "HOTSTAR PREMIUM",
+      "HOTSTAR",
+      "VVIUU DISNEY+ HOTSTAR"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 149,
+        "interval": "monthly",
+        "label": "Mobile"
+      },
+      {
+        "amount": 299,
+        "interval": "monthly",
+        "label": "Super"
+      },
+      {
+        "amount": 499,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "hulu",
+    "name": "Hulu",
+    "merchant_keywords": [
+      "Hulu",
+      "HULU",
+      "HULU LLC",
+      "HULU 877-824-4858",
+      "HULU SUBSCRIPTION"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "With Ads"
+      },
+      {
+        "amount": 17.99,
+        "interval": "monthly",
+        "label": "No Ads"
+      },
+      {
+        "amount": 76.99,
+        "interval": "monthly",
+        "label": "Live TV"
+      },
+      {
+        "amount": 89.99,
+        "interval": "monthly",
+        "label": "Live TV No Ads"
+      }
+    ]
+  },
+  {
+    "id": "hbo_max",
+    "name": "Max (HBO)",
+    "merchant_keywords": [
+      "Max",
+      "HBO Max",
+      "MAX (HBO)",
+      "HBO MAX",
+      "HBOMAX"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "With Ads"
+      },
+      {
+        "amount": 15.99,
+        "interval": "monthly",
+        "label": "Ad-Free"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Ultimate"
+      }
+    ]
+  },
+  {
+    "id": "apple_tv_plus",
+    "name": "Apple TV+",
+    "merchant_keywords": [
+      "Apple TV+",
+      "AppleTV+",
+      "APPLE TV+",
+      "APPLE.COM/BILL APPLE TV",
+      "APL*APPLE TV+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "apple_music",
+    "name": "Apple Music",
+    "merchant_keywords": [
+      "Apple Music",
+      "AppleMusic",
+      "APPLE MUSIC",
+      "APPLE MUSIC SUBSCRIPTION",
+      "APL*APPLE MUSIC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Voice"
+      },
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Student"
+      },
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "apple_arcade",
+    "name": "Apple Arcade",
+    "merchant_keywords": [
+      "Apple Arcade",
+      "APPLE ARCADE",
+      "APL*APPLE ARCADE",
+      "APPLE.COM/BILL ARCADE",
+      "Apple Arcade Subscription"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 49.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "icloud",
+    "name": "iCloud+",
+    "merchant_keywords": [
+      "iCloud+",
+      "iCloud",
+      "ICLOUD",
+      "ICLOUD STORAGE",
+      "ICLOUD+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0.99,
+        "interval": "monthly",
+        "label": "50 GB"
+      },
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "200 GB"
+      },
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "2 TB"
+      },
+      {
+        "amount": 32.99,
+        "interval": "monthly",
+        "label": "6 TB"
+      },
+      {
+        "amount": 64.99,
+        "interval": "monthly",
+        "label": "12 TB"
+      }
+    ]
+  },
+  {
+    "id": "youtube_music",
+    "name": "YouTube Music",
+    "merchant_keywords": [
+      "YouTube Music",
+      "YOUTUBE MUSIC",
+      "YT MUSIC",
+      "GOOGLE*YOUTUBE MUSIC",
+      "YouTube Music Premium"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      },
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Student"
+      }
+    ]
+  },
+  {
+    "id": "google_one",
+    "name": "Google One",
+    "merchant_keywords": [
+      "Google One",
+      "GoogleOne",
+      "GOOGLE ONE",
+      "GOOGLE*CLOUD STORAGE",
+      "GOOGLE*GOOGLE ONE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 1.99,
+        "interval": "monthly",
+        "label": "100 GB"
+      },
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "200 GB"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "2 TB"
+      }
+    ]
+  },
+  {
+    "id": "google_workspace",
+    "name": "Google Workspace",
+    "merchant_keywords": [
+      "Google Workspace",
+      "G Suite",
+      "GOOGLE WORKSPACE",
+      "GOOGLE*WORKSPACE",
+      "GSUITE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6,
+        "interval": "monthly",
+        "label": "Business Starter"
+      },
+      {
+        "amount": 12,
+        "interval": "monthly",
+        "label": "Business Standard"
+      },
+      {
+        "amount": 18,
+        "interval": "monthly",
+        "label": "Business Plus"
+      }
+    ]
+  },
+  {
+    "id": "paramount_plus",
+    "name": "Paramount+",
+    "merchant_keywords": [
+      "Paramount+",
+      "ParamountPlus",
+      "PARAMOUNT+",
+      "PARAMOUNT PLUS",
+      "PARAMOUNTPLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Essential"
+      },
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "With Showtime"
+      }
+    ]
+  },
+  {
+    "id": "peacock",
+    "name": "Peacock",
+    "merchant_keywords": [
+      "Peacock",
+      "PEACOCK",
+      "PEACOCK TV",
+      "PEACOCK PREMIUM",
+      "PEACOCKTV.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Premium Plus"
+      }
+    ]
+  },
+  {
+    "id": "espn_plus",
+    "name": "ESPN+",
+    "merchant_keywords": [
+      "ESPN+",
+      "ESPNPlus",
+      "ESPN PLUS",
+      "ESPN+ BUNDLE",
+      "ESPN+ SUBSCRIPTION"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 109.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "sling_tv",
+    "name": "Sling TV",
+    "merchant_keywords": [
+      "Sling TV",
+      "SlingTV",
+      "SLING TV",
+      "SLING TELEVISION",
+      "SLING.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 40,
+        "interval": "monthly",
+        "label": "Orange"
+      },
+      {
+        "amount": 40,
+        "interval": "monthly",
+        "label": "Blue"
+      },
+      {
+        "amount": 55,
+        "interval": "monthly",
+        "label": "Orange + Blue"
+      }
+    ]
+  },
+  {
+    "id": "fubo_tv",
+    "name": "fuboTV",
+    "merchant_keywords": [
+      "fuboTV",
+      "FuboTV",
+      "FUBO TV",
+      "FUBOTV",
+      "FUBO.TV"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 74.99,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 84.99,
+        "interval": "monthly",
+        "label": "Elite"
+      },
+      {
+        "amount": 94.99,
+        "interval": "monthly",
+        "label": "Premier"
+      }
+    ]
+  },
+  {
+    "id": "philo",
+    "name": "Philo",
+    "merchant_keywords": [
+      "Philo",
+      "PHILO",
+      "PHILO TV",
+      "PHILO.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "64 Channels"
+      }
+    ]
+  },
+  {
+    "id": "discovery_plus",
+    "name": "Discovery+",
+    "merchant_keywords": [
+      "Discovery+",
+      "DiscoveryPlus",
+      "DISCOVERY+",
+      "DISCOVERY PLUS",
+      "DISCOVERYPLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "With Ads"
+      },
+      {
+        "amount": 8.99,
+        "interval": "monthly",
+        "label": "Ad-Free"
+      }
+    ]
+  },
+  {
+    "id": "amc_plus",
+    "name": "AMC+",
+    "merchant_keywords": [
+      "AMC+",
+      "AMCPlus",
+      "AMC PLUS",
+      "AMC+ STREAMING",
+      "AMCPLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 8.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 83.88,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "showtime",
+    "name": "Showtime",
+    "merchant_keywords": [
+      "Showtime",
+      "SHOWTIME",
+      "SHO",
+      "SHOWTIME ANYTIME",
+      "SHOWTIME STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "starz",
+    "name": "Starz",
+    "merchant_keywords": [
+      "Starz",
+      "STARZ",
+      "STARZ ENTERTAINMENT",
+      "STARZ APP",
+      "STARZ STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "mgm_plus",
+    "name": "MGM+",
+    "merchant_keywords": [
+      "MGM+",
+      "MGMPlus",
+      "MGM PLUS",
+      "EPIX",
+      "MGM+ STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "bet_plus",
+    "name": "BET+",
+    "merchant_keywords": [
+      "BET+",
+      "BETPlus",
+      "BET PLUS",
+      "BET+ STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "crunchyroll",
+    "name": "Crunchyroll",
+    "merchant_keywords": [
+      "Crunchyroll",
+      "CRUNCHYROLL",
+      "CRUNCHYROLL PREMIUM",
+      "CR PREMIUM",
+      "CRUNCHYROLL.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Fan"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Mega Fan"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Ultimate Fan"
+      }
+    ]
+  },
+  {
+    "id": "funimation",
+    "name": "Funimation",
+    "merchant_keywords": [
+      "Funimation",
+      "FUNIMATION",
+      "FUNIMATION NOW",
+      "FUNIMATION.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Premium Plus"
+      }
+    ]
+  },
+  {
+    "id": "curiosity_stream",
+    "name": "CuriosityStream",
+    "merchant_keywords": [
+      "CuriosityStream",
+      "CURIOSITYSTREAM",
+      "CURIOSITY STREAM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Smart Bundle"
+      }
+    ]
+  },
+  {
+    "id": "mubi",
+    "name": "MUBI",
+    "merchant_keywords": [
+      "MUBI",
+      "Mubi",
+      "MUBI.COM",
+      "MUBI STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 107.88,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "criterion_channel",
+    "name": "Criterion Channel",
+    "merchant_keywords": [
+      "Criterion Channel",
+      "CRITERION CHANNEL",
+      "THE CRITERION CHANNEL",
+      "CRITERIONCHANNEL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 99.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "shudder",
+    "name": "Shudder",
+    "merchant_keywords": [
+      "Shudder",
+      "SHUDDER",
+      "SHUDDER.COM",
+      "AMC SHUDDER"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 56.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "britbox",
+    "name": "BritBox",
+    "merchant_keywords": [
+      "BritBox",
+      "BRITBOX",
+      "BRITBOX UK",
+      "BRITBOX US"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 79.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "acorn_tv",
+    "name": "Acorn TV",
+    "merchant_keywords": [
+      "Acorn TV",
+      "AcornTV",
+      "ACORN TV",
+      "ACORNTV"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 69.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "tidal",
+    "name": "TIDAL",
+    "merchant_keywords": [
+      "TIDAL",
+      "Tidal",
+      "TIDAL MUSIC",
+      "TIDAL HIFI"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "HiFi"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "HiFi Plus"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "pandora",
+    "name": "Pandora",
+    "merchant_keywords": [
+      "Pandora",
+      "PANDORA",
+      "PANDORA MUSIC",
+      "PANDORA PREMIUM",
+      "PANDORA PLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "deezer",
+    "name": "Deezer",
+    "merchant_keywords": [
+      "Deezer",
+      "DEEZER",
+      "DEEZER MUSIC",
+      "DEEZER PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 17.99,
+        "interval": "monthly",
+        "label": "Family"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "HiFi"
+      }
+    ]
+  },
+  {
+    "id": "amazon_music",
+    "name": "Amazon Music Unlimited",
+    "merchant_keywords": [
+      "Amazon Music",
+      "AMAZON MUSIC",
+      "AMAZON MUSIC UNLIMITED",
+      "AMZN MUSIC",
+      "AMZ MUSIC UNLIMITED"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Prime Member"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "soundcloud",
+    "name": "SoundCloud Go+",
+    "merchant_keywords": [
+      "SoundCloud Go+",
+      "SoundCloud",
+      "SOUNDCLOUD",
+      "SOUNDCLOUD GO+",
+      "SOUNDCLOUD GO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Go"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Go+"
+      }
+    ]
+  },
+  {
+    "id": "audible",
+    "name": "Audible",
+    "merchant_keywords": [
+      "Audible",
+      "AUDIBLE",
+      "AUDIBLE*",
+      "AUDIBLE*A1B2C3D4E5",
+      "AUDIBLE 888-283-5051"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.95,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 14.95,
+        "interval": "monthly",
+        "label": "Premium Plus 1 Credit"
+      },
+      {
+        "amount": 22.95,
+        "interval": "monthly",
+        "label": "Premium Plus 2 Credits"
+      }
+    ]
+  },
+  {
+    "id": "scribd",
+    "name": "Scribd",
+    "merchant_keywords": [
+      "Scribd",
+      "SCRIBD",
+      "SCRIBD*MEMBERSHIP",
+      "SCRIBD INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "kindle_unlimited",
+    "name": "Kindle Unlimited",
+    "merchant_keywords": [
+      "Kindle Unlimited",
+      "KINDLE UNLIMITED",
+      "AMZN KINDLE UNLIMITED",
+      "AMAZON KINDLE UNLIMITED"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "blinkist",
+    "name": "Blinkist",
+    "merchant_keywords": [
+      "Blinkist",
+      "BLINKIST",
+      "BLINKIST INC",
+      "BLINKIST PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 99.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "microsoft_365",
+    "name": "Microsoft 365",
+    "merchant_keywords": [
+      "Microsoft 365",
+      "Microsoft365",
+      "MICROSOFT 365",
+      "MICROSOFT*365",
+      "OFFICE 365"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Personal"
+      },
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Family"
+      },
+      {
+        "amount": 6,
+        "interval": "monthly",
+        "label": "Business Basic"
+      }
+    ]
+  },
+  {
+    "id": "xbox_game_pass",
+    "name": "Xbox Game Pass",
+    "merchant_keywords": [
+      "Xbox Game Pass",
+      "XBOX GAME PASS",
+      "MICROSOFT*XBOX",
+      "MSFT*XBOX GAME PASS",
+      "XBOX GAME PASS ULTIMATE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Core"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Ultimate"
+      }
+    ]
+  },
+  {
+    "id": "nintendo_switch_online",
+    "name": "Nintendo Switch Online",
+    "merchant_keywords": [
+      "Nintendo Switch Online",
+      "NINTENDO SWITCH ONLINE",
+      "NSO",
+      "NINTENDO ONLINE",
+      "NINTENDO*SWITCH"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 3.99,
+        "interval": "monthly",
+        "label": "Individual Monthly"
+      },
+      {
+        "amount": 19.99,
+        "interval": "yearly",
+        "label": "Individual Annual"
+      },
+      {
+        "amount": 34.99,
+        "interval": "yearly",
+        "label": "Family Annual"
+      },
+      {
+        "amount": 49.99,
+        "interval": "monthly",
+        "label": "Expansion Pack"
+      }
+    ]
+  },
+  {
+    "id": "ea_play",
+    "name": "EA Play",
+    "merchant_keywords": [
+      "EA Play",
+      "EA PLAY",
+      "EA ACCESS",
+      "ELECTRONIC ARTS",
+      "EA*PLAY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 29.99,
+        "interval": "yearly",
+        "label": "Annual"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Pro Monthly"
+      }
+    ]
+  },
+  {
+    "id": "ubisoft_plus",
+    "name": "Ubisoft+",
+    "merchant_keywords": [
+      "Ubisoft+",
+      "UBISOFT+",
+      "UBISOFT PLUS",
+      "UPLAY+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 17.99,
+        "interval": "monthly",
+        "label": "PC"
+      }
+    ]
+  },
+  {
+    "id": "geforce_now",
+    "name": "GeForce NOW",
+    "merchant_keywords": [
+      "GeForce NOW",
+      "GEFORCE NOW",
+      "NVIDIA GEFORCE NOW",
+      "GFN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Priority"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Ultimate"
+      }
+    ]
+  },
+  {
+    "id": "discord_nitro",
+    "name": "Discord Nitro",
+    "merchant_keywords": [
+      "Discord Nitro",
+      "DISCORD NITRO",
+      "DISCORD*NITRO",
+      "DISCORD INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "Nitro Basic"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Nitro"
+      }
+    ]
+  },
+  {
+    "id": "twitch_subscription",
+    "name": "Twitch Subscription",
+    "merchant_keywords": [
+      "Twitch Sub",
+      "TWITCH",
+      "TWITCH SUB",
+      "TWITCH.TV",
+      "TWITCH INTERACTIVE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Tier 1"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Tier 2"
+      },
+      {
+        "amount": 24.99,
+        "interval": "monthly",
+        "label": "Tier 3"
+      }
+    ]
+  },
+  {
+    "id": "twitch_turbo",
+    "name": "Twitch Turbo",
+    "merchant_keywords": [
+      "Twitch Turbo",
+      "TWITCH TURBO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "adobe_creative_cloud",
+    "name": "Adobe Creative Cloud",
+    "merchant_keywords": [
+      "Adobe Creative Cloud",
+      "ADOBE*CREATIVE CLD",
+      "ADOBE CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD 408-536-6000"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Photography Plan"
+      },
+      {
+        "amount": 22.99,
+        "interval": "monthly",
+        "label": "Single App"
+      },
+      {
+        "amount": 59.99,
+        "interval": "monthly",
+        "label": "All Apps"
+      }
+    ]
+  },
+  {
+    "id": "adobe_acrobat",
+    "name": "Adobe Acrobat Pro",
+    "merchant_keywords": [
+      "Adobe Acrobat",
+      "ADOBE*ACROBAT",
+      "ADOBE ACROBAT PRO",
+      "ADOBE ACROBAT DC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 22.99,
+        "interval": "monthly",
+        "label": "Acrobat Pro"
+      }
+    ]
+  },
+  {
+    "id": "canva",
+    "name": "Canva Pro",
+    "merchant_keywords": [
+      "Canva Pro",
+      "Canva",
+      "CANVA",
+      "CANVA PRO",
+      "CANVA.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Pro Monthly"
+      },
+      {
+        "amount": 119.99,
+        "interval": "yearly",
+        "label": "Pro Annual"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Teams"
+      }
+    ]
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "merchant_keywords": [
+      "Figma",
+      "FIGMA",
+      "FIGMA INC",
+      "FIGMA PROFESSIONAL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Professional"
+      },
+      {
+        "amount": 45,
+        "interval": "monthly",
+        "label": "Organization"
+      }
+    ]
+  },
+  {
+    "id": "sketch",
+    "name": "Sketch",
+    "merchant_keywords": [
+      "Sketch",
+      "SKETCH",
+      "SKETCH.COM",
+      "SKETCH APP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 22,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "merchant_keywords": [
+      "GitHub",
+      "GITHUB",
+      "GITHUB INC",
+      "GITHUB PRO",
+      "GITHUB TEAM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 4,
+        "interval": "monthly",
+        "label": "Team"
+      },
+      {
+        "amount": 21,
+        "interval": "monthly",
+        "label": "Enterprise"
+      }
+    ]
+  },
+  {
+    "id": "github_copilot",
+    "name": "GitHub Copilot",
+    "merchant_keywords": [
+      "GitHub Copilot",
+      "GITHUB COPILOT",
+      "COPILOT"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 19,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "chatgpt_plus",
+    "name": "ChatGPT Plus",
+    "merchant_keywords": [
+      "ChatGPT Plus",
+      "CHATGPT",
+      "CHATGPT SUBSCRIPTION",
+      "CHATGPT PLUS",
+      "OPENAI CHATGPT PLUS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "openai_api",
+    "name": "OpenAI API",
+    "merchant_keywords": [
+      "OpenAI API",
+      "OPENAI API",
+      "OPENAI PLATFORM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "Pay as you go"
+      }
+    ]
+  },
+  {
+    "id": "midjourney",
+    "name": "Midjourney",
+    "merchant_keywords": [
+      "Midjourney",
+      "MIDJOURNEY",
+      "MIDJOURNEY INC",
+      "MJ"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 60,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "claude_pro",
+    "name": "Claude Pro",
+    "merchant_keywords": [
+      "Claude Pro",
+      "CLAUDE",
+      "CLAUDE PRO",
+      "ANTHROPIC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "merchant_keywords": [
+      "Notion",
+      "NOTION",
+      "NOTION LABS INC",
+      "NOTION PLUS",
+      "NOTION TEAM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 18,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "evernote",
+    "name": "Evernote",
+    "merchant_keywords": [
+      "Evernote",
+      "EVERNOTE",
+      "EVERNOTE PREMIUM",
+      "EVERNOTE PERSONAL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Personal"
+      },
+      {
+        "amount": 17.99,
+        "interval": "monthly",
+        "label": "Professional"
+      }
+    ]
+  },
+  {
+    "id": "todoist",
+    "name": "Todoist",
+    "merchant_keywords": [
+      "Todoist",
+      "TODOIST",
+      "TODOIST PREMIUM",
+      "DOIST"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 8,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "merchant_keywords": [
+      "Slack",
+      "SLACK",
+      "SLACK TECHNOLOGIES",
+      "SLACK PRO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 8.75,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Business+"
+      }
+    ]
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "merchant_keywords": [
+      "Zoom",
+      "ZOOM",
+      "ZOOM.US",
+      "ZOOM VIDEO COMMUNICATIONS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15.99,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 21.99,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "dropbox",
+    "name": "Dropbox",
+    "merchant_keywords": [
+      "Dropbox",
+      "DROPBOX",
+      "DROPBOX*PLUS PLAN",
+      "DROPBOX PLUS",
+      "DROPBOX PROFESSIONAL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Professional"
+      },
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "box",
+    "name": "Box",
+    "merchant_keywords": [
+      "Box",
+      "BOX",
+      "BOX.COM",
+      "BOX INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14,
+        "interval": "monthly",
+        "label": "Personal Pro"
+      },
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "1password",
+    "name": "1Password",
+    "merchant_keywords": [
+      "1Password",
+      "1PASSWORD",
+      "AGILEBITS 1PASSWORD"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 2.99,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Families"
+      },
+      {
+        "amount": 7.99,
+        "interval": "monthly",
+        "label": "Teams"
+      }
+    ]
+  },
+  {
+    "id": "lastpass",
+    "name": "LastPass",
+    "merchant_keywords": [
+      "LastPass",
+      "LASTPASS",
+      "LOGMEIN LASTPASS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 3,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 4,
+        "interval": "monthly",
+        "label": "Families"
+      }
+    ]
+  },
+  {
+    "id": "dashlane",
+    "name": "Dashlane",
+    "merchant_keywords": [
+      "Dashlane",
+      "DASHLANE",
+      "DASHLANE PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 7.49,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "bitwarden",
+    "name": "Bitwarden",
+    "merchant_keywords": [
+      "Bitwarden",
+      "BITWARDEN",
+      "BITWARDEN PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0.83,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 3.33,
+        "interval": "monthly",
+        "label": "Families"
+      }
+    ]
+  },
+  {
+    "id": "nordvpn",
+    "name": "NordVPN",
+    "merchant_keywords": [
+      "NordVPN",
+      "NORDVPN",
+      "NORDVPN.COM",
+      "NORD VPN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Standard Monthly"
+      },
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Plus Monthly"
+      },
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Complete Monthly"
+      }
+    ]
+  },
+  {
+    "id": "expressvpn",
+    "name": "ExpressVPN",
+    "merchant_keywords": [
+      "ExpressVPN",
+      "EXPRESSVPN",
+      "EXPRESS VPN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.95,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "6 Months"
+      },
+      {
+        "amount": 8.32,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "surfshark",
+    "name": "Surfshark",
+    "merchant_keywords": [
+      "Surfshark",
+      "SURFSHARK",
+      "SURFSHARK VPN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15.45,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 2.99,
+        "interval": "yearly",
+        "label": "Annual"
+      },
+      {
+        "amount": 2.29,
+        "interval": "yearly",
+        "label": "2 Year"
+      }
+    ]
+  },
+  {
+    "id": "norton",
+    "name": "Norton 360",
+    "merchant_keywords": [
+      "Norton 360",
+      "NORTON",
+      "NORTON 360",
+      "NORTON LIFELOCK",
+      "NORTON SECURITY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 39.99,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 49.99,
+        "interval": "monthly",
+        "label": "Deluxe"
+      },
+      {
+        "amount": 99.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "mcafee",
+    "name": "McAfee",
+    "merchant_keywords": [
+      "McAfee",
+      "MCAFEE",
+      "MCAFEE TOTAL PROTECTION",
+      "MCAFEE QUARTERLY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 49.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 89.99,
+        "interval": "monthly",
+        "label": "Advanced"
+      }
+    ]
+  },
+  {
+    "id": "la_fitness",
+    "name": "LA Fitness",
+    "merchant_keywords": [
+      "LA Fitness",
+      "LA FITNESS",
+      "LAFITNESS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Single Club"
+      },
+      {
+        "amount": 34.99,
+        "interval": "monthly",
+        "label": "Multi Club"
+      }
+    ]
+  },
+  {
+    "id": "equinox",
+    "name": "Equinox",
+    "merchant_keywords": [
+      "Equinox",
+      "EQUINOX",
+      "EQUINOX MEMBERSHIP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 200,
+        "interval": "monthly",
+        "label": "Single Club"
+      },
+      {
+        "amount": 300,
+        "interval": "monthly",
+        "label": "All Access"
+      }
+    ]
+  },
+  {
+    "id": "orangetheory",
+    "name": "Orangetheory Fitness",
+    "merchant_keywords": [
+      "Orangetheory",
+      "ORANGETHEORY",
+      "OTF",
+      "ORANGETHEORY FITNESS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 69,
+        "interval": "monthly",
+        "label": "Basic (4 classes)"
+      },
+      {
+        "amount": 109,
+        "interval": "monthly",
+        "label": "Elite (8 classes)"
+      },
+      {
+        "amount": 169,
+        "interval": "monthly",
+        "label": "Premier (Unlimited)"
+      }
+    ]
+  },
+  {
+    "id": "peloton",
+    "name": "Peloton",
+    "merchant_keywords": [
+      "Peloton",
+      "PELOTON",
+      "PELOTON SUBSCRIPTION",
+      "PELOTON DIGITAL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "App Only"
+      },
+      {
+        "amount": 44,
+        "interval": "monthly",
+        "label": "All-Access"
+      }
+    ]
+  },
+  {
+    "id": "strava",
+    "name": "Strava",
+    "merchant_keywords": [
+      "Strava",
+      "STRAVA",
+      "STRAVA SUBSCRIPTION",
+      "STRAVA PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 79.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "headspace",
+    "name": "Headspace",
+    "merchant_keywords": [
+      "Headspace",
+      "HEADSPACE",
+      "HEADSPACE MEDITATION"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 69.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "calm",
+    "name": "Calm",
+    "merchant_keywords": [
+      "Calm",
+      "CALM",
+      "CALM.COM",
+      "CALM APP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 69.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "noom",
+    "name": "Noom",
+    "merchant_keywords": [
+      "Noom",
+      "NOOM",
+      "NOOM INC",
+      "NOOM WEIGHT"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 59,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 199,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "weight_watchers",
+    "name": "WW (Weight Watchers)",
+    "merchant_keywords": [
+      "Weight Watchers",
+      "WW",
+      "WEIGHT WATCHERS",
+      "WW INTERNATIONAL"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 3.07,
+        "interval": "monthly",
+        "label": "Digital"
+      },
+      {
+        "amount": 7.69,
+        "interval": "monthly",
+        "label": "Digital + Workshop"
+      },
+      {
+        "amount": 15.38,
+        "interval": "monthly",
+        "label": "Digital + Personal Coaching"
+      }
+    ]
+  },
+  {
+    "id": "myfitnesspal",
+    "name": "MyFitnessPal",
+    "merchant_keywords": [
+      "MyFitnessPal",
+      "MYFITNESSPAL",
+      "MFP PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 79.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "visible",
+    "name": "Visible",
+    "merchant_keywords": [
+      "Visible",
+      "VISIBLE",
+      "VISIBLE WIRELESS",
+      "VISIBLE.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 45,
+        "interval": "monthly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "mint_mobile",
+    "name": "Mint Mobile",
+    "merchant_keywords": [
+      "Mint Mobile",
+      "MINT MOBILE",
+      "MINTMOBILE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "5GB"
+      },
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "15GB"
+      },
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "20GB"
+      },
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Unlimited"
+      }
+    ]
+  },
+  {
+    "id": "google_fi",
+    "name": "Google Fi",
+    "merchant_keywords": [
+      "Google Fi",
+      "GOOGLE FI",
+      "GOOGLE*FI",
+      "PROJECT FI"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Flexible"
+      },
+      {
+        "amount": 50,
+        "interval": "monthly",
+        "label": "Simply Unlimited"
+      },
+      {
+        "amount": 65,
+        "interval": "monthly",
+        "label": "Unlimited Plus"
+      }
+    ]
+  },
+  {
+    "id": "t_mobile",
+    "name": "T-Mobile",
+    "merchant_keywords": [
+      "T-Mobile",
+      "TMOBILE",
+      "T-MOBILE",
+      "T MOBILE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 60,
+        "interval": "monthly",
+        "label": "Essentials"
+      },
+      {
+        "amount": 70,
+        "interval": "monthly",
+        "label": "Magenta"
+      },
+      {
+        "amount": 85,
+        "interval": "monthly",
+        "label": "Magenta MAX"
+      }
+    ]
+  },
+  {
+    "id": "verizon",
+    "name": "Verizon Wireless",
+    "merchant_keywords": [
+      "Verizon",
+      "VERIZON",
+      "VERIZON WIRELESS",
+      "VZW"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 65,
+        "interval": "monthly",
+        "label": "Welcome Unlimited"
+      },
+      {
+        "amount": 80,
+        "interval": "monthly",
+        "label": "Unlimited Plus"
+      },
+      {
+        "amount": 90,
+        "interval": "monthly",
+        "label": "Unlimited Ultimate"
+      }
+    ]
+  },
+  {
+    "id": "att",
+    "name": "AT&T",
+    "merchant_keywords": [
+      "AT&T",
+      "ATT",
+      "AT AND T",
+      "AT&T WIRELESS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 65,
+        "interval": "monthly",
+        "label": "Unlimited Starter"
+      },
+      {
+        "amount": 75,
+        "interval": "monthly",
+        "label": "Unlimited Extra"
+      },
+      {
+        "amount": 85,
+        "interval": "monthly",
+        "label": "Unlimited Premium"
+      }
+    ]
+  },
+  {
+    "id": "new_york_times",
+    "name": "The New York Times",
+    "merchant_keywords": [
+      "New York Times",
+      "NYT",
+      "NY TIMES",
+      "NYT DIGITAL SUBSCRIPTION",
+      "THE NEW YORK TIMES"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4,
+        "interval": "monthly",
+        "label": "Basic Digital"
+      },
+      {
+        "amount": 17,
+        "interval": "monthly",
+        "label": "All Access"
+      }
+    ]
+  },
+  {
+    "id": "washington_post",
+    "name": "The Washington Post",
+    "merchant_keywords": [
+      "Washington Post",
+      "WAPO",
+      "WAPO DIGITAL",
+      "THE WASHINGTON POST",
+      "WASHINGTONPOST.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Digital"
+      }
+    ]
+  },
+  {
+    "id": "wall_street_journal",
+    "name": "The Wall Street Journal",
+    "merchant_keywords": [
+      "Wall Street Journal",
+      "WSJ",
+      "WALL STREET JOURNAL",
+      "THE WALL STREET JOURNAL",
+      "DOW JONES WSJ"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 38.99,
+        "interval": "monthly",
+        "label": "Digital"
+      }
+    ]
+  },
+  {
+    "id": "the_athletic",
+    "name": "The Athletic",
+    "merchant_keywords": [
+      "The Athletic",
+      "ATHLETIC",
+      "THE ATHLETIC",
+      "THEATHLETIC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 71.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "linkedin_premium",
+    "name": "LinkedIn Premium",
+    "merchant_keywords": [
+      "LinkedIn Premium",
+      "LINKEDIN",
+      "LINKEDIN PREMIUM",
+      "LINKEDIN 6509009338",
+      "LINKEDIN CAREER"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Career"
+      },
+      {
+        "amount": 59.99,
+        "interval": "monthly",
+        "label": "Business"
+      },
+      {
+        "amount": 99.99,
+        "interval": "monthly",
+        "label": "Sales Navigator"
+      }
+    ]
+  },
+  {
+    "id": "linkedin_learning",
+    "name": "LinkedIn Learning",
+    "merchant_keywords": [
+      "LinkedIn Learning",
+      "LINKEDIN LEARNING",
+      "LYNDA.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 239.88,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "coursera",
+    "name": "Coursera Plus",
+    "merchant_keywords": [
+      "Coursera",
+      "COURSERA",
+      "COURSERA PLUS",
+      "COURSERA INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 59,
+        "interval": "monthly",
+        "label": "Plus Monthly"
+      },
+      {
+        "amount": 399,
+        "interval": "yearly",
+        "label": "Plus Annual"
+      }
+    ]
+  },
+  {
+    "id": "skillshare",
+    "name": "Skillshare",
+    "merchant_keywords": [
+      "Skillshare",
+      "SKILLSHARE",
+      "SKILLSHARE PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 167.88,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "masterclass",
+    "name": "MasterClass",
+    "merchant_keywords": [
+      "MasterClass",
+      "MASTERCLASS",
+      "MASTERCLASS INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Individual"
+      },
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Duo"
+      },
+      {
+        "amount": 23,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "duolingo",
+    "name": "Duolingo Plus",
+    "merchant_keywords": [
+      "Duolingo",
+      "DUOLINGO",
+      "DUOLINGO PLUS",
+      "DUOLINGO SUPER"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Super Monthly"
+      },
+      {
+        "amount": 83.99,
+        "interval": "yearly",
+        "label": "Super Annual"
+      },
+      {
+        "amount": 119.99,
+        "interval": "monthly",
+        "label": "Family"
+      }
+    ]
+  },
+  {
+    "id": "brilliant",
+    "name": "Brilliant",
+    "merchant_keywords": [
+      "Brilliant",
+      "BRILLIANT",
+      "BRILLIANT.ORG"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 24.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 149.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "pluralsight",
+    "name": "Pluralsight",
+    "merchant_keywords": [
+      "Pluralsight",
+      "PLURALSIGHT",
+      "PLURALSIGHT SKILLS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 45,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "udemy",
+    "name": "Udemy Personal Plan",
+    "merchant_keywords": [
+      "Udemy",
+      "UDEMY",
+      "UDEMY PRO",
+      "UDEMY PERSONAL PLAN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Personal Plan Monthly"
+      }
+    ]
+  },
+  {
+    "id": "codecademy",
+    "name": "Codecademy Pro",
+    "merchant_keywords": [
+      "Codecademy",
+      "CODECADEMY",
+      "CODECADEMY PRO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 39.99,
+        "interval": "monthly",
+        "label": "Pro Monthly"
+      },
+      {
+        "amount": 239.88,
+        "interval": "yearly",
+        "label": "Pro Annual"
+      }
+    ]
+  },
+  {
+    "id": "tinder",
+    "name": "Tinder",
+    "merchant_keywords": [
+      "Tinder",
+      "TINDER",
+      "TINDER GOLD",
+      "TINDER PLUS",
+      "TINDER PLATINUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15.99,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Gold"
+      },
+      {
+        "amount": 39.99,
+        "interval": "monthly",
+        "label": "Platinum"
+      }
+    ]
+  },
+  {
+    "id": "bumble",
+    "name": "Bumble",
+    "merchant_keywords": [
+      "Bumble",
+      "BUMBLE",
+      "BUMBLE BOOST",
+      "BUMBLE PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Boost Weekly"
+      },
+      {
+        "amount": 32.99,
+        "interval": "monthly",
+        "label": "Premium Weekly"
+      }
+    ]
+  },
+  {
+    "id": "hinge",
+    "name": "Hinge",
+    "merchant_keywords": [
+      "Hinge",
+      "HINGE",
+      "HINGE PREFERRED",
+      "HINGE+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 29.99,
+        "interval": "monthly",
+        "label": "Plus Monthly"
+      },
+      {
+        "amount": 49.99,
+        "interval": "monthly",
+        "label": "HingeX Monthly"
+      }
+    ]
+  },
+  {
+    "id": "match",
+    "name": "Match.com",
+    "merchant_keywords": [
+      "Match",
+      "MATCH",
+      "MATCH.COM",
+      "MATCH GROUP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 35.99,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 44.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "hellofresh",
+    "name": "HelloFresh",
+    "merchant_keywords": [
+      "HelloFresh",
+      "HELLOFRESH",
+      "HELLO FRESH"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 55,
+        "interval": "monthly",
+        "label": "2 Person (3 recipes)"
+      },
+      {
+        "amount": 93,
+        "interval": "monthly",
+        "label": "4 Person (3 recipes)"
+      }
+    ]
+  },
+  {
+    "id": "blue_apron",
+    "name": "Blue Apron",
+    "merchant_keywords": [
+      "Blue Apron",
+      "BLUE APRON",
+      "BLUEAPRON"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 47.95,
+        "interval": "monthly",
+        "label": "2 Servings"
+      },
+      {
+        "amount": 95.87,
+        "interval": "monthly",
+        "label": "4 Servings"
+      }
+    ]
+  },
+  {
+    "id": "factor",
+    "name": "Factor",
+    "merchant_keywords": [
+      "Factor",
+      "FACTOR",
+      "FACTOR75",
+      "FACTOR MEALS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 60,
+        "interval": "monthly",
+        "label": "4 Meals/Week"
+      },
+      {
+        "amount": 77,
+        "interval": "monthly",
+        "label": "6 Meals/Week"
+      },
+      {
+        "amount": 100,
+        "interval": "monthly",
+        "label": "8 Meals/Week"
+      }
+    ]
+  },
+  {
+    "id": "door_dash_dashpass",
+    "name": "DoorDash DashPass",
+    "merchant_keywords": [
+      "DashPass",
+      "DASHPASS",
+      "DOORDASH DASHPASS",
+      "DOORDASH*DASHPASS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 96,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "grubhub_plus",
+    "name": "Grubhub+",
+    "merchant_keywords": [
+      "Grubhub+",
+      "GRUBHUB+",
+      "GRUBHUB PLUS",
+      "GRUBHUB MEMBERSHIP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      }
+    ]
+  },
+  {
+    "id": "instacart_express",
+    "name": "Instacart+",
+    "merchant_keywords": [
+      "Instacart+",
+      "INSTACART",
+      "INSTACART EXPRESS",
+      "INSTACART+"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "costco",
+    "name": "Costco Membership",
+    "merchant_keywords": [
+      "Costco",
+      "COSTCO",
+      "COSTCO MEMBERSHIP",
+      "COSTCO WHSE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 65,
+        "interval": "monthly",
+        "label": "Gold Star"
+      },
+      {
+        "amount": 130,
+        "interval": "monthly",
+        "label": "Executive"
+      }
+    ]
+  },
+  {
+    "id": "sams_club",
+    "name": "Sam's Club",
+    "merchant_keywords": [
+      "Sam's Club",
+      "SAMS CLUB",
+      "SAM'S CLUB",
+      "SAMSCLUB"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 50,
+        "interval": "monthly",
+        "label": "Club"
+      },
+      {
+        "amount": 110,
+        "interval": "monthly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "shipt",
+    "name": "Shipt",
+    "merchant_keywords": [
+      "Shipt",
+      "SHIPT",
+      "SHIPT MEMBERSHIP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "ipsy",
+    "name": "Ipsy",
+    "merchant_keywords": [
+      "Ipsy",
+      "IPSY",
+      "IPSY GLAM BAG",
+      "IPSY GLAM BAG QUARTERLY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14,
+        "interval": "monthly",
+        "label": "Glam Bag"
+      },
+      {
+        "amount": 28,
+        "interval": "monthly",
+        "label": "Glam Bag Plus"
+      },
+      {
+        "amount": 58,
+        "interval": "monthly",
+        "label": "Glam Bag X"
+      }
+    ]
+  },
+  {
+    "id": "birchbox",
+    "name": "Birchbox",
+    "merchant_keywords": [
+      "Birchbox",
+      "BIRCHBOX",
+      "BIRCHBOX QUARTERLY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 42,
+        "interval": "monthly",
+        "label": "3 Month"
+      },
+      {
+        "amount": 78,
+        "interval": "monthly",
+        "label": "6 Month"
+      }
+    ]
+  },
+  {
+    "id": "fabfitfun",
+    "name": "FabFitFun",
+    "merchant_keywords": [
+      "FabFitFun",
+      "FABFITFUN",
+      "FAB FIT FUN"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 54.99,
+        "interval": "monthly",
+        "label": "Seasonal"
+      },
+      {
+        "amount": 199.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "barkbox",
+    "name": "BarkBox",
+    "merchant_keywords": [
+      "BarkBox",
+      "BARKBOX",
+      "BARK BOX",
+      "BARK"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 35,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 26,
+        "interval": "monthly",
+        "label": "6 Month"
+      },
+      {
+        "amount": 23,
+        "interval": "monthly",
+        "label": "12 Month"
+      }
+    ]
+  },
+  {
+    "id": "care_of",
+    "name": "Care/of",
+    "merchant_keywords": [
+      "Care/of",
+      "CARE/OF VITAMINS",
+      "CAREOFVITAMINS",
+      "CARE/OF"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Custom Pack"
+      }
+    ]
+  },
+  {
+    "id": "ritual",
+    "name": "Ritual Vitamins",
+    "merchant_keywords": [
+      "Ritual",
+      "RITUAL",
+      "RITUAL VITAMINS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Essential for Women"
+      },
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Essential for Men"
+      }
+    ]
+  },
+  {
+    "id": "dollar_shave_club",
+    "name": "Dollar Shave Club",
+    "merchant_keywords": [
+      "Dollar Shave Club",
+      "DOLLAR SHAVE CLUB",
+      "DSC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5,
+        "interval": "monthly",
+        "label": "Starter Set"
+      }
+    ]
+  },
+  {
+    "id": "robinhood_gold",
+    "name": "Robinhood Gold",
+    "merchant_keywords": [
+      "Robinhood Gold",
+      "ROBINHOOD",
+      "ROBINHOOD GOLD"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5,
+        "interval": "monthly",
+        "label": "Gold"
+      }
+    ]
+  },
+  {
+    "id": "morningstar",
+    "name": "Morningstar Premium",
+    "merchant_keywords": [
+      "Morningstar",
+      "MORNINGSTAR",
+      "MORNINGSTAR PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 34.95,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 249,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "seeking_alpha",
+    "name": "Seeking Alpha Premium",
+    "merchant_keywords": [
+      "Seeking Alpha",
+      "SEEKING ALPHA",
+      "SEEKING ALPHA PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 199.99,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "tradingview",
+    "name": "TradingView",
+    "merchant_keywords": [
+      "TradingView",
+      "TRADINGVIEW",
+      "TRADINGVIEW PRO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14.95,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 29.95,
+        "interval": "monthly",
+        "label": "Pro+"
+      },
+      {
+        "amount": 59.95,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "ynab",
+    "name": "YNAB",
+    "merchant_keywords": [
+      "YNAB",
+      "You Need A Budget",
+      "YOU NEED A BUDGET"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 14.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 109,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "merchant_keywords": [
+      "Vercel",
+      "VERCEL",
+      "VERCEL INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "Enterprise"
+      }
+    ]
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "merchant_keywords": [
+      "Netlify",
+      "NETLIFY",
+      "NETLIFY INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 19,
+        "interval": "monthly",
+        "label": "Pro"
+      },
+      {
+        "amount": 99,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "heroku",
+    "name": "Heroku",
+    "merchant_keywords": [
+      "Heroku",
+      "HEROKU",
+      "SALESFORCE HEROKU"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5,
+        "interval": "monthly",
+        "label": "Eco"
+      },
+      {
+        "amount": 7,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "Standard"
+      }
+    ]
+  },
+  {
+    "id": "digitalocean",
+    "name": "DigitalOcean",
+    "merchant_keywords": [
+      "DigitalOcean",
+      "DIGITALOCEAN",
+      "DO DROPLET"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 4,
+        "interval": "monthly",
+        "label": "Basic Droplet"
+      }
+    ]
+  },
+  {
+    "id": "aws",
+    "name": "Amazon Web Services",
+    "merchant_keywords": [
+      "AWS",
+      "Amazon Web Services",
+      "AWS SERVICES",
+      "AMAZON WEB SERVICES"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "Pay as you go"
+      }
+    ]
+  },
+  {
+    "id": "google_cloud",
+    "name": "Google Cloud Platform",
+    "merchant_keywords": [
+      "Google Cloud",
+      "GCP",
+      "GOOGLE CLOUD PLATFORM",
+      "GOOGLE CLOUD"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "Pay as you go"
+      }
+    ]
+  },
+  {
+    "id": "azure",
+    "name": "Microsoft Azure",
+    "merchant_keywords": [
+      "Azure",
+      "AZURE",
+      "MICROSOFT AZURE",
+      "MS AZURE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "Pay as you go"
+      }
+    ]
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "merchant_keywords": [
+      "Linear",
+      "LINEAR",
+      "LINEAR APP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 8,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 14,
+        "interval": "monthly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "merchant_keywords": [
+      "Jira",
+      "JIRA",
+      "ATLASSIAN JIRA"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7.75,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 15.25,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "confluence",
+    "name": "Confluence",
+    "merchant_keywords": [
+      "Confluence",
+      "CONFLUENCE",
+      "ATLASSIAN CONFLUENCE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.75,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 11,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "monday",
+    "name": "Monday.com",
+    "merchant_keywords": [
+      "Monday",
+      "MONDAY",
+      "MONDAY.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 12,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 19,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "merchant_keywords": [
+      "Asana",
+      "ASANA",
+      "ASANA INC"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10.99,
+        "interval": "monthly",
+        "label": "Premium"
+      },
+      {
+        "amount": 24.99,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "merchant_keywords": [
+      "Trello",
+      "TRELLO",
+      "ATLASSIAN TRELLO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "clickup",
+    "name": "ClickUp",
+    "merchant_keywords": [
+      "ClickUp",
+      "CLICKUP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7,
+        "interval": "monthly",
+        "label": "Unlimited"
+      },
+      {
+        "amount": 12,
+        "interval": "monthly",
+        "label": "Business"
+      }
+    ]
+  },
+  {
+    "id": "basecamp",
+    "name": "Basecamp",
+    "merchant_keywords": [
+      "Basecamp",
+      "BASECAMP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Basecamp"
+      },
+      {
+        "amount": 299,
+        "interval": "monthly",
+        "label": "Pro Unlimited"
+      }
+    ]
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "merchant_keywords": [
+      "Airtable",
+      "AIRTABLE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "backblaze",
+    "name": "Backblaze",
+    "merchant_keywords": [
+      "Backblaze",
+      "BACKBLAZE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 7,
+        "interval": "monthly",
+        "label": "Personal Backup"
+      },
+      {
+        "amount": 0,
+        "interval": "monthly",
+        "label": "B2 Cloud Storage"
+      }
+    ]
+  },
+  {
+    "id": "carbonite",
+    "name": "Carbonite",
+    "merchant_keywords": [
+      "Carbonite",
+      "CARBONITE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 9.34,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 12.5,
+        "interval": "monthly",
+        "label": "Prime"
+      }
+    ]
+  },
+  {
+    "id": "idrive",
+    "name": "IDrive",
+    "merchant_keywords": [
+      "IDrive",
+      "IDRIVE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 79.5,
+        "interval": "monthly",
+        "label": "Personal 5TB"
+      }
+    ]
+  },
+  {
+    "id": "mailchimp",
+    "name": "Mailchimp",
+    "merchant_keywords": [
+      "Mailchimp",
+      "MAILCHIMP",
+      "INTUIT MAILCHIMP"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 13,
+        "interval": "monthly",
+        "label": "Essentials"
+      },
+      {
+        "amount": 20,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 350,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "merchant_keywords": [
+      "HubSpot",
+      "HUBSPOT"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 45,
+        "interval": "monthly",
+        "label": "Starter"
+      },
+      {
+        "amount": 800,
+        "interval": "monthly",
+        "label": "Professional"
+      }
+    ]
+  },
+  {
+    "id": "salesforce",
+    "name": "Salesforce",
+    "merchant_keywords": [
+      "Salesforce",
+      "SALESFORCE",
+      "SALESFORCE.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "Essentials"
+      },
+      {
+        "amount": 80,
+        "interval": "monthly",
+        "label": "Professional"
+      },
+      {
+        "amount": 165,
+        "interval": "monthly",
+        "label": "Enterprise"
+      }
+    ]
+  },
+  {
+    "id": "quickbooks",
+    "name": "QuickBooks Online",
+    "merchant_keywords": [
+      "QuickBooks",
+      "QUICKBOOKS",
+      "INTUIT QUICKBOOKS",
+      "QBO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Simple Start"
+      },
+      {
+        "amount": 60,
+        "interval": "monthly",
+        "label": "Essentials"
+      },
+      {
+        "amount": 90,
+        "interval": "monthly",
+        "label": "Plus"
+      }
+    ]
+  },
+  {
+    "id": "freshbooks",
+    "name": "FreshBooks",
+    "merchant_keywords": [
+      "FreshBooks",
+      "FRESHBOOKS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 17,
+        "interval": "monthly",
+        "label": "Lite"
+      },
+      {
+        "amount": 30,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 55,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "xero",
+    "name": "Xero",
+    "merchant_keywords": [
+      "Xero",
+      "XERO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 15,
+        "interval": "monthly",
+        "label": "Early"
+      },
+      {
+        "amount": 42,
+        "interval": "monthly",
+        "label": "Growing"
+      },
+      {
+        "amount": 78,
+        "interval": "monthly",
+        "label": "Established"
+      }
+    ]
+  },
+  {
+    "id": "squarespace",
+    "name": "Squarespace",
+    "merchant_keywords": [
+      "Squarespace",
+      "SQUARESPACE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 16,
+        "interval": "monthly",
+        "label": "Personal"
+      },
+      {
+        "amount": 23,
+        "interval": "monthly",
+        "label": "Business"
+      },
+      {
+        "amount": 27,
+        "interval": "monthly",
+        "label": "Commerce Basic"
+      }
+    ]
+  },
+  {
+    "id": "wix",
+    "name": "Wix",
+    "merchant_keywords": [
+      "Wix",
+      "WIX",
+      "WIX.COM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 16,
+        "interval": "monthly",
+        "label": "Combo"
+      },
+      {
+        "amount": 22,
+        "interval": "monthly",
+        "label": "Unlimited"
+      },
+      {
+        "amount": 27,
+        "interval": "monthly",
+        "label": "Pro"
+      }
+    ]
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "merchant_keywords": [
+      "Shopify",
+      "SHOPIFY"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 39,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 105,
+        "interval": "monthly",
+        "label": "Shopify"
+      },
+      {
+        "amount": 399,
+        "interval": "monthly",
+        "label": "Advanced"
+      }
+    ]
+  },
+  {
+    "id": "sirius_xm",
+    "name": "SiriusXM",
+    "merchant_keywords": [
+      "SiriusXM",
+      "SIRIUSXM",
+      "SIRIUS XM",
+      "SIRIUS SATELLITE RADIO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Music Showcase"
+      },
+      {
+        "amount": 16.99,
+        "interval": "monthly",
+        "label": "Music & Entertainment"
+      },
+      {
+        "amount": 25.99,
+        "interval": "monthly",
+        "label": "Platinum VIP"
+      }
+    ]
+  },
+  {
+    "id": "alltrails",
+    "name": "AllTrails Pro",
+    "merchant_keywords": [
+      "AllTrails",
+      "ALLTRAILS",
+      "ALLTRAILS PRO"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 35.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "dazn",
+    "name": "DAZN",
+    "merchant_keywords": [
+      "DAZN",
+      "Dazn",
+      "DAZN SPORTS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 149.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "ufc_fight_pass",
+    "name": "UFC Fight Pass",
+    "merchant_keywords": [
+      "UFC Fight Pass",
+      "UFC FIGHT PASS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Monthly"
+      },
+      {
+        "amount": 95.99,
+        "interval": "yearly",
+        "label": "Annual"
+      }
+    ]
+  },
+  {
+    "id": "stan",
+    "name": "Stan",
+    "merchant_keywords": [
+      "Stan",
+      "STAN",
+      "STAN ENTERTAINMENT"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 12,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 17,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 24,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "binge_au",
+    "name": "Binge",
+    "merchant_keywords": [
+      "Binge",
+      "BINGE",
+      "BINGE STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 10,
+        "interval": "monthly",
+        "label": "Basic"
+      },
+      {
+        "amount": 18,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 22,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "kayo_sports",
+    "name": "Kayo Sports",
+    "merchant_keywords": [
+      "Kayo",
+      "KAYO",
+      "KAYO SPORTS"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 25,
+        "interval": "monthly",
+        "label": "One"
+      },
+      {
+        "amount": 27.5,
+        "interval": "monthly",
+        "label": "Basic"
+      }
+    ]
+  },
+  {
+    "id": "crave",
+    "name": "Crave",
+    "merchant_keywords": [
+      "Crave",
+      "CRAVE",
+      "CRAVE TV",
+      "BELL MEDIA CRAVE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Mobile"
+      },
+      {
+        "amount": 19.99,
+        "interval": "monthly",
+        "label": "Standard"
+      },
+      {
+        "amount": 22.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "sky_uk",
+    "name": "Sky UK",
+    "merchant_keywords": [
+      "Sky",
+      "SKY",
+      "SKY UK LIMITED",
+      "SKY ENTERTAINMENT"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 26,
+        "interval": "monthly",
+        "label": "Entertainment"
+      },
+      {
+        "amount": 34,
+        "interval": "monthly",
+        "label": "Sky Sports"
+      }
+    ]
+  },
+  {
+    "id": "now_tv",
+    "name": "NOW TV",
+    "merchant_keywords": [
+      "NOW TV",
+      "NOW",
+      "NOW ENTERTAINMENT",
+      "NOW TV STREAMING"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Entertainment"
+      },
+      {
+        "amount": 11.99,
+        "interval": "monthly",
+        "label": "Cinema"
+      },
+      {
+        "amount": 11.98,
+        "interval": "monthly",
+        "label": "Sports Day"
+      }
+    ]
+  },
+  {
+    "id": "canal_plus",
+    "name": "Canal+",
+    "merchant_keywords": [
+      "Canal+",
+      "CANAL+",
+      "CANAL PLUS",
+      "CANAL+ GROUPE"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Canal+ Series"
+      },
+      {
+        "amount": 21.99,
+        "interval": "monthly",
+        "label": "Canal+"
+      }
+    ]
+  },
+  {
+    "id": "rtl_plus",
+    "name": "RTL+",
+    "merchant_keywords": [
+      "RTL+",
+      "RTL PLUS",
+      "TVNOW",
+      "RTL+ PREMIUM"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 6.99,
+        "interval": "monthly",
+        "label": "Max"
+      },
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "videoland",
+    "name": "Videoland",
+    "merchant_keywords": [
+      "Videoland",
+      "VIDEOLAND"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 5.99,
+        "interval": "monthly",
+        "label": "Basis"
+      },
+      {
+        "amount": 9.99,
+        "interval": "monthly",
+        "label": "Plus"
+      },
+      {
+        "amount": 12.99,
+        "interval": "monthly",
+        "label": "Premium"
+      }
+    ]
+  },
+  {
+    "id": "viaplay",
+    "name": "Viaplay",
+    "merchant_keywords": [
+      "Viaplay",
+      "VIAPLAY",
+      "VIAPLAY NEDERLAND"
+    ],
+    "risk_level": "LOW",
+    "risk_reason": "Standard subscription pricing.",
+    "variance_allowed": true,
+    "plans": [
+      {
+        "amount": 13.99,
+        "interval": "monthly",
+        "label": "Standard"
       }
     ]
   }

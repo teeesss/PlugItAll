@@ -8,7 +8,7 @@
 - [x] Add eBay/Amazon aggressive shopping rejection.
 - [x] Update test suite to 47 passing tests.
 - [x] Set up pre-commit hooks (Prettier, ESLint, Gitleaks, Checkov).
-- [x] Rename product to "Plug It" and update UI.
+- [x] Rename product to "Plug It All" and update UI.
 - [x] Push codebase to GitHub ([teeesss/plug-it](https://github.com/teeesss/plug-it)).
 - [x] Fix all lint errors (@ts-ignore, unused imports, regex escapes).
 - [x] **TASK-001**: Implement robust `parseDate` (ISO, European, abbreviated formats)

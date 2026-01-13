@@ -1,0 +1,84 @@
+{
+    "updates": [
+        {
+            "id": "apple_tv_plus",
+            "fallback_url": "https://tv.apple.com/account"
+        },
+        {
+            "id": "apple_music",
+            "fallback_url": "https://www.apple.com/apple-music/"
+        },
+        {
+            "id": "apple_one",
+            "fallback_url": "https://www.apple.com/apple-one/"
+        },
+        {
+            "id": "apple_arcade",
+            "fallback_url": "https://www.apple.com/apple-arcade/"
+        },
+        {
+            "id": "icloud",
+            "fallback_url": "https://www.icloud.com/settings/"
+        },
+        {
+            "id": "mubi",
+            "fallback_url": "https://mubi.com"
+        },
+        {
+            "id": "evernote",
+            "fallback_url": "https://evernote.com"
+        },
+        {
+            "id": "figma",
+            "fallback_url": "https://www.figma.com"
+        },
+        {
+            "id": "notion",
+            "fallback_url": "https://www.notion.so"
+        },
+        {
+            "id": "calm",
+            "fallback_url": "https://www.calm.com"
+        },
+        {
+            "id": "discord_nitro",
+            "fallback_url": "https://discord.com/nitro"
+        },
+        {
+            "id": "midjourney",
+            "fallback_url": "https://www.midjourney.com"
+        },
+        {
+            "id": "claude_pro",
+            "fallback_url": "https://claude.ai"
+        },
+        {
+            "id": "factor",
+            "fallback_url": "https://www.factor75.com"
+        },
+        {
+            "id": "binge_au",
+            "fallback_url": "https://binge.com.au"
+        },
+        {
+            "id": "kayo_sports",
+            "fallback_url": "https://kayosports.com.au"
+        },
+        {
+            "id": "now_tv",
+            "fallback_url": "https://www.nowtv.com"
+        },
+        {
+            "id": "rtl_plus",
+            "fallback_url": "https://plus.rtl.de"
+        },
+        {
+            "id": "videoland",
+            "fallback_url": "https://www.videoland.com"
+        },
+        {
+            "id": "viaplay",
+            "fallback_url": "https://viaplay.com"
+        }
+    ]
+}

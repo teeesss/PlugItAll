@@ -9,7 +9,7 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
     // Header Title
     doc.setFontSize(22);
     doc.setTextColor(30, 41, 59); // Slate 800
-    doc.text('Plug It - Subscription Report', 14, 20);
+    doc.text('Plug It All - Subscription Report', 14, 20);
 
     // Date
     doc.setFontSize(10);
@@ -114,7 +114,7 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setTextColor(150);
-        doc.text('Plug It - Privacy-First Subscription Manager', 105, 290, { align: 'center' });
+        doc.text('Plug It All - Privacy-First Subscription Manager', 105, 290, { align: 'center' });
     }
 
     doc.save('plug-it-report.pdf');

@@ -232,12 +232,12 @@ When a false positive appears:
 
 ---
 
-### 🆕 Product Rename: **Plug It**
+### 🆕 Product Rename: **Plug It All**
 
 - **Tagline**: "Find the leaks in your bank account"
 - **GitHub Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
-- **Header Updated**: `App.tsx` now shows "Plug It" with processing indicator
-- **Page Title Updated**: `index.html` → "Plug It - Find financial leaks"
+- **Header Updated**: `App.tsx` now shows "Plug It All" with processing indicator
+- **Page Title Updated**: `index.html` → "Plug It All - Find financial leaks"
 
 ---
 

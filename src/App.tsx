@@ -122,7 +122,7 @@ function App() {
           <div>
             <div>
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-100 to-purple-200">
-                Plug It
+                Plug It All
               </h1>
               <p className="text-xs text-slate-400 font-medium mt-0.5">Finding leaks in your bank account</p>
             </div>

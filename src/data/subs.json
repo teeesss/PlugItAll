@@ -37,7 +37,8 @@
     ],
     "logo": "/logos/youtube_tv.png",
     "cancel_url": "https://tv.youtube.com/membership",
-    "instructions": "tv.youtube.com > Settings > Pause/Cancel membership."
+    "instructions": "tv.youtube.com > Settings > Pause/Cancel membership.",
+    "fallback_url": "https://myaccount.google.com/subscriptions"
   },
   {
     "id": "netflix",
@@ -47,7 +48,8 @@
     ],
     "logo": "/logos/netflix.png",
     "cancel_url": "https://www.netflix.com/cancelplan",
-    "instructions": "Go to Account > Membership & Billing > Cancel Membership."
+    "instructions": "Go to Account > Membership & Billing > Cancel Membership.",
+    "fallback_url": "https://www.netflix.com/YourAccount"
   },
   {
     "id": "spotify",
@@ -57,7 +59,8 @@
     ],
     "logo": "/logos/spotify.png",
     "cancel_url": "https://www.spotify.com/account/change-plan/",
-    "instructions": "Log in > Account > Available Plans > Cancel Premium."
+    "instructions": "Log in > Account > Available Plans > Cancel Premium.",
+    "fallback_url": "https://www.spotify.com/account/"
   },
   {
     "id": "hulu",
@@ -67,7 +70,8 @@
     ],
     "logo": "/logos/hulu.png",
     "cancel_url": "https://secure.hulu.com/account",
-    "instructions": "Account > Your Subscription > Cancel."
+    "instructions": "Account > Your Subscription > Cancel.",
+    "fallback_url": "https://secure.hulu.com/account"
   },
   {
     "id": "disneyplus",
@@ -91,7 +95,8 @@
     ],
     "logo": "/logos/amazon_prime.png",
     "cancel_url": "https://www.amazon.com/gp/primecentral",
-    "instructions": "Account > Prime Membership > Manage Membership > End Membership."
+    "instructions": "Account > Prime Membership > Manage Membership > End Membership.",
+    "fallback_url": "https://www.amazon.com/gp/primecentral"
   },
   {
     "id": "youtube_premium",
@@ -102,7 +107,8 @@
     ],
     "logo": "/logos/youtube_premium.png",
     "cancel_url": "https://www.youtube.com/paid_memberships",
-    "instructions": "Profile > Purchases and memberships > Manage membership > Deactivate."
+    "instructions": "Profile > Purchases and memberships > Manage membership > Deactivate.",
+    "fallback_url": "https://myaccount.google.com/subscriptions"
   },
   {
     "id": "apple_services",
@@ -135,7 +141,8 @@
     ],
     "logo": "/logos/visible_mobile.png",
     "cancel_url": "https://www.visible.com/account/overview",
-    "instructions": "Account > Overview > Cancel Service."
+    "instructions": "Account > Overview > Cancel Service.",
+    "fallback_url": "https://www.visible.com/account"
   },
   {
     "id": "liveoak",
@@ -169,7 +176,8 @@
     ],
     "logo": "/logos/walmart_plus.png",
     "cancel_url": "https://www.walmart.com/account/plus",
-    "instructions": "Go to Account > Walmart+ > Manage Membership."
+    "instructions": "Go to Account > Walmart+ > Manage Membership.",
+    "fallback_url": "https://www.walmart.com/account/walmartplus"
   },
   {
     "id": "siriusxm",
@@ -203,7 +211,8 @@
     ],
     "logo": "/logos/planet_fitness.png",
     "cancel_url": "https://www.planetfitness.com/about-planet-fitness/customer-service/membership-faqs",
-    "instructions": "Must visit home club logic or send certified letter."
+    "instructions": "Must visit home club logic or send certified letter.",
+    "fallback_url": "https://www.planetfitness.com"
   },
   {
     "id": "crunch_fitness",
@@ -224,7 +233,8 @@
     ],
     "logo": "/logos/la_fitness.png",
     "cancel_url": "https://www.lafitness.com/Pages/login.aspx",
-    "instructions": "Log in and print cancellation form."
+    "instructions": "Log in and print cancellation form.",
+    "fallback_url": "https://www.lafitness.com"
   },
   {
     "id": "equinox",
@@ -234,7 +244,8 @@
     ],
     "logo": "/logos/equinox.png",
     "cancel_url": "https://www.equinox.com/contactus",
-    "instructions": "Contact club manager or email concierge."
+    "instructions": "Contact club manager or email concierge.",
+    "fallback_url": "https://www.equinox.com"
   },
   {
     "id": "gold_gym",
@@ -265,7 +276,8 @@
     ],
     "logo": "/logos/dropbox.png",
     "cancel_url": "https://www.dropbox.com/account/plan",
-    "instructions": "Settings > Plan > Cancel plan."
+    "instructions": "Settings > Plan > Cancel plan.",
+    "fallback_url": "https://www.dropbox.com/account"
   },
   {
     "id": "google_play",
@@ -299,7 +311,8 @@
     ],
     "logo": "/logos/icloud_.png",
     "cancel_url": "https://support.apple.com/en-us/HT202039",
-    "instructions": "Settings > Apple ID > iCloud > Manage Storage."
+    "instructions": "Settings > Apple ID > iCloud > Manage Storage.",
+    "fallback_url": "https://www.icloud.com/settings/"
   },
   {
     "id": "microsoft_365",
@@ -311,7 +324,8 @@
     ],
     "logo": "/logos/microsoft_365.png",
     "cancel_url": "https://account.microsoft.com/services",
-    "instructions": "Manage > Cancel subscription."
+    "instructions": "Manage > Cancel subscription.",
+    "fallback_url": "https://account.microsoft.com"
   },
   {
     "id": "github",
@@ -321,7 +335,8 @@
     ],
     "logo": "/logos/github.png",
     "cancel_url": "https://github.com/settings/billing",
-    "instructions": "Settings > Billing > Cancel."
+    "instructions": "Settings > Billing > Cancel.",
+    "fallback_url": "https://github.com/settings/billing"
   },
   {
     "id": "heroku",
@@ -331,7 +346,8 @@
     ],
     "logo": "/logos/heroku.png",
     "cancel_url": "https://dashboard.heroku.com/account/billing",
-    "instructions": "Resources > Delete App or Downgrade."
+    "instructions": "Resources > Delete App or Downgrade.",
+    "fallback_url": "https://dashboard.heroku.com/account"
   },
   {
     "id": "digitalocean",
@@ -341,7 +357,8 @@
     ],
     "logo": "/logos/digitalocean.png",
     "cancel_url": "https://cloud.digitalocean.com/settings/billing",
-    "instructions": "Destroy all Droplets/Resources."
+    "instructions": "Destroy all Droplets/Resources.",
+    "fallback_url": "https://cloud.digitalocean.com/account"
   },
   {
     "id": "aws",
@@ -352,7 +369,8 @@
     ],
     "logo": "/logos/aws.png",
     "cancel_url": "https://console.aws.amazon.com/billing/home?#/account",
-    "instructions": "Close Account."
+    "instructions": "Close Account.",
+    "fallback_url": "https://console.aws.amazon.com"
   },
   {
     "id": "vultr",
@@ -403,7 +421,8 @@
     ],
     "logo": "/logos/squarespace.png",
     "cancel_url": "https://account.squarespace.com/",
-    "instructions": "Billing > Subscriptions > Cancel."
+    "instructions": "Billing > Subscriptions > Cancel.",
+    "fallback_url": "https://account.squarespace.com"
   },
   {
     "id": "wix",
@@ -414,7 +433,8 @@
     ],
     "logo": "/logos/wix.png",
     "cancel_url": "https://users.wix.com/wix-billing/subscriptions",
-    "instructions": "Premium Subscriptions > Cancel."
+    "instructions": "Premium Subscriptions > Cancel.",
+    "fallback_url": "https://www.wix.com/account/account-settings"
   },
   {
     "id": "shopify_sub",
@@ -454,7 +474,8 @@
     ],
     "logo": "/logos/zoom.png",
     "cancel_url": "https://zoom.us/billing/subscription",
-    "instructions": "Account Management > Billing > Cancel Subscription."
+    "instructions": "Account Management > Billing > Cancel Subscription.",
+    "fallback_url": "https://zoom.us/profile"
   },
   {
     "id": "slack",
@@ -464,7 +485,8 @@
     ],
     "logo": "/logos/slack.png",
     "cancel_url": "https://my.slack.com/admin/billing",
-    "instructions": "Billing > Settings > Cancel Subscription."
+    "instructions": "Billing > Settings > Cancel Subscription.",
+    "fallback_url": "https://my.slack.com/admin/billing"
   },
   {
     "id": "atlassian",
@@ -484,7 +506,8 @@
     ],
     "logo": "/logos/notion.png",
     "cancel_url": "https://www.notion.so/settings/billing",
-    "instructions": "Settings & Members > Billing > Downgrade."
+    "instructions": "Settings & Members > Billing > Downgrade.",
+    "fallback_url": "https://www.notion.so"
   },
   {
     "id": "figma",
@@ -494,7 +517,8 @@
     ],
     "logo": "/logos/figma.png",
     "cancel_url": "https://www.figma.com/settings/billing",
-    "instructions": "Admin Settings > Billing > Cancel."
+    "instructions": "Admin Settings > Billing > Cancel.",
+    "fallback_url": "https://www.figma.com"
   },
   {
     "id": "canva",
@@ -504,7 +528,8 @@
     ],
     "logo": "/logos/canva.png",
     "cancel_url": "https://www.canva.com/settings/billing",
-    "instructions": "Billing & Teams > Subscriptions > Cancel."
+    "instructions": "Billing & Teams > Subscriptions > Cancel.",
+    "fallback_url": "https://www.canva.com/settings"
   },
   {
     "id": "midjourney",
@@ -514,7 +539,8 @@
     ],
     "logo": "/logos/midjourney.png",
     "cancel_url": "https://www.midjourney.com/account/",
-    "instructions": "Manage Purchase > Cancel Plan."
+    "instructions": "Manage Purchase > Cancel Plan.",
+    "fallback_url": "https://www.midjourney.com"
   },
   {
     "id": "patreon",
@@ -544,7 +570,8 @@
     ],
     "logo": "/logos/tinder.png",
     "cancel_url": "https://tinder.com/",
-    "instructions": "My Profile > Manage Payment Account > Cancel."
+    "instructions": "My Profile > Manage Payment Account > Cancel.",
+    "fallback_url": "https://account.gotinder.com"
   },
   {
     "id": "bumble",
@@ -554,7 +581,8 @@
     ],
     "logo": "/logos/bumble.png",
     "cancel_url": "https://bumble.com/",
-    "instructions": "Profile Settings > Manage Boost/Premium."
+    "instructions": "Profile Settings > Manage Boost/Premium.",
+    "fallback_url": "https://bumble.com/settings"
   },
   {
     "id": "hinge",
@@ -564,7 +592,8 @@
     ],
     "logo": "/logos/hinge.png",
     "cancel_url": "https://hinge.co/",
-    "instructions": "App Store or Play Store Subscription settings."
+    "instructions": "App Store or Play Store Subscription settings.",
+    "fallback_url": "https://hinge.co"
   },
   {
     "id": "hellofresh",
@@ -574,7 +603,8 @@
     ],
     "logo": "/logos/hellofresh.png",
     "cancel_url": "https://www.hellofresh.com/account-settings/account_info",
-    "instructions": "Account Settings > Cancel Plan."
+    "instructions": "Account Settings > Cancel Plan.",
+    "fallback_url": "https://www.hellofresh.com/my-account"
   },
   {
     "id": "blueapron",
@@ -596,7 +626,8 @@
     ],
     "logo": "/logos/peacock.png",
     "cancel_url": "https://www.peacocktv.com/account/plans",
-    "instructions": "Account > Plans & Payment > Change or Cancel Plan."
+    "instructions": "Account > Plans & Payment > Change or Cancel Plan.",
+    "fallback_url": "https://www.peacocktv.com/account"
   },
   {
     "id": "paramount_plus",
@@ -607,7 +638,8 @@
     ],
     "logo": "/logos/paramount_.png",
     "cancel_url": "https://www.paramountplus.com/account/",
-    "instructions": "Account > Subscription > Cancel Subscription."
+    "instructions": "Account > Subscription > Cancel Subscription.",
+    "fallback_url": "https://www.paramountplus.com/account/"
   },
   {
     "id": "discovery_plus",
@@ -618,7 +650,8 @@
     ],
     "logo": "/logos/discovery_.png",
     "cancel_url": "https://www.discoveryplus.com/my-account",
-    "instructions": "Account > Manage > Cancel."
+    "instructions": "Account > Manage > Cancel.",
+    "fallback_url": "https://www.discoveryplus.com/account"
   },
   {
     "id": "appletv_plus",
@@ -640,7 +673,8 @@
     ],
     "logo": "/logos/max__hbo_.png",
     "cancel_url": "https://auth.max.com/subscription",
-    "instructions": "Profile > Subscription > Manage Subscription."
+    "instructions": "Profile > Subscription > Manage Subscription.",
+    "fallback_url": "https://www.max.com/account"
   },
   {
     "id": "starz",
@@ -650,7 +684,8 @@
     ],
     "logo": "/logos/starz.png",
     "cancel_url": "https://www.starz.com/settings/subscription",
-    "instructions": "Settings > Subscription > Cancel."
+    "instructions": "Settings > Subscription > Cancel.",
+    "fallback_url": "https://www.starz.com"
   },
   {
     "id": "sling_tv",
@@ -661,7 +696,8 @@
     ],
     "logo": "/logos/sling_tv.png",
     "cancel_url": "https://www.sling.com/account",
-    "instructions": "My Account > Cancel Subscription."
+    "instructions": "My Account > Cancel Subscription.",
+    "fallback_url": "https://www.sling.com/account"
   },
   {
     "id": "fubo_tv",
@@ -672,7 +708,8 @@
     ],
     "logo": "/logos/fubotv.png",
     "cancel_url": "https://www.fubo.tv/account",
-    "instructions": "My Account > Subscription and Billing > Cancel."
+    "instructions": "My Account > Subscription and Billing > Cancel.",
+    "fallback_url": "https://www.fubo.tv/account"
   },
   {
     "id": "crunchyroll",
@@ -682,7 +719,8 @@
     ],
     "logo": "/logos/crunchyroll.png",
     "cancel_url": "https://www.crunchyroll.com/account/membership",
-    "instructions": "Account > Membership Info > Cancel Membership."
+    "instructions": "Account > Membership Info > Cancel Membership.",
+    "fallback_url": "https://www.crunchyroll.com/account"
   },
   {
     "id": "funimation",
@@ -692,7 +730,8 @@
     ],
     "logo": "/logos/funimation.png",
     "cancel_url": "https://www.funimation.com/account/#/subscription",
-    "instructions": "My Account > Subscription > Cancel."
+    "instructions": "My Account > Subscription > Cancel.",
+    "fallback_url": "https://www.funimation.com/account/"
   },
   {
     "id": "pandora",
@@ -702,7 +741,8 @@
     ],
     "logo": "/logos/pandora.png",
     "cancel_url": "https://www.pandora.com/account/subscription",
-    "instructions": "Profile > Settings > Subscription > Switch Plans/Cancel."
+    "instructions": "Profile > Settings > Subscription > Switch Plans/Cancel.",
+    "fallback_url": "https://www.pandora.com/account"
   },
   {
     "id": "soundcloud",
@@ -712,7 +752,8 @@
     ],
     "logo": "/logos/soundcloud.png",
     "cancel_url": "https://soundcloud.com/you/subscriptions",
-    "instructions": "Subscription > Edit > Opt out of renewal."
+    "instructions": "Subscription > Edit > Opt out of renewal.",
+    "fallback_url": "https://soundcloud.com/settings"
   },
   {
     "id": "audible",
@@ -723,7 +764,8 @@
     ],
     "logo": "/logos/audible.png",
     "cancel_url": "https://www.audible.com/account/overview",
-    "instructions": "Account Details > Membership details > Cancel membership."
+    "instructions": "Account Details > Membership details > Cancel membership.",
+    "fallback_url": "https://www.audible.com/account"
   },
   {
     "id": "tidal",
@@ -733,7 +775,8 @@
     ],
     "logo": "/logos/tidal.png",
     "cancel_url": "https://account.tidal.com/subscription",
-    "instructions": "Subscription > Cancel Subscription."
+    "instructions": "Subscription > Cancel Subscription.",
+    "fallback_url": "https://tidal.com/settings"
   },
   {
     "id": "deezer",
@@ -743,7 +786,8 @@
     ],
     "logo": "/logos/deezer.png",
     "cancel_url": "https://www.deezer.com/account/subscription",
-    "instructions": "Account Settings > Manage my subscription > Cancel."
+    "instructions": "Account Settings > Manage my subscription > Cancel.",
+    "fallback_url": "https://www.deezer.com/account"
   },
   {
     "id": "scribd",
@@ -753,7 +797,8 @@
     ],
     "logo": "/logos/scribd.png",
     "cancel_url": "https://www.scribd.com/account-settings",
-    "instructions": "Account Settings > End Your Membership."
+    "instructions": "Account Settings > End Your Membership.",
+    "fallback_url": "https://www.scribd.com/account-settings"
   },
   {
     "id": "xbox_game_pass",
@@ -764,7 +809,8 @@
     ],
     "logo": "/logos/xbox_game_pass.png",
     "cancel_url": "https://account.microsoft.com/services",
-    "instructions": "Services & Subscriptions > Manage > Cancel."
+    "instructions": "Services & Subscriptions > Manage > Cancel.",
+    "fallback_url": "https://account.microsoft.com"
   },
   {
     "id": "playstation_plus",
@@ -776,7 +822,8 @@
     ],
     "logo": "/logos/playstation_plus.png",
     "cancel_url": "https://store.playstation.com/subscriptions",
-    "instructions": "Subscription Management > Turn Off Auto-Renew."
+    "instructions": "Subscription Management > Turn Off Auto-Renew.",
+    "fallback_url": "https://store.playstation.com/subscriptions"
   },
   {
     "id": "nintendo_online",
@@ -808,7 +855,8 @@
     ],
     "logo": "/logos/ea_play.png",
     "cancel_url": "https://myaccount.ea.com/cp-ui/subscription/index",
-    "instructions": "Account Settings > Memberships > Cancel Membership."
+    "instructions": "Account Settings > Memberships > Cancel Membership.",
+    "fallback_url": "https://myaccount.ea.com/cp-ui/subscriptions"
   },
   {
     "id": "ubisoft_plus",
@@ -818,7 +866,8 @@
     ],
     "logo": "/logos/ubisoft_.png",
     "cancel_url": "https://store.ubisoft.com/my-account",
-    "instructions": "My Account > My Subscription > Cancel Subscription."
+    "instructions": "My Account > My Subscription > Cancel Subscription.",
+    "fallback_url": "https://account.ubisoft.com/subscriptions"
   },
   {
     "id": "roblox",
@@ -885,7 +934,8 @@
     ],
     "logo": "/logos/washington_post.png",
     "cancel_url": "https://subscribe.washingtonpost.com/myaccount",
-    "instructions": "My Account > Subscription & Billing > Cancel Subscription."
+    "instructions": "My Account > Subscription & Billing > Cancel Subscription.",
+    "fallback_url": "https://www.washingtonpost.com/my-account/"
   },
   {
     "id": "medium",
@@ -915,7 +965,8 @@
     ],
     "logo": "/logos/asana.png",
     "cancel_url": "https://app.asana.com/-/billing",
-    "instructions": "Admin Console > Billing > Cancel Subscription."
+    "instructions": "Admin Console > Billing > Cancel Subscription.",
+    "fallback_url": "https://app.asana.com/admin"
   },
   {
     "id": "trello",
@@ -925,7 +976,8 @@
     ],
     "logo": "/logos/trello.png",
     "cancel_url": "https://trello.com/workspace-billing",
-    "instructions": "Workspace Settings > Billing > Cancel."
+    "instructions": "Workspace Settings > Billing > Cancel.",
+    "fallback_url": "https://trello.com/your/account"
   },
   {
     "id": "monday_com",
@@ -945,7 +997,8 @@
     ],
     "logo": "/logos/evernote.png",
     "cancel_url": "https://www.evernote.com/Billing.action",
-    "instructions": "Account Settings > Billing > Cancel Subscription."
+    "instructions": "Account Settings > Billing > Cancel Subscription.",
+    "fallback_url": "https://evernote.com"
   },
   {
     "id": "salesforce",
@@ -955,7 +1008,8 @@
     ],
     "logo": "/logos/salesforce.png",
     "cancel_url": "https://help.salesforce.com/",
-    "instructions": "Contact Account Executive."
+    "instructions": "Contact Account Executive.",
+    "fallback_url": "https://login.salesforce.com"
   },
   {
     "id": "hubspot",
@@ -965,7 +1019,8 @@
     ],
     "logo": "/logos/hubspot.png",
     "cancel_url": "https://app.hubspot.com/setting/",
-    "instructions": "Account & Billing > Delete Account."
+    "instructions": "Account & Billing > Delete Account.",
+    "fallback_url": "https://app.hubspot.com/settings"
   },
   {
     "id": "zendesk",
@@ -997,7 +1052,8 @@
     ],
     "logo": "/logos/xero.png",
     "cancel_url": "https://go.xero.com/Subscription/Manage/",
-    "instructions": "Subscription and billing > Manage Subscription > Cancel Subscription."
+    "instructions": "Subscription and billing > Manage Subscription > Cancel Subscription.",
+    "fallback_url": "https://go.xero.com/Settings"
   },
   {
     "id": "nordvpn",
@@ -1008,7 +1064,8 @@
     ],
     "logo": "/logos/nordvpn.png",
     "cancel_url": "https://my.nordaccount.com/billing/",
-    "instructions": "Billing > Subscriptions > Manage > Cancel auto-renewal."
+    "instructions": "Billing > Subscriptions > Manage > Cancel auto-renewal.",
+    "fallback_url": "https://my.nordaccount.com"
   },
   {
     "id": "expressvpn",
@@ -1018,7 +1075,8 @@
     ],
     "logo": "/logos/expressvpn.png",
     "cancel_url": "https://www.expressvpn.com/users/subscription",
-    "instructions": "My Subscription > Manage Settings > Turn off automatic renewal."
+    "instructions": "My Subscription > Manage Settings > Turn off automatic renewal.",
+    "fallback_url": "https://www.expressvpn.com/account"
   },
   {
     "id": "surfshark",
@@ -1028,7 +1086,8 @@
     ],
     "logo": "/logos/surfshark.png",
     "cancel_url": "https://my.surfshark.com/billing/subscriptions",
-    "instructions": "Contact Support Chat to cancel."
+    "instructions": "Contact Support Chat to cancel.",
+    "fallback_url": "https://my.surfshark.com"
   },
   {
     "id": "proton",
@@ -1061,7 +1120,8 @@
     ],
     "logo": "/logos/verizon.png",
     "cancel_url": "https://www.verizon.com/support/contact-us/",
-    "instructions": "Call Customer Service."
+    "instructions": "Call Customer Service.",
+    "fallback_url": "https://www.verizon.com/signin"
   },
   {
     "id": "att",
@@ -1072,7 +1132,8 @@
     ],
     "logo": "/logos/at_t.png",
     "cancel_url": "https://www.att.com/support/contact-us/",
-    "instructions": "Call Customer Service."
+    "instructions": "Call Customer Service.",
+    "fallback_url": "https://www.att.com/my"
   },
   {
     "id": "tmobile",
@@ -1115,7 +1176,8 @@
     ],
     "logo": "/logos/uber_one.png",
     "cancel_url": "https://m.uber.com/",
-    "instructions": "Account > Uber One > Manage Membership > End Membership."
+    "instructions": "Account > Uber One > Manage Membership > End Membership.",
+    "fallback_url": "https://account.uber.com"
   },
   {
     "id": "shipt",
@@ -1125,7 +1187,8 @@
     ],
     "logo": "/logos/shipt.png",
     "cancel_url": "https://www.shipt.com/account/subscription",
-    "instructions": "Account > Subscription > Cancel Membership."
+    "instructions": "Account > Subscription > Cancel Membership.",
+    "fallback_url": "https://shop.shipt.com/account"
   },
   {
     "id": "walmart_plus",
@@ -1155,7 +1218,8 @@
     ],
     "logo": "/logos/peloton.png",
     "cancel_url": "https://www.onepeloton.com/preferences/subscriptions",
-    "instructions": "Profile > Memberships > Cancel."
+    "instructions": "Profile > Memberships > Cancel.",
+    "fallback_url": "https://www.onepeloton.com/settings"
   },
   {
     "id": "strava",
@@ -1165,7 +1229,8 @@
     ],
     "logo": "/logos/strava.png",
     "cancel_url": "https://www.strava.com/settings/billing",
-    "instructions": "Settings > My Account > Downgrade to Free."
+    "instructions": "Settings > My Account > Downgrade to Free.",
+    "fallback_url": "https://www.strava.com/settings"
   },
   {
     "id": "myfitnesspal",
@@ -1175,7 +1240,8 @@
     ],
     "logo": "/logos/myfitnesspal.png",
     "cancel_url": "https://www.myfitnesspal.com/account/premium",
-    "instructions": "Premium > Subscription Settings > Turn Off Auto-Renewal."
+    "instructions": "Premium > Subscription Settings > Turn Off Auto-Renewal.",
+    "fallback_url": "https://www.myfitnesspal.com/account"
   },
   {
     "id": "fitbit",
@@ -1245,7 +1311,8 @@
     ],
     "logo": "/logos/coursera.png",
     "cancel_url": "https://www.coursera.org/my-purchases",
-    "instructions": "My Purchases > Manage Subscriptions > Cancel."
+    "instructions": "My Purchases > Manage Subscriptions > Cancel.",
+    "fallback_url": "https://www.coursera.org/account-settings"
   },
   {
     "id": "udemy",
@@ -1255,7 +1322,8 @@
     ],
     "logo": "/logos/udemy.png",
     "cancel_url": "https://www.udemy.com/user/edit-payment-methods/",
-    "instructions": "Account Settings > Subscriptions > Cancel."
+    "instructions": "Account Settings > Subscriptions > Cancel.",
+    "fallback_url": "https://www.udemy.com/user/edit-account/"
   },
   {
     "id": "skillshare",
@@ -1265,7 +1333,8 @@
     ],
     "logo": "/logos/skillshare.png",
     "cancel_url": "https://www.skillshare.com/settings/payments",
-    "instructions": "Account Settings > Payments > Cancel Membership."
+    "instructions": "Account Settings > Payments > Cancel Membership.",
+    "fallback_url": "https://www.skillshare.com/settings"
   },
   {
     "id": "duolingo",
@@ -1275,7 +1344,8 @@
     ],
     "logo": "/logos/duolingo_plus.png",
     "cancel_url": "https://www.duolingo.com/settings/plus",
-    "instructions": "Settings > Manage Subscription > Cancel."
+    "instructions": "Settings > Manage Subscription > Cancel.",
+    "fallback_url": "https://www.duolingo.com/settings"
   },
   {
     "id": "linkedin_learning",
@@ -1286,7 +1356,8 @@
     ],
     "logo": "/logos/linkedin_learning.png",
     "cancel_url": "https://www.linkedin.com/premium/manage",
-    "instructions": "Premium > Manage Subscription > Cancel subscription."
+    "instructions": "Premium > Manage Subscription > Cancel subscription.",
+    "fallback_url": "https://www.linkedin.com/mypreferences"
   },
   {
     "id": "chegg",
@@ -1306,7 +1377,8 @@
     ],
     "logo": "/logos/norton.png",
     "cancel_url": "https://my.norton.com/p/my-subscription",
-    "instructions": "My Subscriptions > Cancel Subscription Renewal."
+    "instructions": "My Subscriptions > Cancel Subscription Renewal.",
+    "fallback_url": "https://my.norton.com"
   },
   {
     "id": "mcafee",
@@ -1316,7 +1388,8 @@
     ],
     "logo": "/logos/mcafee.png",
     "cancel_url": "https://home.mcafee.com/secure/protected/login.aspx",
-    "instructions": "My Account > Auto-Renewal Settings > Turn Off."
+    "instructions": "My Account > Auto-Renewal Settings > Turn Off.",
+    "fallback_url": "https://home.mcafee.com"
   },
   {
     "id": "malwarebytes",
@@ -1357,7 +1430,8 @@
     ],
     "logo": "/logos/dollar_shave_club.png",
     "cancel_url": "https://www.dollarshaveclub.com/account/settings/membership",
-    "instructions": "Membership Settings > Cancel Membership."
+    "instructions": "Membership Settings > Cancel Membership.",
+    "fallback_url": "https://www.dollarshaveclub.com/account"
   },
   {
     "id": "ipsy",
@@ -1367,7 +1441,8 @@
     ],
     "logo": "/logos/ipsy.png",
     "cancel_url": "https://www.ipsy.com/account/membership",
-    "instructions": "Account > Membership > Cancel Subscription."
+    "instructions": "Account > Membership > Cancel Subscription.",
+    "fallback_url": "https://www.ipsy.com/account"
   },
   {
     "id": "barkbox",
@@ -1377,7 +1452,8 @@
     ],
     "logo": "/logos/barkbox.png",
     "cancel_url": "https://www.barkbox.com/account",
-    "instructions": "Account > Subscription > Disable Auto-Renewal."
+    "instructions": "Account > Subscription > Disable Auto-Renewal.",
+    "fallback_url": "https://www.barkbox.com"
   },
   {
     "id": "jasper_ai",
@@ -1459,7 +1535,8 @@
     ],
     "logo": "/logos/britbox.png",
     "cancel_url": "https://www.britbox.com/account/subscription",
-    "instructions": "Account > Subscription > Cancel."
+    "instructions": "Account > Subscription > Cancel.",
+    "fallback_url": "https://www.britbox.com/us/account"
   },
   {
     "id": "acorn_tv",
@@ -1469,7 +1546,8 @@
     ],
     "logo": "/logos/acorn_tv.png",
     "cancel_url": "https://acorn.tv/account/status",
-    "instructions": "My Acorn TV > Manage > Cancel."
+    "instructions": "My Acorn TV > Manage > Cancel.",
+    "fallback_url": "https://acorn.tv/account"
   },
   {
     "id": "viki",
@@ -1584,7 +1662,8 @@
     ],
     "logo": "/logos/airtable.png",
     "cancel_url": "https://airtable.com/account",
-    "instructions": "Workspace Settings > Billing > Downgrade."
+    "instructions": "Workspace Settings > Billing > Downgrade.",
+    "fallback_url": "https://airtable.com/account"
   },
   {
     "id": "webflow",
@@ -1614,7 +1693,8 @@
     ],
     "logo": "/logos/linear.png",
     "cancel_url": "https://linear.app/settings/billing",
-    "instructions": "Settings > Billing > Cancel."
+    "instructions": "Settings > Billing > Cancel.",
+    "fallback_url": "https://linear.app/settings"
   },
   {
     "id": "spectrum",
@@ -1664,7 +1744,8 @@
     ],
     "logo": "/logos/vercel.png",
     "cancel_url": "https://vercel.com/dashboard",
-    "instructions": "Settings > Billing > Cancel."
+    "instructions": "Settings > Billing > Cancel.",
+    "fallback_url": "https://vercel.com/account"
   },
   {
     "id": "netlify",
@@ -1674,7 +1755,8 @@
     ],
     "logo": "/logos/netlify.png",
     "cancel_url": "https://app.netlify.com/teams/settings/billing",
-    "instructions": "Team Settings > Billing > Cancel Plan."
+    "instructions": "Team Settings > Billing > Cancel Plan.",
+    "fallback_url": "https://app.netlify.com/account"
   },
   {
     "id": "jetbrains",
@@ -1734,7 +1816,8 @@
     ],
     "logo": "/logos/1password.png",
     "cancel_url": "https://my.1password.com/billing",
-    "instructions": "Billing > Delete Account or Unsubscribe."
+    "instructions": "Billing > Delete Account or Unsubscribe.",
+    "fallback_url": "https://my.1password.com/settings"
   },
   {
     "id": "lastpass",
@@ -1744,7 +1827,8 @@
     ],
     "logo": "/logos/lastpass.png",
     "cancel_url": "https://lastpass.com/my.php",
-    "instructions": "Account Settings > My Account > Cancel Renewal."
+    "instructions": "Account Settings > My Account > Cancel Renewal.",
+    "fallback_url": "https://lastpass.com/account.php"
   },
   {
     "id": "dashlane",
@@ -1754,7 +1838,8 @@
     ],
     "logo": "/logos/dashlane.png",
     "cancel_url": "https://www.dashlane.com/account/summary",
-    "instructions": "My Account > Subscription > Cancel."
+    "instructions": "My Account > Subscription > Cancel.",
+    "fallback_url": "https://app.dashlane.com/account"
   },
   {
     "id": "bitwarden",
@@ -1764,7 +1849,8 @@
     ],
     "logo": "/logos/bitwarden.png",
     "cancel_url": "https://vault.bitwarden.com/#/settings/billing",
-    "instructions": "Settings > Billing > Cancel Subscription."
+    "instructions": "Settings > Billing > Cancel Subscription.",
+    "fallback_url": "https://vault.bitwarden.com/#/settings"
   },
   {
     "id": "new_yorker",
@@ -1827,7 +1913,8 @@
     ],
     "logo": "/logos/headspace.png",
     "cancel_url": "https://www.headspace.com/subscription/manage",
-    "instructions": "Account > Subscription > Turn off auto-renewal."
+    "instructions": "Account > Subscription > Turn off auto-renewal.",
+    "fallback_url": "https://www.headspace.com/settings"
   },
   {
     "id": "calm",
@@ -1838,7 +1925,8 @@
     ],
     "logo": "/logos/calm.png",
     "cancel_url": "https://www.calm.com/profile",
-    "instructions": "Profile > Manage Subscription > Cancel."
+    "instructions": "Profile > Manage Subscription > Cancel.",
+    "fallback_url": "https://www.calm.com"
   },
   {
     "id": "noom",
@@ -1848,7 +1936,8 @@
     ],
     "logo": "/logos/noom.png",
     "cancel_url": "https://www.noom.com/#/settings",
-    "instructions": "Settings > Manage Subscription > Cancel."
+    "instructions": "Settings > Manage Subscription > Cancel.",
+    "fallback_url": "https://web.noom.com"
   },
   {
     "id": "weightwatchers",
@@ -1981,7 +2070,8 @@
     ],
     "logo": "/logos/box.png",
     "cancel_url": "https://app.box.com/billing",
-    "instructions": "Admin Console > Billing > Cancel Account."
+    "instructions": "Admin Console > Billing > Cancel Account.",
+    "fallback_url": "https://app.box.com/master/settings"
   },
   {
     "id": "onedrive",
@@ -2012,7 +2102,8 @@
     ],
     "logo": "/logos/carbonite.png",
     "cancel_url": "https://my.carbonite.com/billing",
-    "instructions": "Account > Billing > Turn off auto-renew."
+    "instructions": "Account > Billing > Turn off auto-renew.",
+    "fallback_url": "https://www.carbonite.com/account"
   },
   {
     "id": "backblaze",
@@ -2022,7 +2113,8 @@
     ],
     "logo": "/logos/backblaze.png",
     "cancel_url": "https://secure.backblaze.com/user_signin.htm",
-    "instructions": "Preferences > Billing > Cancel."
+    "instructions": "Preferences > Billing > Cancel.",
+    "fallback_url": "https://secure.backblaze.com/user_signin.htm"
   },
   {
     "id": "protonmail",
@@ -2075,7 +2167,8 @@
     ],
     "logo": "/logos/costco.png",
     "cancel_url": "https://customerservice.costco.com/app/answers/detail/a_id/1203/",
-    "instructions": "Must speak with a team member at any warehouse membership counter."
+    "instructions": "Must speak with a team member at any warehouse membership counter.",
+    "fallback_url": "https://www.costco.com/MembershipServicesMemberView"
   },
   {
     "id": "sams_club",
@@ -2086,7 +2179,8 @@
     ],
     "logo": "/logos/sams_club.png",
     "cancel_url": "https://www.samsclub.com/content/terms-and-conditions",
-    "instructions": "Visit Membership Desk or call 1-888-746-7726."
+    "instructions": "Visit Membership Desk or call 1-888-746-7726.",
+    "fallback_url": "https://www.samsclub.com/account"
   },
   {
     "id": "lyft_pink",
@@ -2109,7 +2203,8 @@
     ],
     "logo": "/logos/grubhub.png",
     "cancel_url": "https://www.grubhub.com/help/contact-us",
-    "instructions": "Account > Grubhub+ Membership > Cancel Membership."
+    "instructions": "Account > Grubhub+ Membership > Cancel Membership.",
+    "fallback_url": "https://www.grubhub.com/account"
   },
   {
     "id": "uber_eats",
@@ -2123,5 +2218,1251 @@
     "logo": "/logos/uber_one.png",
     "cancel_url": "https://m.uber.com/",
     "instructions": "Account > Uber One > Manage Membership > End Membership."
+  },
+  {
+    "id": "amazon_prime_video",
+    "name": "Amazon Prime Video",
+    "regex_keywords": [
+      "Amazon Prime Video",
+      "AMAZON.COM*PRIME VIDEO",
+      "AMAZON PRIME VIDEO",
+      "AMZ*PRIME VIDEO",
+      "AMZN Prime Video",
+      "Prime Video",
+      "PRIME VIDEO"
+    ],
+    "logo": "https://logo.clearbit.com/amazon.com",
+    "cancel_url": "https://www.amazon.com/gp/video/settings/",
+    "fallback_url": "https://www.amazon.com/gp/primecentral",
+    "instructions": "Included with Prime membership; standalone also available"
+  },
+  {
+    "id": "disney_plus",
+    "name": "Disney+",
+    "regex_keywords": [
+      "Disney+",
+      "DisneyPlus",
+      "DISNEY+",
+      "DISNEY PLUS",
+      "DISNEYPLUS",
+      "DISNEY PLUS SUBSCRIPTION",
+      "DIS+ PREMIER BUNDLE",
+      "DISNEY STREAMING",
+      "DISNEY BUNDLE",
+      "DISNEYPLUS.COM"
+    ],
+    "logo": "https://logo.clearbit.com/disneyplus.com",
+    "cancel_url": "https://www.disneyplus.com/account/subscription",
+    "fallback_url": "https://www.disneyplus.com/account",
+    "instructions": "If subscribed through Apple/Google, cancel there instead"
+  },
+  {
+    "id": "disney_hotstar",
+    "name": "Disney+ Hotstar",
+    "regex_keywords": [
+      "Disney+ Hotstar",
+      "DISNEY+ HOTSTAR",
+      "HOTSTAR PREMIUM",
+      "HOTSTAR",
+      "VVIUU DISNEY+ HOTSTAR",
+      "DISNEY HOTSTAR",
+      "Hotstar Premium"
+    ],
+    "logo": "https://logo.clearbit.com/hotstar.com",
+    "cancel_url": "https://www.hotstar.com/account/subscription",
+    "fallback_url": "https://www.hotstar.com/account",
+    "instructions": "Regional service for India, Indonesia, Thailand"
+  },
+  {
+    "id": "apple_tv_plus",
+    "name": "Apple TV+",
+    "regex_keywords": [
+      "Apple TV+",
+      "AppleTV+",
+      "APPLE TV+",
+      "APPLE.COM/BILL APPLE TV",
+      "APL*APPLE TV+",
+      "APPLE TV PLUS",
+      "Apple TV Plus"
+    ],
+    "logo": "https://logo.clearbit.com/tv.apple.com",
+    "cancel_url": "https://support.apple.com/HT202039",
+    "fallback_url": "https://tv.apple.com/account",
+    "instructions": "Cancel through Apple ID settings or device Settings app"
+  },
+  {
+    "id": "apple_music",
+    "name": "Apple Music",
+    "regex_keywords": [
+      "Apple Music",
+      "AppleMusic",
+      "APPLE MUSIC",
+      "APPLE MUSIC SUBSCRIPTION",
+      "APL*APPLE MUSIC",
+      "APPLE.COM/BILL APPLE MUSIC",
+      "Apple Music Subscription"
+    ],
+    "logo": "https://logo.clearbit.com/apple.com",
+    "cancel_url": "https://support.apple.com/HT202039",
+    "fallback_url": "https://www.apple.com/apple-music/",
+    "instructions": "Cancel through Apple ID settings or device Settings app"
+  },
+  {
+    "id": "apple_one",
+    "name": "Apple One",
+    "regex_keywords": [
+      "Apple One",
+      "AppleOne",
+      "APPLE ONE",
+      "APPLE.COM/BILL APPLE ONE",
+      "APL*APPLE ONE",
+      "Apple One Bundle"
+    ],
+    "logo": "https://logo.clearbit.com/apple.com",
+    "cancel_url": "https://support.apple.com/HT211659",
+    "fallback_url": "https://www.apple.com/apple-one/",
+    "instructions": "Includes Apple Music, TV+, Arcade, iCloud+, and more"
+  },
+  {
+    "id": "apple_arcade",
+    "name": "Apple Arcade",
+    "regex_keywords": [
+      "Apple Arcade",
+      "APPLE ARCADE",
+      "APL*APPLE ARCADE",
+      "APPLE.COM/BILL ARCADE",
+      "Apple Arcade Subscription"
+    ],
+    "logo": "https://logo.clearbit.com/apple.com",
+    "cancel_url": "https://support.apple.com/HT210112",
+    "fallback_url": "https://www.apple.com/apple-arcade/",
+    "instructions": "Cancel through Apple ID settings"
+  },
+  {
+    "id": "youtube_music",
+    "name": "YouTube Music",
+    "regex_keywords": [
+      "YouTube Music",
+      "YOUTUBE MUSIC",
+      "YT MUSIC",
+      "GOOGLE*YOUTUBE MUSIC",
+      "YouTube Music Premium"
+    ],
+    "logo": "https://logo.clearbit.com/music.youtube.com",
+    "cancel_url": "https://www.youtube.com/paid_memberships",
+    "fallback_url": "https://myaccount.google.com/subscriptions",
+    "instructions": "Standalone music subscription"
+  },
+  {
+    "id": "google_one",
+    "name": "Google One",
+    "regex_keywords": [
+      "Google One",
+      "GoogleOne",
+      "GOOGLE ONE",
+      "GOOGLE*CLOUD STORAGE",
+      "GOOGLE*GOOGLE ONE",
+      "GOOGLE ONE STORAGE"
+    ],
+    "logo": "https://logo.clearbit.com/one.google.com",
+    "cancel_url": "https://one.google.com/settings/cancel",
+    "fallback_url": "https://myaccount.google.com/subscriptions",
+    "instructions": "Storage shared across Google services"
+  },
+  {
+    "id": "google_workspace",
+    "name": "Google Workspace",
+    "regex_keywords": [
+      "Google Workspace",
+      "G Suite",
+      "GOOGLE WORKSPACE",
+      "GOOGLE*WORKSPACE",
+      "GSUITE",
+      "G SUITE"
+    ],
+    "logo": "https://logo.clearbit.com/workspace.google.com",
+    "cancel_url": "https://admin.google.com/ac/billing/subscriptions",
+    "fallback_url": "https://admin.google.com",
+    "instructions": "Business email and productivity suite"
+  },
+  {
+    "id": "espn_plus",
+    "name": "ESPN+",
+    "regex_keywords": [
+      "ESPN+",
+      "ESPNPlus",
+      "ESPN PLUS",
+      "ESPN+ BUNDLE",
+      "ESPN+ SUBSCRIPTION",
+      "ESPNPLUS"
+    ],
+    "logo": "https://logo.clearbit.com/plus.espn.com",
+    "cancel_url": "https://plus.espn.com/account/subscription",
+    "fallback_url": "https://plus.espn.com/account",
+    "instructions": "Part of Disney Bundle option"
+  },
+  {
+    "id": "philo",
+    "name": "Philo",
+    "regex_keywords": [
+      "Philo",
+      "PHILO",
+      "PHILO TV",
+      "PHILO.COM"
+    ],
+    "logo": "https://logo.clearbit.com/philo.com",
+    "cancel_url": "https://www.philo.com/account/subscription",
+    "fallback_url": "https://www.philo.com/account",
+    "instructions": "Budget live TV option"
+  },
+  {
+    "id": "amc_plus",
+    "name": "AMC+",
+    "regex_keywords": [
+      "AMC+",
+      "AMCPlus",
+      "AMC PLUS",
+      "AMC+ STREAMING",
+      "AMCPLUS"
+    ],
+    "logo": "https://logo.clearbit.com/amcplus.com",
+    "cancel_url": "https://www.amcplus.com/account/subscription",
+    "fallback_url": "https://www.amcplus.com/account",
+    "instructions": "AMC original content and movies"
+  },
+  {
+    "id": "showtime",
+    "name": "Showtime",
+    "regex_keywords": [
+      "Showtime",
+      "SHOWTIME",
+      "SHO",
+      "SHOWTIME ANYTIME",
+      "SHOWTIME STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/showtime.com",
+    "cancel_url": "https://www.showtime.com/#account",
+    "fallback_url": "https://www.showtime.com",
+    "instructions": "Now bundled with Paramount+"
+  },
+  {
+    "id": "mgm_plus",
+    "name": "MGM+",
+    "regex_keywords": [
+      "MGM+",
+      "MGMPlus",
+      "MGM PLUS",
+      "EPIX",
+      "MGM+ STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/mgmplus.com",
+    "cancel_url": "https://www.mgmplus.com/account",
+    "fallback_url": "https://www.mgmplus.com",
+    "instructions": "Formerly Epix"
+  },
+  {
+    "id": "bet_plus",
+    "name": "BET+",
+    "regex_keywords": [
+      "BET+",
+      "BETPlus",
+      "BET PLUS",
+      "BET+ STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/bet.plus",
+    "cancel_url": "https://www.bet.plus/account",
+    "fallback_url": "https://www.bet.plus",
+    "instructions": "Black entertainment streaming"
+  },
+  {
+    "id": "curiosity_stream",
+    "name": "CuriosityStream",
+    "regex_keywords": [
+      "CuriosityStream",
+      "CURIOSITYSTREAM",
+      "CURIOSITY STREAM"
+    ],
+    "logo": "https://logo.clearbit.com/curiositystream.com",
+    "cancel_url": "https://curiositystream.com/settings/subscription",
+    "fallback_url": "https://curiositystream.com/settings",
+    "instructions": "Documentary streaming"
+  },
+  {
+    "id": "mubi",
+    "name": "MUBI",
+    "regex_keywords": [
+      "MUBI",
+      "Mubi",
+      "MUBI.COM",
+      "MUBI STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/mubi.com",
+    "cancel_url": "https://mubi.com/account",
+    "fallback_url": "https://mubi.com",
+    "instructions": "Curated cinema streaming"
+  },
+  {
+    "id": "criterion_channel",
+    "name": "Criterion Channel",
+    "regex_keywords": [
+      "Criterion Channel",
+      "CRITERION CHANNEL",
+      "THE CRITERION CHANNEL",
+      "CRITERIONCHANNEL"
+    ],
+    "logo": "https://logo.clearbit.com/criterionchannel.com",
+    "cancel_url": "https://www.criterionchannel.com/account/subscription",
+    "fallback_url": "https://www.criterionchannel.com/account",
+    "instructions": "Classic and art-house films"
+  },
+  {
+    "id": "shudder",
+    "name": "Shudder",
+    "regex_keywords": [
+      "Shudder",
+      "SHUDDER",
+      "SHUDDER.COM",
+      "AMC SHUDDER"
+    ],
+    "logo": "https://logo.clearbit.com/shudder.com",
+    "cancel_url": "https://www.shudder.com/account/subscription",
+    "fallback_url": "https://www.shudder.com/account",
+    "instructions": "Horror streaming service"
+  },
+  {
+    "id": "amazon_music",
+    "name": "Amazon Music Unlimited",
+    "regex_keywords": [
+      "Amazon Music",
+      "AMAZON MUSIC",
+      "AMAZON MUSIC UNLIMITED",
+      "AMZN MUSIC",
+      "AMZ MUSIC UNLIMITED"
+    ],
+    "logo": "https://logo.clearbit.com/music.amazon.com",
+    "cancel_url": "https://www.amazon.com/music/settings",
+    "fallback_url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=201549700",
+    "instructions": "Discount for Prime members"
+  },
+  {
+    "id": "kindle_unlimited",
+    "name": "Kindle Unlimited",
+    "regex_keywords": [
+      "Kindle Unlimited",
+      "KINDLE UNLIMITED",
+      "AMZN KINDLE UNLIMITED",
+      "AMAZON KINDLE UNLIMITED"
+    ],
+    "logo": "https://logo.clearbit.com/amazon.com",
+    "cancel_url": "https://www.amazon.com/hz/mycd/myx#/home/settings/payment",
+    "fallback_url": "https://www.amazon.com/kindle-dbs/hz/subscribe/ku",
+    "instructions": "Unlimited ebook reading"
+  },
+  {
+    "id": "blinkist",
+    "name": "Blinkist",
+    "regex_keywords": [
+      "Blinkist",
+      "BLINKIST",
+      "BLINKIST INC",
+      "BLINKIST PREMIUM"
+    ],
+    "logo": "https://logo.clearbit.com/blinkist.com",
+    "cancel_url": "https://www.blinkist.com/app/settings/subscription",
+    "fallback_url": "https://www.blinkist.com/app/settings",
+    "instructions": "Book summaries in 15 minutes"
+  },
+  {
+    "id": "nintendo_switch_online",
+    "name": "Nintendo Switch Online",
+    "regex_keywords": [
+      "Nintendo Switch Online",
+      "NINTENDO SWITCH ONLINE",
+      "NSO",
+      "NINTENDO ONLINE",
+      "NINTENDO*SWITCH"
+    ],
+    "logo": "https://logo.clearbit.com/nintendo.com",
+    "cancel_url": "https://accounts.nintendo.com/",
+    "fallback_url": "https://ec.nintendo.com/my/#/",
+    "instructions": "Online play and classic games"
+  },
+  {
+    "id": "geforce_now",
+    "name": "GeForce NOW",
+    "regex_keywords": [
+      "GeForce NOW",
+      "GEFORCE NOW",
+      "NVIDIA GEFORCE NOW",
+      "GFN"
+    ],
+    "logo": "https://logo.clearbit.com/nvidia.com",
+    "cancel_url": "https://www.nvidia.com/en-us/account/subscription/",
+    "fallback_url": "https://www.nvidia.com/en-us/account/",
+    "instructions": "Cloud gaming service"
+  },
+  {
+    "id": "discord_nitro",
+    "name": "Discord Nitro",
+    "regex_keywords": [
+      "Discord Nitro",
+      "DISCORD NITRO",
+      "DISCORD*NITRO",
+      "DISCORD INC"
+    ],
+    "logo": "https://logo.clearbit.com/discord.com",
+    "cancel_url": "https://discord.com/channels/@me",
+    "fallback_url": "https://discord.com/nitro",
+    "instructions": "Cancel in User Settings > Subscriptions"
+  },
+  {
+    "id": "twitch_subscription",
+    "name": "Twitch Subscription",
+    "regex_keywords": [
+      "Twitch Sub",
+      "TWITCH",
+      "TWITCH SUB",
+      "TWITCH.TV",
+      "TWITCH INTERACTIVE"
+    ],
+    "logo": "https://logo.clearbit.com/twitch.tv",
+    "cancel_url": "https://www.twitch.tv/subscriptions",
+    "fallback_url": "https://www.twitch.tv/settings/connections",
+    "instructions": "Individual channel subscriptions"
+  },
+  {
+    "id": "twitch_turbo",
+    "name": "Twitch Turbo",
+    "regex_keywords": [
+      "Twitch Turbo",
+      "TWITCH TURBO"
+    ],
+    "logo": "https://logo.clearbit.com/twitch.tv",
+    "cancel_url": "https://www.twitch.tv/turbo",
+    "fallback_url": "https://www.twitch.tv/settings",
+    "instructions": "Ad-free viewing across Twitch"
+  },
+  {
+    "id": "adobe_creative_cloud",
+    "name": "Adobe Creative Cloud",
+    "regex_keywords": [
+      "Adobe Creative Cloud",
+      "ADOBE*CREATIVE CLD",
+      "ADOBE CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD 408-536-6000",
+      "ADOBE SYSTEMS",
+      "ADOBE CC"
+    ],
+    "logo": "https://logo.clearbit.com/adobe.com",
+    "cancel_url": "https://account.adobe.com/plans",
+    "fallback_url": "https://account.adobe.com",
+    "instructions": "Early cancellation may incur fees"
+  },
+  {
+    "id": "adobe_acrobat",
+    "name": "Adobe Acrobat Pro",
+    "regex_keywords": [
+      "Adobe Acrobat",
+      "ADOBE*ACROBAT",
+      "ADOBE ACROBAT PRO",
+      "ADOBE ACROBAT DC"
+    ],
+    "logo": "https://logo.clearbit.com/adobe.com",
+    "cancel_url": "https://account.adobe.com/plans",
+    "fallback_url": "https://account.adobe.com",
+    "instructions": "PDF editing and signing"
+  },
+  {
+    "id": "sketch",
+    "name": "Sketch",
+    "regex_keywords": [
+      "Sketch",
+      "SKETCH",
+      "SKETCH.COM",
+      "SKETCH APP"
+    ],
+    "logo": "https://logo.clearbit.com/sketch.com",
+    "cancel_url": "https://www.sketch.com/account/billing/",
+    "fallback_url": "https://www.sketch.com/account/",
+    "instructions": "Mac design tool"
+  },
+  {
+    "id": "github_copilot",
+    "name": "GitHub Copilot",
+    "regex_keywords": [
+      "GitHub Copilot",
+      "GITHUB COPILOT",
+      "COPILOT"
+    ],
+    "logo": "https://logo.clearbit.com/github.com",
+    "cancel_url": "https://github.com/settings/copilot",
+    "fallback_url": "https://github.com/settings/billing",
+    "instructions": "AI pair programming"
+  },
+  {
+    "id": "chatgpt_plus",
+    "name": "ChatGPT Plus",
+    "regex_keywords": [
+      "ChatGPT Plus",
+      "CHATGPT",
+      "CHATGPT SUBSCRIPTION",
+      "CHATGPT PLUS",
+      "OPENAI CHATGPT PLUS",
+      "OPENAI *CHATGPT PLUS",
+      "OPENAI"
+    ],
+    "logo": "https://logo.clearbit.com/chat.openai.com",
+    "cancel_url": "https://chat.openai.com/settings/subscription",
+    "fallback_url": "https://chat.openai.com/settings",
+    "instructions": "Advanced AI assistant"
+  },
+  {
+    "id": "openai_api",
+    "name": "OpenAI API",
+    "regex_keywords": [
+      "OpenAI API",
+      "OPENAI API",
+      "OPENAI PLATFORM"
+    ],
+    "logo": "https://logo.clearbit.com/platform.openai.com",
+    "cancel_url": "https://platform.openai.com/account/billing/overview",
+    "fallback_url": "https://platform.openai.com/account",
+    "instructions": "Pay-as-you-go API access"
+  },
+  {
+    "id": "claude_pro",
+    "name": "Claude Pro",
+    "regex_keywords": [
+      "Claude Pro",
+      "CLAUDE",
+      "CLAUDE PRO",
+      "ANTHROPIC"
+    ],
+    "logo": "https://logo.clearbit.com/claude.ai",
+    "cancel_url": "https://claude.ai/settings",
+    "fallback_url": "https://claude.ai",
+    "instructions": "Advanced AI assistant by Anthropic"
+  },
+  {
+    "id": "todoist",
+    "name": "Todoist",
+    "regex_keywords": [
+      "Todoist",
+      "TODOIST",
+      "TODOIST PREMIUM",
+      "DOIST"
+    ],
+    "logo": "https://logo.clearbit.com/todoist.com",
+    "cancel_url": "https://todoist.com/app/settings/subscription",
+    "fallback_url": "https://todoist.com/app/settings",
+    "instructions": "Task management"
+  },
+  {
+    "id": "orangetheory",
+    "name": "Orangetheory Fitness",
+    "regex_keywords": [
+      "Orangetheory",
+      "ORANGETHEORY",
+      "OTF",
+      "ORANGETHEORY FITNESS"
+    ],
+    "logo": "https://logo.clearbit.com/orangetheory.com",
+    "cancel_url": "https://www.orangetheory.com/en-us/faq/",
+    "fallback_url": "https://www.orangetheory.com",
+    "instructions": "Cancel in person at studio, 30 days notice required"
+  },
+  {
+    "id": "weight_watchers",
+    "name": "WW (Weight Watchers)",
+    "regex_keywords": [
+      "Weight Watchers",
+      "WW",
+      "WEIGHT WATCHERS",
+      "WW INTERNATIONAL"
+    ],
+    "logo": "https://logo.clearbit.com/weightwatchers.com",
+    "cancel_url": "https://www.weightwatchers.com/us/help/billing-cancellations",
+    "fallback_url": "https://www.weightwatchers.com/us/account",
+    "instructions": "Call 1-800-651-6000 to cancel"
+  },
+  {
+    "id": "mint_mobile",
+    "name": "Mint Mobile",
+    "regex_keywords": [
+      "Mint Mobile",
+      "MINT MOBILE",
+      "MINTMOBILE"
+    ],
+    "logo": "https://logo.clearbit.com/mintmobile.com",
+    "cancel_url": "https://www.mintmobile.com/help/",
+    "fallback_url": "https://my.mintmobile.com",
+    "instructions": "Pre-paid wireless carrier"
+  },
+  {
+    "id": "google_fi",
+    "name": "Google Fi",
+    "regex_keywords": [
+      "Google Fi",
+      "GOOGLE FI",
+      "GOOGLE*FI",
+      "PROJECT FI"
+    ],
+    "logo": "https://logo.clearbit.com/fi.google.com",
+    "cancel_url": "https://fi.google.com/account#cancelplan",
+    "fallback_url": "https://fi.google.com/account",
+    "instructions": "Google wireless service"
+  },
+  {
+    "id": "t_mobile",
+    "name": "T-Mobile",
+    "regex_keywords": [
+      "T-Mobile",
+      "TMOBILE",
+      "T-MOBILE",
+      "T MOBILE"
+    ],
+    "logo": "https://logo.clearbit.com/t-mobile.com",
+    "cancel_url": "https://www.t-mobile.com/support/account/cancel-your-account",
+    "fallback_url": "https://my.t-mobile.com",
+    "instructions": "Call 1-800-937-8997 or visit store"
+  },
+  {
+    "id": "new_york_times",
+    "name": "The New York Times",
+    "regex_keywords": [
+      "New York Times",
+      "NYT",
+      "NY TIMES",
+      "NYT DIGITAL SUBSCRIPTION",
+      "THE NEW YORK TIMES"
+    ],
+    "logo": "https://logo.clearbit.com/nytimes.com",
+    "cancel_url": "https://www.nytimes.com/subscription/cancel",
+    "fallback_url": "https://myaccount.nytimes.com",
+    "instructions": "Call 1-800-591-9233 to cancel"
+  },
+  {
+    "id": "wall_street_journal",
+    "name": "The Wall Street Journal",
+    "regex_keywords": [
+      "Wall Street Journal",
+      "WSJ",
+      "WALL STREET JOURNAL",
+      "THE WALL STREET JOURNAL",
+      "DOW JONES WSJ"
+    ],
+    "logo": "https://logo.clearbit.com/wsj.com",
+    "cancel_url": "https://customercenter.wsj.com/",
+    "fallback_url": "https://www.wsj.com/account",
+    "instructions": "Call 1-800-369-2834 to cancel"
+  },
+  {
+    "id": "the_athletic",
+    "name": "The Athletic",
+    "regex_keywords": [
+      "The Athletic",
+      "ATHLETIC",
+      "THE ATHLETIC",
+      "THEATHLETIC"
+    ],
+    "logo": "https://logo.clearbit.com/theathletic.com",
+    "cancel_url": "https://theathletic.com/settings/subscription",
+    "fallback_url": "https://theathletic.com/settings",
+    "instructions": "Sports journalism subscription"
+  },
+  {
+    "id": "linkedin_premium",
+    "name": "LinkedIn Premium",
+    "regex_keywords": [
+      "LinkedIn Premium",
+      "LINKEDIN",
+      "LINKEDIN PREMIUM",
+      "LINKEDIN 6509009338",
+      "LINKEDIN CAREER"
+    ],
+    "logo": "https://logo.clearbit.com/linkedin.com",
+    "cancel_url": "https://www.linkedin.com/psettings/cancel-premium-subscription",
+    "fallback_url": "https://www.linkedin.com/mypreferences/d/categories/account",
+    "instructions": "Professional networking premium"
+  },
+  {
+    "id": "masterclass",
+    "name": "MasterClass",
+    "regex_keywords": [
+      "MasterClass",
+      "MASTERCLASS",
+      "MASTERCLASS INC"
+    ],
+    "logo": "https://logo.clearbit.com/masterclass.com",
+    "cancel_url": "https://www.masterclass.com/settings/subscriptions",
+    "fallback_url": "https://www.masterclass.com/settings",
+    "instructions": "Celebrity-taught online classes"
+  },
+  {
+    "id": "brilliant",
+    "name": "Brilliant",
+    "regex_keywords": [
+      "Brilliant",
+      "BRILLIANT",
+      "BRILLIANT.ORG"
+    ],
+    "logo": "https://logo.clearbit.com/brilliant.org",
+    "cancel_url": "https://brilliant.org/account/subscription/",
+    "fallback_url": "https://brilliant.org/account/",
+    "instructions": "Math and science learning"
+  },
+  {
+    "id": "pluralsight",
+    "name": "Pluralsight",
+    "regex_keywords": [
+      "Pluralsight",
+      "PLURALSIGHT",
+      "PLURALSIGHT SKILLS"
+    ],
+    "logo": "https://logo.clearbit.com/pluralsight.com",
+    "cancel_url": "https://app.pluralsight.com/id/subscription",
+    "fallback_url": "https://app.pluralsight.com/id/account",
+    "instructions": "Tech skills development"
+  },
+  {
+    "id": "codecademy",
+    "name": "Codecademy Pro",
+    "regex_keywords": [
+      "Codecademy",
+      "CODECADEMY",
+      "CODECADEMY PRO"
+    ],
+    "logo": "https://logo.clearbit.com/codecademy.com",
+    "cancel_url": "https://www.codecademy.com/account/subscription",
+    "fallback_url": "https://www.codecademy.com/account",
+    "instructions": "Coding education platform"
+  },
+  {
+    "id": "match",
+    "name": "Match.com",
+    "regex_keywords": [
+      "Match",
+      "MATCH",
+      "MATCH.COM",
+      "MATCH GROUP"
+    ],
+    "logo": "https://logo.clearbit.com/match.com",
+    "cancel_url": "https://www.match.com/account/settings",
+    "fallback_url": "https://www.match.com/account",
+    "instructions": "Cancel auto-renewal in settings"
+  },
+  {
+    "id": "blue_apron",
+    "name": "Blue Apron",
+    "regex_keywords": [
+      "Blue Apron",
+      "BLUE APRON",
+      "BLUEAPRON"
+    ],
+    "logo": "https://logo.clearbit.com/blueapron.com",
+    "cancel_url": "https://www.blueapron.com/account/settings",
+    "fallback_url": "https://www.blueapron.com/account",
+    "instructions": "Call 1-646-891-5376 to cancel"
+  },
+  {
+    "id": "factor",
+    "name": "Factor",
+    "regex_keywords": [
+      "Factor",
+      "FACTOR",
+      "FACTOR75",
+      "FACTOR MEALS"
+    ],
+    "logo": "https://logo.clearbit.com/factor75.com",
+    "cancel_url": "https://www.factor75.com/account",
+    "fallback_url": "https://www.factor75.com",
+    "instructions": "Prepared meal delivery service"
+  },
+  {
+    "id": "door_dash_dashpass",
+    "name": "DoorDash DashPass",
+    "regex_keywords": [
+      "DashPass",
+      "DASHPASS",
+      "DOORDASH DASHPASS",
+      "DOORDASH*DASHPASS"
+    ],
+    "logo": "https://logo.clearbit.com/doordash.com",
+    "cancel_url": "https://www.doordash.com/consumer/membership/",
+    "fallback_url": "https://www.doordash.com/accounts/",
+    "instructions": "Free delivery subscription"
+  },
+  {
+    "id": "instacart_express",
+    "name": "Instacart+",
+    "regex_keywords": [
+      "Instacart+",
+      "INSTACART",
+      "INSTACART EXPRESS",
+      "INSTACART+"
+    ],
+    "logo": "https://logo.clearbit.com/instacart.com",
+    "cancel_url": "https://www.instacart.com/store/account/manage_membership",
+    "fallback_url": "https://www.instacart.com/store/account",
+    "instructions": "Grocery delivery membership"
+  },
+  {
+    "id": "birchbox",
+    "name": "Birchbox",
+    "regex_keywords": [
+      "Birchbox",
+      "BIRCHBOX",
+      "BIRCHBOX QUARTERLY"
+    ],
+    "logo": "https://logo.clearbit.com/birchbox.com",
+    "cancel_url": "https://www.birchbox.com/me/manage-subscription",
+    "fallback_url": "https://www.birchbox.com/me/account",
+    "instructions": "Beauty product subscription"
+  },
+  {
+    "id": "fabfitfun",
+    "name": "FabFitFun",
+    "regex_keywords": [
+      "FabFitFun",
+      "FABFITFUN",
+      "FAB FIT FUN"
+    ],
+    "logo": "https://logo.clearbit.com/fabfitfun.com",
+    "cancel_url": "https://fabfitfun.com/account/subscription",
+    "fallback_url": "https://fabfitfun.com/account",
+    "instructions": "Seasonal lifestyle box"
+  },
+  {
+    "id": "care_of",
+    "name": "Care/of",
+    "regex_keywords": [
+      "Care/of",
+      "CARE/OF VITAMINS",
+      "CAREOFVITAMINS",
+      "CARE/OF"
+    ],
+    "logo": "https://logo.clearbit.com/takecareof.com",
+    "cancel_url": "https://takecareof.com/account/subscription",
+    "fallback_url": "https://takecareof.com/account",
+    "instructions": "Personalized vitamins subscription"
+  },
+  {
+    "id": "ritual",
+    "name": "Ritual Vitamins",
+    "regex_keywords": [
+      "Ritual",
+      "RITUAL",
+      "RITUAL VITAMINS"
+    ],
+    "logo": "https://logo.clearbit.com/ritual.com",
+    "cancel_url": "https://ritual.com/account/subscriptions",
+    "fallback_url": "https://ritual.com/account",
+    "instructions": "Daily vitamin subscription"
+  },
+  {
+    "id": "robinhood_gold",
+    "name": "Robinhood Gold",
+    "regex_keywords": [
+      "Robinhood Gold",
+      "ROBINHOOD",
+      "ROBINHOOD GOLD"
+    ],
+    "logo": "https://logo.clearbit.com/robinhood.com",
+    "cancel_url": "https://robinhood.com/account/settings",
+    "fallback_url": "https://robinhood.com/account",
+    "instructions": "Enhanced investing features"
+  },
+  {
+    "id": "morningstar",
+    "name": "Morningstar Premium",
+    "regex_keywords": [
+      "Morningstar",
+      "MORNINGSTAR",
+      "MORNINGSTAR PREMIUM"
+    ],
+    "logo": "https://logo.clearbit.com/morningstar.com",
+    "cancel_url": "https://www.morningstar.com/members/settings",
+    "fallback_url": "https://www.morningstar.com/account",
+    "instructions": "Investment research"
+  },
+  {
+    "id": "seeking_alpha",
+    "name": "Seeking Alpha Premium",
+    "regex_keywords": [
+      "Seeking Alpha",
+      "SEEKING ALPHA",
+      "SEEKING ALPHA PREMIUM"
+    ],
+    "logo": "https://logo.clearbit.com/seekingalpha.com",
+    "cancel_url": "https://seekingalpha.com/account/subscription",
+    "fallback_url": "https://seekingalpha.com/account",
+    "instructions": "Stock research and analysis"
+  },
+  {
+    "id": "tradingview",
+    "name": "TradingView",
+    "regex_keywords": [
+      "TradingView",
+      "TRADINGVIEW",
+      "TRADINGVIEW PRO"
+    ],
+    "logo": "https://logo.clearbit.com/tradingview.com",
+    "cancel_url": "https://www.tradingview.com/u/#!settings/billing",
+    "fallback_url": "https://www.tradingview.com/u/#!settings",
+    "instructions": "Charting and trading platform"
+  },
+  {
+    "id": "ynab",
+    "name": "YNAB",
+    "regex_keywords": [
+      "YNAB",
+      "You Need A Budget",
+      "YOU NEED A BUDGET"
+    ],
+    "logo": "https://logo.clearbit.com/youneedabudget.com",
+    "cancel_url": "https://app.youneedabudget.com/settings/subscription",
+    "fallback_url": "https://app.youneedabudget.com/settings",
+    "instructions": "Budgeting app"
+  },
+  {
+    "id": "google_cloud",
+    "name": "Google Cloud Platform",
+    "regex_keywords": [
+      "Google Cloud",
+      "GCP",
+      "GOOGLE CLOUD PLATFORM",
+      "GOOGLE CLOUD"
+    ],
+    "logo": "https://logo.clearbit.com/cloud.google.com",
+    "cancel_url": "https://console.cloud.google.com/billing/",
+    "fallback_url": "https://console.cloud.google.com",
+    "instructions": "Cloud computing services"
+  },
+  {
+    "id": "azure",
+    "name": "Microsoft Azure",
+    "regex_keywords": [
+      "Azure",
+      "AZURE",
+      "MICROSOFT AZURE",
+      "MS AZURE"
+    ],
+    "logo": "https://logo.clearbit.com/azure.microsoft.com",
+    "cancel_url": "https://portal.azure.com/#blade/Microsoft_Azure_Billing",
+    "fallback_url": "https://portal.azure.com",
+    "instructions": "Cloud computing platform"
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "regex_keywords": [
+      "Jira",
+      "JIRA",
+      "ATLASSIAN JIRA"
+    ],
+    "logo": "https://logo.clearbit.com/atlassian.com",
+    "cancel_url": "https://admin.atlassian.com/billing/",
+    "fallback_url": "https://admin.atlassian.com",
+    "instructions": "Project management software"
+  },
+  {
+    "id": "confluence",
+    "name": "Confluence",
+    "regex_keywords": [
+      "Confluence",
+      "CONFLUENCE",
+      "ATLASSIAN CONFLUENCE"
+    ],
+    "logo": "https://logo.clearbit.com/atlassian.com",
+    "cancel_url": "https://admin.atlassian.com/billing/",
+    "fallback_url": "https://admin.atlassian.com",
+    "instructions": "Team collaboration wiki"
+  },
+  {
+    "id": "monday",
+    "name": "Monday.com",
+    "regex_keywords": [
+      "Monday",
+      "MONDAY",
+      "MONDAY.COM"
+    ],
+    "logo": "https://logo.clearbit.com/monday.com",
+    "cancel_url": "https://support.monday.com/hc/en-us/articles/360005356779",
+    "fallback_url": "https://auth.monday.com/account/settings",
+    "instructions": "Work management platform"
+  },
+  {
+    "id": "clickup",
+    "name": "ClickUp",
+    "regex_keywords": [
+      "ClickUp",
+      "CLICKUP"
+    ],
+    "logo": "https://logo.clearbit.com/clickup.com",
+    "cancel_url": "https://app.clickup.com/settings/billing",
+    "fallback_url": "https://app.clickup.com/settings",
+    "instructions": "All-in-one productivity platform"
+  },
+  {
+    "id": "basecamp",
+    "name": "Basecamp",
+    "regex_keywords": [
+      "Basecamp",
+      "BASECAMP"
+    ],
+    "logo": "https://logo.clearbit.com/basecamp.com",
+    "cancel_url": "https://launchpad.37signals.com/account/cancel",
+    "fallback_url": "https://launchpad.37signals.com/account",
+    "instructions": "Project management and team communication"
+  },
+  {
+    "id": "idrive",
+    "name": "IDrive",
+    "regex_keywords": [
+      "IDrive",
+      "IDRIVE"
+    ],
+    "logo": "https://logo.clearbit.com/idrive.com",
+    "cancel_url": "https://www.idrive.com/cancel-subscription",
+    "fallback_url": "https://www.idrive.com/login",
+    "instructions": "Cloud backup with local backup"
+  },
+  {
+    "id": "mailchimp",
+    "name": "Mailchimp",
+    "regex_keywords": [
+      "Mailchimp",
+      "MAILCHIMP",
+      "INTUIT MAILCHIMP"
+    ],
+    "logo": "https://logo.clearbit.com/mailchimp.com",
+    "cancel_url": "https://admin.mailchimp.com/account/billing/",
+    "fallback_url": "https://admin.mailchimp.com/account",
+    "instructions": "Email marketing platform"
+  },
+  {
+    "id": "quickbooks",
+    "name": "QuickBooks Online",
+    "regex_keywords": [
+      "QuickBooks",
+      "QUICKBOOKS",
+      "INTUIT QUICKBOOKS",
+      "QBO"
+    ],
+    "logo": "https://logo.clearbit.com/quickbooks.intuit.com",
+    "cancel_url": "https://qbo.intuit.com/app/settings/subscriptions",
+    "fallback_url": "https://qbo.intuit.com/app/settings",
+    "instructions": "Accounting software"
+  },
+  {
+    "id": "freshbooks",
+    "name": "FreshBooks",
+    "regex_keywords": [
+      "FreshBooks",
+      "FRESHBOOKS"
+    ],
+    "logo": "https://logo.clearbit.com/freshbooks.com",
+    "cancel_url": "https://my.freshbooks.com/#/subscription",
+    "fallback_url": "https://my.freshbooks.com",
+    "instructions": "Invoicing and accounting"
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "regex_keywords": [
+      "Shopify",
+      "SHOPIFY"
+    ],
+    "logo": "https://logo.clearbit.com/shopify.com",
+    "cancel_url": "https://admin.shopify.com/store/settings/billing",
+    "fallback_url": "https://admin.shopify.com/store/settings",
+    "instructions": "E-commerce platform"
+  },
+  {
+    "id": "sirius_xm",
+    "name": "SiriusXM",
+    "regex_keywords": [
+      "SiriusXM",
+      "SIRIUSXM",
+      "SIRIUS XM",
+      "SIRIUS SATELLITE RADIO"
+    ],
+    "logo": "https://logo.clearbit.com/siriusxm.com",
+    "cancel_url": "https://care.siriusxm.com/sirlogin_view.action",
+    "fallback_url": "https://www.siriusxm.com/manage",
+    "instructions": "Call 1-866-635-2349 to cancel"
+  },
+  {
+    "id": "alltrails",
+    "name": "AllTrails Pro",
+    "regex_keywords": [
+      "AllTrails",
+      "ALLTRAILS",
+      "ALLTRAILS PRO"
+    ],
+    "logo": "https://logo.clearbit.com/alltrails.com",
+    "cancel_url": "https://www.alltrails.com/account/subscription",
+    "fallback_url": "https://www.alltrails.com/account",
+    "instructions": "Hiking and trail maps"
+  },
+  {
+    "id": "dazn",
+    "name": "DAZN",
+    "regex_keywords": [
+      "DAZN",
+      "Dazn",
+      "DAZN SPORTS"
+    ],
+    "logo": "https://logo.clearbit.com/dazn.com",
+    "cancel_url": "https://www.dazn.com/account",
+    "fallback_url": "https://www.dazn.com/account",
+    "instructions": "Sports streaming service"
+  },
+  {
+    "id": "ufc_fight_pass",
+    "name": "UFC Fight Pass",
+    "regex_keywords": [
+      "UFC Fight Pass",
+      "UFC FIGHT PASS"
+    ],
+    "logo": "https://logo.clearbit.com/ufc.tv",
+    "cancel_url": "https://www.ufc.tv/account",
+    "fallback_url": "https://www.ufc.tv",
+    "instructions": "MMA and combat sports streaming"
+  },
+  {
+    "id": "stan",
+    "name": "Stan",
+    "regex_keywords": [
+      "Stan",
+      "STAN",
+      "STAN ENTERTAINMENT"
+    ],
+    "logo": "https://logo.clearbit.com/stan.com.au",
+    "cancel_url": "https://www.stan.com.au/account/subscription",
+    "fallback_url": "https://www.stan.com.au/account",
+    "instructions": "Australian streaming service"
+  },
+  {
+    "id": "binge_au",
+    "name": "Binge",
+    "regex_keywords": [
+      "Binge",
+      "BINGE",
+      "BINGE STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/binge.com.au",
+    "cancel_url": "https://binge.com.au/account",
+    "fallback_url": "https://binge.com.au",
+    "instructions": "Australian streaming service"
+  },
+  {
+    "id": "kayo_sports",
+    "name": "Kayo Sports",
+    "regex_keywords": [
+      "Kayo",
+      "KAYO",
+      "KAYO SPORTS"
+    ],
+    "logo": "https://logo.clearbit.com/kayosports.com.au",
+    "cancel_url": "https://kayosports.com.au/account",
+    "fallback_url": "https://kayosports.com.au",
+    "instructions": "Australian sports streaming"
+  },
+  {
+    "id": "crave",
+    "name": "Crave",
+    "regex_keywords": [
+      "Crave",
+      "CRAVE",
+      "CRAVE TV",
+      "BELL MEDIA CRAVE"
+    ],
+    "logo": "https://logo.clearbit.com/crave.ca",
+    "cancel_url": "https://www.crave.ca/account/subscription",
+    "fallback_url": "https://www.crave.ca/account",
+    "instructions": "Canadian streaming service"
+  },
+  {
+    "id": "sky_uk",
+    "name": "Sky UK",
+    "regex_keywords": [
+      "Sky",
+      "SKY",
+      "SKY UK LIMITED",
+      "SKY ENTERTAINMENT"
+    ],
+    "logo": "https://logo.clearbit.com/sky.com",
+    "cancel_url": "https://www.sky.com/help/articles/how-to-cancel-sky-tv",
+    "fallback_url": "https://www.sky.com/my-account",
+    "instructions": "Call to cancel, 31 days notice required"
+  },
+  {
+    "id": "now_tv",
+    "name": "NOW TV",
+    "regex_keywords": [
+      "NOW TV",
+      "NOW",
+      "NOW ENTERTAINMENT",
+      "NOW TV STREAMING"
+    ],
+    "logo": "https://logo.clearbit.com/nowtv.com",
+    "cancel_url": "https://www.nowtv.com/account",
+    "fallback_url": "https://www.nowtv.com",
+    "instructions": "Sky's streaming-only service"
+  },
+  {
+    "id": "canal_plus",
+    "name": "Canal+",
+    "regex_keywords": [
+      "Canal+",
+      "CANAL+",
+      "CANAL PLUS",
+      "CANAL+ GROUPE"
+    ],
+    "logo": "https://logo.clearbit.com/canalplus.com",
+    "cancel_url": "https://www.canalplus.com/aide/je-souhaite-resilier-mon-abonnement",
+    "fallback_url": "https://www.canalplus.com/mon-compte",
+    "instructions": "French premium TV service"
+  },
+  {
+    "id": "rtl_plus",
+    "name": "RTL+",
+    "regex_keywords": [
+      "RTL+",
+      "RTL PLUS",
+      "TVNOW",
+      "RTL+ PREMIUM"
+    ],
+    "logo": "https://logo.clearbit.com/plus.rtl.de",
+    "cancel_url": "https://plus.rtl.de/account",
+    "fallback_url": "https://plus.rtl.de",
+    "instructions": "German streaming service"
+  },
+  {
+    "id": "videoland",
+    "name": "Videoland",
+    "regex_keywords": [
+      "Videoland",
+      "VIDEOLAND"
+    ],
+    "logo": "https://logo.clearbit.com/videoland.com",
+    "cancel_url": "https://www.videoland.com/account/subscriptions",
+    "fallback_url": "https://www.videoland.com",
+    "instructions": "Dutch streaming service"
+  },
+  {
+    "id": "viaplay",
+    "name": "Viaplay",
+    "regex_keywords": [
+      "Viaplay",
+      "VIAPLAY",
+      "VIAPLAY NEDERLAND"
+    ],
+    "logo": "https://logo.clearbit.com/viaplay.com",
+    "cancel_url": "https://viaplay.com/account/subscription",
+    "fallback_url": "https://viaplay.com",
+    "instructions": "Nordic streaming service"
   }
 ]

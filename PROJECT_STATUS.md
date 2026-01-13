@@ -1,4 +1,4 @@
-# Project: Plug It - Subscription Detection Engine
+# Project: Plug It All - Subscription Detection Engine
 
 ## Recent Major Updates (Jan 12, 2026)
 

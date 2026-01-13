@@ -1,4 +1,4 @@
-# Plug It - Find the Leaks in Your Bank Account
+# Plug It All - Find the Leaks in Your Bank Account
 
 A privacy-first, client-side subscription detection tool that analyzes bank statements (PDF/CSV) to identify recurring charges.
 

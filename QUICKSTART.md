@@ -2,7 +2,7 @@
 
 ## Product
 
-**Plug It** — Find the leaks in your bank account
+**Plug It All** — Find the leaks in your bank account
 
 GitHub: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
 
