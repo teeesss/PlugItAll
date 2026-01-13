@@ -14,10 +14,23 @@ export interface EnrichedSubscription extends SubscriptionCandidate {
 export const matchSubscription = (description: string): boolean => {
   // Normalize logic similar to analyzer
   const normalized = description.toUpperCase();
-  // console.log(`Matching ${normalized} against ${subsDB.length} subs`);
+
   return subsDB.some((sub) => {
     // Check exact name match or regex keywords
-    if (sub.regex_keywords && sub.regex_keywords.some((k) => normalized.includes(k.toUpperCase())))
+    if (sub.regex_keywords && sub.regex_keywords.some((k) => {
+      const keyword = k.toUpperCase();
+
+      // For short keywords (<= 5 chars), require word boundary to prevent false matches
+      // e.g., "STAN" should not match "STANDARD"
+      if (keyword.length <= 5) {
+        // Use word boundary regex: ensure the keyword is not part of a larger word
+        const wordBoundaryRegex = new RegExp(`\\b${keyword}\\b`, 'i');
+        return wordBoundaryRegex.test(normalized);
+      }
+
+      // For longer keywords, simple substring match is fine
+      return normalized.includes(keyword);
+    }))
       return true;
     return false;
   });

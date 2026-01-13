@@ -152,7 +152,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
       'EBAY', 'ETSY', 'SHELL', 'EXXON', 'CHEVRON', '7-ELEVEN', '7 ELEVEN', '7ELEVEN',
 
       // Financial/Utilities
-      'INTEREST', 'FEE', 'AUTOPAY', 'PAYMENT', 'TRANSFER', 'ATM', 'DEPOSIT', 'CREDIT CARD', 'BANK', 'LOAN', 'MORTGAGE', 'RENT', 'CITI FLEX',
+      'INTEREST', 'INTEREST CHARGED', 'CHARGED', 'FEE', 'AUTOPAY', 'PAYMENT', 'TRANSFER', 'ATM', 'DEPOSIT', 'CREDIT CARD', 'BANK', 'LOAN', 'MORTGAGE', 'RENT', 'CITI FLEX', 'FLEX PLAN',
 
       // Gas Stations & One-offs
       'CIRCLE K', 'CIRCLEK', 'MARATHON', 'BP ', 'TEXACO', 'VALERO', 'SPEEDWAY', 'QUIKTRIP', 'WAWA', 'SHEETZ', 'RACETRAC', 'CEFCO', 'MURPHY', 'TRACTOR SUPPLY',
