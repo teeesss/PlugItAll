@@ -1,5 +1,38 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-13 (Subscription Database Integration)
+
+### 🟢 Feature: Comprehensive Subscription Data Migration
+
+**Goal**: Integrate 500+ subscription services from `subscriptions_master.json` into existing data files.
+
+**Implementation**:
+- Created `scripts/migrate_master_data.cjs` to automate the migration
+- Merged **89 new subscriptions** into `subs.json` (total: 292)
+- Added **176 pricing entries** to `subscription_pricing.json` (total: 193)
+- Applied **20 fallback URLs** from `subscriptions_master_sup_url.json`
+
+**Field Mappings**:
+| Source Field | Target Field |
+|--------------|--------------|
+| `aliases` | `regex_keywords` |
+| `cancellation.url` | `cancel_url` |
+| `cancellation.fallback_url` | `fallback_url` (new) |
+| `cancellation.notes` | `instructions` |
+| `website` | Logo URL via Clearbit |
+
+**Verification**:
+- ✅ Baseline test regenerated and passing
+- ✅ 77/80 tests passing (2 pre-existing issues)
+- ✅ Committed and pushed to remote
+
+**New Files**:
+- `subscriptions_master.json` - Full subscription database
+- `subscriptions_master_sup_url.json` - Fallback URL updates
+- `scripts/migrate_master_data.cjs` - Migration script
+
+---
+
 ## Session: 2026-01-11/12 (Major Debugging)
 
 ### 🔴 Critical Issues Resolved

@@ -1,5 +1,13 @@
 # TASKS
 
+## 🟢 Completed (Session 2026-01-13)
+
+- [x] **TASK-050**: Integrate 500+ subscription database from master data files
+  - Added 89 new subscriptions to `subs.json` (total: 292)
+  - Added 176 pricing entries to `subscription_pricing.json` (total: 193)
+  - Applied 20 fallback URLs from `subscriptions_master_sup_url.json`
+  - Created migration script: `scripts/migrate_master_data.cjs`
+
 ## 🟢 Completed (Session 2026-01-12)
 
 - [x] Fix Visible $25 missing when combined with PDF.

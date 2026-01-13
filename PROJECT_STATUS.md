@@ -1,5 +1,22 @@
 # Project: Plug It All - Subscription Detection Engine
 
+## Recent Major Updates (Jan 13, 2026)
+
+### 🗃️ Subscription Database Integration
+**Goal**: Integrate comprehensive subscription database (~500+ services) from master data files.
+
+**Results**:
+- Added **89 new subscriptions** to `subs.json` (total: 292)
+- Added **176 pricing entries** to `subscription_pricing.json` (total: 193)
+- Applied **20 fallback URLs** for better cancellation support
+- Created reusable migration script: `scripts/migrate_master_data.cjs`
+
+**New Fields**:
+- `fallback_url` - Alternative cancellation URL if primary fails
+- Clearbit logo URLs for all new subscriptions
+
+---
+
 ## Recent Major Updates (Jan 12, 2026)
 
 ### 🎯 Critical Bug Fix: Single File Upload Now Works
