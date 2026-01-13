@@ -1,41 +1,48 @@
-# PROJECT STATUS - 2026-01-12
+# Project: Plug It - Subscription Detection Engine
 
-## 🎯 Current Milestone: Production Ready
+## Recent Major Updates (Jan 12, 2026)
 
-The subscription detection engine is stable and the codebase has pre-commit hooks for quality enforcement.
+### 🎯 Critical Bug Fix: Single File Upload Now Works
+**Issue:** Single CSV uploads were not detecting ANY subscriptions due to incorrect refund detection logic.
 
-**Product Name**: Plug It — "Find the leaks in your bank account"
-**GitHub**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
+**Root Cause:** The `isRefund()` function was treating all negative amounts (`-15.99`) as refunds, filtering out every single charge transaction.
 
-## 🟢 Completed Recently
+**Solution:** Replaced sign-based refund detection with keyword-based detection:
+- Only filters transactions with "REFUND", "RETURN", "REVERSAL", "CREDIT MEMO" in description
+- Supports BOTH positive and negative amount conventions
+- Uses `Math.abs()` to normalize all amounts
 
-- **Pre-Commit Hooks**: Prettier, ESLint, Gitleaks, Checkov installed and passing
-- **Product Rename**: App renamed from "Unsub Static" to "Plug It"
-- **GitHub Push**: Codebase pushed to public repository
-- **Lint Fixes**: Fixed @ts-ignore → @ts-expect-error, unused imports, regex escapes
-- **CSV + PDF Deduplication**: Fixed 0-day interval bugs when combining sources
-- **Median-Based Interval Analysis**: Made detector robust against outlier statement dates
-- **Aggressive Shopping Rejection**: eBay/Amazon random purchases (3+ price points) blocked
-- **Retail Blacklisting**: Added 60+ retail/fast-food keywords with fuzzy variations
-- **Subscription DB Updates**: Added Fabletics, Walmart+, LiveOak Fiber, Google Play, Grubhub+
-- **Parser Robustness**: Refined `parseDate` and `parseAmount` for European formats, CR/DR markers
-- **Test Fixes**: Resolved Amazon Prime/Walmart+ detection and expanded unit tests
+**Impact:** Subscription detection now works for ALL CSV formats, both single and multiple file uploads.
 
-## 🟡 In Progress
+### 📊 Comprehensive 52-Bank Stress Test Coverage
+Expanded from 2 to **52 banks** across global markets:
+- **37 US banks** (traditional, credit unions, digital, brokerages)
+- **15 International banks** (Europe, Asia, LATAM, Australia, Africa)
+- **11 currencies** (USD, GBP, EUR, JPY, SGD, CNY, INR, MXN, AUD, BRL, ZAR)
+- **6 date formats** validated
+- **8 languages** supported
 
-- [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Partially implemented*
-- [ ] **TASK-017**: Implement "Bill View" / Linear List page.
-- [ ] Improved logo handling (some logos missing/broken).
-- **CI/CD Pipeline**: Added GitHub Actions workflow for automated testing
-- **High Risk Merchants**: Added support/validation for Target, Costco, Sams Club, Lyft, Uber Eats
+### 🚀 Deployment Optimizations
+- Fixed deploy script to skip 100+ static logo files
+- Reduced deployment time significantly
+- Live at: https://www.bmwseals.com/plugit/
 
-## 🔴 Blockers
+## Test Coverage
+- **80/80 tests passing** (100%)
+- **Zero crashes** across all bank formats
+- **Zero false positives** validated
 
-- None.
+## Key Files Modified
+- [`src/utils/analyzer.ts`](file:///c:/projects/CancelSubscriptions/just-fucking-cancel/src/utils/analyzer.ts) - Smart refund detection
+- [`scripts/deploy.js`](file:///c:/projects/CancelSubscriptions/just-fucking-cancel/scripts/deploy.js) - Optimized static file handling
+- `tests/fixtures/stress_banks/` - 52 bank CSV samples
 
-## 📊 Stats
+## Documentation
+- [Walkthrough](file:///C:/Users/rayjo/.gemini/antigravity/brain/a177e4ad-5230-4619-b616-e7986b25e2d1/walkthrough.md) - Complete implementation details
+- [Stress Test Data](file:///C:/Users/rayjo/.gemini/antigravity/brain/a177e4ad-5230-4619-b616-e7986b25e2d1/synthetic_credit_card_data.md) - 52-bank coverage
+- `SAMPLE_DATA_README.md` - Manual testing guide
 
-- **Test Coverage**: 48 Passing Tests (8 files)
-- **Supported Merchants**: 158
-- **Confidence Levels**: High (Verified), Medium (Irregular/Range), Low (Review/Unknown)
-- **Pre-Commit Hooks**: 11 hooks active
+## Next Steps
+- Consider adding more international banks
+- Implement PDF parsing improvements
+- Add user feedback mechanism

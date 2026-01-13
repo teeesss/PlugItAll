@@ -2,23 +2,33 @@
 
 You must follow these rules at all times.
 
+---
+
 ## 1. Issue Tracking
 - **ALWAYS** check `issues.md` before starting a task to be aware of known pitfalls.
 - **IMMEDIATELY** log any new error or blocker in `issues.md` as soon as it is identified.
 - **UPDATE** `issues.md` with the resolution once fixed, including the "Cause" to prevent recurrence.
+- **ALWAYS** check `issues.md` before marking any logic task as complete.
 
+---
 ## 2. Testing
 - Run `npm run test:run` before marking any logic task as complete.
 - Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI.
 - When a test fails after code changes, check if the blacklist or detection logic needs adjustment.
 
+---
+
 ## 3. File Safety
 - When using `replace_file_content`, check the surrounding lines to ensure you are not accidentally deleting imports or adjacent logic.
 - Use specific, small chunks for replacements rather than large blocks if possible.
 
+---
+
 ## 4. Environment
 - Ensure `postcss.config.js` exists for Tailwind to work.
 - Use `import type` for all TypeScript interfaces.
+
+---
 
 ## 5. Environment Maintenance
 - **ALWAYS** Kill stale terminals/processes before starting a new server.
@@ -95,3 +105,15 @@ python -m pre_commit run --all-files
 - **Repo**: [https://github.com/teeesss/plug-it](https://github.com/teeesss/plug-it)
 - **Credentials**: `.gitcreds` is in `.gitignore` — never commit secrets
 - **Product Name**: Plug It — "Find the leaks in your bank account"
+
+---
+
+## 9. Uploading to Web Server
+
+- **MANDATORY**: After every successful local logic/UI verification, you **MUST** deploy to the live server.
+- **PROCESS**:
+    1. Run `npm run build` to generate the production bundle.
+    2. Run `npm run deploy` to sync the `dist` folder to the FTP server.
+    3. Only upload files from the `dist` folder to the FTP server which have changed. Do not upload the entire `dist` folder, especially static image files!
+    4. For status files like images. Do not reup-load to a FTP server unless files have changed when uploading dist from node build.
+- **VERIFICATION**: Always check the live URL (`https://www.bmwseals.com/plugit/`) after deployment to ensure changes are reflected.

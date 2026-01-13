@@ -59,14 +59,12 @@ async function deploy() {
         return true;
       }
 
-      // SKIP logos that already exist
+      // SKIP all logos - they are static and never change
       if (relativePath.startsWith('logos/')) {
-        const fileName = path.basename(file);
-        if (existingLogos.has(fileName)) {
-          return false;
-        }
+        return false;
       }
 
+      // Upload everything else (vite.svg, etc.)
       return true;
     });
 

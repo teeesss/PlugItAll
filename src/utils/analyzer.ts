@@ -71,11 +71,6 @@ function validateHighRiskPrice(name: string, amount: number): 'MATCH' | 'REJECT'
   return 'NEUTRAL';
 }
 
-function isRefund(t: Transaction): boolean {
-  // Standard convention: charges are positive, refunds are negative.
-  return t.amount < 0;
-}
-
 /**
  * Filters out balanced pairs of charges and refunds (Pair Cancellation).
  */
@@ -131,8 +126,18 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
     if (filteredTxs.length === 0) return;
 
     // Filter out remaining individual refunds and ensure positive amounts
+    // SMART REFUND DETECTION: Handle both conventions
+    // Convention 1: Charges are negative (e.g., -15.99), refunds are positive
+    // Convention 2: Charges are positive (e.g., 15.99), refunds have "REFUND" in description
     const absoluteTxs = filteredTxs
-      .filter(t => !isRefund(t))
+      .filter(t => {
+        // If description contains refund keywords, it's a refund regardless of sign
+        const desc = t.description.toUpperCase();
+        if (desc.includes('REFUND') || desc.includes('RETURN') || desc.includes('REVERSAL') || desc.includes('CREDIT MEMO')) {
+          return false; // Filter out refunds
+        }
+        return true; // Keep everything else
+      })
       .map(t => ({ ...t, amount: Math.abs(t.amount) }));
 
     if (absoluteTxs.length === 0) return;
@@ -379,7 +384,5 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
         });
       }
     });
-  });
-
-  return candidates;
+  }); return candidates;
 }
