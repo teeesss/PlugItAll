@@ -148,25 +148,30 @@ function App() {
         </div>
 
         <div className="flex items-center space-x-2">
-          {/* Clear Data Button (Only if data exists) */}
-          {allTransactions.length > 0 && (
-            <button
-              onClick={handleClearData}
-              className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
-              title="Clear All Data"
-            >
-              <RefreshCcw className="w-6 h-6" />
-            </button>
-          )}
+          {/* Only show controls if there is data (visible or hidden) */}
+          {(candidates.length > 0 || ignoredList.length > 0) && (
+            <>
+              {/* Clear Data Button */}
+              {allTransactions.length > 0 && (
+                <button
+                  onClick={handleClearData}
+                  className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
+                  title="Clear All Data"
+                >
+                  <RefreshCcw className="w-6 h-6" />
+                </button>
+              )}
 
-          {/* Settings Toggle */}
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
-            title="Manage Hidden Items"
-          >
-            <Settings className="w-6 h-6" />
-          </button>
+              {/* Settings Toggle */}
+              <button
+                onClick={() => setIsSettingsOpen(true)}
+                className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+                title="Manage Hidden Items"
+              >
+                <Settings className="w-6 h-6" />
+              </button>
+            </>
+          )}
         </div>
       </header>
 
