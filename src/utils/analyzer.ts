@@ -3,6 +3,7 @@ export type { Transaction };
 import { matchSubscription } from './matcher';
 import { normalizeDescription } from './normalizer';
 import pricingDB from '../data/subscription_pricing.json';
+import blacklistDB from '../data/blacklist.json';
 
 export interface SubscriptionCandidate {
   name: string;
@@ -147,32 +148,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
 
 
     // Negative filter for keywords
-    const BLACKLIST = [
-      // Retail / Marketplaces (Frequent False Positives - NOT current sub vendors)
-      'EBAY', 'ETSY', 'SHELL', 'EXXON', 'CHEVRON', '7-ELEVEN', '7 ELEVEN', '7ELEVEN',
-
-      // Financial/Utilities
-      'INTEREST', 'INTEREST CHARGED', 'CHARGED', 'FEE', 'AUTOPAY', 'PAYMENT', 'TRANSFER', 'ATM', 'DEPOSIT', 'CREDIT CARD', 'BANK', 'LOAN', 'MORTGAGE', 'RENT', 'CITI FLEX', 'FLEX PLAN',
-
-      // Gas Stations & One-offs
-      'CIRCLE K', 'CIRCLEK', 'MARATHON', 'BP ', 'TEXACO', 'VALERO', 'SPEEDWAY', 'QUIKTRIP', 'WAWA', 'SHEETZ', 'RACETRAC', 'CEFCO', 'MURPHY', 'TRACTOR SUPPLY',
-
-      // General Retail / Dollar Stores
-      'DOLLAR GENERAL', 'DOLLAR TREE', 'DOLLARTREE', 'FAMILY DOLLAR', 'FAMILYDOLLAR', 'WALMART SUPERCENTER', 'WM SUPERCENTER',
-      'KROGER', 'SAFEWAY', 'PUBLIX', 'ALDI', 'HOME DEPOT', 'HOMEDEPOT', 'LOWES', 'MENARDS', 'CVS', 'WALGREENS', 'RITE AID', 'RITEAID',
-
-      // Fast Food / Restaurants (Common False Positives - NOT delivery subs)
-      'PIZZA', 'BURGER', 'MCDONALDS', "MCDONALD'S", 'DOMINO', 'STARBUCKS', 'CHICK-FIL-A', 'CHICK FIL A', 'CHICKFILA',
-      'TACO BELL', 'TACOBELL', 'DUNKIN', 'WENDY', 'PANDA EXPRESS', 'PANDAEXPRESS', 'SONIC', 'ARBYS', 'POPEYES', 'CHIPOTLE',
-      'PANERA', 'SUBWAY', 'FIVE GUYS', 'FIVEGUYS', 'BURGER KING', 'BURGERKING', 'PIZZA HUT', 'PIZZAHUT',
-      'DAIRY QUEEN', 'DAIRYQUEEN', 'KRISPY KREME', 'KRISPYKREME', 'LITTLE CAES', 'LITTLE CAESARS', 'LITTLECEASARS', 'LITTLE CESARS',
-
-      // Travel / One-off
-      'PINK JEEP', 'PARKING', 'HOTEL', 'AIRBNB', 'VRBO',
-      // Specific false positives from user data (2026-01-12)
-      'SP ULC VH', 'THE DISTRICT', 'HUDSON', 'MARIPOSA', 'SARAZONA', 'G2G', 'BOLTON ', 'TST ',
-      'WWMC', 'PENSAC', 'PENSACOLA', 'MEDICAL', 'CENTER', 'FT WALTON', 'DOCTOR', 'PA FT ',
-    ];
+    const BLACKLIST = blacklistDB;
 
     // STICKY BLACKLIST: These terms are ALWAYS rejected for unknown merchants.
     // We check both spaced and non-spaced versions for maximum hit rate on variations.

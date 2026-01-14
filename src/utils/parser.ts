@@ -6,7 +6,7 @@ import type { Transaction } from '../mocks/statements';
 // Initialize PDF.js worker
 // Use unpkg for the worker to avoid local build issues with Vite for now
 if (typeof window !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 }
 
 const DATE_PATTERNS = [

@@ -20,6 +20,8 @@ function App() {
   const [ignoredList, setIgnoredList] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  // NEW: Store raw transactions to support cumulative analysis
+  const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
 
   // Load ignored list on mount
   useEffect(() => {
@@ -43,7 +45,7 @@ function App() {
 
   const handleFiles = async (files: File[]) => {
     setIsProcessing(true);
-    let allTransactions: Transaction[] = [];
+    let newTransactions: Transaction[] = [];
 
     for (const file of files) {
       if (!isSupportedFile(file)) continue;
@@ -55,17 +57,20 @@ function App() {
         } else {
           transactions = await parseCSV(file);
         }
-        allTransactions = [...allTransactions, ...transactions];
+        newTransactions = [...newTransactions, ...transactions];
       } catch (e) {
         console.error(`Failed to parse ${file.name}`, e);
       }
     }
 
-    if (allTransactions.length > 0) {
-      // DEDUPLICATE transactions (in case same statement uploaded as CSV and PDF)
+    if (newTransactions.length > 0) {
+      // Combine with EXISTING transactions (Cumulative)
+      const combined = [...allTransactions, ...newTransactions];
+
+      // DEDUPLICATE transactions
       // Key: date + amount + normalized description prefix
       const seen = new Set<string>();
-      const dedupedTransactions = allTransactions.filter((t) => {
+      const dedupedTransactions = combined.filter((t) => {
         // Use first 20 chars of description to handle minor formatting differences
         const descPrefix = t.description.substring(0, 20).toUpperCase().trim();
         const key = `${t.date}-${t.amount.toFixed(2)}-${descPrefix}`;
@@ -75,14 +80,17 @@ function App() {
       });
 
       console.log(
-        `Deduped: ${allTransactions.length} -> ${dedupedTransactions.length} transactions`
+        `Deduped: ${combined.length} -> ${dedupedTransactions.length} transactions`
       );
 
+      // Update State
+      setAllTransactions(dedupedTransactions);
+
+      // Re-run Detection on EVERYTHING
       const subs = detectSubscriptions(dedupedTransactions);
       const enriched = subs.map(enrichSubscription);
 
-      // REPLACE all candidates (instead of merging with old stale data)
-      // Dedupe only within current batch by Name + approx Amount
+      // Dedupe candidates (retain verified status if we had complex logic, but re-generating is fine)
       const generateKey = (sub: EnrichedSubscription) =>
         `${sub.name}-${Math.round(sub.averageAmount)}`;
       const seenSubs = new Set<string>();
@@ -93,9 +101,16 @@ function App() {
         return true;
       });
 
-      setCandidates(dedupedEnriched); // REPLACE, not merge
+      setCandidates(dedupedEnriched);
     }
     setIsProcessing(false);
+  };
+
+  const handleClearData = () => {
+    if (confirm('Are you sure you want to clear all data?')) {
+      setAllTransactions([]);
+      setCandidates([]);
+    }
   };
 
   const handleDismiss = (name: string) => {
@@ -132,14 +147,27 @@ function App() {
           </div>
         </div>
 
-        {/* Settings Toggle */}
-        <button
-          onClick={() => setIsSettingsOpen(true)}
-          className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
-          title="Manage Hidden Items"
-        >
-          <Settings className="w-6 h-6" />
-        </button>
+        <div className="flex items-center space-x-2">
+          {/* Clear Data Button (Only if data exists) */}
+          {allTransactions.length > 0 && (
+            <button
+              onClick={handleClearData}
+              className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
+              title="Clear All Data"
+            >
+              <RefreshCcw className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Settings Toggle */}
+          <button
+            onClick={() => setIsSettingsOpen(true)}
+            className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+            title="Manage Hidden Items"
+          >
+            <Settings className="w-6 h-6" />
+          </button>
+        </div>
       </header>
 
       <SettingsModal
