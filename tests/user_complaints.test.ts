@@ -13,7 +13,7 @@ describe('User Complaints False Positives', () => {
     // Check matcher first
     const match = matchSubscription('MCDONALDS F31602');
     console.log('McDonalds Match:', match);
-    expect(match).toBe(false);
+    expect(match).toBeNull();
 
     const subs = detectSubscriptions(txs);
     const mcd = subs.find((s) => s.name.toUpperCase().includes('MCDONALDS'));
@@ -29,7 +29,7 @@ describe('User Complaints False Positives', () => {
     // Target IS now a known subscription provider (Target Circle), so this matches.
     const match = matchSubscription('TARGET MARY ESTHER FL');
     console.log('Target Match:', match);
-    expect(match).toBe(true);
+    expect(match).toBeTruthy();
 
     // BUT, the detector should reject it because the prices ($45, $23.5) don't match the plan ($49, $99).
     const subs = detectSubscriptions(txs);

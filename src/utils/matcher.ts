@@ -10,12 +10,13 @@ export interface EnrichedSubscription extends SubscriptionCandidate {
 
 /**
  * Matches a detected subscription candidate against the known database.
+ * Returns metadata about the match, including signal strength.
  */
-export const matchSubscription = (description: string): boolean => {
+export const matchSubscription = (description: string): { id: string; name: string; isWeakSignal: boolean } | null => {
   // Normalize logic similar to analyzer
   const normalized = description.toUpperCase();
 
-  return subsDB.some((sub) => {
+  const match = subsDB.find((sub) => {
     // Check exact name match or regex keywords
     if (sub.regex_keywords && sub.regex_keywords.some((k) => {
       const keyword = k.toUpperCase();
@@ -34,6 +35,27 @@ export const matchSubscription = (description: string): boolean => {
       return true;
     return false;
   });
+
+  if (!match) return null;
+
+  // Determine Signal Strength
+  // Weak Signal = Matched on a keyword that is very short (<= 3 chars, e.g. "WW", "WSJ", "NYT")
+  // We check which keyword actually matched to determine this.
+  const matchedKeyword = match.regex_keywords?.find(k => {
+    const keyword = k.toUpperCase();
+    if (keyword.length <= 5) {
+      return new RegExp(`\\b${keyword}\\b`, 'i').test(normalized);
+    }
+    return normalized.includes(keyword);
+  });
+
+  const isWeakSignal = (matchedKeyword?.length || 0) <= 3;
+
+  return {
+    id: match.id,
+    name: match.name,
+    isWeakSignal
+  };
 };
 
 /**
@@ -45,7 +67,14 @@ export function enrichSubscription(candidate: SubscriptionCandidate): EnrichedSu
   // Find matching entry in DB
   const match = subsDB.find((service) => {
     const patterns = service.regex_keywords || [];
-    return patterns.some((pattern: string) => normalizedName.includes(pattern));
+    return patterns.some((k) => {
+      const keyword = k.toUpperCase();
+      // Use strict word boundary for short keywords to avoid bad logo matches
+      if (keyword.length <= 5) {
+        return new RegExp(`\\b${keyword}\\b`, 'i').test(normalizedName);
+      }
+      return normalizedName.includes(keyword);
+    });
   });
 
   if (match) {

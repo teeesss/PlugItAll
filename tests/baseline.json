@@ -6,22 +6,10 @@
     "confidence": "Low"
   },
   {
-    "name": "GOOGLE NYT GAMES WORD",
-    "amount": 18,
-    "frequency": "Monthly",
-    "confidence": "Low"
-  },
-  {
     "name": "NETFLIX",
     "amount": 9,
     "frequency": "Monthly",
     "confidence": "High"
-  },
-  {
-    "name": "PAYPAL WWWBRUMATEC WW CO NULL",
-    "amount": 82,
-    "frequency": "Yearly",
-    "confidence": "Low"
   },
   {
     "name": "PY LIVEOAK",

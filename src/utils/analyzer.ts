@@ -143,8 +143,10 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
 
     if (absoluteTxs.length === 0) return;
 
+
     // EXCEPTION: If it is a KNOWN subscription pattern, allow even 1 instance.
-    const isKnown = matchSubscription(name);
+    const knownMatch = matchSubscription(name);
+    const isKnown = !!knownMatch;
 
 
     // Negative filter for keywords
@@ -160,6 +162,22 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
       const bNoSpace = bUpper.replace(/\s+/g, '');
       return upperName.includes(bUpper) || noSpaceName.includes(bNoSpace);
     })) return;
+
+    // --- SIGNAL STRENGTH FILTER (Task-005) ---
+    // If it's a weak signal (e.g., "WW" match), we require stricter validation.
+    // Rule: Weak signals must have either:
+    // A) Recurring pattern (>= 2 transactions)
+    // B) Exact Price Match (if single transaction)
+    if (knownMatch && knownMatch.isWeakSignal) {
+      // If only 1 transaction, verify price
+      if (absoluteTxs.length < 2) {
+        const amount = absoluteTxs[0].amount;
+        const priceStatus = validateHighRiskPrice(name, amount);
+
+        // If price is not a strict MATCH, assume false positive for weak keys
+        if (priceStatus !== 'MATCH') return;
+      }
+    }
 
     if (absoluteTxs.length < 2 && !isKnown) return;
 
