@@ -100,8 +100,8 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
     }
 
     let currentY = 70;
-    currentY = renderTable('✅ Verified Subscriptions', verifiedSubs, currentY);
-    currentY = renderTable('⚠️ Unverified / One-Time Matches', unverifiedSubs, currentY);
+    currentY = renderTable('Verified Subscriptions', verifiedSubs, currentY);
+    currentY = renderTable('Unverified / One-Time Matches', unverifiedSubs, currentY);
 
     // Confidence Legend
     const legendY = currentY + 10;
@@ -141,5 +141,14 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
         doc.text('Plug It All - Privacy-First Subscription Manager', 105, 290, { align: 'center' });
     }
 
-    doc.save('plug-it-all-report.pdf');
+    // Explicit blob download for better browser compatibility
+    const pdfBlob = doc.output('blob');
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'plug-it-all-report.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 };
