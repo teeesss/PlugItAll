@@ -31,7 +31,7 @@ function App() {
 
   // Filter candidates based on ignored list
   const visibleCandidates = useMemo(() => {
-    return candidates.filter((c) => !ignoredList.includes(c.name));
+    return candidates.filter((c) => !ignoredList.includes(c.id) && !ignoredList.includes(c.name));
   }, [candidates, ignoredList]);
 
   // Derived Stats (based on VISIBLE candidates only)

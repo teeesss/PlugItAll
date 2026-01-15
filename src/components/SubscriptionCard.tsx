@@ -59,7 +59,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         className="glass-panel rounded-xl p-5 group hover:border-indigo-500/30 transition-all duration-300 relative"
       >
         <button
-          onClick={() => onDismiss(subscription.name)}
+          onClick={() => onDismiss(subscription.id)}
           className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-white/10 text-slate-500 hover:text-slate-300 transition-colors opacity-0 group-hover:opacity-100"
           title="Not a subscription? Hide this."
         >

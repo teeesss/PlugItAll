@@ -6,6 +6,7 @@ import pricingDB from '../data/subscription_pricing.json';
 import blacklistDB from '../data/blacklist.json';
 
 export interface SubscriptionCandidate {
+  id: string;
   name: string;
   averageAmount: number;
   frequency: 'Monthly' | 'Yearly' | 'Weekly' | 'Irregular';
@@ -236,6 +237,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
       const priceCheck = validateHighRiskPrice(name, highestAmount);
       if (priceCheck !== 'REJECT') {
         candidates.push({
+          id: `${name}-${highestAmount.toFixed(2)}`,
           name,
           averageAmount: highestAmount,
           frequency: 'Monthly',
@@ -370,6 +372,7 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
       // Final Candidate logic
       if (frequency !== 'Irregular') {
         candidates.push({
+          id: `${name}-${averageAmount.toFixed(2)}`,
           name,
           averageAmount,
           frequency,
