@@ -75,4 +75,4 @@ tests/
 
 ## 6. Last Updated
 
-**2026-01-12** - Implemented median-based interval analysis, aggressive shopping pattern rejection (eBay/Amazon), and fixed CSV+PDF deduplication.
+**2026-01-15** - Fixed granular subscription hiding (unique IDs: `name-amount`), PDF download reliability, deployment sync engine, and added 3 new dismissal tests.

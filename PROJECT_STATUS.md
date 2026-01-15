@@ -2,6 +2,13 @@
 
 ## Recent Major Updates (Jan 15, 2026)
 
+### 🎯 Granular Subscription Hiding
+**Goal**: Prevent hiding one subscription from hiding all with the same name.
+- **Issue**: Hiding SiriusXM $4.62 also hid SiriusXM $7.71.
+- **Fix**: Added unique `id` field (`name-amount`) to each subscription candidate.
+- **Result**: Users can now hide specific price-point subscriptions independently.
+- **Tests**: Added `dismissal.test.ts`, `dismissal_sirius.test.ts`, `e2e_dismiss.test.ts`.
+
 ### 📄 Robust PDF Generation
 **Goal**: Fix persistent download issues (GUID naming/hash) on production.
 - **Fix**: Reverted to standard `jsPDF.save()` protocol.

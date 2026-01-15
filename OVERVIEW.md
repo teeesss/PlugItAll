@@ -17,6 +17,7 @@ Tagline: _"Find the leaks in your bank account"_
 
 ## Recent Architectural Shifts
 
+- **Unique ID-Based Hiding**: Subscriptions now have unique IDs (`name-amount`) for granular dismiss functionality.
 - **Median vs Average**: Switched to median intervals to handle variable statement dates.
 - **Shopping Patterns**: Merchant visits with 3+ distinct prices are rejected to avoid one-off retail visits (eBay fix).
 - **Consolidated Plan Support**: Logic handles merchants like Visible that have multiple plan price points ($25, $35).
