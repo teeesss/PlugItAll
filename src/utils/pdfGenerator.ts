@@ -2,6 +2,51 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import type { EnrichedSubscription } from './matcher';
 
+/**
+ * Force download a blob with a specific filename using multiple methods
+ * for maximum browser compatibility
+ */
+const forceDownload = (blob: Blob, filename: string) => {
+    console.log('[PDF DEBUG] forceDownload called with filename:', filename);
+
+    // Method 1: Check for msSaveBlob (IE/Edge legacy)
+    // @ts-expect-error - msSaveBlob is IE-specific
+    if (typeof window.navigator.msSaveBlob !== 'undefined') {
+        console.log('[PDF DEBUG] Using msSaveBlob method');
+        // @ts-expect-error - msSaveBlob is IE-specific
+        window.navigator.msSaveBlob(blob, filename);
+        return;
+    }
+
+    // Method 2: Create object URL and force download via anchor
+    const blobUrl = window.URL.createObjectURL(blob);
+    console.log('[PDF DEBUG] Created blob URL:', blobUrl);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+
+    // Important: Some browsers need the link to be in the DOM
+    link.style.visibility = 'hidden';
+    link.style.position = 'absolute';
+    link.style.left = '-9999px';
+    document.body.appendChild(link);
+
+    console.log('[PDF DEBUG] Anchor created - href:', link.href);
+    console.log('[PDF DEBUG] Anchor created - download attr:', link.download);
+
+    // Trigger click
+    link.click();
+    console.log('[PDF DEBUG] Anchor clicked');
+
+    // Cleanup with delay to ensure download starts
+    setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+        console.log('[PDF DEBUG] Cleanup complete');
+    }, 200);
+};
+
 export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
     console.log('[PDF DEBUG] Starting PDF generation...');
     console.log('[PDF DEBUG] Subscriptions count:', subscriptions.length);
@@ -128,37 +173,14 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
             doc.text('Plug It All - Privacy-First Subscription Manager', 105, 290, { align: 'center' });
         }
 
-        // Use explicit blob download for maximum browser compatibility
+        // Generate blob with explicit PDF MIME type
         console.log('[PDF DEBUG] Creating PDF blob...');
         const pdfBlob = doc.output('blob');
-        console.log('[PDF DEBUG] Blob created, size:', pdfBlob.size, 'bytes');
+        console.log('[PDF DEBUG] Blob created, size:', pdfBlob.size, 'bytes, type:', pdfBlob.type);
 
+        // Force download with proper filename
         const filename = 'plug-it-all-report.pdf';
-        console.log('[PDF DEBUG] Target filename:', filename);
-
-        // Create download link
-        const downloadUrl = URL.createObjectURL(pdfBlob);
-        console.log('[PDF DEBUG] Blob URL created:', downloadUrl);
-
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = filename;
-        link.style.display = 'none';
-
-        console.log('[PDF DEBUG] Link element created with download attribute:', link.download);
-
-        document.body.appendChild(link);
-        console.log('[PDF DEBUG] Link appended to document body');
-
-        link.click();
-        console.log('[PDF DEBUG] Link clicked - download should start');
-
-        // Cleanup after a short delay
-        setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(downloadUrl);
-            console.log('[PDF DEBUG] Cleanup complete');
-        }, 100);
+        forceDownload(pdfBlob, filename);
 
         console.log('[PDF DEBUG] PDF generation complete!');
 
