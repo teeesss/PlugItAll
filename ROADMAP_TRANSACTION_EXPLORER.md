@@ -1,0 +1,271 @@
+# Transaction Explorer & Enhanced Features Roadmap
+
+## Project Summary
+
+Adding a Transaction Explorer feature that gives users the ability to search, filter, and analyze all their uploaded transactions—not just detected subscriptions. This expands the app from "subscription finder" toward "bank statement analyzer" while maintaining the privacy-first, client-side architecture.
+
+---
+
+## Phase 1: Core Transaction Explorer
+**Foundation - Search, Filter, Display**
+
+### Task 1.1: Transaction State Architecture
+- [ ] Audit current codebase to understand how parsed transactions flow through React state
+- [ ] Ensure all uploaded files merge into a single unified transaction array with proper date sorting
+- [ ] Add a transactions context or state that the explorer can consume
+- [ ] Transactions should persist in state until user refreshes or clears
+
+### Task 1.2: Search Bar Component (Stealth Mode)
+- [ ] Add subtle search icon + input in header area (collapsed by default)
+- [ ] Input placeholder: "Search transactions..."
+- [ ] Only visible/enabled after files are uploaded (hidden completely before upload)
+- [ ] Clicking expands to show quick results (5-10 items max)
+
+### Task 1.3: Quick Results Dropdown
+- [ ] Shows matching transactions as user types (debounced 300ms)
+- [ ] Displays: Date | Description | Amount
+- [ ] "See all X results →" link at bottom when results exceed 5
+- [ ] Keyboard navigable (arrow keys, enter to select)
+
+### Task 1.4: Full Explorer Panel (Overlay Mode)
+- [ ] "See all results" opens 85-90% screen overlay
+- [ ] Semi-transparent backdrop, subscription page visible behind
+- [ ] Close button (X) and click-outside-to-close
+- [ ] Smooth slide-up or fade-in animation
+
+### Task 1.5: Transaction Table in Explorer
+- [ ] Sortable columns: Date, Description, Amount, Type (Credit/Debit)
+- [ ] Alternating row colors for readability
+- [ ] Debit amounts in red/normal, credits in green
+- [ ] Scrollable with sticky header
+- [ ] Show total count: "Showing X of Y transactions"
+
+### Task 1.6: Price Range Filter Buttons
+- [ ] Toggle button chips for preset ranges:
+  - Under $10
+  - $10 - $50
+  - $50 - $100
+  - $100 - $500
+  - $500 - $1,000
+  - Over $1,000
+- [ ] Multiple can be selected (OR logic within price, AND with search text)
+- [ ] Visual feedback when active (filled vs outlined)
+
+### Task 1.7: Credit/Debit Toggle
+- [ ] Default: Debits only (most common use case)
+- [ ] Toggle button to include credits
+- [ ] Or three-state: Debits | Credits | Both
+
+### Task 1.8: Date Range Filter
+- [ ] Quick presets: Last 30 days, Last 3 months, Last 6 months, All
+- [ ] Custom date range picker (optional, can defer to Phase 2)
+
+### Task 1.9: Combined Filter Logic
+- [ ] All filters work together with AND logic
+- [ ] Active filters shown as removable pills/tags
+- [ ] "Clear all filters" button when any filter active
+
+---
+
+## Phase 2: Manual Subscription Management
+**User Control - Add, Edit, Override**
+
+### Task 2.1: "Add as Subscription" Action
+- [ ] Each transaction row in explorer gets a "+" or "Add" button
+- [ ] Clicking opens a small modal/popover:
+  - Confirm merchant name (editable, linked to original)
+  - Select frequency: Weekly / Monthly / Quarterly / Yearly
+  - Optional: Expected amount, notes
+- [ ] Save adds to subscription list with "Manual" badge
+
+### Task 2.2: LocalStorage Persistence for Manual Subs
+- [ ] Store user-added subscriptions in localStorage
+- [ ] Key structure: `plugitall_manual_subs`
+- [ ] Load on app init, merge with auto-detected
+- [ ] Include timestamp for when added
+
+### Task 2.3: Export/Import Manual Subscriptions
+- [ ] Export button downloads JSON file of manual subs
+- [ ] Import button allows restoring from JSON
+- [ ] Validates JSON structure before importing
+
+### Task 2.4: Conflict Resolution
+- [ ] When auto-detection finds something user already added manually:
+  - Show notification/toast: "We detected [X] which you added manually"
+  - Options: Keep manual settings | Use auto-detected | Merge
+  - User's frequency/notes preserved if they choose merge
+
+### Task 2.5: Edit/Remove Manual Subscriptions
+- [ ] Edit icon on manual subscription cards
+- [ ] Opens same modal as "Add" with current values
+- [ ] Delete option with confirmation
+
+---
+
+## Phase 3: Auto-Categorization Engine
+**Intelligence - Classify Transactions**
+
+### Task 3.1: Category Definition File
+- [ ] Create `src/data/categories.ts` with:
+  - Category ID, name, icon, color
+  - Pattern matches (regex/keywords)
+- [ ] Initial broad categories:
+  - Food & Dining
+  - Entertainment
+  - Utilities
+  - Shopping
+  - Transportation
+  - Health & Fitness
+  - Subscriptions (links to existing detection)
+  - Income/Credits
+  - Uncategorized
+
+### Task 3.2: Category Matching Engine
+- [ ] Similar architecture to subscription matcher
+- [ ] Normalize description → match against category patterns
+- [ ] Return category ID or "uncategorized"
+- [ ] Run on all transactions during parse
+
+### Task 3.3: Category Display in Explorer
+- [ ] Add Category column to transaction table
+- [ ] Color-coded pills/badges for each category
+- [ ] Filter by category (checkbox list or chips)
+
+### Task 3.4: User Category Override
+- [ ] Click category pill to change it
+- [ ] Dropdown of available categories
+- [ ] Store overrides in localStorage
+- [ ] Future: Let user add custom categories (backlog)
+
+### Task 3.5: Category Toggle (Enable/Disable)
+- [ ] Settings option to turn auto-categorization on/off
+- [ ] When off, category column hidden
+- [ ] Preference saved in localStorage
+
+---
+
+## Phase 4: Insights & Visualization
+**Analytics - Charts and Summaries**
+
+### Task 4.1: Spending Summary Component
+- [ ] Total spent (debits) for uploaded period
+- [ ] Total income (credits) for uploaded period
+- [ ] Net change
+- [ ] Date range covered
+
+### Task 4.2: Spending by Category Bar Chart
+- [ ] Horizontal bar chart
+- [ ] Categories sorted by amount (highest first)
+- [ ] Click bar to filter explorer to that category
+- [ ] Use recharts library
+
+### Task 4.3: Spending Over Time Line Chart
+- [ ] Monthly spending trend
+- [ ] X-axis: months, Y-axis: total spent
+- [ ] Optional: overlay income line
+- [ ] Handles partial months gracefully
+
+### Task 4.4: Category Breakdown Donut Chart
+- [ ] Visual percentage breakdown
+- [ ] Legend with amounts
+- [ ] "Other/Uncategorized" grouped if small
+
+### Task 4.5: Top Merchants List
+- [ ] "You spent the most at:" section
+- [ ] Top 5-10 merchants by total amount
+- [ ] Shows count of transactions + total
+
+### Task 4.6: Insights Section Layout
+- [ ] Collapsible section below subscriptions (or tab)
+- [ ] Only shows after file upload
+- [ ] Clean card-based layout for each chart/summary
+
+---
+
+## Phase 5: Export Enhancements
+**Output - CSV and Enhanced PDF**
+
+### Task 5.1: CSV Export for Transactions
+- [ ] Export filtered or all transactions to CSV
+- [ ] Columns: Date, Description, Amount, Type, Category
+- [ ] Respects current filters (exports what you see)
+- [ ] Filename includes date range
+
+### Task 5.2: CSV Export for Subscriptions
+- [ ] Separate from transaction export
+- [ ] Includes: Name, Amount, Frequency, Status (Verified/Review/Manual), Category
+
+### Task 5.3: Enhanced PDF Report
+- [ ] Add new sections to existing PDF:
+  - Spending summary
+  - Category breakdown (simple table, not chart)
+  - Top merchants
+- [ ] Keep existing subscription section intact
+- [ ] Do not modify current PDF parser—create wrapper/enhancer
+
+---
+
+## Phase 6: Polish & Edge Cases
+**Refinement - UX Details**
+
+### Task 6.1: Empty States
+- [ ] Explorer hidden before file upload
+- [ ] After upload with no results for search: "No transactions match your filters"
+- [ ] Clear messaging throughout
+
+### Task 6.2: Duplicate Transaction Detection
+- [ ] Flag potential duplicates (same merchant, amount, date)
+- [ ] Visual indicator in explorer
+- [ ] Tooltip explains why flagged
+
+### Task 6.3: Refund Handling
+- [ ] Detect refund keywords in description
+- [ ] Tag as "Refund" in explorer
+- [ ] Exclude from spending totals (or show separately)
+- [ ] Note: Does not affect subscription detection
+
+### Task 6.4: Performance Optimization
+- [ ] Virtualized list for 500+ transactions (only render visible rows)
+- [ ] Debounced search (300ms)
+- [ ] Memoized filter calculations
+
+### Task 6.5: Keyboard Navigation
+- [ ] Tab through filters
+- [ ] Arrow keys in results
+- [ ] Escape closes overlay
+- [ ] Enter selects/confirms
+
+### Task 6.6: Mobile Responsiveness
+- [ ] Explorer overlay goes full-screen on mobile
+- [ ] Filters collapse into dropdown/accordion
+- [ ] Touch-friendly button sizes
+
+---
+
+## Backlog (Future Consideration)
+
+- [ ] User feedback mechanism for unknown categories (submit to improve matching)
+- [ ] Custom user categories (beyond preset list)
+- [ ] Recurring payment predictions ("Your next Netflix charge is ~Dec 15")
+- [ ] Bill calendar view (calendar showing expected charges)
+- [ ] Multi-currency support
+- [ ] Bank connection (Plaid integration—breaks privacy-first model, would be opt-in)
+- [ ] Browser extension for auto-importing statements
+- [ ] Comparison view (this month vs last month)
+- [ ] Subscription cancellation links/guides
+
+---
+
+## Technical Notes
+
+- **Do not modify existing PDF parser**—create new components alongside
+- **All data stays client-side**—localStorage for persistence, no server calls
+- **Match existing styling**—keep current CSS/Tailwind theme
+- **New route consideration**: `/explorer` could be a dedicated page, but overlay approach keeps single-page feel
+- **Testing**: Add Vitest tests for new utilities (category matcher, filter logic)
+
+---
+
+## Suggested Starting Point
+
+Begin with **Phase 1 (Tasks 1.1–1.5)** to get the basic explorer working. This gives you a functional feature to test UI approaches without the complexity of categorization or manual subscriptions.

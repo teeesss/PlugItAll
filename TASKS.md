@@ -40,11 +40,37 @@
 - [x] **Verification Promotion**: Automate "Verified" status for 3+ consistent charges.
 - [x] **UI Enhancement**: Added Transaction Count badge to cards.
 
-## 🟡 Next Up (P0 Critical)
+## 🟡 Next Up (P0 Critical) - Transaction Explorer Phase 1
 
-- [ ] **TASK-059**: Transaction Search / Filter
-  - Add search box to filter uploaded transactions by keyword or wildcard.
-  - Allow users to quickly find specific merchants or charges.
+_Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md)_
+
+- [ ] **TASK-060**: Transaction State Architecture
+  - Audit transaction flow through React state
+  - Ensure unified transaction array with proper date sorting
+  - Add transactions context for explorer consumption
+- [ ] **TASK-061**: Search Bar Component (Stealth Mode)
+  - Subtle search icon in header (collapsed by default)
+  - Only visible after files uploaded
+- [ ] **TASK-062**: Quick Results Dropdown
+  - Debounced 300ms search with Date | Description | Amount display
+  - "See all X results →" link
+- [ ] **TASK-063**: Full Explorer Panel (Overlay Mode)
+  - 85-90% screen overlay with backdrop
+  - Close button, click-outside-to-close, smooth animation
+- [ ] **TASK-064**: Transaction Table in Explorer
+  - Sortable columns: Date, Description, Amount, Type
+  - Alternating rows, color-coded amounts, sticky header
+- [ ] **TASK-065**: Price Range Filter Buttons
+  - Preset toggle chips: Under $10, $10-$50, $50-$100, etc.
+- [ ] **TASK-066**: Credit/Debit Toggle
+  - Default: Debits only, toggle for Credits/Both
+- [ ] **TASK-067**: Date Range Filter
+  - Quick presets: Last 30 days, 3 months, 6 months, All
+- [ ] **TASK-068**: Combined Filter Logic
+  - AND logic, removable filter pills, "Clear all" button
+
+## 🟡 Other P0 Tasks
+
 - [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Implemented basic guessing*
 - [ ] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
@@ -61,6 +87,7 @@
 
 ## 📋 Roadmap (P2+)
 
+- [ ] **Transaction Explorer Phase 2-6**: See [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md)
 - [ ] **TASK-011**: PDF Multi-Column Layout Support (Chase/BofA).
 - [ ] **TASK-017**: Add Multi-Bank Integration Tests.
 - [ ] **TASK-022**: Support Quarterly Subscriptions.
