@@ -14,12 +14,16 @@ import { FileUpload } from './components/FileUpload';
 import { SubscriptionCard } from './components/SubscriptionCard';
 import { Stats } from './components/Stats';
 import { SettingsModal } from './components/SettingsModal';
+import { TransactionSearch } from './components/TransactionSearch';
+import { TransactionExplorer } from './components/TransactionExplorer';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
   const [ignoredList, setIgnoredList] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+  const [explorerInitialSearch, setExplorerInitialSearch] = useState('');
   // NEW: Store raw transactions to support cumulative analysis
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
 
@@ -79,12 +83,17 @@ function App() {
         return true;
       });
 
+      // Sort transactions by date (newest first)
+      const sortedTransactions = dedupedTransactions.sort((a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
       console.log(
-        `Deduped: ${combined.length} -> ${dedupedTransactions.length} transactions`
+        `Deduped: ${combined.length} -> ${sortedTransactions.length} transactions`
       );
 
       // Update State
-      setAllTransactions(dedupedTransactions);
+      setAllTransactions(sortedTransactions);
 
       // Re-run Detection on EVERYTHING
       const subs = detectSubscriptions(dedupedTransactions);
@@ -161,6 +170,15 @@ function App() {
                   <RefreshCcw className="w-6 h-6" />
                 </button>
               )}
+
+              {/* Transaction Search */}
+              <TransactionSearch
+                transactions={allTransactions}
+                onOpenExplorer={(searchTerm) => {
+                  setExplorerInitialSearch(searchTerm);
+                  setIsExplorerOpen(true);
+                }}
+              />
 
               {/* Settings Toggle */}
               <button
@@ -335,12 +353,29 @@ function App() {
         <div className="mt-20 text-center space-y-4">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/5 text-xs text-slate-500">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2 animate-pulse" />
-            System Secure & Encrypted • v1.1.2
+            System Secure & Encrypted • v1.1.3
           </div>
         </div>
       </main>
+
+      {/* Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        onUpdate={handleSettingsUpdate}
+      />
+
+      {/* Transaction Explorer */}
+      <TransactionExplorer
+        key={explorerInitialSearch}
+        isOpen={isExplorerOpen}
+        onClose={() => setIsExplorerOpen(false)}
+        transactions={allTransactions}
+        initialSearch={explorerInitialSearch}
+      />
     </div>
   );
 }
+
 
 export default App;
