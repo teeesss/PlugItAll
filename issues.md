@@ -1,5 +1,24 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-15 (PDF Fix & Deployment Optimization)
+
+### 🔴 Critical Bug: PDF Download Filename / GUID Renaming
+- **Issue**: Report downloads as a random hash (e.g., `f70b2da5-...`) or fails to download entirely on production.
+- **Cause**: Browser security restrictions on `URL.createObjectURL` blob URLs. When triggered via `link.click()`, some browsers ignore the `download` attribute or block the action.
+- **Resolution**: Reverted to standard `jsPDF.save('plug-it-all-report.pdf')`.
+- **Lesson**: Avoid complex blob-based download triggers for production files if `save()` is available.
+
+### 🔴 Deployment Bug: Stale Assets on Server
+- **Issue**: Latest code changes (like the PDF fix) were not reflecting on the live site despite successful FTP upload.
+- **Cause**: The deployment script was using a size-based comparison to skip uploads. Vite's hashed bundles (e.g., `index-abc123.js`) occasionally matched the size of previous bundles, causing the script to skip the new bundle and leave the old `index.html` referencing it.
+- **Resolution**: 
+    1. Added `cleanRemoteAssets()` to delete the remote `assets/` folder before deployment.
+    2. Forced upload of all files starting with `assets/` and `index.html`.
+- **Lesson**: Always clean remote asset directories when using content-hashed bundles to prevent zombie files.
+
+---
+
+
 ## Session: 2026-01-13 (Subscription Database Integration)
 
 ### 🟢 Feature: Comprehensive Subscription Data Migration

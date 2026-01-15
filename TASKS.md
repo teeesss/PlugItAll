@@ -1,5 +1,15 @@
 # TASKS
 
+## 🟢 Completed (Session 2026-01-15)
+
+- [x] **TASK-055**: Fix PDF Download Filename Logic
+  - Reverted to `jsPDF.save()` to fix persistent random hash filenames on production.
+- [x] **TASK-056**: Optimize Deployment Script
+  - Implemented intelligent sync to skip ~150 logo files if unchanged.
+  - Added remote asset folder cleaning to prevent stale build bundles.
+- [x] **TASK-057**: Environment Management
+  - Enforced single-node-instance rule for builds and deployments.
+
 ## 🟢 Completed (Session 2026-01-13)
 
 - [x] **TASK-050**: Integrate 500+ subscription database from master data files

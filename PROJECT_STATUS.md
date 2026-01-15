@@ -1,5 +1,21 @@
 # Project: Plug It All - Subscription Detection Engine
 
+## Recent Major Updates (Jan 15, 2026)
+
+### 📄 Robust PDF Generation
+**Goal**: Fix persistent download issues (GUID naming/hash) on production.
+- **Fix**: Reverted to standard `jsPDF.save()` protocol.
+- **Result**: Consistent downloads as `plug-it-all-report.pdf` across all browsers.
+- **Version**: Bumped to `v1.1.2-FINAL`.
+
+### 🚀 Optimized Deployment Engine
+**Goal**: Prevent stale production builds and reduce deployment time.
+- **Intelligent Sync**: Deployment now skips unchanged logo files (~150+ assets) but **forces** upload of `index.html` and hashed JS/CSS bundles.
+- **Remote Cleanup**: Added `cleanRemoteAssets()` to the deploy script to wipe old hashed bundles before syncing.
+- **Node Instance Safety**: Enforced single-node-instance lock during build/deploy to prevent resource starvation.
+
+---
+
 ## Recent Major Updates (Jan 13, 2026)
 
 ### 🗃️ Subscription Database Integration

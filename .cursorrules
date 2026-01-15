@@ -149,3 +149,15 @@ Run `node scripts/migrate_master_data.cjs` to:
     3. **ONLY upload modified files**: Never upload static image files (especially in `logos/`) unless they are new or modified. Use size-based or name-based comparison to skip existing files.
     4. Don't use && with powershell commands. Use ; instead.
 - **VERIFICATION**: Always check the live URL (`https://www.bmwseals.com/plugit/`) after deployment to ensure changes are reflected.
+
+---
+
+## 11. Deployment & Asset Logic (Lessons Learned)
+
+### Sync Engine (`scripts/deploy.js`)
+- **CLEAN ASSETS**: Always call `cleanRemoteAssets()` to remove the remote `assets/` directory before syncing. This prevents stale, hashed JS/CSS bundles from lingering and causing "ghost" bugs.
+- **FORCE UPLOAD**: Always force upload `index.html` and any files in `assets/`. Content-hashed assets change names frequently, and `index.html` must always point to the newest bundle.
+- **SKIP LOGOS**: Skip re-uploading the `logos/` directory if files already exist remotely to save time/bandwidth.
+
+### PDF Generation (`src/utils/pdfGenerator.ts`)
+- **USE `doc.save()`**: For triggering downloads, always prefer `jsPDF.save('filename.pdf')` over manual blob creation (`URL.createObjectURL`). Standard blob triggers are frequently blocked or renamed to random GUID hashes by browser security policies on production domains.
