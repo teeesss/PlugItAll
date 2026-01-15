@@ -113,9 +113,9 @@ function App() {
     }
   };
 
-  const handleDismiss = (name: string) => {
-    ignoreItem(name);
-    setIgnoredList(getIgnoredItems()); // Refresh list
+  const handleDismiss = (id: string) => {
+    ignoreItem(id);
+    setIgnoredList(getIgnoredItems());
   };
 
   const handleSettingsUpdate = () => {

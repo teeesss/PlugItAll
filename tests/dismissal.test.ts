@@ -1,6 +1,7 @@
 
+import { describe, it, expect } from 'vitest';
 import { detectSubscriptions } from '../src/utils/analyzer';
-import { Transaction } from '../src/utils/analyzer';
+import type { Transaction } from '../src/utils/analyzer';
 
 describe('Subscription Dismissal Logic', () => {
     it('should generate unique IDs for close-but-distinct subscriptions', () => {

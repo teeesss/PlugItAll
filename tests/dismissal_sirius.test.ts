@@ -1,6 +1,7 @@
 
+import { describe, it, expect } from 'vitest';
 import { detectSubscriptions } from '../src/utils/analyzer';
-import { Transaction } from '../src/utils/analyzer';
+import type { Transaction } from '../src/utils/analyzer';
 
 describe('Subscription Dismissal Logic (User SiriusXM)', () => {
     it('should generate unique IDs for SiriusXM at $7.71 vs $4.62', () => {

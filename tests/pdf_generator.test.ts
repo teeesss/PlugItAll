@@ -45,6 +45,7 @@ describe('PDF Generator', () => {
     it('should generate PDF with valid subscriptions', () => {
         const mockSubscriptions: EnrichedSubscription[] = [
             {
+                id: 'NETFLIX-15.99',
                 name: 'Netflix',
                 displayName: 'Netflix',
                 averageAmount: 15.99,
@@ -57,6 +58,7 @@ describe('PDF Generator', () => {
                 ],
             },
             {
+                id: 'SPOTIFY-9.99',
                 name: 'Spotify',
                 displayName: 'Spotify',
                 averageAmount: 9.99,
@@ -68,6 +70,7 @@ describe('PDF Generator', () => {
                 ],
             },
             {
+                id: 'UNKNOWN-5.99',
                 name: 'Unknown Sub',
                 displayName: 'Unknown Sub',
                 averageAmount: 5.99,
@@ -93,6 +96,7 @@ describe('PDF Generator', () => {
     it('should handle subscriptions without cancelUrl', () => {
         const subscriptions: EnrichedSubscription[] = [
             {
+                id: 'UNKNOWN-19.99',
                 name: 'Unknown Service',
                 displayName: 'Unknown Service',
                 averageAmount: 19.99,
@@ -108,6 +112,7 @@ describe('PDF Generator', () => {
     it('should handle subscriptions with special characters in names', () => {
         const subscriptions: EnrichedSubscription[] = [
             {
+                id: 'TEST-12.99',
                 name: 'Test & Co. "Special" <Service>',
                 displayName: 'Test & Co. "Special" <Service>',
                 averageAmount: 12.99,

@@ -39,6 +39,7 @@ describe('Core Logic Regression Tests', () => {
     it('should NOT deduplicate in App.tsx style merge', () => {
       // Simulate what App.tsx does
       const sub1 = {
+        id: 'VISIBLE-35.00',
         name: 'VISIBLE WIRELESS',
         averageAmount: 35,
         frequency: 'Monthly' as const,
@@ -46,6 +47,7 @@ describe('Core Logic Regression Tests', () => {
         transactions: [],
       };
       const sub2 = {
+        id: 'VISIBLE-25.00',
         name: 'VISIBLE WIRELESS',
         averageAmount: 25,
         frequency: 'Monthly' as const,

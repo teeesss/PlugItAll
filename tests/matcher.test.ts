@@ -5,6 +5,7 @@ import type { SubscriptionCandidate } from '../src/utils/analyzer';
 describe('Subscription Matcher Services', () => {
   it('should match known service (Netflix)', () => {
     const candidate: SubscriptionCandidate = {
+      id: 'NETFLIX-15.99',
       name: 'NETFLIX',
       averageAmount: 15.99,
       frequency: 'Monthly',
@@ -20,6 +21,7 @@ describe('Subscription Matcher Services', () => {
 
   it('should handle unknown services gracefully', () => {
     const candidate: SubscriptionCandidate = {
+      id: 'RANDOM-50.00',
       name: 'RANDOM CLUB',
       averageAmount: 50,
       frequency: 'Monthly',
@@ -35,6 +37,7 @@ describe('Subscription Matcher Services', () => {
 
   it('should key off partial matches (SPOTIFY USA)', () => {
     const candidate: SubscriptionCandidate = {
+      id: 'SPOTIFY-10.99',
       name: 'SPOTIFY USA',
       averageAmount: 10.99,
       frequency: 'Monthly',

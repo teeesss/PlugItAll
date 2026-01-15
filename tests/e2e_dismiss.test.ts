@@ -1,7 +1,8 @@
 
+import { describe, it, expect } from 'vitest';
 import { detectSubscriptions } from '../src/utils/analyzer';
 import { enrichSubscription } from '../src/utils/matcher';
-import { Transaction } from '../src/utils/analyzer';
+import type { Transaction } from '../src/utils/analyzer';
 
 describe('End-to-End Dismiss Flow', () => {
     it('should filter by specific ID without collateral damage', () => {
