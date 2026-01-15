@@ -54,16 +54,16 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 
 **Phase 1 Complete!** ✅ Search bar, explorer overlay, filters all working.
 
-- [ ] **TASK-069**: "Add as Subscription" Action
-  - Each transaction row gets "+" button to add as manual subscription
-- [ ] **TASK-070**: LocalStorage Persistence for Manual Subs
-  - Store user-added subscriptions with `plugitall_manual_subs` key
+- [x] **TASK-069**: "Add as Subscription" Action
+  - Added "Action" column to Transaction Explorer with "+" button.
+- [x] **TASK-070**: LocalStorage Persistence for Manual Subs
+  - Created `storage.ts` with `addManualSubscription`, `getManualSubscriptions`, and `deleteManualSubscription`.
+- [x] **TASK-072**: Conflict Resolution
+  - Manual subscriptions take precedence over auto-detected ones (matching by ID).
+- [x] **TASK-073**: Remove Manual Subscriptions (Edit deferred)
+  - Added red trash can icon to manual subscription cards for deletion.
 - [ ] **TASK-071**: Export/Import Manual Subscriptions
   - JSON export/import functionality
-- [ ] **TASK-072**: Conflict Resolution
-  - Handle when auto-detection finds manually added sub
-- [ ] **TASK-073**: Edit/Remove Manual Subscriptions
-  - Edit/delete manual subscription entries
 
 ## 🟡 Other P0 Tasks
 

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { X, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { X, ArrowUpDown, ArrowUp, ArrowDown, Plus, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Transaction } from '../utils/analyzer';
 
@@ -8,6 +8,8 @@ interface TransactionExplorerProps {
     onClose: () => void;
     transactions: Transaction[];
     initialSearch?: string;
+    onAddSubscription?: (t: Transaction) => void;
+    existingSubscriptionIds?: Set<string>;
 }
 
 type SortField = 'date' | 'description' | 'amount';
@@ -58,6 +60,8 @@ export function TransactionExplorer({
     onClose,
     transactions,
     initialSearch = '',
+    onAddSubscription,
+    existingSubscriptionIds,
 }: TransactionExplorerProps) {
     const [searchTerm, setSearchTerm] = useState(initialSearch);
     const [sortField, setSortField] = useState<SortField>('date');
@@ -342,12 +346,15 @@ export function TransactionExplorer({
                                         <th className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase">
                                             Type
                                         </th>
+                                        <th className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase">
+                                            Action
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredTransactions.length === 0 ? (
                                         <tr>
-                                            <td colSpan={4} className="px-4 py-12 text-center text-slate-500">
+                                            <td colSpan={5} className="px-4 py-12 text-center text-slate-500">
                                                 No transactions match your filters
                                             </td>
                                         </tr>
@@ -376,6 +383,26 @@ export function TransactionExplorer({
                                                     >
                                                         {t.amount > 0 ? 'Credit' : 'Debit'}
                                                     </span>
+                                                </td>
+                                                <td className="px-4 py-3 text-center">
+                                                    {onAddSubscription && (
+                                                        <button
+                                                            onClick={() => onAddSubscription(t)}
+                                                            className={`p-1 rounded transition-colors ${existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`)
+                                                                ? 'bg-green-500/20 text-green-400 cursor-default'
+                                                                : 'hover:bg-blue-500/20 text-slate-400 hover:text-blue-400'
+                                                                }`}
+                                                            title={existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`)
+                                                                ? "Already in subscriptions"
+                                                                : "Add as manual subscription"}
+                                                        >
+                                                            {existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`) ? (
+                                                                <Check size={14} />
+                                                            ) : (
+                                                                <Plus size={14} />
+                                                            )}
+                                                        </button>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))

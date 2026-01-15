@@ -1,14 +1,16 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Plus, Settings, RefreshCcw, Download } from 'lucide-react';
 
 import { parseCSV, parsePDF, isSupportedFile } from './utils/parser';
 import { detectSubscriptions } from './utils/analyzer';
-import type { Transaction } from './utils/analyzer';
+import type { Transaction, SubscriptionCandidate } from './utils/analyzer';
+import { normalizeDescription } from './utils/normalizer';
 import { enrichSubscription } from './utils/matcher';
 import type { EnrichedSubscription } from './utils/matcher';
 import { getIgnoredItems, ignoreItem } from './utils/persistence';
 import { generatePDF } from './utils/pdfGenerator';
+import { getManualSubscriptions, addManualSubscription, deleteManualSubscription } from './utils/storage';
 
 import { FileUpload } from './components/FileUpload';
 import { SubscriptionCard } from './components/SubscriptionCard';
@@ -19,24 +21,28 @@ import { TransactionExplorer } from './components/TransactionExplorer';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
-  const [ignoredList, setIgnoredList] = useState<string[]>([]);
+  const [ignoredList, setIgnoredList] = useState<string[]>(getIgnoredItems());
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
   const [explorerInitialSearch, setExplorerInitialSearch] = useState('');
   // NEW: Store raw transactions to support cumulative analysis
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
+  const [manualSubs, setManualSubs] = useState<EnrichedSubscription[]>(getManualSubscriptions() as EnrichedSubscription[]);
 
-  // Load ignored list on mount
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIgnoredList(getIgnoredItems());
-  }, []);
 
-  // Filter candidates based on ignored list
+  // Filter candidates based on ignored list and merge with manual subs
   const visibleCandidates = useMemo(() => {
-    return candidates.filter((c) => !ignoredList.includes(c.id));
-  }, [candidates, ignoredList]);
+    // 1. Get auto-detected subs that aren't ignored
+    const visibleAuto = candidates.filter((c) => !ignoredList.includes(c.id));
+
+    // 2. Filter out auto subs that are overridden by manual subs (matching by ID)
+    const manualIds = new Set(manualSubs.map(m => m.id));
+    const nonOverriddenAuto = visibleAuto.filter(c => !manualIds.has(c.id));
+
+    // 3. Return combined list (manual subs always visible for now)
+    return [...manualSubs, ...nonOverriddenAuto];
+  }, [candidates, ignoredList, manualSubs]);
 
   // Derived Stats (based on VISIBLE candidates only)
   const totals = useMemo(() => {
@@ -46,6 +52,28 @@ function App() {
       yearly: monthly * 12,
     };
   }, [visibleCandidates]);
+
+  const handleManualAdd = (t: Transaction) => {
+    const normalizedName = normalizeDescription(t.description);
+    const sub: SubscriptionCandidate = {
+      id: `${normalizedName}-${Math.abs(t.amount).toFixed(2)}`,
+      name: normalizedName,
+      averageAmount: Math.abs(t.amount),
+      frequency: 'Monthly', // Default to monthly for manual adds
+      confidence: 'High',
+      transactions: [t],
+      isManual: true
+    };
+
+    addManualSubscription(sub);
+    // Refresh local state
+    setManualSubs(getManualSubscriptions() as EnrichedSubscription[]);
+  };
+
+  const handleManualDelete = (id: string) => {
+    deleteManualSubscription(id);
+    setManualSubs(getManualSubscriptions() as EnrichedSubscription[]);
+  };
 
   const handleFiles = async (files: File[]) => {
     setIsProcessing(true);
@@ -289,7 +317,11 @@ function App() {
                           key={`${sub.name}-${i}`}
                           subscription={sub}
                           index={i}
-                          onDismiss={handleDismiss}
+                          onDismiss={(idOrName) => {
+                            const sub = visibleCandidates.find(s => s.id === idOrName || s.name === idOrName);
+                            if (sub?.isManual) handleManualDelete(idOrName);
+                            else handleDismiss(idOrName);
+                          }}
                         />
                       ))}
                   </AnimatePresence>
@@ -325,7 +357,11 @@ function App() {
                               key={`${sub.name}-${i}-review`}
                               subscription={sub}
                               index={i}
-                              onDismiss={handleDismiss}
+                              onDismiss={(idOrName) => {
+                                const s = visibleCandidates.find(item => item.id === idOrName || item.name === idOrName);
+                                if (s?.isManual) handleManualDelete(idOrName);
+                                else handleDismiss(idOrName);
+                              }}
                             />
                           ))}
                       </AnimatePresence>
@@ -372,6 +408,8 @@ function App() {
         onClose={() => setIsExplorerOpen(false)}
         transactions={allTransactions}
         initialSearch={explorerInitialSearch}
+        onAddSubscription={handleManualAdd}
+        existingSubscriptionIds={new Set(visibleCandidates.map(c => c.id))}
       />
     </div>
   );

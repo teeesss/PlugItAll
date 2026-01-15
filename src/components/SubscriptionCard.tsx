@@ -6,6 +6,8 @@ import {
   CheckCircle2,
   HelpCircle,
   Calendar,
+  Trash2,
+  Plus,
 } from 'lucide-react';
 import { cn } from '../utils/cn';
 import type { EnrichedSubscription } from '../utils/matcher';
@@ -61,9 +63,9 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         <button
           onClick={() => onDismiss(subscription.id)}
           className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-white/10 text-slate-500 hover:text-slate-300 transition-colors opacity-0 group-hover:opacity-100"
-          title="Not a subscription? Hide this."
+          title={subscription.isManual ? "Delete manual subscription" : "Not a subscription? Hide this."}
         >
-          <X className="w-4 h-4" />
+          {subscription.isManual ? <Trash2 className="w-4 h-4 text-red-400" /> : <X className="w-4 h-4" />}
         </button>
 
         <div className="flex items-start space-x-4">
@@ -111,15 +113,22 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
 
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center space-x-2 relative group/tooltip">
-            <span
-              className={cn(
-                'text-xs font-medium px-2 py-1 rounded-md border flex items-center cursor-help',
-                getConfidenceColor(subscription.confidence)
-              )}
-            >
-              {subscription.confidence} Confidence
-              <HelpCircle className="w-3 h-3 ml-1.5 opacity-70" />
-            </span>
+            {subscription.isManual ? (
+              <span className="text-xs font-medium px-2 py-1 rounded-md border border-blue-500/30 bg-blue-500/10 text-blue-400 flex items-center">
+                Manual Entry
+                <Plus size={12} className="ml-1.5" />
+              </span>
+            ) : (
+              <span
+                className={cn(
+                  'text-xs font-medium px-2 py-1 rounded-md border flex items-center cursor-help',
+                  getConfidenceColor(subscription.confidence)
+                )}
+              >
+                {subscription.confidence} Confidence
+                <HelpCircle className="w-3 h-3 ml-1.5 opacity-70" />
+              </span>
+            )}
             {/* Tooltip */}
             <div className="absolute bottom-full left-0 mb-2 w-48 p-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 shadow-xl opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none z-10">
               {getConfidenceTooltip(subscription.confidence)}

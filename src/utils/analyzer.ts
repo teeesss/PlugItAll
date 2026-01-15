@@ -14,6 +14,7 @@ export interface SubscriptionCandidate {
   nextPaymentDate?: string;
   description?: string; // Add description for UI context if needed
   transactions: Transaction[]; // Source transactions for drill-down
+  isManual?: boolean; // Flag for user-added subscriptions
 }
 
 /**
