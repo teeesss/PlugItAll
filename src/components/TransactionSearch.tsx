@@ -35,11 +35,18 @@ export function TransactionSearch({ transactions, onOpenExplorer }: TransactionS
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [searchTerm]);
 
-    // Filter transactions based on search
+    // Filter transactions based on search with wildcard support
     const filteredTransactions = useMemo(() => {
-        if (debouncedTerm.length < 2) return [];
+        if (debouncedTerm.length < 1) return [];
+        // Convert wildcard pattern to regex: * -> .*, ? -> .
+        const pattern = debouncedTerm
+            .toLowerCase()
+            .replace(/[.+^${}()|[\]\\]/g, '\\$&') // Escape regex special chars
+            .replace(/\*/g, '.*')  // * matches any characters
+            .replace(/\?/g, '.');  // ? matches single character
+        const regex = new RegExp(pattern);
         return transactions.filter((t) =>
-            t.description.toLowerCase().includes(debouncedTerm.toLowerCase())
+            regex.test(t.description.toLowerCase())
         );
     }, [transactions, debouncedTerm]);
 
@@ -135,7 +142,7 @@ export function TransactionSearch({ transactions, onOpenExplorer }: TransactionS
             )}
 
             {/* Quick Results Dropdown */}
-            {showResults && debouncedTerm.length >= 2 && isExpanded && (
+            {showResults && debouncedTerm.length >= 1 && isExpanded && (
                 <div className="absolute top-full mt-2 w-80 right-0 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden">
                     {quickResults.length === 0 ? (
                         <div className="p-4 text-sm text-slate-500 text-center">

@@ -63,7 +63,7 @@ export function TransactionExplorer({
     const [sortField, setSortField] = useState<SortField>('date');
     const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
     const [selectedPriceRanges, setSelectedPriceRanges] = useState<number[]>([]);
-    const [transactionType, setTransactionType] = useState<TransactionType>('debit');
+    const [transactionType, setTransactionType] = useState<TransactionType>('both');
     const [datePreset, setDatePreset] = useState(3); // All time by default
     const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -89,11 +89,17 @@ export function TransactionExplorer({
     const filteredTransactions = useMemo(() => {
         let result = [...transactions];
 
-        // Search filter
-        if (searchTerm.length >= 2) {
-            const term = searchTerm.toLowerCase();
+        // Search filter with wildcard support
+        if (searchTerm.length >= 1) {
+            // Convert wildcard pattern to regex: * -> .*, ? -> .
+            const pattern = searchTerm
+                .toLowerCase()
+                .replace(/[.+^${}()|[\]\\]/g, '\\$&') // Escape regex special chars
+                .replace(/\*/g, '.*')  // * matches any characters
+                .replace(/\?/g, '.');  // ? matches single character
+            const regex = new RegExp(pattern);
             result = result.filter((t) =>
-                t.description.toLowerCase().includes(term)
+                regex.test(t.description.toLowerCase())
             );
         }
 
@@ -168,7 +174,7 @@ export function TransactionExplorer({
     const hasActiveFilters =
         searchTerm.length > 0 ||
         selectedPriceRanges.length > 0 ||
-        transactionType !== 'debit' ||
+        transactionType !== 'both' ||
         datePreset !== 3;
 
     const formatAmount = (amount: number) => {
