@@ -161,3 +161,12 @@ Run `node scripts/migrate_master_data.cjs` to:
 
 ### PDF Generation (`src/utils/pdfGenerator.ts`)
 - **USE `doc.save()`**: For triggering downloads, always prefer `jsPDF.save('filename.pdf')` over manual blob creation (`URL.createObjectURL`). Standard blob triggers are frequently blocked or renamed to random GUID hashes by browser security policies on production domains.
+
+---
+
+## 12. User Action Targeting (Lessons Learned)
+
+### Subscription Hiding (`App.tsx`, `SubscriptionCard.tsx`)
+- **ALWAYS USE UNIQUE IDs**: When hiding/dismissing items, use a unique identifier (e.g., `${name}-${amount}`) instead of just the name. This prevents collateral hiding of same-name items with different prices.
+- **ID Generation**: The `id` field is generated in `analyzer.ts` as `${name}-${averageAmount.toFixed(2)}` (e.g., `SIRIUSXM-7.71`).
+- **Persistence**: The `persistence.ts` utility stores these IDs in localStorage. When filtering `visibleCandidates`, compare against `c.id`, not `c.name`.

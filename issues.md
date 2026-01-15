@@ -1,5 +1,18 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-15 (Granular Subscription Hiding)
+
+### 🔴 Critical Bug: Hiding One Subscription Hides All With Same Name
+- **Issue**: Clicking "Hide" on one SiriusXM subscription ($4.62) also hid the other SiriusXM ($7.71).
+- **Cause**: The dismiss logic used `subscription.name` (e.g., "SIRIUSXM") as the ignore key. Both subscriptions shared the same name, so hiding one filtered out both.
+- **Resolution**:
+    1. Added unique `id` field to `SubscriptionCandidate` interface: `${name}-${amount.toFixed(2)}` (e.g., `SIRIUSXM-4.62`).
+    2. Updated `SubscriptionCard.tsx` to pass `subscription.id` to dismiss handler.
+    3. Updated `App.tsx` to filter by `id` instead of `name`.
+- **Lesson**: For any user-facing filter/hide functionality, always use a unique identifier that distinguishes otherwise-identical items.
+
+---
+
 ## Session: 2026-01-15 (PDF Fix & Deployment Optimization)
 
 ### 🔴 Critical Bug: PDF Download Filename / GUID Renaming

@@ -2,6 +2,10 @@
 
 ## 🟢 Completed (Session 2026-01-15)
 
+- [x] **TASK-058**: Fix Granular Subscription Hiding
+  - Hiding one SiriusXM ($4.62) no longer hides the other ($7.71).
+  - Added unique `id` field (`name-amount`) to `SubscriptionCandidate`.
+  - Updated filtering to use `id` instead of `name`.
 - [x] **TASK-055**: Fix PDF Download Filename Logic
   - Reverted to `jsPDF.save()` to fix persistent random hash filenames on production.
 - [x] **TASK-056**: Optimize Deployment Script
@@ -38,6 +42,9 @@
 
 ## 🟡 Next Up (P0 Critical)
 
+- [ ] **TASK-059**: Transaction Search / Filter
+  - Add search box to filter uploaded transactions by keyword or wildcard.
+  - Allow users to quickly find specific merchants or charges.
 - [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Implemented basic guessing*
 - [ ] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
