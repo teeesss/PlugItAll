@@ -91,8 +91,10 @@ describe('Amount Parser', () => {
     });
 
     test('parses with CR/DR markers', () => {
-        expect(parseAmount('15.99 CR')).toBe(-15.99); // Credit is usually money in/refund
-        expect(parseAmount('15.99 DR')).toBe(15.99);  // Debit is money out
+        // CR = Credit = money TO you = POSITIVE
+        // DR = Debit = money FROM you = NEGATIVE
+        expect(parseAmount('15.99 CR')).toBe(15.99);
+        expect(parseAmount('15.99 DR')).toBe(-15.99);
     });
 
     test('parses without dollar sign', () => {

@@ -119,6 +119,9 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
 
   const candidates: SubscriptionCandidate[] = [];
 
+  // Check if the entire dataset uses signs (has any negative numbers)
+  const hasSignsGlobal = rawTransactions.some((t: Transaction) => t.amount < 0);
+
   groups.forEach((transactions, name) => {
     // 1.5 Refund/Pair Cancellation (Task-004)
     // Filter out pairs that exactly cancel each other out (Charge + Refund)
@@ -128,19 +131,22 @@ export function detectSubscriptions(rawTransactions: Transaction[]): Subscriptio
     if (filteredTxs.length === 0) return;
 
     // Filter out remaining individual refunds and ensure positive amounts
-    // SMART REFUND DETECTION: Handle both conventions
-    // Convention 1: Charges are negative (e.g., -15.99), refunds are positive
-    // Convention 2: Charges are positive (e.g., 15.99), refunds have "REFUND" in description
+    // Since we've standardized the parser:
+    // - Charges (money leaving) are NEGATIVE (e.g., -15.99)
+    // - Credits/Refunds (money entering) are POSITIVE (e.g., 15.99)
     const absoluteTxs = filteredTxs
       .filter(t => {
-        // If description contains refund keywords, it's a refund regardless of sign
+        // If the dataset has signs, EXCLUDE positive amounts (they are credits)
+        if (hasSignsGlobal && t.amount > 0) return false;
+
+        // Also exclude items with refund keywords
         const desc = t.description.toUpperCase();
         if (desc.includes('REFUND') || desc.includes('RETURN') || desc.includes('REVERSAL') || desc.includes('CREDIT MEMO')) {
-          return false; // Filter out refunds
+          return false;
         }
-        return true; // Keep everything else
+        return true;
       })
-      .map(t => ({ ...t, amount: Math.abs(t.amount) }));
+      .map(t => ({ ...t, amount: Math.abs(t.amount) })); // Work with positive numbers for analysis logic
 
     if (absoluteTxs.length === 0) return;
 

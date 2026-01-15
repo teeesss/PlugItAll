@@ -1,5 +1,23 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-15 (Transaction Explorer Phase 1 Bugs)
+
+### 🔴 Bug: All Transactions Showing as "Credit" 
+- **Issue**: In Transaction Explorer, 99% of transactions displayed as "Credit" when they should be "Debit".
+- **Cause**: Parser sign logic was inverted. `CR` marker was incorrectly setting amounts to negative, and `DR` marker to positive.
+- **Resolution**: Fixed `parseAmount()` in `parser.ts`:
+  - `CR` marker → POSITIVE (money TO you)
+  - `DR` marker, parentheses `(50.00)`, trailing minus `50.00-` → NEGATIVE (money FROM you)
+- **Tests Added**: `tests/amount_sign.test.ts` with 14 new tests for sign logic.
+- **Lesson**: Bank statement conventions: Debits = charges (negative), Credits = refunds (positive).
+
+### 🟡 Bug: Alternating Row Colors Not Visible
+- **Issue**: Table rows all looked the same color.
+- **Cause**: `bg-slate-900` vs `bg-slate-900/50` too subtle.
+- **Resolution**: Changed to `bg-slate-800/30` vs `bg-slate-900/50` for more contrast.
+
+---
+
 ## Session: 2026-01-15 (Granular Subscription Hiding)
 
 ### 🔴 Critical Bug: Hiding One Subscription Hides All With Same Name

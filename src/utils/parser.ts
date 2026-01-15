@@ -174,9 +174,13 @@ export function parseAmount(amountStr: string): number | null {
   if (isNaN(amount)) return null;
 
   // Sign logic
-  if (isParenNegative || isTrailingNegative || isCredit) {
+  // Debits (charges, money leaving account) = NEGATIVE
+  // Credits (refunds, money entering account) = POSITIVE
+  if (isParenNegative || isTrailingNegative || isDebit) {
+    // Parenthetical (50.00), trailing minus 50.00-, or DR marker = debit = negative
     amount = -Math.abs(amount);
-  } else if (isDebit) {
+  } else if (isCredit) {
+    // CR marker = credit = positive
     amount = Math.abs(amount);
   }
 
@@ -320,7 +324,12 @@ export const parseCSVString = (content: string): Transaction[] => {
       } else if (columnMap!.debit !== undefined || columnMap!.credit !== undefined) {
         const debit = columnMap!.debit !== undefined ? (parseAmount(row[columnMap!.debit]) || 0) : 0;
         const credit = columnMap!.credit !== undefined ? (parseAmount(row[columnMap!.credit]) || 0) : 0;
-        amount = debit - credit;
+        // Standardize: Credits are POSITIVE, Debits/Charges are NEGATIVE
+        // If we have separate columns, usually they are both positive strings
+        // So amount = credit - debit
+        // e.g. debit column has 15.99 -> amount = 0 - 15.99 = -15.99
+        // e.g. credit column has 23.29 -> amount = 23.29 - 0 = 23.29
+        amount = Math.abs(credit) - Math.abs(debit);
       }
 
       const dateObj = parseDate(dateStr);

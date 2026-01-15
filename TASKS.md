@@ -11,7 +11,9 @@
   - Created `TransactionExplorer.tsx` (90% overlay, sortable table)
   - Added filters: price range chips, credit/debit toggle, date presets
   - Combined AND filter logic with "Clear all" button
-  - All 88 tests pass, deployed to production
+  - Fixed bugs: wildcard support, default "both" filter, alternating colors, credit/debit sign logic.
+  - Excluded credits/refunds from subscription detection (TASK-074).
+  - All 115 tests pass, deployed to production
 - [x] **TASK-055**: Fix PDF Download Filename Logic
   - Reverted to `jsPDF.save()` to fix persistent random hash filenames on production.
 - [x] **TASK-056**: Optimize Deployment Script
@@ -71,10 +73,10 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 
 ## 🔴 High Priority (P1)
 
-- [ ] **TASK-074**: Exclude Credits/Refunds from Subscription Detection
-  - Credits (positive amounts) should NEVER be flagged as subscriptions
-  - Example: Google One refund of $23.29 was incorrectly detected because it matched "Google One" keyword
-  - Fix: Filter out all positive amounts in `detectSubscriptions()` before analysis
+- [x] **TASK-074**: Exclude Credits/Refunds from Subscription Detection
+  - Standardized parser to use negative for debits and positive for credits
+  - Updated `detectSubscriptions()` to filter out positive amounts in signed datasets
+  - Verified with real user data (Google One refund no longer detected)
 - [ ] **TASK-004**: Improve Logo matching (Many major brands still missing).
 - [ ] **TASK-005**: Add "Cancel All" automated helper flow for common merchants.
 - [ ] **TASK-019**: Refine Transaction History UI (Ensure it scales well on mobile).

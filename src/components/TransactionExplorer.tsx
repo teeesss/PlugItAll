@@ -355,7 +355,7 @@ export function TransactionExplorer({
                                         filteredTransactions.map((t, idx) => (
                                             <tr
                                                 key={`${t.date}-${t.amount}-${idx}`}
-                                                className={`border-b border-slate-800 hover:bg-slate-800/50 ${idx % 2 === 0 ? 'bg-slate-900' : 'bg-slate-900/50'
+                                                className={`border-b border-slate-700/50 hover:bg-slate-700/50 ${idx % 2 === 0 ? 'bg-slate-800/30' : 'bg-slate-900/50'
                                                     }`}
                                             >
                                                 <td className="px-4 py-3 text-sm text-slate-400 whitespace-nowrap">
