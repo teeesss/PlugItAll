@@ -98,6 +98,10 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
             doc.text(footerText, 105, 290, { align: 'center' });
         }
 
+        // CRITICAL: DO NOT CHANGE THIS DOWNLOAD METHOD.
+        // Previous attempts using URL.createObjectURL(blob) caused persistent
+        // filename hashing bugs (GUIDs) and security blocks on production.
+        // doc.save() is the only reliable, cross-browser method for this implementation.
         doc.save('plug-it-all-report.pdf');
     } catch (err) {
         console.error('FAILED to generate PDF:', err);
