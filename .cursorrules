@@ -32,6 +32,7 @@ You must follow these rules at all times.
 
 ## 5. Environment Maintenance
 - **ALWAYS** Kill stale terminals/processes before starting a new server.
+- **ONLY 1 NODE INSTANCE**: Ensure only one Node.js instance (server or test) is running. Never spawn new instances without killing existing ones.
 - **ENSURE** the server runs on Port 5173 (default). If usage blocked, `kill` the blocker, don't just increment the port.
 - **READ** console errors carefully; if a dependency complains about missing plugins (e.g. PostCSS), fix the config immediately.
 
@@ -145,7 +146,6 @@ Run `node scripts/migrate_master_data.cjs` to:
 - **PROCESS**:
     1. Run `npm run build` to generate the production bundle.
     2. Run `npm run deploy` to sync the `dist` folder to the FTP server.
-    3. Only upload files from the `dist` folder to the FTP server which have changed. Do not upload the entire `dist` folder, especially static image files!
+    3. **ONLY upload modified files**: Never upload static image files (especially in `logos/`) unless they are new or modified. Use size-based or name-based comparison to skip existing files.
     4. Don't use && with powershell commands. Use ; instead.
-    5. For status files like images. Do not reup-load to a FTP server unless files have changed when uploading dist from node build.
 - **VERIFICATION**: Always check the live URL (`https://www.bmwseals.com/plugit/`) after deployment to ensure changes are reflected.

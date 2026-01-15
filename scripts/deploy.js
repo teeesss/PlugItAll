@@ -39,35 +39,82 @@ async function deploy() {
     console.log(`📂 Ensuring remote directory exists: ${remotePath}`);
     await client.ensureDir(remotePath);
 
-    // Get list of existing logos to skip them
-    const remoteLogosPath = path.posix.join(remotePath, 'logos');
-    const existingLogos = new Set();
-    try {
-      const list = await client.list(remoteLogosPath);
-      list.forEach(item => existingLogos.add(item.name));
-      console.log(`🔍 Found ${existingLogos.size} existing logos on server.`);
-    } catch (e) {
-      console.log('ℹ️ Logos directory empty or not found.');
+    // Get list of all remote files recursively to avoid re-uploading
+    console.log('🔍 Listing remote files (this may take a moment)...');
+    const remoteFiles = new Map();
+
+    async function listRecursive(dir, prefix = '') {
+      const list = await client.list(dir);
+      for (const item of list) {
+        const relPath = prefix ? `${prefix}/${item.name}` : item.name;
+        if (item.type === ftp.FileType.Directory) {
+          await listRecursive(`${dir}/${item.name}`, relPath);
+        } else {
+          remoteFiles.set(relPath, item);
+        }
+      }
     }
 
-    console.log(`🚀 Starting Incremental Sync to ${remotePath}...`);
-    await client.uploadFromDir(localPath, remotePath, (file) => {
-      const relativePath = path.relative(localPath, file).replace(/\\/g, '/');
+    await listRecursive(remotePath);
+    console.log(`🔍 Found ${remoteFiles.size} files on server.`);
 
-      // ALWAYS upload core files (index.html) and hashed assets
-      if (relativePath === 'index.html' || relativePath.startsWith('assets/')) {
-        return true;
+    async function cleanRemoteAssets() {
+      try {
+        console.log('🧹 Cleaning remote assets folder...');
+        await client.removeDir(`${remotePath}/assets`);
+        await client.ensureDir(`${remotePath}/assets`);
+        console.log('✅ Remote assets folder cleaned.');
+      } catch (e) {
+        console.log('ℹ️ Assets folder not found or already clean.');
+        await client.ensureDir(`${remotePath}/assets`);
       }
+    }
 
-      // SKIP all logos - they are static and never change
-      if (relativePath.startsWith('logos/')) {
-        return false;
+    await cleanRemoteAssets();
+
+    console.log(`🚀 Starting Intelligent Sync to ${remotePath}...`);
+
+    async function syncDir(localDir, remoteDir) {
+      const items = fs.readdirSync(localDir);
+      for (const item of items) {
+        const localFile = path.join(localDir, item);
+        const relativePath = path.relative(localPath, localFile).replace(/\\/g, '/');
+        const stats = fs.statSync(localFile);
+
+        if (stats.isDirectory()) {
+          await client.ensureDir(`${remoteDir}/${item}`);
+          await syncDir(localFile, `${remoteDir}/${item}`);
+          await client.cd(remoteDir); // Return to parent
+        } else {
+          const remoteFile = remoteFiles.get(relativePath);
+          const isImage = /\.(png|jpg|jpeg|svg|webp)$/i.test(item);
+          const isLogo = relativePath.startsWith('logos/');
+          const isAsset = relativePath.startsWith('assets/');
+
+          let shouldUpload = true;
+          if (remoteFile) {
+            if (isLogo) {
+              shouldUpload = false; // NEVER re-upload logos
+            } else if (isAsset) {
+              shouldUpload = true; // FORCE upload assets (we cleaned the dir anyway)
+            } else if (isImage && remoteFile.size === stats.size) {
+              shouldUpload = false; // Skip unchanged images
+            } else if (relativePath === 'index.html') {
+              shouldUpload = true; // ALWAYS upload index.html
+            }
+          }
+
+          if (shouldUpload) {
+            console.log(`📤 Uploading: ${relativePath}`);
+            await client.uploadFrom(localFile, `${remoteDir}/${item}`);
+          } else {
+            console.log(`⏭️ Skipping: ${relativePath}`);
+          }
+        }
       }
+    }
 
-      // Upload everything else (vite.svg, etc.)
-      return true;
-    });
-
+    await syncDir(localPath, remotePath);
     console.log('✅ Deployment complete!');
   } catch (err) {
     console.error('❌ Deployment failed:', err);
