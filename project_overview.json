@@ -15,17 +15,23 @@
   },
   "logic_engine": {
     "method": "Deterministic Frequency Analysis",
-    "libraries": ["papaparse", "pdfjs-dist"],
+    "libraries": [
+      "papaparse",
+      "pdfjs-dist"
+    ],
     "rules": {
       "min_occurrences": 2,
-      "date_gap_days": [28, 31],
+      "date_gap_days": [
+        28,
+        31
+      ],
       "amount_variance": 0.05
     }
   },
   "deployment_target": {
-    "server": "bimmerinfo.com",
-    "path": "bmwseals.com/unsub",
-    "folder_to_create": "unsub"
+    "server": "plugitall.com",
+    "path": "plugitall.com/",
+    "folder_to_create": "/"
   },
   "data_privacy": "ABSOLUTE. No user data upload. Application code upload only."
 }

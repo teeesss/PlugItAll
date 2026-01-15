@@ -65,7 +65,7 @@ Expanded from 2 to **52 banks** across global markets:
 ### 🚀 Deployment Optimizations
 - Fixed deploy script to skip 100+ static logo files
 - Reduced deployment time significantly
-- Live at: https://www.bmwseals.com/plugit/
+- Live at: https://plugitall.com/
 
 ## Test Coverage
 - **80/80 tests passing** (100%)

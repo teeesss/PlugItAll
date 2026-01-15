@@ -1,7 +1,7 @@
 # Sample Bank Data for Live Testing
 
 ## About This Package
-This ZIP contains **10 representative bank CSV files** with synthetic transaction data for testing the subscription detection on the live site: https://www.bmwseals.com/PlugItAll/
+This ZIP contains **10 representative bank CSV files** with synthetic transaction data for testing the subscription detection on the live site: https://plugitall.com/
 
 ## Included Banks
 
@@ -26,7 +26,7 @@ Each CSV contains recurring charges for services like:
 - Hulu, Disney+, HBO Max, YouTube Premium, etc.
 
 ## How to Test
-1. Go to https://www.bmwseals.com/PlugItAll/
+1. Go to https://plugitall.com/
 2. Upload any CSV from this package
 3. Verify subscriptions are correctly detected
 4. Check for zero false positives
