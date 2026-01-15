@@ -12,7 +12,7 @@ Tagline: _"Find the leaks in your bank account"_
 
 - **Privacy First**: No data leaves the browser.
 - **Static First**: No backend required; can be hosted anywhere.
-- **Reliability First**: Driven by 47 strict test cases to avoid false positives.
+- **Reliability First**: Driven by 80+ strict test cases to avoid false positives.
 - **Quality First**: Pre-commit hooks enforce code standards on every commit.
 
 ## Recent Architectural Shifts
@@ -35,8 +35,8 @@ Tagline: _"Find the leaks in your bank account"_
 ### FTP Deployment
 - **Method**: Direct FTP upload via `scripts/deploy.js`.
 - **Credentials**: Stored in `deploy_creds.json` (gitignored) or `.credentials` (legacy).
-- **Target**: `bimmerinfo.com` (user: `nughaud`) -> `/bmwseals.com/PlugItAll`
-- **Security Check**: Deployment script verifies SSL/TLS settings (currently insecure/plain FTP allowed for this host).
+- **Target**: `plugitall.com`
+- **Security Check**: Deployment script verifies SSL/TLS settings (hosted on DigitalOcean Droplet).
 - **Process**:
   1. Run `npm run build` locally.
   2. Run `node scripts/deploy.js` to clear and upload `dist/`.
