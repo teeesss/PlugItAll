@@ -6,6 +6,12 @@
   - Hiding one SiriusXM ($4.62) no longer hides the other ($7.71).
   - Added unique `id` field (`name-amount`) to `SubscriptionCandidate`.
   - Updated filtering to use `id` instead of `name`.
+- [x] **TASK-060 to TASK-068**: Transaction Explorer Phase 1
+  - Created `TransactionSearch.tsx` (stealth mode search bar, quick results dropdown)
+  - Created `TransactionExplorer.tsx` (90% overlay, sortable table)
+  - Added filters: price range chips, credit/debit toggle, date presets
+  - Combined AND filter logic with "Clear all" button
+  - All 88 tests pass, deployed to production
 - [x] **TASK-055**: Fix PDF Download Filename Logic
   - Reverted to `jsPDF.save()` to fix persistent random hash filenames on production.
 - [x] **TASK-056**: Optimize Deployment Script
@@ -40,34 +46,22 @@
 - [x] **Verification Promotion**: Automate "Verified" status for 3+ consistent charges.
 - [x] **UI Enhancement**: Added Transaction Count badge to cards.
 
-## 🟡 Next Up (P0 Critical) - Transaction Explorer Phase 1
+## 🟡 Next Up (P0 Critical) - Transaction Explorer Phase 2
 
 _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md)_
 
-- [ ] **TASK-060**: Transaction State Architecture
-  - Audit transaction flow through React state
-  - Ensure unified transaction array with proper date sorting
-  - Add transactions context for explorer consumption
-- [ ] **TASK-061**: Search Bar Component (Stealth Mode)
-  - Subtle search icon in header (collapsed by default)
-  - Only visible after files uploaded
-- [ ] **TASK-062**: Quick Results Dropdown
-  - Debounced 300ms search with Date | Description | Amount display
-  - "See all X results →" link
-- [ ] **TASK-063**: Full Explorer Panel (Overlay Mode)
-  - 85-90% screen overlay with backdrop
-  - Close button, click-outside-to-close, smooth animation
-- [ ] **TASK-064**: Transaction Table in Explorer
-  - Sortable columns: Date, Description, Amount, Type
-  - Alternating rows, color-coded amounts, sticky header
-- [ ] **TASK-065**: Price Range Filter Buttons
-  - Preset toggle chips: Under $10, $10-$50, $50-$100, etc.
-- [ ] **TASK-066**: Credit/Debit Toggle
-  - Default: Debits only, toggle for Credits/Both
-- [ ] **TASK-067**: Date Range Filter
-  - Quick presets: Last 30 days, 3 months, 6 months, All
-- [ ] **TASK-068**: Combined Filter Logic
-  - AND logic, removable filter pills, "Clear all" button
+**Phase 1 Complete!** ✅ Search bar, explorer overlay, filters all working.
+
+- [ ] **TASK-069**: "Add as Subscription" Action
+  - Each transaction row gets "+" button to add as manual subscription
+- [ ] **TASK-070**: LocalStorage Persistence for Manual Subs
+  - Store user-added subscriptions with `plugitall_manual_subs` key
+- [ ] **TASK-071**: Export/Import Manual Subscriptions
+  - JSON export/import functionality
+- [ ] **TASK-072**: Conflict Resolution
+  - Handle when auto-detection finds manually added sub
+- [ ] **TASK-073**: Edit/Remove Manual Subscriptions
+  - Edit/delete manual subscription entries
 
 ## 🟡 Other P0 Tasks
 
