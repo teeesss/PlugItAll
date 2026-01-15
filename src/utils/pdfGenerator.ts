@@ -45,7 +45,7 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
             sub.cancelUrl ? `Cancel ${sub.displayName || sub.name}` : 'No direct link',
         ]);
 
-        let finalY = 70;
+        let finalY = 80;
 
         // TABLE 1: VERIFIED SUBSCRIPTIONS
         if (verifiedSubs.length > 0) {
