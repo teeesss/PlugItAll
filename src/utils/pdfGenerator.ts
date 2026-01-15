@@ -37,56 +37,110 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
         doc.setTextColor(16, 185, 129);
         doc.text(`$${yearlyTotal.toFixed(2)}`, 100, 53);
 
-        // Subscriptions Table
-        const tableData = subscriptions.map((sub) => [
+        // SPLIT DATA: Verified (High/Medium) vs Review (Low)
+        const verifiedSubs = subscriptions.filter(s => s.confidence !== 'Low');
+        const reviewSubs = subscriptions.filter(s => s.confidence === 'Low');
+
+        // Helper to generate table data with link placeholder
+        const generateTableData = (subs: EnrichedSubscription[]) => subs.map((sub) => [
             sub.displayName || sub.name,
             `$${sub.averageAmount.toFixed(2)}`,
             sub.frequency,
             sub.confidence,
-            sub.cancelUrl ? 'Available' : 'Check Site',
+            sub.cancelUrl ? `Cancel ${sub.displayName || sub.name}` : 'No direct link',
         ]);
 
-        autoTable(doc, {
-            startY: 70,
-            head: [['Name', 'Amount', 'Frequency', 'Confidence', 'Cancel Link']],
-            body: tableData,
-            theme: 'striped',
-            headStyles: { fillColor: [79, 70, 229] },
-            styles: { fontSize: 10, cellPadding: 3 },
-            columnStyles: {
-                0: { fontStyle: 'bold' },
-                1: { halign: 'right' }
-            }
-        });
+        let finalY = 70;
 
-        // Add clickable links section
-        // @ts-expect-error - jspdf-autotable adds lastAutoTable to doc object
-        let currentY = (doc.lastAutoTable?.finalY || 80) + 15;
+        // TABLE 1: VERIFIED SUBSCRIPTIONS
+        if (verifiedSubs.length > 0) {
+            doc.setFontSize(14);
+            doc.setTextColor(30, 41, 59);
+            doc.text('Verified Subscriptions', 14, finalY - 5);
 
-        doc.setFontSize(12);
-        doc.setTextColor(30, 41, 59);
-        doc.text('Cancellation Links', 14, currentY);
-        currentY += 8;
-
-        const actionableSubs = subscriptions.filter(s => s.cancelUrl);
-        if (actionableSubs.length === 0) {
-            doc.setFontSize(10);
-            doc.setTextColor(100);
-            doc.text('No direct cancellation links available for these items.', 14, currentY);
-        } else {
-            doc.setFontSize(10);
-            doc.setTextColor(79, 70, 229);
-            actionableSubs.forEach((sub) => {
-                if (currentY > 270) {
-                    doc.addPage();
-                    currentY = 20;
+            autoTable(doc, {
+                startY: finalY,
+                head: [['Name', 'Amount', 'Frequency', 'Confidence', 'Action']],
+                body: generateTableData(verifiedSubs),
+                theme: 'striped',
+                headStyles: { fillColor: [16, 185, 129] }, // Green for Verified
+                styles: { fontSize: 10, cellPadding: 3 },
+                columnStyles: {
+                    0: { fontStyle: 'bold' },
+                    1: { halign: 'right' },
+                    4: { textColor: [79, 70, 229] } // Blue text for links
+                },
+                didDrawCell: (data) => {
+                    // Add link to the "Action" column (index 4) if a URL exists
+                    if (data.section === 'body' && data.column.index === 4) {
+                        const sub = verifiedSubs[data.row.index];
+                        if (sub?.cancelUrl) {
+                            doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, {
+                                url: sub.cancelUrl
+                            });
+                        }
+                    }
                 }
-                const label = `• Cancel ${sub.displayName || sub.name}`;
-                doc.text(label, 14, currentY);
-                doc.link(14, currentY - 4, 100, 6, { url: sub.cancelUrl || '' });
-                currentY += 7;
             });
+
+            // @ts-expect-error - jspdf-autotable adds lastAutoTable
+            finalY = doc.lastAutoTable.finalY + 20;
         }
+
+        // TABLE 2: REVIEW NEEDED
+        if (reviewSubs.length > 0) {
+            // Check if we need a new page
+            if (finalY > 250) {
+                doc.addPage();
+                finalY = 20;
+            }
+
+            doc.setFontSize(14);
+            doc.setTextColor(30, 41, 59);
+            doc.text('Review Needed (Low Confidence)', 14, finalY - 5);
+
+            autoTable(doc, {
+                startY: finalY,
+                head: [['Name', 'Amount', 'Frequency', 'Confidence', 'Action']],
+                body: generateTableData(reviewSubs),
+                theme: 'striped',
+                headStyles: { fillColor: [245, 158, 11] }, // Orange/Amber for Review
+                styles: { fontSize: 10, cellPadding: 3 },
+                columnStyles: {
+                    0: { fontStyle: 'bold' },
+                    1: { halign: 'right' },
+                    4: { textColor: [79, 70, 229] }
+                },
+                didDrawCell: (data) => {
+                    if (data.section === 'body' && data.column.index === 4) {
+                        const sub = reviewSubs[data.row.index];
+                        if (sub?.cancelUrl) {
+                            doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, {
+                                url: sub.cancelUrl
+                            });
+                        }
+                    }
+                }
+            });
+
+            // @ts-expect-error - jspdf-autotable adds lastAutoTable
+            finalY = doc.lastAutoTable.finalY + 20;
+        }
+
+        // LEGEND / FOOTER NOTE
+        if (finalY > 260) {
+            doc.addPage();
+            finalY = 20;
+        }
+
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        const legend = [
+            'Confidence Levels:',
+            '• High/Medium: Recurring patterns detected or matched known services. Highly likely a valid subscription.',
+            '• Low: Subscription detected but irregular intervals or unknown merchant. Please review manually.'
+        ];
+        doc.text(legend, 14, finalY);
 
         // Footer
         const pageCount = doc.getNumberOfPages();
