@@ -7,16 +7,11 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
 
     try {
         const doc = new jsPDF();
-        const today = new Date().toLocaleDateString();
 
         // Header
         doc.setFontSize(22);
         doc.setTextColor(30, 41, 59);
         doc.text('Plug It All - Subscription Report', 14, 20);
-
-        doc.setFontSize(10);
-        doc.setTextColor(100);
-        doc.text(`Generated on ${today} | v1.1.0-debug`, 14, 28);
 
         // Stats boxes
         const monthlyTotal = subscriptions.reduce((sum, sub) => sum + sub.averageAmount, 0);
@@ -124,7 +119,7 @@ export const generatePDF = (subscriptions: EnrichedSubscription[]) => {
             });
 
             // @ts-expect-error - jspdf-autotable adds lastAutoTable
-            finalY = doc.lastAutoTable.finalY + 20;
+            finalY = doc.lastAutoTable.finalY + 10;
         }
 
         // LEGEND / FOOTER NOTE
