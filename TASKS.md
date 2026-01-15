@@ -71,6 +71,10 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 
 ## 🔴 High Priority (P1)
 
+- [ ] **TASK-074**: Exclude Credits/Refunds from Subscription Detection
+  - Credits (positive amounts) should NEVER be flagged as subscriptions
+  - Example: Google One refund of $23.29 was incorrectly detected because it matched "Google One" keyword
+  - Fix: Filter out all positive amounts in `detectSubscriptions()` before analysis
 - [ ] **TASK-004**: Improve Logo matching (Many major brands still missing).
 - [ ] **TASK-005**: Add "Cancel All" automated helper flow for common merchants.
 - [ ] **TASK-019**: Refine Transaction History UI (Ensure it scales well on mobile).
