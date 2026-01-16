@@ -227,7 +227,7 @@ function App() {
 
       <main className="space-y-12">
         {/* State 1: Empty / Hero */}
-        {visibleCandidates.length === 0 && candidates.length === 0 && (
+        {visibleCandidates.length === 0 && candidates.length === 0 && allTransactions.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -255,8 +255,8 @@ function App() {
           </motion.div>
         )}
 
-        {/* State 2: Dashboard (Using visibleCandidates) */}
-        {(visibleCandidates.length > 0 || candidates.length > 0) && (
+        {/* State 2: Dashboard (Using visibleCandidates OR existing transactions) */}
+        {(visibleCandidates.length > 0 || candidates.length > 0 || allTransactions.length > 0) && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
             {/* Privacy Notice Banner */}
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-300 max-w-2xl mx-auto text-center">
@@ -292,9 +292,15 @@ function App() {
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold text-slate-100 flex items-center">
                     Active Subscriptions
-                    <span className="ml-3 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30">
-                      {visibleCandidates.filter(s => s.confidence === 'High').length} Verified
-                    </span>
+                    {visibleCandidates.length > 0 ? (
+                      <span className="ml-3 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30">
+                        {visibleCandidates.filter(s => s.confidence === 'High').length} Verified
+                      </span>
+                    ) : (
+                      <span className="ml-3 bg-slate-500/20 text-slate-400 text-xs px-2 py-1 rounded-full border border-slate-500/30">
+                        0 Found
+                      </span>
+                    )}
                   </h2>
                   <button
                     onClick={() => generatePDF(visibleCandidates)}
@@ -323,6 +329,14 @@ function App() {
                         />
                       ))}
                   </AnimatePresence>
+                  {visibleCandidates.length === 0 && (
+                    <div className="col-span-full py-12 text-center border-2 border-dashed border-white/5 rounded-2xl">
+                      <p className="text-slate-400 mb-2">No subscriptions detected automatically.</p>
+                      <p className="text-sm text-slate-500">
+                        Try adding one manually or check 'Items for Review' below.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* REVIEW SECTION */}

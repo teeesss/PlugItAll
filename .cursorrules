@@ -240,8 +240,12 @@ Run `node scripts/migrate_master_data.cjs` to:
 - Archive old documentation to `docs/archive/` (don't delete, they have historical value)
 - Update `docs/DOCUMENTATION_GUIDE.md` if file structure changes
 
+### UI & State Management (Lessons Learned)
+- **0-Subscription State**: ALWAYS handle the empty state gracefully. If a process (like parsing) completes but returns 0 results, the UI MUST provide feedback (e.g., transition to dashboard with "0 Found") rather than staying on the input screen.
+- **Use REPLACE instead of MERGE** when processing new uploads to avoid stale data persistence.
+
 ### Current Stats (Update as needed)
-- **Tests**: 140/140 passing across 24 test suites
+- **Tests**: 142/142 passing across 25 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
 - **Version**: v1.1.4-FINAL

@@ -1,11 +1,16 @@
-# PROJECT STATUS SUMMARY - Plug It All
+# Project Status Summary
 
-**Last Updated:** January 16, 2026  
-**Version:** v1.1.4-FINAL  
-**Tests:** ✅ 140/140 passing across 24 suites  
-**Live URL:** https://plugitall.com/
+**Last Updated:** 2026-01-16
+**Version:** v1.1.4-FINAL
+**Test Status:** 142/142 Passing (25 Suites)
+**Live URL:** [https://plugitall.com/](https://plugitall.com/)
 
 ---
+
+## 🚀 Recent Achievements
+- **Fixed USAA PDF Crash**: Resolved critical parser failure for USAA statements in production by adding defensive checks for malformed PDF items. (v1.1.4)
+- **Fixed 0-Subscription UI**: Updated dashboard to correctly transition even when 0 subscriptions are found, allowing manual search/entry. (v1.1.4)
+- **Robustness Testing**: Added dedicated test suite (`parser_robustness.test.ts`) to prevent future parsing regressions.
 
 ## 📋 CURRENT TASK TRACKING FILES
 

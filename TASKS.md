@@ -6,10 +6,13 @@
   - Backup/Restore functionality for manually added subscriptions.
   - JSON format with versioning and metadata.
   - UI integration in SettingsModal.
-- [x] **USAA PDF Parsing Test**:
-  - Diagnostic test created to analyze `pdfs/USAA1.pdf`.
-  - Identified that the PDF is image-based (scan) and not parseable via current text-layer extraction.
-  - Updated documentation to reflect this limitation.
+- [x] **USAA PDF Parsing Fix** (v1.1.4):
+  - Created robustness test `parser_robustness.test.ts`.
+  - Added defensive checks in `parser.ts` to handle malformed `transform` properties in PDF items.
+  - Verified fix on production.
+- [x] **0-Subscription UI Transition Fix** (v1.1.4):
+  - Updated `App.tsx` logic to transition to dashboard if allTransactions > 0.
+  - Added "0 Found" badge and "Add More Data" visibility.
 
 ## 🟢 Completed (Session 2026-01-15)
 

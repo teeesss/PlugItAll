@@ -390,7 +390,10 @@ async function detectBank(pdf: any): Promise<string> {
   try {
     const page = await pdf.getPage(1);
     const content = await page.getTextContent();
-    const text = content.items.map((it: any) => it.str || '').join(' ').toUpperCase();
+    const text = content.items
+      .map((it: any) => (it.str && it.transform ? it.str : ''))
+      .join(' ')
+      .toUpperCase();
 
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
     if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
@@ -416,7 +419,8 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
 
     const lineMap: { [key: number]: TextItem[] } = {};
     const jitter = 2;
-    items.forEach((item) => {
+    items.forEach((item: any) => {
+      if (!item.transform || typeof item.str !== 'string') return;
       const y = Math.round(item.transform[5]);
       const targetYMatch = Object.keys(lineMap).find(ly => Math.abs(Number(ly) - y) <= jitter);
       const targetY = targetYMatch ? Number(targetYMatch) : y;
@@ -529,7 +533,8 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
     const textContent = await page.getTextContent();
     const items = textContent.items as TextItem[];
     const lines: { [key: number]: string[] } = {};
-    items.forEach((item) => {
+    items.forEach((item: any) => {
+      if (!item.transform || typeof item.str !== 'string') return;
       const y = Math.round(item.transform[5]);
       if (!lines[y]) lines[y] = [];
       lines[y].push(item.str);

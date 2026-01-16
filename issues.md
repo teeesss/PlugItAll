@@ -11,6 +11,18 @@
 - **Tests**: `tests/export_import.test.ts` added with 12 tests for backup/restore integrity.
 
 ### 🟢 Discovery: USAA PDF Parsing (SUCCESS)
+- **Problem**: `pdfs/USAA-*.pdf` crashed in production due to lack of `transform` property checks on Marked Content items.
+- **Resolution**: Added defensive checks `item.transform || []` and filtered non-text items early in `parser.ts`.
+- **Tests**: Created `tests/parser_robustness.test.ts`.
+- **Status**: Fixed in v1.1.4.
+
+### 🟢 Bug: UI Stalls on 0-Subscription Result (SUCCESS)
+- **Problem**: If parser returned 0 subscriptions (but valid transactions), the UI remained on the upload screen ("Nothing Happens").
+- **Cause**: Dashboard visibility was gated by `candidates.length > 0`.
+- **Resolution**: Updated `App.tsx` to show dashboard if `allTransactions.length > 0`. Added "0 Found" badge.
+- **Status**: Verified fixed in v1.1.4.
+
+### 🟢 Feature: Export/Import Manual Subscriptions (TASK-071)
 - **Problem**: `pdfs/USAA-*.pdf` were initially difficult to parse due to multi-column layouts (separate Debit/Credit) and multi-line descriptions.
 - **Resolution**: Implemented a **Table-Aware Parser** in `parser.ts`:
   - **Bank Routing**: Added `detectBank()` to trigger specialized parsing based on statement footer/header.
