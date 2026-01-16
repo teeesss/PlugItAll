@@ -50,7 +50,35 @@ if (typeof globalThis.Path2D === 'undefined') {
     globalThis.Path2D = Path2DPolyfill;
 }
 
+// Polyfill localStorage (force it for tests)
+{
+    const storage = new Map<string, string>();
+    const localStoragePolyfill = {
+        getItem: (key: string) => {
+            const val = storage.get(key) ?? null;
+            // console.log('[DEBUG LOCALSTORAGE] getItem', key, val ? '(found)' : '(null)');
+            return val;
+        },
+        setItem: (key: string, value: string) => {
+            // console.log('[DEBUG LOCALSTORAGE] setItem', key, value.length, 'bytes');
+            storage.set(key, value);
+        },
+        removeItem: (key: string) => storage.delete(key),
+        clear: () => storage.clear(),
+        key: (index: number) => Array.from(storage.keys())[index] ?? null,
+        get length() { return storage.size; }
+    };
+
+    // override global
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (globalThis as any).localStorage = localStoragePolyfill;
+    // node compatibility
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (global as any).localStorage = localStoragePolyfill;
+}
+
 // Suppress console output during tests for cleaner output (optional)
 // Uncomment if you want to silence console logs during tests:
 // globalThis.console.log = () => {};
 // globalThis.console.debug = () => {};
+

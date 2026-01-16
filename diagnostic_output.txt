@@ -1,0 +1,26 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90mC:/projects/CancelSubscriptions/just-fucking-cancel[39m
+
+[90mstdout[2m | tests/usaa_pdf_test.test.ts[2m > [22m[2mUSAA Diagnostic Test[2m > [22m[2mshould diagnose USAA1.pdf parsing
+[22m[39m--- DIAGNOSTIC DATA FOR USAA1.pdf ---
+
+[90mstdout[2m | tests/usaa_pdf_test.test.ts[2m > [22m[2mUSAA Diagnostic Test[2m > [22m[2mshould diagnose USAA1.pdf parsing
+[22m[39mPDF Loaded: 2 pages
+
+[90mstdout[2m | tests/usaa_pdf_test.test.ts[2m > [22m[2mUSAA Diagnostic Test[2m > [22m[2mshould diagnose USAA1.pdf parsing
+[22m[39m--- Sample Lines (first 100) ---
+[Y=590] [D:true, A:false] | 1/16/26, 11:11 AM| |USAA-Bank-Statement-343449_3.png (1275├ù1650)
+[Y=17] [D:true, A:false] | |https://www.verifyevty.com/wp-content/uploads/2024/10/USAA-Bank-Statement-343449_3.png?v=1741522025| |1/2
+
+[90mstdout[2m | tests/usaa_pdf_test.test.ts[2m > [22m[2mUSAA Diagnostic Test[2m > [22m[2mshould diagnose USAA1.pdf parsing
+[22m[39m
+ENGINE_RESULT: 0 transactions found.
+Γ¥î NO TRANSACTIONS PARSED BY THE ENGINE
+
+ [32mΓ£ô[39m tests/usaa_pdf_test.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 121[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m   Start at [22m 11:17:29
+[2m   Duration [22m 827ms[2m (transform 73ms, setup 40ms, import 198ms, tests 121ms, environment 0ms)[22m
+

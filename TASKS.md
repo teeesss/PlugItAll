@@ -1,5 +1,16 @@
 # TASKS
 
+## 🟢 Completed (Session 2026-01-16)
+
+- [x] **TASK-071**: Export/Import manual subscriptions (JSON format)
+  - Backup/Restore functionality for manually added subscriptions.
+  - JSON format with versioning and metadata.
+  - UI integration in SettingsModal.
+- [x] **USAA PDF Parsing Test**:
+  - Diagnostic test created to analyze `pdfs/USAA1.pdf`.
+  - Identified that the PDF is image-based (scan) and not parseable via current text-layer extraction.
+  - Updated documentation to reflect this limitation.
+
 ## 🟢 Completed (Session 2026-01-15)
 
 - [x] **TASK-058**: Fix Granular Subscription Hiding
@@ -65,8 +76,7 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Provided toggle in Explorer and trash can on cards.
 - [x] **TASK-075**: Remove Manual Subscriptions from Explorer
   - Implemented logic to "uncheck" manual subscriptions directly in the table.
-- [ ] **TASK-071**: Export/Import Manual Subscriptions
-  - JSON export/import functionality
+- [x] **TASK-071**: Export/Import Manual Subscriptions (COMPLETED 2026-01-16)
 
 ## 🟡 Other P0 Tasks
 

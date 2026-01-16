@@ -1,5 +1,34 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-16 (PDF Diagnostic & Backup Export)
+
+### 🟢 Feature: Export/Import Manual Subscriptions (TASK-071)
+- **Goal**: Allow users to back up manually added subscriptions.
+- **Implementation**: 
+  - Added `exportManualSubscriptions` and `importManualSubscriptions` in `storage.ts`.
+  - Integrated UI into `SettingsModal.tsx` with Download/Upload buttons.
+  - Implemented merging logic with duplicate skipping (by ID).
+- **Tests**: `tests/export_import.test.ts` added with 12 tests for backup/restore integrity.
+
+### 🟢 Discovery: USAA PDF Parsing (SUCCESS)
+- **Problem**: `pdfs/USAA-*.pdf` were initially difficult to parse due to multi-column layouts (separate Debit/Credit) and multi-line descriptions.
+- **Resolution**: Implemented a **Table-Aware Parser** in `parser.ts`:
+  - **Bank Routing**: Added `detectBank()` to trigger specialized parsing based on statement footer/header.
+  - **Column Detection**: Automatically finds "Date", "Description", "Debits", "Credits", "Amount" using X-coordinates.
+  - **Multi-line Merging**: Description items spanning multiple lines are now grouped correctly by tracking the current transaction context across lines.
+  - **Amount Routing**: Logic now correctly subtractions Debits from Credits when columns are separate.
+  - **Summary Filtering**: Improved removal of "Beginning Balance", "Ending Balance", and other non-transactional items.
+- **Tests**: `tests/usaa_content.test.ts` and `tests/usaa_multi_test.test.ts` verify all 3 USAA PDFs and ensure **Citi** still works perfectly.
+- **Status**: USAA support is now robust and production-ready.
+
+### 🟢 Issue: Manual Subscription Tests Failing in Node.js
+- **Symtom**: `tests/export_import.test.ts` failed with `AssertionError`.
+- **Cause**: The `localStorage` polyfill in `tests/setup.ts` was only conditionally installed, which caused issues in certain vitest environments.
+- **Resolution**: Forced the polyfill on both `globalThis` and `global` using a persistent `Map`.
+- **Lesson**: Node.js testing environments for browser-like utilities often require forced polyfills for globals like `localStorage`.
+
+---
+
 ## Session: 2026-01-15 (Transaction Explorer Phase 1 Bugs)
 
 ### 🔴 Bug: All Transactions Showing as "Credit" 

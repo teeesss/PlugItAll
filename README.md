@@ -14,6 +14,10 @@ A privacy-first, client-side subscription detection tool that analyzes bank stat
 - 🚫 **False Positive Filtering** - Extensive blacklist (eBay, Amazon, restaurants) with **fuzzy matching** for variations (e.g., 'Taco Bell' vs 'TACOBELL').
 - 💰 **Price Validation** - High-risk merchants (Amazon, Walmart, Fabletics) require exact price match or known subscription markers.
 
+## 📚 Documentation
+
+**New to the project?** See [docs/DOCUMENTATION_GUIDE.md](docs/DOCUMENTATION_GUIDE.md) for a complete explanation of all documentation files and how they relate to each other.
+
 ## Quick Start
 
 ```bash
@@ -68,7 +72,7 @@ Hooks include: **Prettier**, **ESLint**, **Gitleaks** (secret detection), **Chec
 npm test
 ```
 
-11 test suites with 80+ tests covering analyzer, normalizer, matcher, and real-world scenarios.
+18 test suites with 119 tests covering analyzer, normalizer, matcher, Transaction Explorer, dismissal logic, and real-world scenarios.
 
 ## License
 

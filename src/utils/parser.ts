@@ -383,70 +383,204 @@ export const parsePDF = async (file: File): Promise<Transaction[]> => {
 /**
  * Core PDF Parsing Logic (Buffer-based for easier testing)
  */
-export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transaction[]> => {
+/**
+ * Detects the bank by scanning keywords on the first page.
+ */
+async function detectBank(pdf: any): Promise<string> {
   try {
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    const transactions: Transaction[] = [];
+    const page = await pdf.getPage(1);
+    const content = await page.getTextContent();
+    const text = content.items.map((it: any) => it.str || '').join(' ').toUpperCase();
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const textContent = await page.getTextContent();
-      const items = textContent.items as TextItem[];
+    if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
+    if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
+  } catch (e) {
+    // Bank detection failed, fallback to generic
+  }
+  return 'GENERIC';
+}
 
-      // Group items by Y coordinate (same line)
-      // Note: PDF coordinates often have small floating point differences
-      const lines: { [key: number]: string[] } = {};
-      items.forEach((item) => {
-        const y = Math.round(item.transform[5]);
-        if (!lines[y]) lines[y] = [];
-        lines[y].push(item.str);
-      });
+/**
+ * Specialized parser for USAA Bank Statements.
+ * Handles multi-column layouts and multi-line descriptions using table-aware logic.
+ */
+async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
+  const allTransactions: Transaction[] = [];
+  let currentColumnMap: { [key: string]: { xStart: number; xEnd: number } } | null = null;
 
-      Object.values(lines).forEach((lineParts) => {
-        const fullLine = lineParts.join(' ');
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const items = textContent.items as TextItem[];
+    if (items.length === 0) continue;
 
-        // Regex for Date: Require at least MM/DD or YYYY-MM-DD
-        const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3}\s+\d{1,2})/);
+    const lineMap: { [key: number]: TextItem[] } = {};
+    const jitter = 2;
+    items.forEach((item) => {
+      const y = Math.round(item.transform[5]);
+      const targetYMatch = Object.keys(lineMap).find(ly => Math.abs(Number(ly) - y) <= jitter);
+      const targetY = targetYMatch ? Number(targetYMatch) : y;
+      if (!lineMap[targetY]) lineMap[targetY] = [];
+      lineMap[targetY].push(item);
+    });
 
-        // Regex for Amount: Require decimal point OR leading dollar sign to avoid matching random numbers
-        const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/);
+    const sortedYs = Object.keys(lineMap).map(Number).sort((a, b) => b - a);
+    let pageTransactions: Transaction[] = [];
+    let currentTx: Transaction | null = null;
 
-        if (dateMatch && amountMatch) {
-          const dateObj = parseDate(dateMatch[0]);
-          const amount = parseAmount(amountMatch[0]);
+    sortedYs.forEach(y => {
+      const lineItems = lineMap[y].sort((a, b) => a.transform[4] - b.transform[4]);
+      const lineText = lineItems.map(it => it.str).join(' ');
 
-          if (!dateObj || amount === null) return;
+      if (/date.*description.*(debit|credit|amount|balance)/i.test(lineText)) {
+        const newMap: Record<string, { xStart: number; xEnd: number }> = {};
+        lineItems.forEach((it, idx) => {
+          const str = it.str.toLowerCase();
+          const x = it.transform[4];
+          const nextItem = lineItems[idx + 1];
+          const xEnd = nextItem ? nextItem.transform[4] - 2 : x + 100;
+          if (str.includes('date')) newMap.date = { xStart: x - 10, xEnd: xEnd };
+          else if (str.includes('description')) newMap.desc = { xStart: x - 10, xEnd: xEnd };
+          else if (str.includes('debit')) newMap.debit = { xStart: x - 20, xEnd: xEnd };
+          else if (str.includes('credit')) newMap.credit = { xStart: x - 10, xEnd: xEnd };
+          else if (str.includes('amount')) newMap.amount = { xStart: x - 20, xEnd: xEnd };
+          else if (str.includes('balance')) newMap.balance = { xStart: x - 10, xEnd: xEnd + 100 };
+        });
+        if (newMap.date && newMap.desc) currentColumnMap = newMap;
+      }
+    });
 
-          // Description Extraction
-          let description = fullLine
-            .replace(dateMatch[0], '')
-            .replace(amountMatch[0], '')
-            .trim();
+    sortedYs.forEach(y => {
+      const lineItems = lineMap[y].sort((a, b) => a.transform[4] - b.transform[4]);
+      const fullLine = lineItems.map(it => it.str).join(' ');
+      const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3}\s+\d{1,2})/);
 
-          description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '');
+      if (dateMatch) {
+        const dateObj = parseDate(dateMatch[0]);
+        if (dateObj) {
+          const amountRegex = /(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/g;
+          const amountMatch = fullLine.match(amountRegex);
+          let amount: number | null = null;
 
-          description = description
-            .replace(/^\s*-\s*/, '')
-            .replace(/[|]/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim();
-
-          if (description.length > 2) {
-            transactions.push({
-              date: dateObj.toLocaleDateString(),
-              description,
-              amount: amount,
+          if (currentColumnMap && (currentColumnMap.debit || currentColumnMap.credit || currentColumnMap.amount)) {
+            let debit = 0, credit = 0;
+            lineItems.forEach(it => {
+              const x = it.transform[4];
+              const val = parseAmount(it.str);
+              if (val !== null) {
+                if (currentColumnMap?.debit && x >= currentColumnMap.debit.xStart - 50 && x < currentColumnMap.debit.xEnd + 10) debit = val;
+                if (currentColumnMap?.credit && x >= currentColumnMap.credit.xStart - 10 && x < currentColumnMap.credit.xEnd + 10) credit = val;
+                if (currentColumnMap?.amount && x >= currentColumnMap.amount.xStart - 50 && x < currentColumnMap.amount.xEnd + 10) amount = val;
+              }
             });
+            if (amount === null && (debit !== 0 || credit !== 0)) amount = Math.abs(credit) - Math.abs(debit);
+          }
+          if (amount === null && amountMatch) amount = parseAmount(amountMatch[0]);
+
+          if (amount !== null) {
+            if (currentTx) pageTransactions.push(currentTx);
+            let description = fullLine.replace(dateMatch[0], '');
+            (amountMatch || []).forEach(a => { description = description.replace(a, ''); });
+            description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '').trim();
+            currentTx = { date: dateObj.toLocaleDateString(), description, amount: amount };
+            return;
           }
         }
-      });
-    }
-    return transactions;
+      }
+
+      if (currentTx && fullLine.length > 2) {
+        const hasAmount = /(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})/.test(fullLine);
+        const isHeader = /date|description|amount|debit|credit|balance|statement|account/i.test(fullLine);
+        const isSumLine = /ending balance|beginning balance|summary|total|interest paid/i.test(fullLine);
+        if (!hasAmount && !isHeader && !isSumLine && currentTx.description.length < 300) {
+          const descItems = currentColumnMap ? lineItems.filter(it => it.transform[4] >= (currentColumnMap?.desc.xStart || 0) && it.transform[4] < (currentColumnMap?.desc.xEnd || 350)) : lineItems;
+          if (descItems.length > 0) {
+            const extra = descItems.map(it => it.str).join(' ').trim();
+            if (extra && !currentTx.description.includes(extra)) currentTx.description += ' ' + extra;
+          }
+        }
+      }
+    });
+
+    if (currentTx) pageTransactions.push(currentTx);
+    pageTransactions = pageTransactions.filter(tx => {
+      const d = tx.description.toLowerCase();
+      return tx.description.length > 2 &&
+        !d.includes('beginning balance') &&
+        !d.includes('ending balance') &&
+        !d.includes('statement period') &&
+        !d.includes('account number') &&
+        !d.includes('interest paid');
+    });
+    allTransactions.push(...pageTransactions);
+  }
+  return allTransactions;
+}
+
+/**
+ * Specialized parser for Citibank Statements.
+ * Uses a simpler regex-based logic to maintain stability for existing formats.
+ * "Never touched" by USAA specific changes.
+ */
+async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
+  const transactions: Transaction[] = [];
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const items = textContent.items as TextItem[];
+    const lines: { [key: number]: string[] } = {};
+    items.forEach((item) => {
+      const y = Math.round(item.transform[5]);
+      if (!lines[y]) lines[y] = [];
+      lines[y].push(item.str);
+    });
+
+    Object.values(lines).forEach((lineParts) => {
+      const fullLine = lineParts.join(' ');
+      const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3}\s+\d{1,2})/);
+      const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/);
+
+      if (dateMatch && amountMatch) {
+        const dateObj = parseDate(dateMatch[0]);
+        const amount = parseAmount(amountMatch[0]);
+        if (dateObj && amount !== null) {
+          let description = fullLine.replace(dateMatch[0], '').replace(amountMatch[0], '').trim();
+          description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '');
+          description = description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
+          if (description.length > 2 && !description.toLowerCase().includes('beginning balance')) {
+            transactions.push({ date: dateObj.toLocaleDateString(), description, amount: amount });
+          }
+        }
+      }
+    });
+  }
+  return transactions;
+}
+
+/**
+ * Generic PDF parser for unrecognized bank formats.
+ */
+async function parseGenericSpecific(pdf: any): Promise<Transaction[]> {
+  return parseCitiSpecific(pdf); // Fallback to classic regex-based parser
+}
+
+/**
+ * Core PDF Parsing Logic (Buffer-based for easier testing)
+ */
+export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transaction[]> => {
+  try {
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
+    const bank = await detectBank(pdf);
+
+    if (bank === 'USAA') return await parseUSAASpecific(pdf);
+    if (bank === 'CITI') return await parseCitiSpecific(pdf);
+    return await parseGenericSpecific(pdf);
   } catch (e) {
     console.error('PDF Parse Error Internal', e);
     return [];
   }
 };
+
 
 /**
  * Validates if the uploaded file is a supported CSV or PDF.

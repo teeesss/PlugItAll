@@ -4,17 +4,51 @@ You must follow these rules at all times.
 
 ---
 
-## 1. Issue Tracking
-- **ALWAYS** check `issues.md` before starting a task to be aware of known pitfalls.
-- **IMMEDIATELY** log any new error or blocker in `issues.md` as soon as it is identified.
-- **UPDATE** `issues.md` with the resolution once fixed, including the "Cause" to prevent recurrence.
-- **ALWAYS** check `issues.md` before marking any logic task as complete.
+## 1. Project Status \u0026 Issue Tracking
+- **ALWAYS** check `PROJECT_STATUS_SUMMARY.md` first for current project state, completed tasks, and pending priorities
+- **ALWAYS** check `issues.md` before starting a task to be aware of known pitfalls
+- **IMMEDIATELY** log any new error or blocker in `issues.md` as soon as it is identified
+- **UPDATE** `issues.md` with the resolution once fixed, including the "Cause" to prevent recurrence
+- **UPDATE** `TASKS.md` when completing tasks
+- **ALWAYS** check `issues.md` before marking any logic task as complete
+
+### Documentation Structure (Updated Jan 16, 2026)
+**NEW**: If confused about which file to use, see `docs/DOCUMENTATION_GUIDE.md` for complete file relationship guide.
+
+**Core Tracking Files (Use Daily):**
+- `TASKS.md` - PRIMARY daily task tracker
+- `ROADMAP_TRANSACTION_EXPLORER.md` - Transaction Explorer feature roadmap (Phases 1-6)
+- `issues.md` - Bug log and debugging history
+
+**Status & Overview Files (Reference):**
+- `PROJECT_STATUS_SUMMARY.md` - ⭐ Comprehensive project overview (START HERE for status)
+- `PROJECT_STATUS.md` - Recent updates and changelog
+- `OVERVIEW.md` - Architecture overview (CONSOLIDATED - includes detection pipeline & file structure)
+
+**Public-Facing Docs:**
+- `README.md` - GitHub landing page
+- `QUICKSTART.md` - Setup and quick start guide
+- `SAMPLE_DATA_README.md` - Testing data guide
+
+**File Relationships:**
+```
+ROADMAP_TRANSACTION_EXPLORER.md (Long-term feature plan)
+    ↓ Creates specific tasks
+TASKS.md (Daily execution tracker)
+    ↓ Documents completion
+PROJECT_STATUS.md (Recent changelog)
+```
+
+**Archived Files:**
+- `docs/archive/project_overview.md` - Merged into OVERVIEW.md (Jan 16, 2026)
+- `docs/archive/PDF-Parser-Possible.md` - Research notes
 
 ---
 ## 2. Testing
-- Run `npm run test:run` before marking any logic task as complete.
-- Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI.
-- When a test fails after code changes, check if the blacklist or detection logic needs adjustment.
+- All tests must pass before merging (currently 119/119 tests passing across 18 suites)
+- Run `npm run test:run` before marking any logic task as complete
+- Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI
+- When a test fails after code changes, check if the blacklist or detection logic needs adjustment
 
 ---
 
@@ -72,6 +106,17 @@ You must follow these rules at all times.
 ### App State & Deduplication (`src/App.tsx`)
 - Use REPLACE instead of MERGE when processing new uploads to avoid stale data persistence.
 - **Dedupe inputs**: Create a unique key `date + amount + description.substring(0,20)` to prevent CSV+PDF overlaps from creating 0-day intervals.
+
+### Bank-Specific Parsing Logic (Jan 16, 2026)
+- **Automatic Detection**: Always implement a `detectBank()` function that scans the raw text of the first page (PDF) or headers (CSV).
+- **Specialized Routing**: Route parsing to isolated functions (e.g., `parseUSAASpecific`) based on the detected bank.
+- **Table-Aware Design**: For complex multi-column PDFs (USAA), group text items by Y-coordinate and use X-coordinate boundaries for column mapping.
+- **Description Merging**: In table-aware parsers, always check if the next line's text falls within the "Description" column's X-range and append it to the current transaction if it does.
+- **Isolated Generic Parser**: Always maintain a `parseGenericSpecific` function as a fallback to ensure stability for unknown formats.
+- **Sign Logic Protocol**:
+  - `CR` / Credit Column → POSITIVE
+  - `DR` / Debit Column / Parentheses / Trailing Minus → NEGATIVE
+- **Tests**: Every new bank-specific parser MUST have its own diagnostic test file (e.g., `tests/usaa_content.test.ts`).
 
 ---
 
@@ -170,3 +215,32 @@ Run `node scripts/migrate_master_data.cjs` to:
 - **ALWAYS USE UNIQUE IDs**: When hiding/dismissing items, use a unique identifier (e.g., `${name}-${amount}`) instead of just the name. This prevents collateral hiding of same-name items with different prices.
 - **ID Generation**: The `id` field is generated in `analyzer.ts` as `${name}-${averageAmount.toFixed(2)}` (e.g., `SIRIUSXM-7.71`).
 - **Persistence**: The `persistence.ts` utility stores these IDs in localStorage. When filtering `visibleCandidates`, compare against `c.id`, not `c.name`.
+
+---
+
+## 13. Documentation Maintenance
+
+### When Creating New Features
+1. Add feature plan to `ROADMAP_TRANSACTION_EXPLORER.md` (if Transaction Explorer related)
+2. Break down into specific tasks in `TASKS.md`
+3. Update `PROJECT_STATUS.md` when completed
+4. Update `PROJECT_STATUS_SUMMARY.md` if major milestone
+
+### When Fixing Bugs
+1. Check `issues.md` for similar past issues
+2. Document the bug in `issues.md` immediately when found
+3. Document the resolution in `issues.md` with "Cause" and "Fix"
+4. Update `TASKS.md` when fixed
+
+### When Updating Documentation
+- Update test counts in: `README.md`, `QUICKSTART.md`, `OVERVIEW.md`, `.cursorrules`
+- Keep `PROJECT_STATUS_SUMMARY.md` as single source of truth for overall status
+- Archive old documentation to `docs/archive/` (don't delete, they have historical value)
+- Update `docs/DOCUMENTATION_GUIDE.md` if file structure changes
+
+### Current Stats (Update as needed)
+- **Tests**: 119/119 passing across 18 test suites
+- **Subscriptions**: 292 in database
+- **Pricing Entries**: 193
+- **Version**: v1.1.2-FINAL
+- **Live URL**: https://plugitall.com/

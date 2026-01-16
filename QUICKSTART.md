@@ -43,7 +43,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 npm run test:run
 ```
 
-This runs all 80+ unit and integration tests.
+This runs all 119 unit and integration tests across 18 test suites.
 
 ## Running Pre-Commit Checks
 

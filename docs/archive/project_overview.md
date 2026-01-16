@@ -1,10 +1,12 @@
-# Project Overview: Unsub Static (Client-Side Subscription Manager)
+# Project Overview: Plug It All (Client-Side Subscription Manager)
 
 ## 1. Executive Summary
 
 A privacy-focused, static Single Page Application (SPA) that helps users identify unwanted recurring subscriptions. Users drag and drop PDF or CSV bank statements. The app runs entirely in the browser to detect recurring payments and provides "Deep Links" to cancel them.
 
 **Key differentiator:** NO AI APIs (avoiding cost), NO server uploads (ensuring privacy).
+
+**Tagline:** "Find the leaks in your bank account"
 
 ## 2. Technical Architecture
 
@@ -13,7 +15,7 @@ A privacy-focused, static Single Page Application (SPA) that helps users identif
 - **Styling:** Tailwind CSS
 - **PDF Parsing:** pdfjs-dist (legacy build for Node.js compatibility)
 - **CSV Parsing:** papaparse
-- **Testing:** Vitest (8 test files, 47 tests)
+- **Testing:** Vitest (18 test suites, 119 tests)
 - **Deployment:** Static files via FTP
 
 ## 3. Core Detection Engine (`src/utils/analyzer.ts`)
@@ -43,7 +45,7 @@ A privacy-focused, static Single Page Application (SPA) that helps users identif
 
 | File                                 | Purpose                                                         |
 | ------------------------------------ | --------------------------------------------------------------- |
-| `src/data/subs.json`                 | 150+ subscription definitions with logos, keywords, cancel URLs |
+| `src/data/subs.json`                 | 292 subscription definitions with logos, keywords, cancel URLs |
 | `src/data/subscription_pricing.json` | High-risk merchant pricing for validation                       |
 | `src/data/detector_overrides.json`   | (Future) Manual user overrides                                  |
 
@@ -75,4 +77,4 @@ tests/
 
 ## 6. Last Updated
 
-**2026-01-15** - Fixed granular subscription hiding (unique IDs: `name-amount`), PDF download reliability, deployment sync engine, and added 3 new dismissal tests.
+**2026-01-16** - Transaction Explorer Phase 1-2 complete (search, filter, manual subscriptions), 119 tests passing, 292 subscriptions in database, granular hiding with unique IDs.
