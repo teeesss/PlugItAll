@@ -6,14 +6,15 @@
   - Hiding one SiriusXM ($4.62) no longer hides the other ($7.71).
   - Added unique `id` field (`name-amount`) to `SubscriptionCandidate`.
   - Updated filtering to use `id` instead of `name`.
-- [x] **TASK-060 to TASK-068**: Transaction Explorer Phase 1
-  - Created `TransactionSearch.tsx` (stealth mode search bar, quick results dropdown)
-  - Created `TransactionExplorer.tsx` (90% overlay, sortable table)
-  - Added filters: price range chips, credit/debit toggle, date presets
-  - Combined AND filter logic with "Clear all" button
-  - Fixed bugs: wildcard support, default "both" filter, alternating colors, credit/debit sign logic.
-  - Excluded credits/refunds from subscription detection (TASK-074).
-  - All 115 tests pass, deployed to production
+- [x] **TASK-060 to TASK-075**: Transaction Explorer Phase 1 & 2 Core
+  - Created `TransactionSearch.tsx` (stealth search, results dropdown)
+  - Created `TransactionExplorer.tsx` (Overlay table, sortable, filters)
+  - **Manual Toggle**: Implemented "+" / Checkmark toggle for adding/removing subscriptions (TASK-075).
+  - Added unique `id` field (`name-amount`) for granular dismissal.
+  - Standardized credit/debit sign logic across all parsers.
+  - Excluded credits/refunds from detection.
+  - Integrated `localStorage` persistence for manual and ignored items.
+  - All 115 tests pass, logic verified.
 - [x] **TASK-055**: Fix PDF Download Filename Logic
   - Reverted to `jsPDF.save()` to fix persistent random hash filenames on production.
 - [x] **TASK-056**: Optimize Deployment Script
@@ -55,13 +56,15 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 **Phase 1 Complete!** ✅ Search bar, explorer overlay, filters all working.
 
 - [x] **TASK-069**: "Add as Subscription" Action
-  - Added "Action" column to Transaction Explorer with "+" button.
+  - Added "Add as Sub" column to Explorer with toggle functionality.
 - [x] **TASK-070**: LocalStorage Persistence for Manual Subs
-  - Created `storage.ts` with `addManualSubscription`, `getManualSubscriptions`, and `deleteManualSubscription`.
+  - Removals and additions persistent via `storage.ts`.
 - [x] **TASK-072**: Conflict Resolution
-  - Manual subscriptions take precedence over auto-detected ones (matching by ID).
-- [x] **TASK-073**: Remove Manual Subscriptions (Edit deferred)
-  - Added red trash can icon to manual subscription cards for deletion.
+  - Manual subscriptions take precedence via ID matching.
+- [x] **TASK-073**: Remove Manual Subscriptions
+  - Provided toggle in Explorer and trash can on cards.
+- [x] **TASK-075**: Remove Manual Subscriptions from Explorer
+  - Implemented logic to "uncheck" manual subscriptions directly in the table.
 - [ ] **TASK-071**: Export/Import Manual Subscriptions
   - JSON export/import functionality
 

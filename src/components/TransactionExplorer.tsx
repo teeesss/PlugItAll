@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { X, ArrowUpDown, ArrowUp, ArrowDown, Plus, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Transaction } from '../utils/analyzer';
+import { normalizeDescription } from '../utils/normalizer';
 
 interface TransactionExplorerProps {
     isOpen: boolean;
@@ -9,6 +10,7 @@ interface TransactionExplorerProps {
     transactions: Transaction[];
     initialSearch?: string;
     onAddSubscription?: (t: Transaction) => void;
+    onRemoveSubscription?: (id: string) => void;
     existingSubscriptionIds?: Set<string>;
 }
 
@@ -61,6 +63,7 @@ export function TransactionExplorer({
     transactions,
     initialSearch = '',
     onAddSubscription,
+    onRemoveSubscription,
     existingSubscriptionIds,
 }: TransactionExplorerProps) {
     const [searchTerm, setSearchTerm] = useState(initialSearch);
@@ -171,7 +174,7 @@ export function TransactionExplorer({
     const clearAllFilters = () => {
         setSearchTerm('');
         setSelectedPriceRanges([]);
-        setTransactionType('debit');
+        setTransactionType('both'); // Changed from 'debit' to 'both' to match initial state
         setDatePreset(3);
     };
 
@@ -347,7 +350,7 @@ export function TransactionExplorer({
                                             Type
                                         </th>
                                         <th className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase">
-                                            Action
+                                            Add as Sub
                                         </th>
                                     </tr>
                                 </thead>
@@ -387,16 +390,23 @@ export function TransactionExplorer({
                                                 <td className="px-4 py-3 text-center">
                                                     {onAddSubscription && (
                                                         <button
-                                                            onClick={() => onAddSubscription(t)}
-                                                            className={`p-1 rounded transition-colors ${existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`)
-                                                                ? 'bg-green-500/20 text-green-400 cursor-default'
+                                                            onClick={() => {
+                                                                const id = `${normalizeDescription(t.description)}-${Math.abs(t.amount).toFixed(2)}`;
+                                                                if (existingSubscriptionIds?.has(id)) {
+                                                                    onRemoveSubscription?.(id);
+                                                                } else {
+                                                                    onAddSubscription(t);
+                                                                }
+                                                            }}
+                                                            className={`p-1 rounded transition-colors ${existingSubscriptionIds?.has(`${normalizeDescription(t.description)}-${Math.abs(t.amount).toFixed(2)}`)
+                                                                ? 'bg-green-500/20 text-green-400 hover:bg-red-500/10 hover:text-red-400'
                                                                 : 'hover:bg-blue-500/20 text-slate-400 hover:text-blue-400'
                                                                 }`}
-                                                            title={existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`)
-                                                                ? "Already in subscriptions"
+                                                            title={existingSubscriptionIds?.has(`${normalizeDescription(t.description)}-${Math.abs(t.amount).toFixed(2)}`)
+                                                                ? "Remove from subscriptions"
                                                                 : "Add as manual subscription"}
                                                         >
-                                                            {existingSubscriptionIds?.has(`${t.description}-${Math.abs(t.amount).toFixed(2)}`) ? (
+                                                            {existingSubscriptionIds?.has(`${normalizeDescription(t.description)}-${Math.abs(t.amount).toFixed(2)}`) ? (
                                                                 <Check size={14} />
                                                             ) : (
                                                                 <Plus size={14} />

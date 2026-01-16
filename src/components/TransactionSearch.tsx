@@ -8,7 +8,7 @@ interface TransactionSearchProps {
 }
 
 export function TransactionSearch({ transactions, onOpenExplorer }: TransactionSearchProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedTerm, setDebouncedTerm] = useState('');
     const [showResults, setShowResults] = useState(false);

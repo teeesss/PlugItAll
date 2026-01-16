@@ -9,7 +9,13 @@
 - **Result**: Users can now hide specific price-point subscriptions independently.
 - **Tests**: Added `dismissal.test.ts`, `dismissal_sirius.test.ts`, `e2e_dismiss.test.ts`.
 
-### 📄 Robust PDF Generation
+### 🔘 Manual Subscription Toggle (Jan 15, 2026)
+**Goal**: Allow users to add and remove manual subscriptions from the Transaction Explorer.
+- **Toggle Action**: The "+" button in the Explorer now toggles between "Add" (Plus icon) and "Remove" (Checkmark icon).
+- **ID Consistency**: Uses `normalizeDescription` to ensure manual IDs match detected ones, preventing duplicates.
+- **Persistence**: Removals and additions persistent via `localStorage`.
+
+### 📄 Robust PDF Generation (Jan 15, 2026)
 **Goal**: Fix persistent download issues (GUID naming/hash) on production.
 - **Fix**: Reverted to standard `jsPDF.save()` protocol.
 - **Result**: Consistent downloads as `plug-it-all-report.pdf` across all browsers.
@@ -83,6 +89,6 @@ Expanded from 2 to **52 banks** across global markets:
 - `SAMPLE_DATA_README.md` - Manual testing guide
 
 ## Next Steps
-- Consider adding more international banks
-- Implement PDF parsing improvements
+- Implement JSON Export/Import for manual subscriptions (TASK-071)
 - Add user feedback mechanism
+- Improve Logo matching for niche secondary brands

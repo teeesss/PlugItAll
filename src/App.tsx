@@ -185,19 +185,17 @@ function App() {
         </div>
 
         <div className="flex items-center space-x-2">
-          {/* Only show controls if there is data (visible or hidden) */}
-          {(candidates.length > 0 || ignoredList.length > 0) && (
+          {/* Only show controls if there is data */}
+          {allTransactions.length > 0 && (
             <>
               {/* Clear Data Button */}
-              {allTransactions.length > 0 && (
-                <button
-                  onClick={handleClearData}
-                  className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
-                  title="Clear All Data"
-                >
-                  <RefreshCcw className="w-6 h-6" />
-                </button>
-              )}
+              <button
+                onClick={handleClearData}
+                className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
+                title="Clear All Data"
+              >
+                <RefreshCcw className="w-6 h-6" />
+              </button>
 
               {/* Transaction Search */}
               <TransactionSearch
@@ -409,6 +407,7 @@ function App() {
         transactions={allTransactions}
         initialSearch={explorerInitialSearch}
         onAddSubscription={handleManualAdd}
+        onRemoveSubscription={handleManualDelete}
         existingSubscriptionIds={new Set(visibleCandidates.map(c => c.id))}
       />
     </div>
