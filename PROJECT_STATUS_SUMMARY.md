@@ -1,8 +1,8 @@
 # PROJECT STATUS SUMMARY - Plug It All
 
 **Last Updated:** January 16, 2026  
-**Version:** v1.1.2-FINAL  
-**Tests:** ✅ 131/131 passing (including Export/Import tests)  
+**Version:** v1.1.4-FINAL  
+**Tests:** ✅ 140/140 passing across 24 suites  
 **Live URL:** https://plugitall.com/
 
 ---
@@ -66,14 +66,14 @@ See [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md) for det
 
 ## 📊 TEST COVERAGE
 
-**Current Status:** ✅ 119/119 tests passing
-
-### Test Suites (18 files)
+### Test Suites (24 files)
 - Analyzer logic tests
 - Parser validation (dates, amounts, formats)
 - Normalizer tests
 - Matcher tests
 - 52-bank stress tests
+- USAA Bank specialized PDF tests
+- Citibank baseline stability tests
 - Transaction Explorer tests
 - Dismissal/granular hiding tests
 - Real-world user data verification

@@ -239,8 +239,8 @@ Run `node scripts/migrate_master_data.cjs` to:
 - Update `docs/DOCUMENTATION_GUIDE.md` if file structure changes
 
 ### Current Stats (Update as needed)
-- **Tests**: 119/119 passing across 18 test suites
+- **Tests**: 140/140 passing across 24 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
-- **Version**: v1.1.2-FINAL
+- **Version**: v1.1.4-FINAL
 - **Live URL**: https://plugitall.com/
