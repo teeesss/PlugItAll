@@ -89,7 +89,7 @@ See [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md) for det
 ### Deployment Process
 1. `npm run build` (generates production bundle)
 2. `npm run deploy` (syncs `dist/` to FTP server)
-3. Verify at live URL
+3. **MANDATORY FINAL VERIFICATION**: Always verify only at [https://plugitall.com/](https://plugitall.com/). Never use old staging domains.
 
 ### Recent Optimizations
 - ✅ Intelligent asset sync (skips unchanged logos)

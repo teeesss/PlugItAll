@@ -45,10 +45,12 @@ PROJECT_STATUS.md (Recent changelog)
 
 ---
 ## 2. Testing
-- All tests must pass before merging (currently 119/119 tests passing across 18 suites)
-- Run `npm run test:run` before marking any logic task as complete
-- Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI
-- When a test fails after code changes, check if the blacklist or detection logic needs adjustment
+- All tests must pass before merging (currently 140/140 tests passing across 24 suites)
+- Run `npm run test:run` before marking any logic task as complete.
+- **TERMINATE NODE PROCESSES**: Always ensure all Node.js processes (test runners, dev servers) are terminated after testing to prevent resource leaks.
+- Don't just rely on unit tests; verify in the browser (`http://localhost:5173`) when touching UI.
+- **FINAL VERIFICATION**: After deployment, the FINAL verification MUST be performed on the production site: [https://plugitall.com/](https://plugitall.com/). Do NOT use old staging URLs (e.g., bmwseals.com).
+- When a test fails after code changes, check if the blacklist or detection logic needs adjustment.
 
 ---
 
