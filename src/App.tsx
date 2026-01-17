@@ -25,6 +25,7 @@ import { Toast } from './components/Toast';
 import { PrivacyBanner } from './components/PrivacyBanner';
 import { BillView } from './components/BillView';
 import { InsightsEnhanced } from './components/InsightsEnhanced';
+import { ProcessingOverlay } from './components/ProcessingOverlay';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -47,6 +48,12 @@ function App() {
 
   // TASK-017: View mode toggle (Card vs Bill view)
   const [viewMode, setViewMode] = useState<'card' | 'bill'>('card');
+
+  // TASK-089: Processing overlay state
+  const [processingStep, setProcessingStep] = useState<'parsing' | 'analyzing' | 'detecting' | 'complete'>('parsing');
+  const [processedFiles, setProcessedFiles] = useState(0);
+  const [processedTransactions, setProcessedTransactions] = useState(0);
+  const [foundSubscriptions, setFoundSubscriptions] = useState(0);
 
   // TASK-078: Auto-clear highlight after 7 seconds
   useEffect(() => {
@@ -116,6 +123,11 @@ function App() {
 
   const handleFiles = async (files: File[]) => {
     setIsProcessing(true);
+    setProcessingStep('parsing');
+    setProcessedFiles(files.length);
+    setProcessedTransactions(0);
+    setFoundSubscriptions(0);
+
     const previousTxCount = allTransactions.length;
     const previousSubIds = new Set(candidates.map(c => c.id));
 
@@ -138,6 +150,10 @@ function App() {
     }
 
     if (newTransactions.length > 0) {
+      // Step 2: Analyzing
+      setProcessingStep('analyzing');
+      setProcessedTransactions(newTransactions.length);
+
       // Combine with EXISTING transactions (Cumulative)
       const combined = [...allTransactions, ...newTransactions];
 
@@ -165,6 +181,9 @@ function App() {
       // Update State
       setAllTransactions(sortedTransactions);
 
+      // Step 3: Detecting
+      setProcessingStep('detecting');
+
       // Re-run detection
       const subs = detectSubscriptions(dedupedTransactions);
       const enriched = subs.map(enrichSubscription);
@@ -181,6 +200,10 @@ function App() {
       });
 
       setCandidates(dedupedEnriched);
+
+      // Update found subscriptions count
+      setFoundSubscriptions(dedupedEnriched.length);
+      setProcessingStep('complete');
 
       // --- TOAST FEEDBACK LOGIC + TASK-078: Mark New Subs ---
       const addedTxCount = sortedTransactions.length - previousTxCount;
@@ -245,6 +268,18 @@ function App() {
         message={toastState.message}
         isVisible={toastState.visible}
         onClose={() => setToastState(prev => ({ ...prev, visible: false }))}
+      />
+
+      <ProcessingOverlay
+        isProcessing={isProcessing}
+        fileCount={processedFiles}
+        transactionCount={processedTransactions}
+        subscriptionCount={foundSubscriptions}
+        currentStep={processingStep}
+        onComplete={() => {
+          // Overlay will auto-close after minimum display time
+          console.log('Processing overlay completed');
+        }}
       />
 
       {/* Header */}

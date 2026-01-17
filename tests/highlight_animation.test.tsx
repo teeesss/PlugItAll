@@ -1,6 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
+import React from 'react';
 import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
 import { render } from '@testing-library/react';
 import { SubscriptionCard } from '../src/components/SubscriptionCard';
