@@ -203,6 +203,10 @@ function App() {
 
       // Update found subscriptions count
       setFoundSubscriptions(dedupedEnriched.length);
+
+      // CRITICAL: Set isProcessing false BEFORE setting step to 'complete'
+      // This allows the overlay's timer to start properly
+      setIsProcessing(false);
       setProcessingStep('complete');
 
       // --- TOAST FEEDBACK LOGIC + TASK-078: Mark New Subs ---
@@ -230,9 +234,12 @@ function App() {
 
     } else {
       showToast('No valid transactions found in uploaded files.');
+      // Only reset processing if no data found (skip overlay display)
+      setIsProcessing(false);
+      setProcessingStep('parsing');
     }
 
-    setIsProcessing(false);
+    // Don't set isProcessing(false) when data is found - let overlay's onComplete handle it
     // Reset file inputs by incrementing key
     setUploadKey(prev => prev + 1);
   };
@@ -242,11 +249,15 @@ function App() {
     if (confirm('Are you sure you want to clear all data?')) {
       // Close explorer first
       setIsExplorerOpen(false);
+      setExplorerInitialSearch('');
 
       // Clear all data
       setAllTransactions([]);
       setCandidates([]);
       setManualSubs([]);
+
+      // Clear ignored list state
+      setIgnoredList([]);
 
       // Clear localStorage for manual subscriptions
       localStorage.removeItem('manual_subscriptions');
@@ -285,7 +296,7 @@ function App() {
         subscriptionCount={foundSubscriptions}
         currentStep={processingStep}
         onComplete={() => {
-          // Reset processing state so overlay disappears
+          // Just reset the step - isProcessing is already false at this point
           setProcessingStep('parsing');
         }}
       />
