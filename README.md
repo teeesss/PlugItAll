@@ -10,9 +10,11 @@ A privacy-first, client-side subscription detection tool that analyzes bank stat
 - 📊 **PDF & CSV Support** - Upload bank statements in either format
 - 🎯 **Smart Detection** - Identifies subscriptions using pattern matching, **median-based clustering**, and **shopping pattern rejection**.
 - 🌍 **Robust Parsing** - Handles European/US date formats, `CR`/`DR` markers, and varied number formats automatically.
+
 - ✅ **Verified vs Review** - Known subscriptions are marked "Verified". **3+ consistent charges** from any merchant are automatically promoted to Verified.
 - 🚫 **False Positive Filtering** - Extensive blacklist (eBay, Amazon, restaurants) with **fuzzy matching** for variations (e.g., 'Taco Bell' vs 'TACOBELL').
 - 💰 **Price Validation** - High-risk merchants (Amazon, Walmart, Fabletics) require exact price match or known subscription markers.
+- 🏦 **Bank Support** - Specialized parsers for **USAA** and **Citibank** and **E*TRADE**.
 
 ## 📚 Documentation
 
@@ -72,7 +74,7 @@ Hooks include: **Prettier**, **ESLint**, **Gitleaks** (secret detection), **Chec
 npm test
 ```
 
-24 test suites with 140 tests covering analyzer, normalizer, matcher, Transaction Explorer, dismissal logic, and real-world scenarios.
+26 test suites with 143 tests covering analyzer, normalizer, matcher, Transaction Explorer, dismissal logic, and real-world scenarios.
 
 ## License
 

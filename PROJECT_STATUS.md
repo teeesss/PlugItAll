@@ -13,11 +13,21 @@
 - **Tests**: `tests/usaa_content.test.ts` and `tests/usaa_multi_test.test.ts` verify all 3 USAA PDFs and ensure **Citi** still works perfectly.
 - **Status**: USAA support is now robust and production-ready.
 
+
 ### 🟢 Bug: Manual Subscription Tests Failing in Node.js
 - **Issue**: `tests/export_import.test.ts` failed because `localStorage` was not correctly polyfilled or shared across modules in the `node` environment.
 - **Cause**: The `setup.ts` polyfill only installed if `globalThis.localStorage` was undefined, which failed to stick correctly in some vitest execution modes.
 - **Resolution**: Forced the `localStorage` polyfill to install on both `globalThis` and `global` in `setup.ts` using a `Map`-backed implementation.
 - **Tests**: All 12 export/import tests now pass.
+
+### 🟢 Feature: E*TRADE PDF Parsing (SUCCESS)
+- **Problem**: Need to support E*TRADE bank statements in PDF format.
+- **Resolution**: 
+  - Added "E*TRADE" and "MORGAN STANLEY" detection in `detectBank()`.
+  - Implemented `parseEtradeSpecific()` leveraging robust line-parsing logic.
+  - Verified with `Etrade-102025.pdf`.
+- **Tests**: Added `tests/pdf_parser.test.ts`.
+- **Status**: E*TRADE support deployed and verified.
 
 ## Recent Major Updates (Jan 15, 2026)
 

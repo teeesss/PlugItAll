@@ -8,9 +8,11 @@
 ---
 
 ## 🚀 Recent Achievements
+
 - **Fixed USAA PDF Crash**: Resolved critical parser failure for USAA statements in production by adding defensive checks for malformed PDF items. (v1.1.4)
 - **Fixed 0-Subscription UI**: Updated dashboard to correctly transition even when 0 subscriptions are found, allowing manual search/entry. (v1.1.4)
 - **Robustness Testing**: Added dedicated test suite (`parser_robustness.test.ts`) to prevent future parsing regressions.
+- **E*TRADE Support**: Added native parsing for E*TRADE / Morgan Stanley statements. (v1.1.5)
 
 ## 📋 CURRENT TASK TRACKING FILES
 

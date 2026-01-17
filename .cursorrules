@@ -109,16 +109,17 @@ PROJECT_STATUS.md (Recent changelog)
 - Use REPLACE instead of MERGE when processing new uploads to avoid stale data persistence.
 - **Dedupe inputs**: Create a unique key `date + amount + description.substring(0,20)` to prevent CSV+PDF overlaps from creating 0-day intervals.
 
+
 ### Bank-Specific Parsing Logic (Jan 16, 2026)
 - **Automatic Detection**: Always implement a `detectBank()` function that scans the raw text of the first page (PDF) or headers (CSV).
-- **Specialized Routing**: Route parsing to isolated functions (e.g., `parseUSAASpecific`) based on the detected bank.
+- **Specialized Routing**: Route parsing to isolated functions (e.g., `parseUSAASpecific`, `parseEtradeSpecific`) based on the detected bank.
 - **Table-Aware Design**: For complex multi-column PDFs (USAA), group text items by Y-coordinate and use X-coordinate boundaries for column mapping.
 - **Description Merging**: In table-aware parsers, always check if the next line's text falls within the "Description" column's X-range and append it to the current transaction if it does.
 - **Isolated Generic Parser**: Always maintain a `parseGenericSpecific` function as a fallback to ensure stability for unknown formats.
 - **Sign Logic Protocol**:
   - `CR` / Credit Column → POSITIVE
   - `DR` / Debit Column / Parentheses / Trailing Minus → NEGATIVE
-- **Tests**: Every new bank-specific parser MUST have its own diagnostic test file (e.g., `tests/usaa_content.test.ts`).
+- **Tests**: Every new bank-specific parser MUST have its own diagnostic test file (e.g., `tests/usaa_content.test.ts`, `tests/pdf_parser.test.ts`).
 
 ---
 
