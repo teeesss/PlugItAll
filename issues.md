@@ -234,6 +234,17 @@ if (keyword.length <= 5) {
 - **Final Duration**: Changed from 5s to 7s per user preference.
 - **Status**: RESOLVED and working in production.
 
+### 🟢 Feature: Bill View / List View (TASK-017)
+- **Problem**: Users may want a more compact, table-based view of subscriptions instead of cards.
+- **Resolution**: Implemented Bill View - a linear list layout with table format:
+  - New `BillView.tsx` component with responsive grid layout
+  - Toggle buttons (Cards/List) next to Download Report with active state styling
+  - Conditional rendering in App.tsx based on viewMode state ('card' | 'bill')
+  - Table columns: Service (with logo), Amount, Frequency, Confidence, Actions (Cancel/Delete buttons)
+  - Summary footer showing total subscription count and monthly cost
+  - Maintains all existing functionality (dismiss, delete, cancel links)
+- **Files**: `src/components/BillView.tsx`, `src/App.tsx` (view mode state + toggle UI)
+
 ---
 
 #### [Issue #20] DOMMatrix Not Defined in Node.js CI

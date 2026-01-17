@@ -99,13 +99,14 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [x] **TASK-077**: New Data Feedback (Toast Message).
   - Created `Toast.tsx` component with success/info stats.
   - Integrated into `App.tsx` to show "Processed X transactions" and "Found Y new subscriptions" after upload.
-- [ ] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
+- [x] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
+  - Created `BillView.tsx` component with table layout.
+  - Added view mode toggle (Cards vs List) next to Download Report button.
+  - Conditional rendering based on view mode state.
+  - Table shows: Service, Amount, Frequency, Confidence, Actions.
+  - Summary footer with total count and monthly amount.
 
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
-
-- [ ] **TASK-079**: Standardize Privacy Banner Styling.
-  - Make the "Privacy First" banner on the main dashboard match the styling and size of the hero version (as shown in user screenshot).
-
 
 
 - [x] **TASK-080**: Fix "Clear Data" Double-Click Bug.
