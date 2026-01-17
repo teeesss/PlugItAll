@@ -225,7 +225,12 @@ if (keyword.length <= 5) {
 - **Resolution**: Removed local state management. Component now uses `isNew` prop directly. Parent (`App.tsx`) controls timing via `setTimeout` that clears `newSubIds` after 5 seconds.
 - **Lesson Learned**: For timed UI effects controlled by parent state, avoid duplicate state in child components. Let props flow down and keep timing logic in one place.
 - **Color Change**: Changed from red to green per user preference (`ring-green-500/50`).
-- **Tests**: `tests/highlight_animation.test.tsx` (validates prop-based highlighting).
+**CRITICAL FIX #2 (2026-01-16 23:03):**
+- **Problem**: First fix still didn't work - highlight remained static and never disappeared.
+- **Root Cause**: `setTimeout` in `handleFiles` was being created but not properly managed. React wasn't re-rendering when Set became empty.
+- **Resolution**: Moved timer logic to `useEffect` hook that watches `newSubIds.size`. When size > 0, starts 5s timer. Proper cleanup with clearTimeout. Removed inline setTimeout from handleFiles.
+- **Added**: Console.log debug statements to track timer lifecycle.
+- **Testing**: User will test on production after this deployment.
 
 ---
 

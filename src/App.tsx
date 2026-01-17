@@ -1,5 +1,6 @@
 
-import { useState, useMemo } from 'react';
+
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Settings, RefreshCcw, Download } from 'lucide-react';
 import { cn } from './utils/cn';
@@ -41,6 +42,22 @@ function App() {
 
   // TASK-078: Track newly discovered subscription IDs
   const [newSubIds, setNewSubIds] = useState<Set<string>>(new Set());
+
+  // TASK-078: Auto-clear highlight after 5 seconds
+  useEffect(() => {
+    if (newSubIds.size > 0) {
+      console.log('Starting 5s timer for', newSubIds.size, 'new subscriptions');
+      const timer = setTimeout(() => {
+        console.log('Clearing newSubIds after 5 seconds');
+        setNewSubIds(new Set());
+      }, 5000);
+
+      return () => {
+        console.log('Cleaning up timer');
+        clearTimeout(timer);
+      };
+    }
+  }, [newSubIds]);
 
 
   // Filter candidates based on ignored list and merge with manual subs
@@ -169,11 +186,7 @@ function App() {
       if (newSubsCount > 0) {
         const newIds = new Set(newSubs.map(s => s.id));
         setNewSubIds(newIds);
-
-        // Auto-clear after 5 seconds
-        setTimeout(() => {
-          setNewSubIds(new Set());
-        }, 5000);
+        // Note: Timer is managed by useEffect hook above
       }
 
       if (addedTxCount > 0) {
