@@ -124,11 +124,19 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Consolidated matching logic into `matcher.ts`.
   - Implemented smart regex with word boundary safety.
   - Deduplicated `subs.json` via script.
+- [x] **TASK-003**: CSV column auto-detection improvements
+  - Implemented scoring system (0-100) for column detection.
+  - Exact matches prioritized, removed risky patterns like "Balance".
+  - Tests: `tests/parser_automagic.test.ts`.
+- [x] **TASK-071**: Export/Import manual subscriptions (JSON format)
+  - Added JSON Export/Import in Settings Modal.
+  - Validates schema and prevents duplicates on import.
+  - Tests: `tests/export_import.test.ts`.
 
 ## 🔴 High Priority (P1)
 
-- [ ] **TASK-003**: CSV column auto-detection improvements
-- [ ] **TASK-071**: Export/Import manual subscriptions (JSON format)
+- [ ] **TASK-005**: Add "Cancel All" automated helper flow for common merchants.
+- [ ] **TASK-019**: Refine Transaction History UI (Ensure it scales well on mobile).
 
 
 - [x] **TASK-006**: Strip Phone Numbers/Category Prefixes from descriptions (Improve Normalizer).
