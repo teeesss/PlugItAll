@@ -215,12 +215,12 @@ function App() {
 
       {/* Header */}
       <header className="flex items-center justify-between mb-12">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-4">
           <div className="relative group">
             {/* Logo Image */}
-            <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
               <img
-                src="/logo.png"
+                src="/logo_icon.png"
                 alt="Plug It All Logo"
                 className={cn(
                   "w-full h-full object-cover transform transition-transform duration-700",
