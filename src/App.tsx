@@ -43,14 +43,14 @@ function App() {
   // TASK-078: Track newly discovered subscription IDs
   const [newSubIds, setNewSubIds] = useState<Set<string>>(new Set());
 
-  // TASK-078: Auto-clear highlight after 5 seconds
+  // TASK-078: Auto-clear highlight after 7 seconds
   useEffect(() => {
     if (newSubIds.size > 0) {
-      console.log('Starting 5s timer for', newSubIds.size, 'new subscriptions');
+      console.log('Starting 7s timer for', newSubIds.size, 'new subscriptions');
       const timer = setTimeout(() => {
-        console.log('Clearing newSubIds after 5 seconds');
+        console.log('Clearing newSubIds after 7 seconds');
         setNewSubIds(new Set());
-      }, 5000);
+      }, 7000);
 
       return () => {
         console.log('Cleaning up timer');

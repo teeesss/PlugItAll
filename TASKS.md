@@ -156,10 +156,11 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Created `scripts/enhance_keywords.cjs` for reproducible enhancement.
   - Tests: `tests/merchant_aliases.test.ts` (18 tests).
 - [x] **TASK-078**: Highlight Newly Discovered Subscriptions.
-  - New subscriptions pulse with green glow (changed from red) for 5 seconds after upload.
+  - New subscriptions pulse with green glow (changed from red) for 7 seconds after upload.
   - Adds visual feedback for newly found subscriptions.
-  - Auto-fades after 5s with smooth animation.
+  - Auto-fades after 7s with smooth animation.
   - **Fix Applied**: Removed local state, uses `isNew` prop directly controlled by parent.
+  - **Timer Management**: useEffect hook watches newSubIds.size and manages 7s timer with proper cleanup.
 
 ## 📋 Roadmap (P2+)
 

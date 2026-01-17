@@ -228,9 +228,11 @@ if (keyword.length <= 5) {
 **CRITICAL FIX #2 (2026-01-16 23:03):**
 - **Problem**: First fix still didn't work - highlight remained static and never disappeared.
 - **Root Cause**: `setTimeout` in `handleFiles` was being created but not properly managed. React wasn't re-rendering when Set became empty.
-- **Resolution**: Moved timer logic to `useEffect` hook that watches `newSubIds.size`. When size > 0, starts 5s timer. Proper cleanup with clearTimeout. Removed inline setTimeout from handleFiles.
+- **Resolution**: Moved timer logic to `useEffect` hook that watches `newSubIds.size`. When size > 0, starts 7s timer. Proper cleanup with clearTimeout. Removed inline setTimeout from handleFiles.
 - **Added**: Console.log debug statements to track timer lifecycle.
-- **Testing**: User will test on production after this deployment.
+- **Testing**: User confirmed working on production. ✅
+- **Final Duration**: Changed from 5s to 7s per user preference.
+- **Status**: RESOLVED and working in production.
 
 ---
 
