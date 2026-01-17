@@ -218,13 +218,13 @@ function App() {
         <div className="flex items-center space-x-4">
           <div className="relative group">
             {/* Logo Image */}
-            <div className="w-24 h-24 rounded-2xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center relative">
               <img
                 src="/logo_icon.png"
                 alt="Plug It All Logo"
                 className={cn(
-                  "w-full h-full object-cover transform transition-transform duration-700",
-                  isProcessing && "animate-pulse" // Subtle pulse instead of spin for the whole image
+                  "w-full h-full object-cover transform transition-transform duration-700 scale-125",
+                  isProcessing && "animate-pulse"
                 )}
               />
               {isProcessing && (
@@ -234,7 +234,7 @@ function App() {
           </div>
           <div>
             <div>
-              <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-100 to-purple-200">
+              <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 drop-shadow-sm">
                 Plug It All
               </h1>
               {/* Only show tagline in Header if we are in Dashboard mode (data exists) */}
