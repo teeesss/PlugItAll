@@ -210,6 +210,15 @@ if (keyword.length <= 5) {
 - **Scripts**: `scripts/enhance_keywords.cjs` for repeatable enhancement
 - **Tests**: `tests/merchant_aliases.test.ts` (18 new tests).
 
+### 🟢 Feature: New Subscription Highlight Animation (TASK-078)
+- **Problem**: No visual feedback to indicate which subscriptions were newly discovered from a fresh upload.
+- **Resolution**: Implemented pulsing red glow highlight:
+  - New subscriptions get `ring-2 ring-red-500/50` border + shadow
+  - Slow pulse animation (2s cycle) for 5 seconds
+  - Auto-fades after 5s via `setTimeout` cleanup
+  - Tracked via `newSubIds` state in `App.tsx`
+- **Files**: `src/components/SubscriptionCard.tsx`, `src/App.tsx`, `src/index.css`
+
 ---
 
 #### [Issue #20] DOMMatrix Not Defined in Node.js CI

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -16,14 +16,27 @@ interface SubscriptionCardProps {
   subscription: EnrichedSubscription;
   index: number;
   onDismiss: (name: string) => void;
+  isNew?: boolean; // TASK-078: Flag for newly discovered subscriptions
 }
 
 export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   subscription,
   index,
   onDismiss,
+  isNew = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showHighlight, setShowHighlight] = useState(isNew);
+
+  // TASK-078: Auto-remove highlight after 5 seconds
+  useEffect(() => {
+    if (isNew) {
+      const timer = setTimeout(() => {
+        setShowHighlight(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isNew]);
 
   const getConfidenceColor = (level: string) => {
     switch (level) {
@@ -58,7 +71,10 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ delay: index * 0.05 }}
-        className="glass-panel rounded-xl p-5 group hover:border-indigo-500/30 transition-all duration-300 relative"
+        className={cn(
+          "glass-panel rounded-xl p-5 group hover:border-indigo-500/30 transition-all duration-300 relative",
+          showHighlight && "ring-2 ring-red-500/50 shadow-lg shadow-red-500/30 animate-pulse-slow"
+        )}
       >
         <button
           onClick={() => onDismiss(subscription.id)}

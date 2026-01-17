@@ -39,6 +39,9 @@ function App() {
   const [manualSubs, setManualSubs] = useState<EnrichedSubscription[]>(getManualSubscriptions() as EnrichedSubscription[]);
   const [uploadKey, setUploadKey] = useState(0);
 
+  // TASK-078: Track newly discovered subscription IDs
+  const [newSubIds, setNewSubIds] = useState<Set<string>>(new Set());
+
 
   // Filter candidates based on ignored list and merge with manual subs
   const visibleCandidates = useMemo(() => {
@@ -157,9 +160,21 @@ function App() {
 
       setCandidates(dedupedEnriched);
 
-      // --- TOAST FEEDBACK LOGIC ---
+      // --- TOAST FEEDBACK LOGIC + TASK-078: Mark New Subs ---
       const addedTxCount = sortedTransactions.length - previousTxCount;
-      const newSubsCount = dedupedEnriched.filter(c => !previousSubIds.has(c.id)).length;
+      const newSubs = dedupedEnriched.filter(c => !previousSubIds.has(c.id));
+      const newSubsCount = newSubs.length;
+
+      // TASK-078: Track new subscription IDs for highlight animation
+      if (newSubsCount > 0) {
+        const newIds = new Set(newSubs.map(s => s.id));
+        setNewSubIds(newIds);
+
+        // Auto-clear after 5 seconds
+        setTimeout(() => {
+          setNewSubIds(new Set());
+        }, 5000);
+      }
 
       if (addedTxCount > 0) {
         let msg = `Processed ${addedTxCount} new transactions.`;
@@ -385,6 +400,7 @@ function App() {
                           key={`${sub.name}-${i}`}
                           subscription={sub}
                           index={i}
+                          isNew={newSubIds.has(sub.id)}
                           onDismiss={(idOrName) => {
                             const sub = visibleCandidates.find(s => s.id === idOrName || s.name === idOrName);
                             if (sub?.isManual) handleManualDelete(idOrName);
@@ -433,6 +449,7 @@ function App() {
                               key={`${sub.name}-${i}-review`}
                               subscription={sub}
                               index={i}
+                              isNew={newSubIds.has(sub.id)}
                               onDismiss={(idOrName) => {
                                 const s = visibleCandidates.find(item => item.id === idOrName || item.name === idOrName);
                                 if (s?.isManual) handleManualDelete(idOrName);

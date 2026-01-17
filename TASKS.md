@@ -155,6 +155,10 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Added 35+ keywords across 9 popular services (Netflix, Spotify, GitHub, Medium, etc.).
   - Created `scripts/enhance_keywords.cjs` for reproducible enhancement.
   - Tests: `tests/merchant_aliases.test.ts` (18 tests).
+- [x] **TASK-078**: Highlight Newly Discovered Subscriptions.
+  - New subscriptions pulse with red glow for 5 seconds after upload.
+  - Adds visual feedback for newly found subscriptions.
+  - Auto-fades after 5s with smooth animation.
 
 ## 📋 Roadmap (P2+)
 
