@@ -45,7 +45,12 @@
     "id": "netflix",
     "name": "Netflix",
     "regex_keywords": [
-      "NETFLIX"
+      "NETFLIX",
+      "NETFLIX.COM",
+      "NETFLIX INC",
+      "NETFLIX STREAMING",
+      "PAYPAL *NETFLIX",
+      "SQ *NETFLIX"
     ],
     "logo": "/logos/netflix.png",
     "cancel_url": "https://www.netflix.com/cancelplan",
@@ -56,7 +61,12 @@
     "id": "spotify",
     "name": "Spotify",
     "regex_keywords": [
-      "SPOTIFY"
+      "SPOTIFY",
+      "SPOTIFY USA",
+      "SPOTIFY.COM",
+      "SPOTIFY AB",
+      "SPOTIFY PREMIUM",
+      "PAYPAL *SPOTIFY"
     ],
     "logo": "/logos/spotify.png",
     "cancel_url": "https://www.spotify.com/account/change-plan/",
@@ -67,7 +77,11 @@
     "id": "hulu",
     "name": "Hulu",
     "regex_keywords": [
-      "HULU"
+      "HULU",
+      "HULU.COM",
+      "HULU LLC",
+      "HULU STREAMING",
+      "PAYPAL *HULU"
     ],
     "logo": "/logos/hulu.png",
     "cancel_url": "https://secure.hulu.com/account",
@@ -124,7 +138,11 @@
     "name": "Apple Services",
     "regex_keywords": [
       "APPLE.COM/BILL",
-      "ITUNES"
+      "ITUNES",
+      "APPLE.COM BILL",
+      "APPLE SERVICES",
+      "APPLE SUBSCRIPTION",
+      "APP STORE"
     ],
     "logo": "/logos/apple_services.png",
     "cancel_url": "https://support.apple.com/en-us/HT202039",
@@ -336,7 +354,10 @@
     "id": "github",
     "name": "GitHub",
     "regex_keywords": [
-      "GITHUB"
+      "GITHUB",
+      "GITHUB.COM",
+      "GITHUB INC",
+      "PAYPAL *GITHUB"
     ],
     "logo": "/logos/github.png",
     "cancel_url": "https://github.com/settings/billing",
@@ -552,7 +573,10 @@
     "id": "patreon",
     "name": "Patreon",
     "regex_keywords": [
-      "PATREON"
+      "PATREON",
+      "PATREON.COM",
+      "PATREON INC",
+      "PAYPAL *PATREON"
     ],
     "logo": "/logos/patreon.png",
     "cancel_url": "https://www.patreon.com/settings/memberships",
@@ -938,7 +962,11 @@
     "name": "Wall Street Journal",
     "regex_keywords": [
       "WSJ",
-      "WALL ST JOURNAL"
+      "WALL ST JOURNAL",
+      "WALL STREET JOURNAL",
+      "WSJ.COM",
+      "WSJ DIGITAL",
+      "DOW JONES"
     ],
     "logo": "/logos/wall_street_journal.png",
     "cancel_url": "https://customercenter.wsj.com/dashboard",
@@ -949,7 +977,11 @@
     "name": "Washington Post",
     "regex_keywords": [
       "WASHPOST",
-      "WASHINGTON POST"
+      "WASHINGTON POST",
+      "WASH POST",
+      "WAPO",
+      "WASHINGTONPOST.COM",
+      "THE WASHINGTON POST"
     ],
     "logo": "/logos/washington_post.png",
     "cancel_url": "https://subscribe.washingtonpost.com/myaccount",
@@ -960,7 +992,10 @@
     "id": "medium",
     "name": "Medium",
     "regex_keywords": [
-      "MEDIUM.COM"
+      "MEDIUM.COM",
+      "MEDIUM",
+      "A MEDIUM CORPORATION",
+      "PAYPAL *MEDIUM"
     ],
     "logo": "/logos/medium.png",
     "cancel_url": "https://medium.com/me/settings",

@@ -190,6 +190,26 @@ if (keyword.length <= 5) {
 - **Resolution**: Added JSON Export/Import functionality in Settings. Validates schema and avoids duplicates on import.
 - **Tests**: `tests/export_import.test.ts`.
 
+### 🟢 Feature: Enhanced City/State Stripping (TASK-008)
+- **Problem**: Merchant names often include city/state suffixes like "AMAZON SEATTLE WA" or "STARBUCKS SAN FRANCISCO CA".
+- **Resolution**: Implemented comprehensive US state code detection with multi-pass regex:
+  - Handles 3-word cities (Salt Lake City UT)
+  - Handles 2-word cities (San Francisco CA)
+  - Handles single-word cities (Seattle WA)  
+  - Handles state-only suffixes (CA, TX, NY)
+- **Tests**: `tests/city_state.test.ts` (5 tests) + `tests/normalizer_improvements.test.ts` (updated).
+
+### 🟢 Feature: Expanded Merchant Aliases (TASK-009)
+- **Problem**: Popular services like Netflix, Spotify, WSJ had minimal keyword coverage, leading to missed matches.
+- **Resolution**: Enhanced keyword coverage for 9 major services:
+  - **Netflix**: +5 keywords (NETFLIX.COM, NETFLIX INC, PAYPAL *NETFLIX, etc.)
+  - **Spotify**: +5 keywords (SPOTIFY USA, SPOTIFY.COM, SPOTIFY PREMIUM, etc.)
+  - **Hulu**: +4 keywords (HULU.COM, HULU LLC, etc.)
+  - **WSJ**: +4 keywords (WALL STREET JOURNAL, WSJ.COM, DOW JONES, etc.)
+  - **GitHub, Medium, Patreon, Apple, Washington Post**: Combined +18 keywords
+- **Scripts**: `scripts/enhance_keywords.cjs` for repeatable enhancement
+- **Tests**: `tests/merchant_aliases.test.ts` (18 new tests).
+
 ---
 
 #### [Issue #20] DOMMatrix Not Defined in Node.js CI

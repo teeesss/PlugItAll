@@ -147,8 +147,14 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [x] **TASK-007**: Handle Pending Transaction Markers ("PENDING", "*").
   - Added support for leading "PENDING", "* PENDING", and suffix " - PENDING".
   - Created `tests/pending_markers.test.ts` to verify 10+ variations.
-- [ ] **TASK-008**: Strip City/State Suffixes.
-- [ ] **TASK-009**: Expand `subs.json` Merchant Alias Map (Add more keywords for NYT, etc).
+- [x] **TASK-008**: Strip City/State Suffixes.
+  - Implemented multi-pass regex for 1-3 word cities + state codes.
+  - Handles: "SALT LAKE CITY UT", "SAN FRANCISCO CA", "SEATTLE WA", "CA".
+  - Tests: `tests/city_state.test.ts` (5 tests).
+- [x] **TASK-009**: Expand Merchant Alias Map.
+  - Added 35+ keywords across 9 popular services (Netflix, Spotify, GitHub, Medium, etc.).
+  - Created `scripts/enhance_keywords.cjs` for reproducible enhancement.
+  - Tests: `tests/merchant_aliases.test.ts` (18 tests).
 
 ## 📋 Roadmap (P2+)
 
