@@ -38,7 +38,12 @@ pdfs/
 deploy_creds.json
 scripts/debug*.js
 
+
 # AI Assistant
 .claude/
 .agent/
 .gemini/
+
+# Generated Reports
+*.pdf
+# But allow specific pdfs if needed? proper pdfs are in pdfs/ which is ignored..

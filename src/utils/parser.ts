@@ -1,6 +1,8 @@
 import Papa from 'papaparse';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
-import type { TextItem } from 'pdfjs-dist/types/src/display/api';
+
+// @ts-ignore
+import type { TextItem, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 import type { Transaction } from '../mocks/statements';
 
 // Initialize PDF.js worker
@@ -386,18 +388,22 @@ export const parsePDF = async (file: File): Promise<Transaction[]> => {
 /**
  * Detects the bank by scanning keywords on the first page.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function detectBank(pdf: any): Promise<string> {
   try {
     const page = await pdf.getPage(1);
     const content = await page.getTextContent();
     const text = content.items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((it: any) => (it.str && it.transform ? it.str : ''))
       .join(' ')
       .toUpperCase();
 
+
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
     if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
-  } catch (e) {
+    if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETRADE';
+  } catch (_e) {
     // Bank detection failed, fallback to generic
   }
   return 'GENERIC';
@@ -407,6 +413,7 @@ async function detectBank(pdf: any): Promise<string> {
  * Specialized parser for USAA Bank Statements.
  * Handles multi-column layouts and multi-line descriptions using table-aware logic.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
   const allTransactions: Transaction[] = [];
   let currentColumnMap: { [key: string]: { xStart: number; xEnd: number } } | null = null;
@@ -419,6 +426,7 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
 
     const lineMap: { [key: number]: TextItem[] } = {};
     const jitter = 2;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items.forEach((item: any) => {
       if (!item.transform || typeof item.str !== 'string') return;
       const y = Math.round(item.transform[5]);
@@ -526,6 +534,7 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
  * Uses a simpler regex-based logic to maintain stability for existing formats.
  * "Never touched" by USAA specific changes.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
   const transactions: Transaction[] = [];
   for (let i = 1; i <= pdf.numPages; i++) {
@@ -533,6 +542,7 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
     const textContent = await page.getTextContent();
     const items = textContent.items as TextItem[];
     const lines: { [key: number]: string[] } = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items.forEach((item: any) => {
       if (!item.transform || typeof item.str !== 'string') return;
       const y = Math.round(item.transform[5]);
@@ -563,8 +573,20 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
 }
 
 /**
+ * Specialized parser for E*TRADE formatted PDFs.
+ * Currently reuses the robust Citi/Generic regex logic which works well for line-by-line statements.
+ * Added to support future specific tweaks for Etrade garbage removal.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function parseEtradeSpecific(pdf: any): Promise<Transaction[]> {
+  // Reuse the regex-based line parser as it effectively handles Etrade's standard statements
+  return parseCitiSpecific(pdf);
+}
+
+/**
  * Generic PDF parser for unrecognized bank formats.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function parseGenericSpecific(pdf: any): Promise<Transaction[]> {
   return parseCitiSpecific(pdf); // Fallback to classic regex-based parser
 }
@@ -579,6 +601,7 @@ export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transact
 
     if (bank === 'USAA') return await parseUSAASpecific(pdf);
     if (bank === 'CITI') return await parseCitiSpecific(pdf);
+    if (bank === 'ETRADE') return await parseEtradeSpecific(pdf);
     return await parseGenericSpecific(pdf);
   } catch (e) {
     console.error('PDF Parse Error Internal', e);
