@@ -1,7 +1,8 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Plus, Settings, RefreshCcw, Download } from 'lucide-react';
+import { Plus, Settings, RefreshCcw, Download } from 'lucide-react';
+import { cn } from './utils/cn';
 
 import { parseCSV, parsePDF, isSupportedFile } from './utils/parser';
 import { detectSubscriptions } from './utils/analyzer';
@@ -215,12 +216,21 @@ function App() {
       {/* Header */}
       <header className="flex items-center justify-between mb-12">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-lg shadow-lg shadow-blue-500/20">
-            {isProcessing ? (
-              <RefreshCcw className="w-8 h-8 text-white animate-spin" />
-            ) : (
-              <ShieldCheck className="w-8 h-8 text-white" />
-            )}
+          <div className="relative group">
+            {/* Logo Image */}
+            <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
+              <img
+                src="/logo.png"
+                alt="Plug It All Logo"
+                className={cn(
+                  "w-full h-full object-cover transform transition-transform duration-700",
+                  isProcessing && "animate-pulse" // Subtle pulse instead of spin for the whole image
+                )}
+              />
+              {isProcessing && (
+                <div className="absolute inset-0 bg-blue-500/20 animate-pulse z-10" />
+              )}
+            </div>
           </div>
           <div>
             <div>
