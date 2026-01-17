@@ -73,7 +73,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         transition={{ delay: index * 0.05 }}
         className={cn(
           "glass-panel rounded-xl p-5 group hover:border-indigo-500/30 transition-all duration-300 relative",
-          showHighlight && "ring-2 ring-red-500/50 shadow-lg shadow-red-500/30 animate-pulse-slow"
+          showHighlight && "ring-2 ring-green-500/50 shadow-lg shadow-green-500/30 animate-pulse-slow"
         )}
       >
         <button
