@@ -10,9 +10,15 @@
   - Created robustness test `parser_robustness.test.ts`.
   - Added defensive checks in `parser.ts` to handle malformed `transform` properties in PDF items.
   - Verified fix on production.
+
 - [x] **0-Subscription UI Transition Fix** (v1.1.4):
   - Updated `App.tsx` logic to transition to dashboard if allTransactions > 0.
   - Added "0 Found" badge and "Add More Data" visibility.
+- [x] **E*TRADE PDF Support** (v1.1.5):
+  - Analyzed and integrated Etrade PDF parsing (summary/generic format).
+  - Added `tests/pdf_parser.test.ts` for robustness.
+  - Updated `parser.ts` with Etrade detection and lint cleanup.
+  - Verified and deployed.
 
 ## 🟢 Completed (Session 2026-01-15)
 
