@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, DollarSign, Calendar 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { cn } from '../utils/cn';
 import type { Transaction } from '../utils/analyzer';
+import { filterRealTransactions } from '../utils/transactionFilters';
 
 interface InsightsProps {
     transactions: Transaction[];
@@ -11,50 +12,56 @@ interface InsightsProps {
 export function Insights({ transactions }: InsightsProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Calculate spending summary
+    // Calculate spending summary (with transfer filtering)
     const summary = useMemo(() => {
         if (transactions.length === 0) return null;
 
-        const debits = transactions.filter(t => t.amount < 0);
-        const credits = transactions.filter(t => t.amount > 0);
+        // Filter out transfers/payments to avoid double-counting
+        const realTransactions = filterRealTransactions(transactions);
+        const filteredCount = transactions.length - realTransactions.length;
 
-        const totalSpent = Math.abs(debits.reduce((sum, t) => sum + t.amount, 0));
-        const totalIncome = credits.reduce((sum, t) => sum + t.amount, 0);
-        const netChange = totalIncome - totalSpent;
+        const purchases = realTransactions.filter(t => t.amount < 0);
+        const credits = realTransactions.filter(t => t.amount > 0);
 
-        const dates = transactions.map(t => new Date(t.date));
+        const totalSpent = Math.abs(purchases.reduce((sum, t) => sum + t.amount, 0));
+        const totalCredits = credits.reduce((sum, t) => sum + t.amount, 0);
+        const netChange = totalCredits - totalSpent;
+
+        const dates = realTransactions.map(t => new Date(t.date));
         const startDate = new Date(Math.min(...dates.map(d => d.getTime())));
         const endDate = new Date(Math.max(...dates.map(d => d.getTime())));
 
         return {
             totalSpent,
-            totalIncome,
+            totalCredits,
             netChange,
             startDate,
             endDate,
-            transactionCount: transactions.length,
+            transactionCount: realTransactions.length,
+            filteredCount,
         };
     }, [transactions]);
 
-    // Calculate monthly spending trend
+    // Calculate monthly spending trend (also filtered)
     const monthlyData = useMemo(() => {
         if (transactions.length === 0) return [];
 
-        const monthlyMap = new Map<string, { spent: number; income: number }>();
+        const realTransactions = filterRealTransactions(transactions);
+        const monthlyMap = new Map<string, { spent: number; credits: number }>();
 
-        transactions.forEach(t => {
+        realTransactions.forEach(t => {
             const date = new Date(t.date);
             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 
             if (!monthlyMap.has(monthKey)) {
-                monthlyMap.set(monthKey, { spent: 0, income: 0 });
+                monthlyMap.set(monthKey, { spent: 0, credits: 0 });
             }
 
             const entry = monthlyMap.get(monthKey)!;
             if (t.amount < 0) {
                 entry.spent += Math.abs(t.amount);
             } else {
-                entry.income += t.amount;
+                entry.credits += t.amount;
             }
         });
 
@@ -62,7 +69,7 @@ export function Insights({ transactions }: InsightsProps) {
             .map(([month, data]) => ({
                 month,
                 spent: parseFloat(data.spent.toFixed(2)),
-                income: parseFloat(data.income.toFixed(2)),
+                credits: parseFloat(data.credits.toFixed(2)),
             }))
             .sort((a, b) => a.month.localeCompare(b.month));
     }, [transactions]);
@@ -73,8 +80,9 @@ export function Insights({ transactions }: InsightsProps) {
 
         const merchantMap = new Map<string, { total: number; count: number }>();
 
-        transactions
-            .filter(t => t.amount < 0) // Only debits
+        const realTransactions = filterRealTransactions(transactions);
+        realTransactions
+            .filter(t => t.amount < 0) // Only purchases
             .forEach(t => {
                 const merchant = t.description;
                 if (!merchantMap.has(merchant)) {
@@ -131,8 +139,13 @@ export function Insights({ transactions }: InsightsProps) {
                     <TrendingUp className="w-5 h-5 text-indigo-400" />
                     <h3 className="text-lg font-semibold text-slate-100">Spending Insights</h3>
                     <span className="text-xs text-slate-500 bg-slate-800/50 px-2 py-1 rounded-full">
-                        {summary.transactionCount} transactions
+                        {summary.transactionCount} purchases/credits
                     </span>
+                    {summary.filteredCount > 0 && (
+                        <span className="text-xs text-orange-400 bg-orange-500/10 px-2 py-1 rounded-full border border-orange-500/20">
+                            {summary.filteredCount} transfers filtered
+                        </span>
+                    )}
                 </div>
                 {isExpanded ? (
                     <ChevronUp className="w-5 h-5 text-slate-400" />
@@ -155,13 +168,13 @@ export function Insights({ transactions }: InsightsProps) {
                             <p className="text-2xl font-bold text-red-200">{formatCurrency(summary.totalSpent)}</p>
                         </div>
 
-                        {/* Total Income */}
+                        {/* Credits/Refunds */}
                         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs text-green-300 uppercase tracking-wide">Total Income</span>
+                                <span className="text-xs text-green-300 uppercase tracking-wide">Credits/Refunds</span>
                                 <TrendingUp className="w-4 h-4 text-green-400" />
                             </div>
-                            <p className="text-2xl font-bold text-green-200">{formatCurrency(summary.totalIncome)}</p>
+                            <p className="text-2xl font-bold text-green-200">{formatCurrency(summary.totalCredits)}</p>
                         </div>
 
                         {/* Net Change */}
@@ -245,10 +258,10 @@ export function Insights({ transactions }: InsightsProps) {
                                     />
                                     <Line
                                         type="monotone"
-                                        dataKey="income"
+                                        dataKey="credits"
                                         stroke="#22c55e"
                                         strokeWidth={2}
-                                        name="Income"
+                                        name="Credits"
                                         dot={{ fill: '#22c55e', r: 4 }}
                                     />
                                 </LineChart>
