@@ -7,7 +7,8 @@
       "VISIBLE WIRELESS",
       "VISIBLE MOBILE",
       "VISIBLESERV",
-      "PAYPAL *VISIBLE"
+      "PAYPAL *VISIBLE",
+      "VISIBLE CO"
     ],
     "logo": "/logos/visible_mobile.png",
     "cancel_url": "https://www.visible.com/account",
@@ -78,7 +79,15 @@
     "name": "Disney+",
     "regex_keywords": [
       "DISNEY PLUS",
-      "DISNEY+"
+      "DISNEY+",
+      "Disney+",
+      "DisneyPlus",
+      "DISNEYPLUS",
+      "DISNEY PLUS SUBSCRIPTION",
+      "DIS+ PREMIER BUNDLE",
+      "DISNEY STREAMING",
+      "DISNEY BUNDLE",
+      "DISNEYPLUS.COM"
     ],
     "logo": "/logos/disney_.png",
     "cancel_url": "https://www.disneyplus.com/account/subscription",
@@ -126,34 +135,16 @@
     "name": "ChatGPT Plus",
     "regex_keywords": [
       "OPENAI",
-      "CHATGPT"
+      "CHATGPT",
+      "ChatGPT Plus",
+      "CHATGPT SUBSCRIPTION",
+      "CHATGPT PLUS",
+      "OPENAI CHATGPT PLUS",
+      "OPENAI *CHATGPT PLUS"
     ],
     "logo": "/logos/chatgpt_plus.png",
     "cancel_url": "https://chat.openai.com/#/settings/billing",
     "instructions": "My Plan > Manage my subscription > Cancel Plan."
-  },
-  {
-    "id": "visible",
-    "name": "Visible Mobile",
-    "regex_keywords": [
-      "VISIBLE",
-      "VISIBLE CO"
-    ],
-    "logo": "/logos/visible_mobile.png",
-    "cancel_url": "https://www.visible.com/account/overview",
-    "instructions": "Account > Overview > Cancel Service.",
-    "fallback_url": "https://www.visible.com/account"
-  },
-  {
-    "id": "liveoak",
-    "name": "LiveOak Fiber",
-    "regex_keywords": [
-      "LIVEOAK",
-      "LIVEOAK FIBER"
-    ],
-    "logo": "/logos/liveoak_fiber.png",
-    "cancel_url": "https://liveoakfiber.com/contact-us/",
-    "instructions": "Call Customer Service to cancel."
   },
   {
     "id": "fabletics",
@@ -185,7 +176,9 @@
     "regex_keywords": [
       "SIRIUSXM",
       "SXM",
-      "SIRIUS XM"
+      "SIRIUS XM",
+      "SiriusXM",
+      "SIRIUS SATELLITE RADIO"
     ],
     "logo": "/logos/siriusxm.png",
     "cancel_url": "https://care.siriusxm.com/",
@@ -196,7 +189,14 @@
     "name": "Adobe Creative Cloud",
     "regex_keywords": [
       "ADOBE",
-      "CREATIVE CLOUD"
+      "CREATIVE CLOUD",
+      "Adobe Creative Cloud",
+      "ADOBE*CREATIVE CLD",
+      "ADOBE CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD",
+      "ADOBE *CREATIVE CLOUD 408-536-6000",
+      "ADOBE SYSTEMS",
+      "ADOBE CC"
     ],
     "logo": "/logos/adobe_creative_cloud.png",
     "cancel_url": "https://account.adobe.com/plans",
@@ -288,7 +288,7 @@
       "GPAY",
       "GOOGLE PLAY"
     ],
-    "logo": "/logos/google_play.png",
+    "logo": "/logos/google_one.png",
     "cancel_url": "https://play.google.com/store/account/subscriptions",
     "instructions": "Log in to Play Store > Payments & subscriptions > Subscriptions."
   },
@@ -297,7 +297,12 @@
     "name": "Google One",
     "regex_keywords": [
       "GOOGLE *STORAGE",
-      "GOOGLE ONE"
+      "GOOGLE ONE",
+      "Google One",
+      "GoogleOne",
+      "GOOGLE*CLOUD STORAGE",
+      "GOOGLE*GOOGLE ONE",
+      "GOOGLE ONE STORAGE"
     ],
     "logo": "/logos/google_one.png",
     "cancel_url": "https://one.google.com/settings",
@@ -440,7 +445,8 @@
     "id": "shopify_sub",
     "name": "Shopify",
     "regex_keywords": [
-      "SHOPIFY"
+      "SHOPIFY",
+      "Shopify"
     ],
     "logo": "/logos/shopify.png",
     "cancel_url": "https://admin.shopify.com/settings/plan",
@@ -611,7 +617,8 @@
     "name": "Blue Apron",
     "regex_keywords": [
       "BLUE APRON",
-      "BLUEAPRON"
+      "BLUEAPRON",
+      "Blue Apron"
     ],
     "logo": "/logos/blue_apron.png",
     "cancel_url": "https://www.blueapron.com/account/settings",
@@ -657,7 +664,14 @@
     "id": "appletv_plus",
     "name": "Apple TV+",
     "regex_keywords": [
-      "APPLE TV"
+      "APPLE TV",
+      "Apple TV+",
+      "AppleTV+",
+      "APPLE TV+",
+      "APPLE.COM/BILL APPLE TV",
+      "APL*APPLE TV+",
+      "APPLE TV PLUS",
+      "Apple TV Plus"
     ],
     "logo": "/logos/apple_tv_.png",
     "cancel_url": "https://tv.apple.com/settings",
@@ -829,7 +843,12 @@
     "id": "nintendo_online",
     "name": "Nintendo Switch Online",
     "regex_keywords": [
-      "NINTENDO"
+      "NINTENDO",
+      "Nintendo Switch Online",
+      "NINTENDO SWITCH ONLINE",
+      "NSO",
+      "NINTENDO ONLINE",
+      "NINTENDO*SWITCH"
     ],
     "logo": "/logos/nintendo_switch_online.png",
     "cancel_url": "https://ec.nintendo.com/my/membership",
@@ -983,7 +1002,9 @@
     "id": "monday_com",
     "name": "Monday.com",
     "regex_keywords": [
-      "MONDAY.COM"
+      "MONDAY.COM",
+      "Monday",
+      "MONDAY"
     ],
     "logo": "/logos/monday_com.png",
     "cancel_url": "https://monday.com/admin/billing",
@@ -1140,7 +1161,9 @@
     "name": "T-Mobile",
     "regex_keywords": [
       "T-MOBILE",
-      "TMOBILE"
+      "TMOBILE",
+      "T-Mobile",
+      "T MOBILE"
     ],
     "logo": "/logos/t_mobile.png",
     "cancel_url": "https://www.t-mobile.com/contact-us",
@@ -1150,7 +1173,10 @@
     "id": "instacart",
     "name": "Instacart+",
     "regex_keywords": [
-      "INSTACART"
+      "INSTACART",
+      "Instacart+",
+      "INSTACART EXPRESS",
+      "INSTACART+"
     ],
     "logo": "/logos/instacart_.png",
     "cancel_url": "https://www.instacart.com/store/account/instacart_plus",
@@ -1189,16 +1215,6 @@
     "cancel_url": "https://www.shipt.com/account/subscription",
     "instructions": "Account > Subscription > Cancel Membership.",
     "fallback_url": "https://shop.shipt.com/account"
-  },
-  {
-    "id": "walmart_plus",
-    "name": "Walmart+",
-    "regex_keywords": [
-      "WALMART+"
-    ],
-    "logo": "/logos/walmart_.png",
-    "cancel_url": "https://www.walmart.com/account/plus",
-    "instructions": "Account > Walmart+ > Manage membership > Cancel."
   },
   {
     "id": "chewy",
@@ -1267,7 +1283,10 @@
     "id": "match_com",
     "name": "Match.com",
     "regex_keywords": [
-      "MATCH.COM"
+      "MATCH.COM",
+      "Match",
+      "MATCH",
+      "MATCH GROUP"
     ],
     "logo": "/logos/match_com.png",
     "cancel_url": "https://www.match.com/account/subscription",
@@ -1559,16 +1578,6 @@
     "logo": "/logos/viki.png",
     "cancel_url": "https://www.viki.com/account-settings",
     "instructions": "Subscription & Settings > Cancel Plan."
-  },
-  {
-    "id": "fabletics",
-    "name": "Fabletics",
-    "regex_keywords": [
-      "FABLETICS"
-    ],
-    "logo": "/logos/fabletics.png",
-    "cancel_url": "https://www.fabletics.com/account/vip",
-    "instructions": "Call customer service or Chat to cancel VIP."
   },
   {
     "id": "savage_x_fenty",
@@ -2154,7 +2163,6 @@
       "TARGET CIRCLE",
       "SUB-TARGET.COM"
     ],
-    "logo": "/logos/target.png",
     "cancel_url": "https://www.target.com/circle/settings",
     "instructions": "Account > Circle > Manage Subscription."
   },
@@ -2165,7 +2173,6 @@
       "COSTCO MBR",
       "COSTCO WHSE"
     ],
-    "logo": "/logos/costco.png",
     "cancel_url": "https://customerservice.costco.com/app/answers/detail/a_id/1203/",
     "instructions": "Must speak with a team member at any warehouse membership counter.",
     "fallback_url": "https://www.costco.com/MembershipServicesMemberView"
@@ -2177,7 +2184,6 @@
       "SAMS CLUB",
       "SAMSCLUB"
     ],
-    "logo": "/logos/sams_club.png",
     "cancel_url": "https://www.samsclub.com/content/terms-and-conditions",
     "instructions": "Visit Membership Desk or call 1-888-746-7726.",
     "fallback_url": "https://www.samsclub.com/account"
@@ -2189,7 +2195,6 @@
       "LYFT PINK",
       "LYFT *PINK"
     ],
-    "logo": "/logos/lyft.png",
     "cancel_url": "https://www.lyft.com/pink",
     "instructions": "App > Menu > Lyft Pink > Manage Plan > Cancel."
   },
@@ -2201,7 +2206,6 @@
       "GRUBHUB PLUS",
       "GRUBHUB+"
     ],
-    "logo": "/logos/grubhub.png",
     "cancel_url": "https://www.grubhub.com/help/contact-us",
     "instructions": "Account > Grubhub+ Membership > Cancel Membership.",
     "fallback_url": "https://www.grubhub.com/account"
@@ -2237,26 +2241,6 @@
     "instructions": "Included with Prime membership; standalone also available"
   },
   {
-    "id": "disney_plus",
-    "name": "Disney+",
-    "regex_keywords": [
-      "Disney+",
-      "DisneyPlus",
-      "DISNEY+",
-      "DISNEY PLUS",
-      "DISNEYPLUS",
-      "DISNEY PLUS SUBSCRIPTION",
-      "DIS+ PREMIER BUNDLE",
-      "DISNEY STREAMING",
-      "DISNEY BUNDLE",
-      "DISNEYPLUS.COM"
-    ],
-    "logo": "/logos/disney_.png",
-    "cancel_url": "https://www.disneyplus.com/account/subscription",
-    "fallback_url": "https://www.disneyplus.com/account",
-    "instructions": "If subscribed through Apple/Google, cancel there instead"
-  },
-  {
     "id": "disney_hotstar",
     "name": "Disney+ Hotstar",
     "regex_keywords": [
@@ -2272,23 +2256,6 @@
     "cancel_url": "https://www.hotstar.com/account/subscription",
     "fallback_url": "https://www.hotstar.com/account",
     "instructions": "Regional service for India, Indonesia, Thailand"
-  },
-  {
-    "id": "apple_tv_plus",
-    "name": "Apple TV+",
-    "regex_keywords": [
-      "Apple TV+",
-      "AppleTV+",
-      "APPLE TV+",
-      "APPLE.COM/BILL APPLE TV",
-      "APL*APPLE TV+",
-      "APPLE TV PLUS",
-      "Apple TV Plus"
-    ],
-    "logo": "/logos/apple_tv_.png",
-    "cancel_url": "https://support.apple.com/HT202039",
-    "fallback_url": "https://tv.apple.com/account",
-    "instructions": "Cancel through Apple ID settings or device Settings app"
   },
   {
     "id": "apple_music",
@@ -2352,22 +2319,6 @@
     "cancel_url": "https://www.youtube.com/paid_memberships",
     "fallback_url": "https://myaccount.google.com/subscriptions",
     "instructions": "Standalone music subscription"
-  },
-  {
-    "id": "google_one",
-    "name": "Google One",
-    "regex_keywords": [
-      "Google One",
-      "GoogleOne",
-      "GOOGLE ONE",
-      "GOOGLE*CLOUD STORAGE",
-      "GOOGLE*GOOGLE ONE",
-      "GOOGLE ONE STORAGE"
-    ],
-    "logo": "/logos/google_one.png",
-    "cancel_url": "https://one.google.com/settings/cancel",
-    "fallback_url": "https://myaccount.google.com/subscriptions",
-    "instructions": "Storage shared across Google services"
   },
   {
     "id": "google_workspace",
@@ -2573,21 +2524,6 @@
     "instructions": "Book summaries in 15 minutes"
   },
   {
-    "id": "nintendo_switch_online",
-    "name": "Nintendo Switch Online",
-    "regex_keywords": [
-      "Nintendo Switch Online",
-      "NINTENDO SWITCH ONLINE",
-      "NSO",
-      "NINTENDO ONLINE",
-      "NINTENDO*SWITCH"
-    ],
-    "logo": "/logos/nintendo_switch_online.png",
-    "cancel_url": "https://accounts.nintendo.com/",
-    "fallback_url": "https://ec.nintendo.com/my/#/",
-    "instructions": "Online play and classic games"
-  },
-  {
     "id": "geforce_now",
     "name": "GeForce NOW",
     "regex_keywords": [
@@ -2643,23 +2579,6 @@
     "instructions": "Ad-free viewing across Twitch"
   },
   {
-    "id": "adobe_creative_cloud",
-    "name": "Adobe Creative Cloud",
-    "regex_keywords": [
-      "Adobe Creative Cloud",
-      "ADOBE*CREATIVE CLD",
-      "ADOBE CREATIVE CLOUD",
-      "ADOBE *CREATIVE CLOUD",
-      "ADOBE *CREATIVE CLOUD 408-536-6000",
-      "ADOBE SYSTEMS",
-      "ADOBE CC"
-    ],
-    "logo": "/logos/adobe_creative_cloud.png",
-    "cancel_url": "https://account.adobe.com/plans",
-    "fallback_url": "https://account.adobe.com",
-    "instructions": "Early cancellation may incur fees"
-  },
-  {
     "id": "adobe_acrobat",
     "name": "Adobe Acrobat Pro",
     "regex_keywords": [
@@ -2699,23 +2618,6 @@
     "cancel_url": "https://github.com/settings/copilot",
     "fallback_url": "https://github.com/settings/billing",
     "instructions": "AI pair programming"
-  },
-  {
-    "id": "chatgpt_plus",
-    "name": "ChatGPT Plus",
-    "regex_keywords": [
-      "ChatGPT Plus",
-      "CHATGPT",
-      "CHATGPT SUBSCRIPTION",
-      "CHATGPT PLUS",
-      "OPENAI CHATGPT PLUS",
-      "OPENAI *CHATGPT PLUS",
-      "OPENAI"
-    ],
-    "logo": "/logos/chatgpt_plus.png",
-    "cancel_url": "https://chat.openai.com/settings/subscription",
-    "fallback_url": "https://chat.openai.com/settings",
-    "instructions": "Advanced AI assistant"
   },
   {
     "id": "openai_api",
@@ -2812,20 +2714,6 @@
     "cancel_url": "https://fi.google.com/account#cancelplan",
     "fallback_url": "https://fi.google.com/account",
     "instructions": "Google wireless service"
-  },
-  {
-    "id": "t_mobile",
-    "name": "T-Mobile",
-    "regex_keywords": [
-      "T-Mobile",
-      "TMOBILE",
-      "T-MOBILE",
-      "T MOBILE"
-    ],
-    "logo": "/logos/t_mobile.png",
-    "cancel_url": "https://www.t-mobile.com/support/account/cancel-your-account",
-    "fallback_url": "https://my.t-mobile.com",
-    "instructions": "Call 1-800-937-8997 or visit store"
   },
   {
     "id": "new_york_times",
@@ -2939,33 +2827,6 @@
     "instructions": "Coding education platform"
   },
   {
-    "id": "match",
-    "name": "Match.com",
-    "regex_keywords": [
-      "Match",
-      "MATCH",
-      "MATCH.COM",
-      "MATCH GROUP"
-    ],
-    "logo": "/logos/match_com.png",
-    "cancel_url": "https://www.match.com/account/settings",
-    "fallback_url": "https://www.match.com/account",
-    "instructions": "Cancel auto-renewal in settings"
-  },
-  {
-    "id": "blue_apron",
-    "name": "Blue Apron",
-    "regex_keywords": [
-      "Blue Apron",
-      "BLUE APRON",
-      "BLUEAPRON"
-    ],
-    "logo": "/logos/blue_apron.png",
-    "cancel_url": "https://www.blueapron.com/account/settings",
-    "fallback_url": "https://www.blueapron.com/account",
-    "instructions": "Call 1-646-891-5376 to cancel"
-  },
-  {
     "id": "factor",
     "name": "Factor",
     "regex_keywords": [
@@ -2992,20 +2853,6 @@
     "cancel_url": "https://www.doordash.com/consumer/membership/",
     "fallback_url": "https://www.doordash.com/accounts/",
     "instructions": "Free delivery subscription"
-  },
-  {
-    "id": "instacart_express",
-    "name": "Instacart+",
-    "regex_keywords": [
-      "Instacart+",
-      "INSTACART",
-      "INSTACART EXPRESS",
-      "INSTACART+"
-    ],
-    "logo": "/logos/instacart_.png",
-    "cancel_url": "https://www.instacart.com/store/account/manage_membership",
-    "fallback_url": "https://www.instacart.com/store/account",
-    "instructions": "Grocery delivery membership"
   },
   {
     "id": "birchbox",
@@ -3180,19 +3027,6 @@
     "instructions": "Team collaboration wiki"
   },
   {
-    "id": "monday",
-    "name": "Monday.com",
-    "regex_keywords": [
-      "Monday",
-      "MONDAY",
-      "MONDAY.COM"
-    ],
-    "logo": "/logos/monday_com.png",
-    "cancel_url": "https://support.monday.com/hc/en-us/articles/360005356779",
-    "fallback_url": "https://auth.monday.com/account/settings",
-    "instructions": "Work management platform"
-  },
-  {
     "id": "clickup",
     "name": "ClickUp",
     "regex_keywords": [
@@ -3266,32 +3100,6 @@
     "cancel_url": "https://my.freshbooks.com/#/subscription",
     "fallback_url": "https://my.freshbooks.com",
     "instructions": "Invoicing and accounting"
-  },
-  {
-    "id": "shopify",
-    "name": "Shopify",
-    "regex_keywords": [
-      "Shopify",
-      "SHOPIFY"
-    ],
-    "logo": "/logos/shopify.png",
-    "cancel_url": "https://admin.shopify.com/store/settings/billing",
-    "fallback_url": "https://admin.shopify.com/store/settings",
-    "instructions": "E-commerce platform"
-  },
-  {
-    "id": "sirius_xm",
-    "name": "SiriusXM",
-    "regex_keywords": [
-      "SiriusXM",
-      "SIRIUSXM",
-      "SIRIUS XM",
-      "SIRIUS SATELLITE RADIO"
-    ],
-    "logo": "/logos/siriusxm.png",
-    "cancel_url": "https://care.siriusxm.com/sirlogin_view.action",
-    "fallback_url": "https://www.siriusxm.com/manage",
-    "instructions": "Call 1-866-635-2349 to cancel"
   },
   {
     "id": "alltrails",
