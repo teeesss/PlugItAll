@@ -2,33 +2,6 @@
 
 ## 🟡 In Progress (Session 2026-01-17)
 
-- [ ] **TASK-089**: Statement Processing Feedback (v1.2.1)
-  - **Problem**: User uploads statements → brief pause → results appear (feels frozen)
-  - **Solution**: Visual feedback with minimum 2-second display
-  - **Implementation**:
-    - Show loading overlay immediately on file upload
-    - Animated progress indicators (pulse, spinner, step-by-step)
-    - Display processing stats:
-      - "Parsing 3 files..."
-      - "Found 247 transactions..."
-      - "Detecting subscriptions..."
-      - "✓ Complete! Found 12 subscriptions"
-    - Guarantee minimum 2-second visibility (prevents flash)
-    - Smooth fade-out when done (even if takes 5+ seconds)
-  - **Visual Options**:
-    - Pulsing logo animation
-    - Progress bar (indeterminate or with steps)
-    - File-by-file processing list
-    - Transaction count ticker
-  - **Nice-to-have**:
-    - Sound effect on completion (optional, user-toggleable)
-    - Haptic feedback on mobile
-    - Celebration animation for large uploads
-
-- [ ] **TASK-086**: Advanced Filter UX Enhancements (v1.3.0)
-  - Add filter presets: "Last Month", "This Quarter", "Last Quarter", "This Year"
-  - Add custom date range picker (start date → end date)
-  - Save filter sets to localStorage (named presets user can recall)
   - Add URL params for shareable filter states
   - Add "Clear all filters" button
   - Add filter history (recent filter combinations)
