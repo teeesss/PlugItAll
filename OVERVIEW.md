@@ -11,18 +11,19 @@ Tagline: _"Find the leaks in your bank account"_
 
 - **Privacy First**: No data leaves the browser.
 - **Static First**: No backend required; can be hosted anywhere.
-- **Reliability First**: Driven by 119 strict test cases across 18 test suites to avoid false positives.
+- **Reliability First**: Driven by 217 strict test cases across 36 test suites to avoid false positives.
 - **Quality First**: Pre-commit hooks enforce code standards on every commit.
 
 ## Recent Architectural Shifts
 
-- **Transaction Explorer**: Search, filter, and analyze all uploaded transactions (Phase 1-2 complete)
 - **Manual Subscription Management**: Users can add/remove subscriptions from the Transaction Explorer
 - **Unique ID-Based Hiding**: Subscriptions now have unique IDs (`name-amount`) for granular dismiss functionality
 - **Median vs Average**: Switched to median intervals to handle variable statement dates
 - **Shopping Patterns**: Merchant visits with 3+ distinct prices are rejected to avoid one-off retail visits (eBay fix)
 - **Consolidated Plan Support**: Logic handles merchants like Visible that have multiple plan price points ($25, $35)
-- **Pre-Commit Hooks**: ESLint, Prettier, Gitleaks, and Checkov enforce standards automatically
+- **Processing Feedback**: Animated overlay (v1.2.1e) with step-by-step progress during uploads (Parsing → Detecting → Complete).
+- **UI Safety (v1.2.1e)**: Relocated reset/search controls to prevent interception of clicks by dropdowns.
+- **Pre-Commit Hooks**: ESLint, Prettier, Gitleaks, and Checkov enforce standards automatically.
 
 ## Detection Pipeline
 
@@ -79,7 +80,7 @@ src/
 │   └── pdfGenerator.ts # PDF report generation
 └── App.tsx            # Main app component (Deduplication logic)
 
-tests/                 # 18 test suites, 119 tests
+tests/                 # 36 test suites, 217 tests
 ├── analyzer.test.ts
 ├── normalizer.test.ts
 ├── matcher.test.ts
