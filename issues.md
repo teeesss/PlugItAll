@@ -146,6 +146,15 @@ if (keyword.length <= 5) {
 
 ---
 
+
+### 🟢 Feature: Auto-Clear Upload List (TASK-076)
+- **Problem**: Uploaded file pills persisted in the UI even after processing was complete, cluttering the view.
+- **Resolution**: Implemented a "Key Reset" pattern in `App.tsx`:
+  - Added `uploadKey` state that increments after `handleFiles` completes.
+  - Passed `key={uploadKey}` to `FileUpload` components.
+  - This forces React to unmount and remount the component, cleanly resetting its internal state.
+- **Status**: Deployed and verified.
+
 ### 🟢 Feature: Enhanced Normalizer (TASK-006)
 - **Problem**: Phone numbers, payment processor prefixes (`SQ *`, `TST*`), and zip codes were preventing clean grouping of transactions.
 - **Resolution**:
