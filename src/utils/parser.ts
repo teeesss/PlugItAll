@@ -1,8 +1,7 @@
 import Papa from 'papaparse';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-// @ts-ignore
-import type { TextItem, PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+import type { TextItem } from 'pdfjs-dist/types/src/display/api';
 import type { Transaction } from '../mocks/statements';
 
 // Initialize PDF.js worker
@@ -197,35 +196,92 @@ interface ColumnMap {
   credit?: number;
 }
 
-const COLUMN_PATTERNS: Record<string, RegExp[]> = {
-  date: [/date/i, /posted/i, /trans.*date/i, /when/i],
-  description: [/description/i, /payee/i, /merchant/i, /name/i, /memo/i, /details/i],
-  amount: [/amount/i, /sum/i, /total/i, /value/i, /balance/i],
-  debit: [/debit/i, /withdrawal/i, /payment/i],
-  credit: [/credit/i, /deposit/i, /refund/i],
+
+const COLUMN_PATTERNS: Record<string, { regex: RegExp; score: number }[]> = {
+  date: [
+    { regex: /^transaction\s*date$/i, score: 100 },
+    { regex: /^trans\s*date$/i, score: 95 },
+    { regex: /^date$/i, score: 90 },
+    { regex: /^posted\s*date$/i, score: 50 }, // Lower priority than Trans Date
+    { regex: /date/i, score: 10 },
+  ],
+  description: [
+    { regex: /^description$/i, score: 100 },
+    { regex: /^desc$/i, score: 95 },
+    { regex: /^payee$/i, score: 95 },
+    { regex: /^merchant$/i, score: 95 },
+    { regex: /^memo$/i, score: 90 },
+    { regex: /^details$/i, score: 80 },
+    { regex: /^item$/i, score: 80 },
+    { regex: /description/i, score: 50 },
+  ],
+  amount: [
+    { regex: /^amount$/i, score: 100 },
+    { regex: /^cost$/i, score: 90 },
+    { regex: /^value$/i, score: 80 },
+    { regex: /^total$/i, score: 70 },
+    { regex: /amount/i, score: 50 },
+    // Removed /balance/i to prevent false positives
+  ],
+  debit: [
+    { regex: /^debit$/i, score: 100 },
+    { regex: /^withdrawal$/i, score: 90 },
+    { regex: /^payment$/i, score: 80 },
+  ],
+  credit: [
+    { regex: /^credit$/i, score: 100 },
+    { regex: /^deposit$/i, score: 90 },
+    { regex: /^refund$/i, score: 80 },
+  ],
 };
 
 /**
- * Detects CSV columns based on headers.
+ * Detects CSV columns based on headers using a scoring system.
+ * Prioritizes exact matches and preferred terms (e.g. Transaction Date > Posted Date).
  */
 export function detectColumns(headers: string[]): ColumnMap | null {
-  const map: Partial<ColumnMap> = {};
+  const scores: Record<keyof ColumnMap, { index: number; score: number }> = {
+    date: { index: -1, score: -1 },
+    description: { index: -1, score: -1 },
+    amount: { index: -1, score: -1 },
+    debit: { index: -1, score: -1 },
+    credit: { index: -1, score: -1 },
+  };
 
   headers.forEach((header, index) => {
     if (!header) return;
-    const normalized = header.toLowerCase().trim();
+    const normalized = header.trim(); // Keep case for regex flags
+
+    // Check against all field types
     for (const [field, patterns] of Object.entries(COLUMN_PATTERNS)) {
-      if (patterns.some((p) => p.test(normalized))) {
-        if (!(field in map)) {
-          (map as Record<string, number>)[field] = index;
+      const fieldKey = field as keyof ColumnMap;
+
+      for (const { regex, score } of patterns) {
+        if (regex.test(normalized)) {
+          // If this match is better than what we have, take it
+          if (score > scores[fieldKey].score) {
+            scores[fieldKey] = { index, score };
+          }
         }
       }
     }
   });
 
-  // Valid if we have Date, Description, AND some form of Amount
-  if (map.date !== undefined && map.description !== undefined &&
-    (map.amount !== undefined || (map.debit !== undefined && map.credit !== undefined) || map.debit !== undefined)) {
+  // Construct Result Map
+  const map: Partial<ColumnMap> = {};
+  if (scores.date.index !== -1) map.date = scores.date.index;
+  if (scores.description.index !== -1) map.description = scores.description.index;
+  if (scores.amount.index !== -1) map.amount = scores.amount.index;
+  if (scores.debit.index !== -1) map.debit = scores.debit.index;
+  if (scores.credit.index !== -1) map.credit = scores.credit.index;
+
+  // Validation Logic
+  const hasDate = map.date !== undefined;
+  const hasDesc = map.description !== undefined;
+  const hasAmount = map.amount !== undefined;
+  const hasSplitAmount = map.debit !== undefined || (map.debit !== undefined && map.credit !== undefined);
+
+  if (hasDate && hasDesc && (hasAmount || hasSplitAmount)) {
     return map as ColumnMap;
   }
 
@@ -403,7 +459,7 @@ async function detectBank(pdf: any): Promise<string> {
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
     if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
     if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETRADE';
-  } catch (_e) {
+  } catch {
     // Bank detection failed, fallback to generic
   }
   return 'GENERIC';

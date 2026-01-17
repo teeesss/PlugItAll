@@ -168,9 +168,27 @@ if (keyword.length <= 5) {
   - Unified color gradients across Title, Logo, and UI accents.
   - Scripted audit fixed 28 broken logo paths in `subs.json`.
 - **Status**: Live in v1.1.6-BRANDING.
-  - **Regression Fix**: Fixed a bug where years (e.g., "2025") were triggering zip code truncation by ensuring date removal runs first.
-- **Tests**: `tests/normalizer_improvements.test.ts`.
-- **Status**: Deployed and verified.
+
+### 🟢 Feature: Smarter Matcher (TASK-004)
+- **Problem**: Matcher was missing obvious subscriptions or falsely validating short keywords ("Standard" matching "Stan").
+- **Resolution**:
+  - Implemented centralized `findDatabaseMatch` logic.
+  - Enforced `\b` word boundaries for keywords ≤ 5 characters.
+  - Deduplicated 17 entries in `subs.json` and fixed missing logo paths.
+- **Tests**: `tests/matcher_robustness.test.ts` (8 new tests).
+
+### 🟢 Feature: CSV Scoring Engine (TASK-003)
+- **Problem**: Parser blindly picked the first column matching regex, leading to "Balance" being used as "Amount" or "Posted Date" overriding "Transaction Date".
+- **Resolution**: Implemented a scoring system (0-100) for column detection.
+  - Exact matches (e.g., "Amount") get 100.
+  - Preferred terms ("Transaction Date") outscore others ("Posted Date").
+  - Removed risky patterns like "Balance".
+- **Tests**: `tests/parser_automagic.test.ts`.
+
+### 🟢 Feature: Manual Subscription Export (TASK-071)
+- **Problem**: Manual subscriptions were locked to the browser's LocalStorage.
+- **Resolution**: Added JSON Export/Import functionality in Settings. Validates schema and avoids duplicates on import.
+- **Tests**: `tests/export_import.test.ts`.
 
 ---
 
