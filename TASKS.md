@@ -157,20 +157,27 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [x] **TASK-076**: Auto-clear file list after successful processing (UI Polish).
   - Implemented `uploadKey` state in `App.tsx` to force-reset `FileUpload` components after processing.
 
-## 🟡 Other P0 Tasks
+## � Completed (Session 2026-01-17)
 
+- [x] **TASK-089**: Statement Processing Feedback (v1.2.1) ✅
+  - ✅ Created `ProcessingOverlay.tsx` component with step-by-step progress
+  - ✅ Shows: "Parsing X files" → "Found Y transactions" → "Detecting subscriptions" → "Complete!"
+  - ✅ Guaranteed minimum 2-second display (prevents flash)
+  - ✅ Smooth Framer Motion animations with progress bar
+  - ✅ Integrated into App.tsx file processing flow
+  - ✅ Comprehensive tests created (processing_overlay.test.tsx)
+  - ✅ **217 tests passing** (including new tests)
+  - ✅ Deployed to production
 
-- [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Implemented basic guessing*
-
-- [x] **TASK-077**: New Data Feedback (Toast Message).
-  - Created `Toast.tsx` component with success/info stats.
-  - Integrated into `App.tsx` to show "Processed X transactions" and "Found Y new subscriptions" after upload.
-- [x] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
-  - Created `BillView.tsx` component with table layout.
-  - Added view mode toggle (Cards vs List) next to Download Report button.
-  - Conditional rendering based on view mode state.
-  - Table shows: Service, Amount, Frequency, Confidence, Actions.
-  - Summary footer with total count and monthly amount.
+- [ ] **TASK-086**: Advanced Filter UX Enhancements (v1.3.0) - **40% Complete**
+  - ✅ Created `filterState.ts` utility (URL params, localStorage, presets)
+  - ✅ Created `DateRangePicker.tsx` component with quick presets
+  - ✅ Comprehensive tests created (filter_state.test.ts)
+  - ⏳ **Remaining**: Integration into InsightsEnhanced component
+  - ⏳ Filter presets UI implementation
+  - ⏳ Saved filter sets UI
+  - ⏳ Keyboard shortcuts (/, Escape), Amount, Frequency, Confidence, Actions.
+  Summary footer with total count and monthly amount.
 
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
 
