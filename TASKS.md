@@ -85,7 +85,11 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Provided toggle in Explorer and trash can on cards.
 - [x] **TASK-075**: Remove Manual Subscriptions from Explorer
   - Implemented logic to "uncheck" manual subscriptions directly in the table.
+
+
 - [x] **TASK-071**: Export/Import Manual Subscriptions (COMPLETED 2026-01-16)
+- [x] **TASK-076**: Auto-clear file list after successful processing (UI Polish).
+  - Implemented `uploadKey` state in `App.tsx` to force-reset `FileUpload` components after processing.
 
 ## 🟡 Other P0 Tasks
 

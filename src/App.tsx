@@ -25,10 +25,12 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+
   const [explorerInitialSearch, setExplorerInitialSearch] = useState('');
   // NEW: Store raw transactions to support cumulative analysis
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
   const [manualSubs, setManualSubs] = useState<EnrichedSubscription[]>(getManualSubscriptions() as EnrichedSubscription[]);
+  const [uploadKey, setUploadKey] = useState(0);
 
 
   // Filter candidates based on ignored list and merge with manual subs
@@ -123,11 +125,11 @@ function App() {
       // Update State
       setAllTransactions(sortedTransactions);
 
-      // Re-run Detection on EVERYTHING
+      // Re-run detection
       const subs = detectSubscriptions(dedupedTransactions);
       const enriched = subs.map(enrichSubscription);
 
-      // Dedupe candidates (retain verified status if we had complex logic, but re-generating is fine)
+      // Dedupe candidates
       const generateKey = (sub: EnrichedSubscription) =>
         `${sub.name}-${Math.round(sub.averageAmount)}`;
       const seenSubs = new Set<string>();
@@ -140,13 +142,17 @@ function App() {
 
       setCandidates(dedupedEnriched);
     }
+
     setIsProcessing(false);
+    // Reset file inputs by incrementing key
+    setUploadKey(prev => prev + 1);
   };
 
   const handleClearData = () => {
     if (confirm('Are you sure you want to clear all data?')) {
       setAllTransactions([]);
       setCandidates([]);
+      setUploadKey(0);
     }
   };
 
@@ -250,7 +256,7 @@ function App() {
             </div>
 
             <div className="glass-panel p-1 rounded-2xl shadow-2xl shadow-indigo-500/10">
-              <FileUpload onFilesSelected={handleFiles} />
+              <FileUpload key={uploadKey} onFilesSelected={handleFiles} />
             </div>
           </motion.div>
         )}
@@ -275,6 +281,7 @@ function App() {
                     <Plus className="w-4 h-4 mr-2" /> Add More Data
                   </h3>
                   <FileUpload
+                    key={uploadKey}
                     onFilesSelected={handleFiles}
                     className="opacity-80 hover:opacity-100 transition-opacity"
                   />
