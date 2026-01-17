@@ -93,9 +93,17 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 
 ## 🟡 Other P0 Tasks
 
+
 - [ ] **TASK-003**: Implement CSV Column Auto-Detection (Logic to find header row/guess by content) - *Implemented basic guessing*
+
+- [x] **TASK-077**: New Data Feedback (Toast Message).
+  - Created `Toast.tsx` component with success/info stats.
+  - Integrated into `App.tsx` to show "Processed X transactions" and "Found Y new subscriptions" after upload.
 - [ ] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
+
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
+- [ ] **TASK-079**: Standardize Privacy Banner Styling.
+  - Make the "Privacy First" banner on the main dashboard match the styling and size of the hero version (as shown in user screenshot).
 
 ## 🔴 High Priority (P1)
 
@@ -125,7 +133,10 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [ ] **TASK-011**: PDF Multi-Column Layout Support (Chase/BofA).
 - [ ] **TASK-017**: Add Multi-Bank Integration Tests.
 - [ ] **TASK-022**: Support Quarterly Subscriptions.
+
 - [ ] **TASK-034**: Implement Export to CSV/Excel.
 - [ ] **TASK-043**: Add React Error Boundary for crash protection.
+- [ ] **TASK-078**: Highlight Newly Discovered Subscriptions.
+  - Temporarily highlight (red glow/border) new cards when they first appear from a fresh upload for 5s.
 
 _See `PROJECT_STATUS.md` and `issues.md` for historical log._

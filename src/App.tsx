@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Plus, Settings, RefreshCcw, Download } from 'lucide-react';
@@ -18,6 +19,7 @@ import { Stats } from './components/Stats';
 import { SettingsModal } from './components/SettingsModal';
 import { TransactionSearch } from './components/TransactionSearch';
 import { TransactionExplorer } from './components/TransactionExplorer';
+import { Toast } from './components/Toast';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -25,6 +27,9 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+
+  // Toast State
+  const [toastState, setToastState] = useState<{ message: string; visible: boolean }>({ message: '', visible: false });
 
   const [explorerInitialSearch, setExplorerInitialSearch] = useState('');
   // NEW: Store raw transactions to support cumulative analysis
@@ -55,6 +60,10 @@ function App() {
     };
   }, [visibleCandidates]);
 
+  const showToast = (message: string) => {
+    setToastState({ message, visible: true });
+  };
+
   const handleManualAdd = (t: Transaction) => {
     const normalizedName = normalizeDescription(t.description);
     const sub: SubscriptionCandidate = {
@@ -70,6 +79,7 @@ function App() {
     addManualSubscription(sub);
     // Refresh local state
     setManualSubs(getManualSubscriptions() as EnrichedSubscription[]);
+    showToast(`Added manual subscription: ${normalizedName}`);
   };
 
   const handleManualDelete = (id: string) => {
@@ -79,6 +89,9 @@ function App() {
 
   const handleFiles = async (files: File[]) => {
     setIsProcessing(true);
+    const previousTxCount = allTransactions.length;
+    const previousSubIds = new Set(candidates.map(c => c.id));
+
     let newTransactions: Transaction[] = [];
 
     for (const file of files) {
@@ -141,6 +154,24 @@ function App() {
       });
 
       setCandidates(dedupedEnriched);
+
+      // --- TOAST FEEDBACK LOGIC ---
+      const addedTxCount = sortedTransactions.length - previousTxCount;
+      const newSubsCount = dedupedEnriched.filter(c => !previousSubIds.has(c.id)).length;
+
+      if (addedTxCount > 0) {
+        let msg = `Processed ${addedTxCount} new transactions.`;
+        if (newSubsCount > 0) {
+          msg += ` Found ${newSubsCount} new subscriptions.`;
+        }
+        showToast(msg);
+      } else if (newTransactions.length > 0 && addedTxCount === 0) {
+        showToast('No new transactions found (duplicates skipped).');
+      }
+      // -----------------------------
+
+    } else {
+      showToast('No valid transactions found in uploaded files.');
     }
 
     setIsProcessing(false);
@@ -153,6 +184,7 @@ function App() {
       setAllTransactions([]);
       setCandidates([]);
       setUploadKey(0);
+      showToast('All data cleared.');
     }
   };
 
@@ -167,6 +199,12 @@ function App() {
 
   return (
     <div className="min-h-screen p-8 md:p-12 max-w-7xl mx-auto">
+      <Toast
+        message={toastState.message}
+        isVisible={toastState.visible}
+        onClose={() => setToastState(prev => ({ ...prev, visible: false }))}
+      />
+
       {/* Header */}
       <header className="flex items-center justify-between mb-12">
         <div className="flex items-center space-x-3">
@@ -435,6 +473,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
