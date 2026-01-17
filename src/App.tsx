@@ -179,11 +179,16 @@ function App() {
     setUploadKey(prev => prev + 1);
   };
 
+
   const handleClearData = () => {
     if (confirm('Are you sure you want to clear all data?')) {
       setAllTransactions([]);
       setCandidates([]);
-      setUploadKey(0);
+      // Force FileUpload reset with a new key
+      setUploadKey(prev => prev + 1);
+      // Close explorer if open
+      setIsExplorerOpen(false);
+
       showToast('All data cleared.');
     }
   };
@@ -196,6 +201,8 @@ function App() {
   const handleSettingsUpdate = () => {
     setIgnoredList(getIgnoredItems()); // Reload list when restored/cleared
   };
+
+  const hasData = visibleCandidates.length > 0 || candidates.length > 0 || allTransactions.length > 0;
 
   return (
     <div className="min-h-screen p-8 md:p-12 max-w-7xl mx-auto">
@@ -220,11 +227,17 @@ function App() {
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-100 to-purple-200">
                 Plug It All
               </h1>
-              <p className="text-xs text-slate-400 font-medium mt-0.5">Finding leaks in your bank account</p>
+              {/* Only show tagline in Header if we are in Dashboard mode (data exists) */}
+              {hasData && (
+                <p className="text-xs text-slate-400 font-medium mt-0.5">Finding leaks in your bank account</p>
+              )}
             </div>
-            <p className="text-xs text-slate-500 font-mono tracking-wide">
-              {isProcessing ? 'SCANNING STATEMENTS...' : 'CLIENT-SIDE PRIVACY ENGINE'}
-            </p>
+            {/* Show Privacy Engine text only if data exists (header mode), otherwise it's in Hero */}
+            {hasData && (
+              <p className="text-xs text-slate-500 font-mono tracking-wide">
+                {isProcessing ? 'SCANNING STATEMENTS...' : 'CLIENT-SIDE PRIVACY ENGINE'}
+              </p>
+            )}
           </div>
         </div>
 
@@ -235,6 +248,7 @@ function App() {
               {/* Clear Data Button */}
               <button
                 onClick={handleClearData}
+                type="button"
                 className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
                 title="Clear All Data"
               >

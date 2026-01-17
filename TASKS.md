@@ -102,8 +102,16 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [ ] **TASK-017**: Implement "Bill View" / Linear List page for detailed sub analysis.
 
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
+
 - [ ] **TASK-079**: Standardize Privacy Banner Styling.
   - Make the "Privacy First" banner on the main dashboard match the styling and size of the hero version (as shown in user screenshot).
+
+
+- [x] **TASK-080**: Fix "Clear Data" Double-Click Bug.
+  - Updated `handleClearData` to explicitly close Explorer and cycle `uploadKey`. Added `type="button"` to prevent form submission issues.
+- [x] **TASK-081**: Cleanup Header & Hero Text.
+  - Tagline and Privacy Banner now hidden in Header on initial load (Hero state).
+  - They reappear in Header when Dashboard is active.
 
 ## 🔴 High Priority (P1)
 
