@@ -190,13 +190,15 @@ Run `node scripts/migrate_master_data.cjs` to:
 
 ## 10. Uploading to Web Server
 
+
 - **MANDATORY**: After every successful local logic/UI verification, you **MUST** deploy to the live server.
 - **PROCESS**:
-    1. Run `npm run build` to generate the production bundle.
-    2. Run `npm run deploy` to sync the `dist` folder to the FTP server.
-    3. **ONLY upload modified files**: Never upload static image files (especially in `logos/`) unless they are new or modified. Use size-based or name-based comparison to skip existing files.
-    4. Don't use && with powershell commands. Use ; instead.
-- **VERIFICATION**: Always check the live URL (`https://www.bmwseals.com/plugit/`) after deployment to ensure changes are reflected.
+    1. **UPDATE VERSION**: Bump the version in `App.tsx` (Footer) and `PROJECT_STATUS_SUMMARY.md`. Use letter suffixes for small iterations (e.g., `v1.1.4a`, `v1.1.4b`) to avoid rapid number inflation.
+    2. Run `npm run build` to generate the production bundle.
+    3. Run `npm run deploy` to sync the `dist` folder to the FTP server.
+    4. **ONLY upload modified files**: Never upload static image files (especially in `logos/`) unless they are new or modified. Use size-based or name-based comparison to skip existing files.
+    5. Don't use && with powershell commands. Use ; instead.
+- **VERIFICATION**: Always check the live URL (`https://plugitall.com/`) after deployment to ensure the **version number in the footer** matches your update.
 
 ---
 
