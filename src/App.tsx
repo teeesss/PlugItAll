@@ -21,6 +21,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { TransactionSearch } from './components/TransactionSearch';
 import { TransactionExplorer } from './components/TransactionExplorer';
 import { Toast } from './components/Toast';
+import { PrivacyBanner } from './components/PrivacyBanner';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -309,10 +310,7 @@ function App() {
                 <p>
                   Securely identify recurring subscriptions from your bank statements.
                 </p>
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-300 max-w-md mx-auto">
-                  <span className="font-semibold">🔒 Privacy First:</span> Your files are processed entirely in your browser.
-                  No transaction data is <strong>ever</strong> uploaded to any server.
-                </div>
+                <PrivacyBanner />
               </div>
             </div>
 
@@ -326,10 +324,8 @@ function App() {
         {(visibleCandidates.length > 0 || candidates.length > 0 || allTransactions.length > 0) && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
             {/* Privacy Notice Banner */}
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-300 max-w-2xl mx-auto text-center">
-              <span className="font-semibold">🔒 Privacy First:</span> Your files are processed entirely in your browser.
-              No transaction data is <strong>ever</strong> uploaded to any server.
-            </div>
+            <PrivacyBanner className="mb-4" />
+
             {/* Stats Banner */}
             <Stats totalMonthly={totals.monthly} totalYearly={totals.yearly} />
 
