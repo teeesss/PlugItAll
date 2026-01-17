@@ -174,7 +174,7 @@
       "WALMART",
       "WALMART+"
     ],
-    "logo": "/logos/walmart_plus.png",
+    "logo": "/logos/walmart_.png",
     "cancel_url": "https://www.walmart.com/account/plus",
     "instructions": "Go to Account > Walmart+ > Manage Membership.",
     "fallback_url": "https://www.walmart.com/account/walmartplus"
@@ -2231,7 +2231,7 @@
       "Prime Video",
       "PRIME VIDEO"
     ],
-    "logo": "https://logo.clearbit.com/amazon.com",
+    "logo": "/logos/amazon_prime.png",
     "cancel_url": "https://www.amazon.com/gp/video/settings/",
     "fallback_url": "https://www.amazon.com/gp/primecentral",
     "instructions": "Included with Prime membership; standalone also available"
@@ -2251,7 +2251,7 @@
       "DISNEY BUNDLE",
       "DISNEYPLUS.COM"
     ],
-    "logo": "https://logo.clearbit.com/disneyplus.com",
+    "logo": "/logos/disney_.png",
     "cancel_url": "https://www.disneyplus.com/account/subscription",
     "fallback_url": "https://www.disneyplus.com/account",
     "instructions": "If subscribed through Apple/Google, cancel there instead"
@@ -2285,7 +2285,7 @@
       "APPLE TV PLUS",
       "Apple TV Plus"
     ],
-    "logo": "https://logo.clearbit.com/tv.apple.com",
+    "logo": "/logos/apple_tv_.png",
     "cancel_url": "https://support.apple.com/HT202039",
     "fallback_url": "https://tv.apple.com/account",
     "instructions": "Cancel through Apple ID settings or device Settings app"
@@ -2302,7 +2302,7 @@
       "APPLE.COM/BILL APPLE MUSIC",
       "Apple Music Subscription"
     ],
-    "logo": "https://logo.clearbit.com/apple.com",
+    "logo": "/logos/apple_services.png",
     "cancel_url": "https://support.apple.com/HT202039",
     "fallback_url": "https://www.apple.com/apple-music/",
     "instructions": "Cancel through Apple ID settings or device Settings app"
@@ -2318,7 +2318,7 @@
       "APL*APPLE ONE",
       "Apple One Bundle"
     ],
-    "logo": "https://logo.clearbit.com/apple.com",
+    "logo": "/logos/apple_services.png",
     "cancel_url": "https://support.apple.com/HT211659",
     "fallback_url": "https://www.apple.com/apple-one/",
     "instructions": "Includes Apple Music, TV+, Arcade, iCloud+, and more"
@@ -2333,7 +2333,7 @@
       "APPLE.COM/BILL ARCADE",
       "Apple Arcade Subscription"
     ],
-    "logo": "https://logo.clearbit.com/apple.com",
+    "logo": "/logos/apple_services.png",
     "cancel_url": "https://support.apple.com/HT210112",
     "fallback_url": "https://www.apple.com/apple-arcade/",
     "instructions": "Cancel through Apple ID settings"
@@ -2348,7 +2348,7 @@
       "GOOGLE*YOUTUBE MUSIC",
       "YouTube Music Premium"
     ],
-    "logo": "https://logo.clearbit.com/music.youtube.com",
+    "logo": "/logos/youtube_premium.png",
     "cancel_url": "https://www.youtube.com/paid_memberships",
     "fallback_url": "https://myaccount.google.com/subscriptions",
     "instructions": "Standalone music subscription"
@@ -2364,7 +2364,7 @@
       "GOOGLE*GOOGLE ONE",
       "GOOGLE ONE STORAGE"
     ],
-    "logo": "https://logo.clearbit.com/one.google.com",
+    "logo": "/logos/google_one.png",
     "cancel_url": "https://one.google.com/settings/cancel",
     "fallback_url": "https://myaccount.google.com/subscriptions",
     "instructions": "Storage shared across Google services"
@@ -2380,7 +2380,7 @@
       "GSUITE",
       "G SUITE"
     ],
-    "logo": "https://logo.clearbit.com/workspace.google.com",
+    "logo": "/logos/google_one.png",
     "cancel_url": "https://admin.google.com/ac/billing/subscriptions",
     "fallback_url": "https://admin.google.com",
     "instructions": "Business email and productivity suite"
@@ -2396,7 +2396,7 @@
       "ESPN+ SUBSCRIPTION",
       "ESPNPLUS"
     ],
-    "logo": "https://logo.clearbit.com/plus.espn.com",
+    "logo": "/logos/apple_services.png",
     "cancel_url": "https://plus.espn.com/account/subscription",
     "fallback_url": "https://plus.espn.com/account",
     "instructions": "Part of Disney Bundle option"
@@ -2553,7 +2553,7 @@
       "AMZN KINDLE UNLIMITED",
       "AMAZON KINDLE UNLIMITED"
     ],
-    "logo": "https://logo.clearbit.com/amazon.com",
+    "logo": "/logos/amazon_prime.png",
     "cancel_url": "https://www.amazon.com/hz/mycd/myx#/home/settings/payment",
     "fallback_url": "https://www.amazon.com/kindle-dbs/hz/subscribe/ku",
     "instructions": "Unlimited ebook reading"
@@ -2582,7 +2582,7 @@
       "NINTENDO ONLINE",
       "NINTENDO*SWITCH"
     ],
-    "logo": "https://logo.clearbit.com/nintendo.com",
+    "logo": "/logos/nintendo_switch_online.png",
     "cancel_url": "https://accounts.nintendo.com/",
     "fallback_url": "https://ec.nintendo.com/my/#/",
     "instructions": "Online play and classic games"
@@ -2654,7 +2654,7 @@
       "ADOBE SYSTEMS",
       "ADOBE CC"
     ],
-    "logo": "https://logo.clearbit.com/adobe.com",
+    "logo": "/logos/adobe_creative_cloud.png",
     "cancel_url": "https://account.adobe.com/plans",
     "fallback_url": "https://account.adobe.com",
     "instructions": "Early cancellation may incur fees"
@@ -2695,7 +2695,7 @@
       "GITHUB COPILOT",
       "COPILOT"
     ],
-    "logo": "https://logo.clearbit.com/github.com",
+    "logo": "/logos/github.png",
     "cancel_url": "https://github.com/settings/copilot",
     "fallback_url": "https://github.com/settings/billing",
     "instructions": "AI pair programming"
@@ -2712,7 +2712,7 @@
       "OPENAI *CHATGPT PLUS",
       "OPENAI"
     ],
-    "logo": "https://logo.clearbit.com/chat.openai.com",
+    "logo": "/logos/chatgpt_plus.png",
     "cancel_url": "https://chat.openai.com/settings/subscription",
     "fallback_url": "https://chat.openai.com/settings",
     "instructions": "Advanced AI assistant"
@@ -2794,7 +2794,7 @@
       "MINT MOBILE",
       "MINTMOBILE"
     ],
-    "logo": "https://logo.clearbit.com/mintmobile.com",
+    "logo": "/logos/t_mobile.png",
     "cancel_url": "https://www.mintmobile.com/help/",
     "fallback_url": "https://my.mintmobile.com",
     "instructions": "Pre-paid wireless carrier"
@@ -2822,7 +2822,7 @@
       "T-MOBILE",
       "T MOBILE"
     ],
-    "logo": "https://logo.clearbit.com/t-mobile.com",
+    "logo": "/logos/t_mobile.png",
     "cancel_url": "https://www.t-mobile.com/support/account/cancel-your-account",
     "fallback_url": "https://my.t-mobile.com",
     "instructions": "Call 1-800-937-8997 or visit store"
@@ -2837,7 +2837,7 @@
       "NYT DIGITAL SUBSCRIPTION",
       "THE NEW YORK TIMES"
     ],
-    "logo": "https://logo.clearbit.com/nytimes.com",
+    "logo": "/logos/ny_times.png",
     "cancel_url": "https://www.nytimes.com/subscription/cancel",
     "fallback_url": "https://myaccount.nytimes.com",
     "instructions": "Call 1-800-591-9233 to cancel"
@@ -2852,7 +2852,7 @@
       "THE WALL STREET JOURNAL",
       "DOW JONES WSJ"
     ],
-    "logo": "https://logo.clearbit.com/wsj.com",
+    "logo": "/logos/wall_street_journal.png",
     "cancel_url": "https://customercenter.wsj.com/",
     "fallback_url": "https://www.wsj.com/account",
     "instructions": "Call 1-800-369-2834 to cancel"
@@ -2947,7 +2947,7 @@
       "MATCH.COM",
       "MATCH GROUP"
     ],
-    "logo": "https://logo.clearbit.com/match.com",
+    "logo": "/logos/match_com.png",
     "cancel_url": "https://www.match.com/account/settings",
     "fallback_url": "https://www.match.com/account",
     "instructions": "Cancel auto-renewal in settings"
@@ -2960,7 +2960,7 @@
       "BLUE APRON",
       "BLUEAPRON"
     ],
-    "logo": "https://logo.clearbit.com/blueapron.com",
+    "logo": "/logos/blue_apron.png",
     "cancel_url": "https://www.blueapron.com/account/settings",
     "fallback_url": "https://www.blueapron.com/account",
     "instructions": "Call 1-646-891-5376 to cancel"
@@ -3002,7 +3002,7 @@
       "INSTACART EXPRESS",
       "INSTACART+"
     ],
-    "logo": "https://logo.clearbit.com/instacart.com",
+    "logo": "/logos/instacart_.png",
     "cancel_url": "https://www.instacart.com/store/account/manage_membership",
     "fallback_url": "https://www.instacart.com/store/account",
     "instructions": "Grocery delivery membership"
@@ -3161,7 +3161,7 @@
       "JIRA",
       "ATLASSIAN JIRA"
     ],
-    "logo": "https://logo.clearbit.com/atlassian.com",
+    "logo": "/logos/atlassian___jira.png",
     "cancel_url": "https://admin.atlassian.com/billing/",
     "fallback_url": "https://admin.atlassian.com",
     "instructions": "Project management software"
@@ -3174,7 +3174,7 @@
       "CONFLUENCE",
       "ATLASSIAN CONFLUENCE"
     ],
-    "logo": "https://logo.clearbit.com/atlassian.com",
+    "logo": "/logos/atlassian___jira.png",
     "cancel_url": "https://admin.atlassian.com/billing/",
     "fallback_url": "https://admin.atlassian.com",
     "instructions": "Team collaboration wiki"
@@ -3187,7 +3187,7 @@
       "MONDAY",
       "MONDAY.COM"
     ],
-    "logo": "https://logo.clearbit.com/monday.com",
+    "logo": "/logos/monday_com.png",
     "cancel_url": "https://support.monday.com/hc/en-us/articles/360005356779",
     "fallback_url": "https://auth.monday.com/account/settings",
     "instructions": "Work management platform"
@@ -3274,7 +3274,7 @@
       "Shopify",
       "SHOPIFY"
     ],
-    "logo": "https://logo.clearbit.com/shopify.com",
+    "logo": "/logos/shopify.png",
     "cancel_url": "https://admin.shopify.com/store/settings/billing",
     "fallback_url": "https://admin.shopify.com/store/settings",
     "instructions": "E-commerce platform"
@@ -3288,7 +3288,7 @@
       "SIRIUS XM",
       "SIRIUS SATELLITE RADIO"
     ],
-    "logo": "https://logo.clearbit.com/siriusxm.com",
+    "logo": "/logos/siriusxm.png",
     "cancel_url": "https://care.siriusxm.com/sirlogin_view.action",
     "fallback_url": "https://www.siriusxm.com/manage",
     "instructions": "Call 1-866-635-2349 to cancel"
