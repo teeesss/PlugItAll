@@ -219,6 +219,14 @@ if (keyword.length <= 5) {
   - Tracked via `newSubIds` state in `App.tsx`
 - **Files**: `src/components/SubscriptionCard.tsx`, `src/App.tsx`, `src/index.css`
 
+**CRITICAL FIX (2026-01-16):**
+- **Problem**: Initial implementation had highlight not disappearing after 5s due to stale state.
+- **Root Cause**: `useEffect` was only listening to `isNew` becoming true, not false. Local `showHighlight` state wasn't syncing when parent cleared `newSubIds`.
+- **Resolution**: Removed local state management. Component now uses `isNew` prop directly. Parent (`App.tsx`) controls timing via `setTimeout` that clears `newSubIds` after 5 seconds.
+- **Lesson Learned**: For timed UI effects controlled by parent state, avoid duplicate state in child components. Let props flow down and keep timing logic in one place.
+- **Color Change**: Changed from red to green per user preference (`ring-green-500/50`).
+- **Tests**: `tests/highlight_animation.test.tsx` (validates prop-based highlighting).
+
 ---
 
 #### [Issue #20] DOMMatrix Not Defined in Node.js CI

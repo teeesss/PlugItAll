@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -26,17 +26,6 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   isNew = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showHighlight, setShowHighlight] = useState(isNew);
-
-  // TASK-078: Auto-remove highlight after 5 seconds
-  useEffect(() => {
-    if (isNew) {
-      const timer = setTimeout(() => {
-        setShowHighlight(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [isNew]);
 
   const getConfidenceColor = (level: string) => {
     switch (level) {
@@ -73,7 +62,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         transition={{ delay: index * 0.05 }}
         className={cn(
           "glass-panel rounded-xl p-5 group hover:border-indigo-500/30 transition-all duration-300 relative",
-          showHighlight && "ring-2 ring-green-500/50 shadow-lg shadow-green-500/30 animate-pulse-slow"
+          isNew && "ring-2 ring-green-500/50 shadow-lg shadow-green-500/30 animate-pulse-slow"
         )}
       >
         <button

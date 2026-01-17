@@ -4,13 +4,27 @@ You must follow these rules at all times.
 
 ---
 
-## 1. Project Status \u0026 Issue Tracking
+## 1. Project Status & Issue Tracking
 - **ALWAYS** check `PROJECT_STATUS_SUMMARY.md` first for current project state, completed tasks, and pending priorities
 - **ALWAYS** check `issues.md` before starting a task to be aware of known pitfalls
 - **IMMEDIATELY** log any new error or blocker in `issues.md` as soon as it is identified
 - **UPDATE** `issues.md` with the resolution once fixed, including the "Cause" to prevent recurrence
 - **UPDATE** `TASKS.md` when completing tasks
 - **ALWAYS** check `issues.md` before marking any logic task as complete
+
+### MANDATORY Documentation Rules (CRITICAL)
+**TASKS.md**:
+- **HISTORICAL RECORD**: Every completed task MUST be logged in TASKS.md - this is the permanent historical record
+- **NO EXCEPTIONS**: If work was done, it MUST be in TASKS.md, even if not originally planned
+- **COMPLETENESS**: Include task description, resolution approach, and references to tests/files
+- **NEVER DELETE**: Keep all completed tasks - this is a historical artifact
+
+**issues.md**:
+- **PURPOSE**: Log problems, debugging efforts, and resolutions - especially things that broke or could break
+- **LESSONS LEARNED**: Document root causes and solutions to prevent recurrence
+- **CRITICAL FIXES**: Always log fixes for bugs that made it to production or affected users
+- **PREVENTIVE**: Document edge cases and gotchas discovered during development
+
 
 ### Documentation Structure (Updated Jan 16, 2026)
 **NEW**: If confused about which file to use, see `docs/DOCUMENTATION_GUIDE.md` for complete file relationship guide.
