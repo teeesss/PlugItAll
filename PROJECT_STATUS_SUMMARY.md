@@ -1,13 +1,15 @@
 # Project Status Summary
-> **Current Version:** v1.2.1
+> **Current Version:** v1.2.1e
 > **Last Updated:** 2026-01-17
 > **Last Deployment:** LIVE (plugitall.com)
 
 ## 🚀 Recent Achievements (Session 2026-01-17)
 - **v1.2.0**: Comprehensive Insights Filtering - Type filters, date ranges, sorting, merchant search, clickable merchants with detail modal
 - **v1.2.0a**: Dynamic date ranges + improved dropdown contrast
-- **v1.2.1** (NEW): Processing overlay with animated feedback during statement uploads
-- **TASK-089**: Statement processing overlay with guaranteed 2-second minimum display time
+- **v1.2.1e** (NEW): Processing overlay duration increased to 4s + Logic fix for stuck overlay
+- **TASK-089**: Statement processing overlay with guaranteed 4-second minimum display time
+- **UI Refresh**: Swapped Search/Reset buttons to prevent dropdown overlap (v1.2.1e)
+- **v1.2.1d**: Fixed critical logic bug where `isProcessing` blocked the completion timer
 - **Test Suite**: Expanded to 217 passing tests (added ProcessingOverlay + FilterState tests)
 - **Foundation Built**: Advanced filter utilities (TASK-086 - 40% complete)
 
@@ -35,12 +37,12 @@
 - [x] Active filter badges
 - [x] Improved dropdown contrast (dark bg + white text)
 
-### UX & Processing Feedback ✅
 - [x] **TASK-089**: Processing overlay with step-by-step progress ✅
   - Animated steps: Parsing → Analyzing → Detecting → Complete
-  - Guaranteed 2-second minimum display (prevents flash)
+  - Guaranteed 4-second minimum display (increased from 2s per feedback)
   - Framer Motion animations with progress bars
   - Success celebration with checkmarks
+  - Logic fix: Timer now starts correctly by resetting `isProcessing` before completion step
 - [x] **TASK-078**: New subscription highlight animation (7s green glow) ✅
 - [x] **TASK-017**: Bill View implementation ✅
 
@@ -123,7 +125,7 @@ See [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.md) for det
 **Last Deployed:** January 17, 2026  
 **Live Site:** https://plugitall.com/  
 **Method:** FTP via `scripts/deploy.js`  
-**Current Version:** v1.2.1
+**Current Version:** v1.2.1e
 
 ### Deployment Process
 1. `npm run build` (generates production bundle)

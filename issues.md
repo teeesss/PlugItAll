@@ -1,5 +1,24 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-01-17 (Processing Feedback & Filter Foundation)
+
+### 🔴 Bug: Processing Overlay "Stuck" on Complete Step
+- **Problem**: The overlay would stay on "Processing Complete!" forever and never auto-dismiss.
+- **Root Cause**: The timer logic in `ProcessingOverlay.tsx` was gated by `if (!isProcessing)`. In `App.tsx`, we were setting the step to 'complete' while `isProcessing` was still true. This prevented the dismissal timer from ever starting.
+- **Resolution**: Updated `App.tsx` to call `setIsProcessing(false)` *before* setting the step to 'complete'.
+- **Status**: Fixed in v1.2.1d.
+
+### 🟡 Bug: Reset Button Required Double-Click (UI Overlap)
+- **Problem**: Users had to click the "Clear All Data" button twice.
+- **Root Cause**: The `TransactionSearch` dropdown grows to the left and was physically overlapping/intercepting the click event of the Reset button. The first click was just closing the search dropdown.
+- **Resolution**: Swapped the order of the Search and Reset buttons in the Header. The Reset button is now on the far right, where no dropdown can overlap it.
+- **Status**: Fixed in v1.2.1e.
+
+### 🟡 Enhancement: Overlay Display Too Short
+- **Problem**: 2 seconds (then 3.5 seconds) felt too fast for users to read the "Found X subscriptions" count.
+- **Resolution**: Increased `MIN_DISPLAY_MS` to **4000** (4 seconds).
+- **Status**: Updated in v1.2.1e.
+
 ## Session: 2026-01-16 (PDF Diagnostic & Backup Export)
 
 ### 🟢 Feature: Export/Import Manual Subscriptions (TASK-071)

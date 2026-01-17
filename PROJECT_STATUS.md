@@ -1,5 +1,27 @@
 # Project Status: Plug It All
 
+## Recent Major Updates (Jan 17, 2026)
+
+### 🟢 Feature: Processing Overlay (v1.2.1e)
+- **Goal**: Provide visual feedback during long statement parsing/analysis operations.
+- **Resolution**:
+  - Implemented `ProcessingOverlay.tsx` with step-by-step progress tracking.
+  - **Animated Success**: Celebrates discovery with a count of found subscriptions.
+  - **User Feedback**: Increased minimum display duration to **4 seconds** for readability.
+  - **Critical Fix**: Resolved logic race condition where `isProcessing` blocked the auto-dismiss timer.
+- **Status**: Production-ready and deployed.
+
+### 🟢 UI Refactor: Header Button Order (v1.2.1e)
+- **Goal**: Resolve "Double Click" reset button issue.
+- **Problem**: Transaction search dropdown overlapped the Reset button, intercepting clicks.
+- **Resolution**: Swapped Header order: [Search Bar] [Reset Button] [Settings].
+- **Result**: Reset button is now on far right, making it reliably accessible in one click.
+
+### 🟢 Feature: Comprehensive Insights Filtering (v1.2.0)
+- **Goal**: Allow users to slice spending data by date, type, and merchant.
+- **Resolution**: Implemented `InsightsEnhanced.tsx` with dynamic date ranges (30d - 3yr), sort options, and clickable merchant details.
+- **Status**: Deployed.
+
 ## Recent Major Updates (Jan 16, 2026)
 
 ### 🟢 Feature: Bill View / Linear List (TASK-017)

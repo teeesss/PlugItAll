@@ -342,6 +342,15 @@ function App() {
           {/* Only show controls if there is data */}
           {allTransactions.length > 0 && (
             <>
+              {/* Transaction Search */}
+              <TransactionSearch
+                transactions={allTransactions}
+                onOpenExplorer={(searchTerm) => {
+                  setExplorerInitialSearch(searchTerm);
+                  setIsExplorerOpen(true);
+                }}
+              />
+
               {/* Clear Data Button */}
               <button
                 onClick={handleClearData}
@@ -351,15 +360,6 @@ function App() {
               >
                 <RefreshCcw className="w-6 h-6" />
               </button>
-
-              {/* Transaction Search */}
-              <TransactionSearch
-                transactions={allTransactions}
-                onOpenExplorer={(searchTerm) => {
-                  setExplorerInitialSearch(searchTerm);
-                  setIsExplorerOpen(true);
-                }}
-              />
 
               {/* Settings Toggle */}
               <button

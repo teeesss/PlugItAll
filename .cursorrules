@@ -260,12 +260,14 @@ Run `node scripts/migrate_master_data.cjs` to:
 ### UI & State Management (Lessons Learned)
 - **0-Subscription State**: ALWAYS handle the empty state gracefully. If a process (like parsing) completes but returns 0 results, the UI MUST provide feedback (e.g., transition to dashboard with "0 Found") rather than staying on the input screen.
 - **Use REPLACE instead of MERGE** when processing new uploads to avoid stale data persistence.
-- **Timed UI Effects (Timers)**: Centralize logic in `useEffect` at the parent level (e.g. `App.tsx`). Use a dedicated state trigger (e.g. `newSubIds.size`). ALWAYS return cleanup function (`clearTimeout`) to prevent memory leaks. Parent controls the `isNew` prop lifecycle.
+- **Timed UI Effects (Timers)**: Centralize logic in `useEffect` at the parent level (e.g. `App.tsx`) or specialized component. Use a dedicated state trigger (e.g. `newSubIds.size`). ALWAYS return cleanup function (`clearTimeout`) to prevent memory leaks.
+- **Overlay State Timing**: If a component's timer depends on a "processing is over" state, ensure the state transition happens in the correct order. (e.g., `setIsProcessing(false)` MUST happen before setting the 'complete' status if the timer is gated by `isProcessing === false`).
+- **UI Interaction Safety**: Watch for dropdowns or absolute-positioned elements overlapping buttons. If a button requires "double clicks" to work, it's often because a nearby interactive element's dropdown/hitbox is intercepting the first click. Swap layout positions to ensure clear hit targets.
 
 ### Current Stats (Update as needed)
 - **Tests**: 217/224 passing across 36 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
-- **Version**: v1.2.1
+- **Version**: v1.2.1e
 - **Live URL**: https://plugitall.com/
 - **Roadmaps**: ROADMAP_TRANSACTION_EXPLORER.md, ROADMAP_MOBILE_ADVANCED_FILTERS.md

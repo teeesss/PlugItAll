@@ -117,8 +117,8 @@ describe('ProcessingOverlay (TASK-089)', () => {
         // Should not call immediately
         expect(onComplete).not.toHaveBeenCalled();
 
-        // Fast-forward past 3.5 seconds (minimum display time)
-        vi.advanceTimersByTime(3600);
+        // Fast-forward past 4 seconds (minimum display time)
+        vi.advanceTimersByTime(4100);
 
         expect(onComplete).toHaveBeenCalled();
 

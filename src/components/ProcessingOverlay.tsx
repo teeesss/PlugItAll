@@ -28,7 +28,7 @@ export function ProcessingOverlay({
     onComplete,
 }: ProcessingOverlayProps) {
     const displayTimeRef = useRef(0);
-    const MIN_DISPLAY_MS = 3500; // v1.2.1b - Updated from 2000ms per user feedback
+    const MIN_DISPLAY_MS = 4000; // v1.2.1e - Updated to 4 seconds per user feedback
 
     useEffect(() => {
         if (isProcessing) {

@@ -159,15 +159,16 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 
 ## � Completed (Session 2026-01-17)
 
-- [x] **TASK-089**: Statement Processing Feedback (v1.2.1) ✅
+- [x] **TASK-089**: Statement Processing Feedback (v1.2.1e) ✅
   - ✅ Created `ProcessingOverlay.tsx` component with step-by-step progress
   - ✅ Shows: "Parsing X files" → "Found Y transactions" → "Detecting subscriptions" → "Complete!"
-  - ✅ Guaranteed minimum 2-second display (prevents flash)
+  - ✅ **v1.2.1e Updated**: Increased minimum display time to **4 seconds** for better readability.
+  - ✅ **Logic Fix**: Ensured `isProcessing` is set to false BEFORE step='complete' so timer starts correctly.
   - ✅ Smooth Framer Motion animations with progress bar
   - ✅ Integrated into App.tsx file processing flow
   - ✅ Comprehensive tests created (processing_overlay.test.tsx)
   - ✅ **217 tests passing** (including new tests)
-  - ✅ Deployed to production
+  - ✅ Deployed to production https://plugitall.com/
 
 - [ ] **TASK-086**: Advanced Filter UX Enhancements (v1.3.0) - **40% Complete**
   - ✅ Created `filterState.ts` utility (URL params, localStorage, presets)
@@ -182,8 +183,10 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [ ] **TASK-018**: Add toggle for "Card View" vs "List View" on main dashboard.
 
 
-- [x] **TASK-080**: Fix "Clear Data" Double-Click Bug.
-  - Updated `handleClearData` to explicitly close Explorer and cycle `uploadKey`. Added `type="button"` to prevent form submission issues.
+- [x] **TASK-080**: Fix "Clear Data" Double-Click / UI Intercept Bug (v1.2.1e).
+  - ✅ Updated `handleClearData` to explicitly close Explorer and cycle `uploadKey`.
+  - ✅ **UI Fix**: Swapped Reset Button and Search box in header to prevent search results from covering the button.
+  - ✅ Logic now reliably clears all state (manual subs, ignored, transactions) in one click.
 - [x] **TASK-081**: Cleanup Header & Hero Text.
   - Tagline and Privacy Banner now hidden in Header on initial load (Hero state).
   - They reappear in Header when Dashboard is active.
