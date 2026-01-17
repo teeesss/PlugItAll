@@ -117,16 +117,18 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Implemented new "Plug Shield" logo (V3).
   - Updated Title Gradient to match.
   - Fixed 28 broken logo paths in `subs.json`.
+- [x] **TASK-079**: Standardize Privacy Banner Styling.
+  - Created reusable `PrivacyBanner` component.
+  - Unified styling between Hero and Dashboard views.
+- [x] **TASK-004**: Improve logo matching.
+  - Consolidated matching logic into `matcher.ts`.
+  - Implemented smart regex with word boundary safety.
+  - Deduplicated `subs.json` via script.
 
 ## 🔴 High Priority (P1)
 
-- [x] **TASK-074**: Exclude Credits/Refunds from Subscription Detection
-  - Standardized parser to use negative for debits and positive for credits
-  - Updated `detectSubscriptions()` to filter out positive amounts in signed datasets
-  - Verified with real user data (Google One refund no longer detected)
-- [ ] **TASK-004**: Improve Logo matching (Many major brands still missing).
-- [ ] **TASK-005**: Add "Cancel All" automated helper flow for common merchants.
-- [ ] **TASK-019**: Refine Transaction History UI (Ensure it scales well on mobile).
+- [ ] **TASK-003**: CSV column auto-detection improvements
+- [ ] **TASK-071**: Export/Import manual subscriptions (JSON format)
 
 
 - [x] **TASK-006**: Strip Phone Numbers/Category Prefixes from descriptions (Improve Normalizer).
