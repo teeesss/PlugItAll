@@ -1,6 +1,5 @@
 # OVERVIEW
 
-For a detailed technical breakdown, see [project_overview.md](./project_overview.md).
 
 ## Core Purpose
 

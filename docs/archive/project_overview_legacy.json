@@ -1,0 +1,37 @@
+{
+  "project_name": "Plug It All",
+  "type": "Static Single Page Application (SPA)",
+  "stack": {
+    "frontend": "React",
+    "bundler": "Vite",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS",
+    "deployment": "FTP"
+  },
+  "core_constraints": {
+    "no_ai": true,
+    "client_side_processing_only": true,
+    "browser_compatibility": "Modern Browsers"
+  },
+  "logic_engine": {
+    "method": "Deterministic Frequency Analysis",
+    "libraries": [
+      "papaparse",
+      "pdfjs-dist"
+    ],
+    "rules": {
+      "min_occurrences": 2,
+      "date_gap_days": [
+        28,
+        31
+      ],
+      "amount_variance": 0.05
+    }
+  },
+  "deployment_target": {
+    "server": "plugitall.com",
+    "path": "plugitall.com/",
+    "folder_to_create": "/"
+  },
+  "data_privacy": "ABSOLUTE. No user data upload. Application code upload only."
+}

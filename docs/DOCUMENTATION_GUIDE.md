@@ -43,6 +43,7 @@ TASKS.md (THE EXECUTION)
 
 ---
 
+
 ### 🔵 **STATUS & OVERVIEW FILES** (Reference)
 
 | File | Purpose | Status | Recommendation |
@@ -50,9 +51,8 @@ TASKS.md (THE EXECUTION)
 | **PROJECT_STATUS_SUMMARY.md** | ⭐ **Comprehensive project overview** | ACTIVE | **START HERE** for project status |
 | **PROJECT_STATUS.md** | Recent updates & changelog | ACTIVE | For detailed recent changes |
 | **OVERVIEW.md** | Architecture overview | ACTIVE | Understanding project structure |
-| **project_overview.md** | Detailed technical breakdown | ACTIVE | **CONSOLIDATE** with OVERVIEW.md |
 
-**🔧 Recommendation:** Merge `project_overview.md` → `OVERVIEW.md` (they have 60% overlapping content)
+**🔧 Recommendation:** `project_overview.md` has been merged into `OVERVIEW.md`.
 
 ---
 
@@ -70,10 +70,10 @@ TASKS.md (THE EXECUTION)
 
 | File | Purpose | Status |
 |------|---------|--------|
-| **project_overview.json** | Structured project metadata | OUTDATED (still says "Unsub Static") |
+| **project_overview.json** | Structured project metadata | ACTIVE |
 | **.cursorrules** | Development rules for AI assistants | ACTIVE |
 
-**🔧 Recommendation:** Update or archive `project_overview.json` (outdated project name)
+**🔧 Recommendation:** `project_overview.json` is now up to date with "Plug It All".
 
 ---
 
@@ -95,8 +95,8 @@ ROOT DIRECTORY (Keep These):
 
 ARCHIVE (Move These):
 └── docs/archive/
-    ├── project_overview.md            ← Merge into OVERVIEW.md first
-    └── project_overview.json          ← Outdated metadata
+    ├── project_overview_legacy.json   ← Archived metadata
+    └── ...
 ```
 
 ---
@@ -150,12 +150,12 @@ PROJECT_STATUS_SUMMARY.md (Update overview)
 ## 🧹 CLEANUP ACTIONS NEEDED
 
 ### **High Priority**
-- [ ] **Merge** `project_overview.md` → `OVERVIEW.md` (remove duplication)
-- [ ] **Update** `project_overview.json` with current project name ("Plug It All")
-- [ ] **Archive** old `project_overview.json` to `docs/archive/`
+- [x] **Merge** `project_overview.md` → `OVERVIEW.md` (remove duplication)
+- [x] **Update** `project_overview.json` with current project name ("Plug It All")
+- [x] **Archive** old `project_overview.json` to `docs/archive/`
 
 ### **Medium Priority**
-- [ ] **Consolidate** older entries in `issues.md` (move pre-2026 to archive section)
+- [x] **Consolidate** older entries in `issues.md` (Checked: No pre-2026 entries found)
 - [ ] **Review** and update all file headers with consistent formatting
 
 ---
