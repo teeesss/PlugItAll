@@ -107,11 +107,16 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
   - Make the "Privacy First" banner on the main dashboard match the styling and size of the hero version (as shown in user screenshot).
 
 
+
 - [x] **TASK-080**: Fix "Clear Data" Double-Click Bug.
   - Updated `handleClearData` to explicitly close Explorer and cycle `uploadKey`. Added `type="button"` to prevent form submission issues.
 - [x] **TASK-081**: Cleanup Header & Hero Text.
   - Tagline and Privacy Banner now hidden in Header on initial load (Hero state).
   - They reappear in Header when Dashboard is active.
+- [x] **TASK-082**: Brand Refresh.
+  - Implemented new "Plug Shield" logo (V3).
+  - Updated Title Gradient to match.
+  - Fixed 28 broken logo paths in `subs.json`.
 
 ## 🔴 High Priority (P1)
 

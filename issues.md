@@ -155,12 +155,19 @@ if (keyword.length <= 5) {
   - This forces React to unmount and remount the component, cleanly resetting its internal state.
 - **Status**: Deployed and verified.
 
-### 🟢 Feature: Enhanced Normalizer (TASK-006)
-- **Problem**: Phone numbers, payment processor prefixes (`SQ *`, `TST*`), and zip codes were preventing clean grouping of transactions.
+
+### 🟢 Bug Fix: Clear Data State Sync (TASK-080)
+- **Problem**: "Clear Data" button sometimes required two clicks or left "ghost" UI states (like the search box). File inputs didn't reset.
+- **Resolution**: refactored `handleClearData` to explicitly close the Explorer panel and force-reset the FileUpload component via the `uploadKey` pattern. Added `type="button"` to prevent accidental form submission behavior.
+- **Status**: Fixed in v1.1.6.
+
+### 🟢 Feature: Brand Overhaul (TASK-082)
+- **Problem**: Generic branding and disjointed visual hierarchy. Many broken logo links.
 - **Resolution**:
-  - **Phone Numbers**: Added aggressive regex for dashed, dotted, and spaced formats.
-  - **Prefixes**: Added stripping for `SQ`, `TST`, `PAYPAL`, `PYPL`, `TOAST`.
-  - **Zip Codes**: Implemented smart truncation (remove everything after a standalone 4-6 digit number at the end).
+  - Implemented custom "Plug Shield" logo.
+  - Unified color gradients across Title, Logo, and UI accents.
+  - Scripted audit fixed 28 broken logo paths in `subs.json`.
+- **Status**: Live in v1.1.6-BRANDING.
   - **Regression Fix**: Fixed a bug where years (e.g., "2025") were triggering zip code truncation by ensuring date removal runs first.
 - **Tests**: `tests/normalizer_improvements.test.ts`.
 - **Status**: Deployed and verified.

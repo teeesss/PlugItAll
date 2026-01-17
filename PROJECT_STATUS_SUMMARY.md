@@ -1,19 +1,14 @@
 # Project Status Summary
-
-
-**Last Updated:** 2026-01-16
-**Version:** v1.1.5a
-**Test Status:** 151/151 Passing (28 Suites)
-**Live URL:** [https://plugitall.com/](https://plugitall.com/)
-
----
+> **Current Version:** v1.1.6-BRANDING
+> **Last Updated:** 2026-01-16
+> **Deployment Status:** LIVE (plugitall.com)
 
 ## 🚀 Recent Achievements
-
-- **Fixed USAA PDF Crash**: Resolved critical parser failure for USAA statements in production by adding defensive checks for malformed PDF items. (v1.1.4)
-- **Fixed 0-Subscription UI**: Updated dashboard to correctly transition even when 0 subscriptions are found, allowing manual search/entry. (v1.1.4)
-- **Robustness Testing**: Added dedicated test suite (`parser_robustness.test.ts`) to prevent future parsing regressions.
-- **E*TRADE Support**: Added native parsing for E*TRADE / Morgan Stanley statements. (v1.1.5)
+- **Brand Overhaul**: Implemented new "Plug Shield" logo, updated gradients, and polished header UI.
+- **Logo Fixes**: Scripted fix for 28 broken/missing logo paths in `subs.json`.
+- **UI Polish**: Cleaned up duplicated text in Header/Hero.
+- **Critical Fixes**: Resolved "Clear Data" state bug (TASK-080).
+- **Toast Feedback**: Added comprehensive user feedback system for file actions.
 
 ## 📋 CURRENT TASK TRACKING FILES
 
