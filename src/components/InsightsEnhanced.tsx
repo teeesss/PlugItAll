@@ -39,6 +39,38 @@ export function InsightsEnhanced({ transactions }: InsightsProps) {
     const [merchantSearch, setMerchantSearch] = useState('');
     const [selectedMerchant, setSelectedMerchant] = useState<MerchantDetail | null>(null);
 
+    // Calculate dynamic date range options based on data
+    const dateRangeOptions = useMemo(() => {
+        if (transactions.length === 0) return [];
+
+        const dates = transactions.map((t) => new Date(t.date));
+        const oldestDate = new Date(Math.min(...dates.map((d) => d.getTime())));
+        const newestDate = new Date(Math.max(...dates.map((d) => d.getTime())));
+        const daysDiff = Math.floor((newestDate.getTime() - oldestDate.getTime()) / (1000 * 60 * 60 * 24));
+        const monthsDiff = Math.floor(daysDiff / 30);
+        const yearsDiff = Math.floor(daysDiff / 365);
+
+        const options: Array<{ key: DateRange | string; label: string }> = [];
+
+        // Always show common options if data supports them
+        if (daysDiff >= 30) options.push({ key: '30days', label: '30 Days' });
+        if (monthsDiff >= 3) options.push({ key: '3months', label: '3 Months' });
+        if (monthsDiff >= 6) options.push({ key: '6months', label: '6 Months' });
+
+        // Add year options dynamically
+        if (yearsDiff >= 1) {
+            for (let i = 1; i <= Math.min(yearsDiff, 3); i++) {
+                options.push({ key: `${i}year` as DateRange, label: `${i} Year${i > 1 ? 's' : ''}` });
+            }
+        }
+
+        // Always show YTD and All
+        options.push({ key: 'ytd', label: 'YTD' });
+        options.push({ key: 'all', label: 'All Time' });
+
+        return options;
+    }, [transactions]);
+
     // Apply date range filter
     const dateFilteredTransactions = useMemo(() => {
         if (dateRange === 'all') return transactions;
@@ -46,19 +78,24 @@ export function InsightsEnhanced({ transactions }: InsightsProps) {
         const now = new Date();
         const cutoffDate = new Date();
 
-        switch (dateRange) {
-            case '30days':
-                cutoffDate.setDate(now.getDate() - 30);
-                break;
-            case '3months':
-                cutoffDate.setMonth(now.getMonth() - 3);
-                break;
-            case '6months':
-                cutoffDate.setMonth(now.getMonth() - 6);
-                break;
-            case 'ytd':
-                cutoffDate.setMonth(0, 1); // January 1st of current year
-                break;
+        if (dateRange.endsWith('year')) {
+            const years = parseInt(dateRange.replace('year', ''));
+            cutoffDate.setFullYear(now.getFullYear() - years);
+        } else {
+            switch (dateRange) {
+                case '30days':
+                    cutoffDate.setDate(now.getDate() - 30);
+                    break;
+                case '3months':
+                    cutoffDate.setMonth(now.getMonth() - 3);
+                    break;
+                case '6months':
+                    cutoffDate.setMonth(now.getMonth() - 6);
+                    break;
+                case 'ytd':
+                    cutoffDate.setMonth(0, 1); // January 1st of current year
+                    break;
+            }
         }
 
         return transactions.filter((t) => new Date(t.date) >= cutoffDate);
@@ -309,18 +346,12 @@ export function InsightsEnhanced({ transactions }: InsightsProps) {
                             </div>
                         </div>
 
-                        {/* Date Range Filter */}
+                        {/* Date Range Filter - Dynamic */}
                         <div className="flex items-center space-x-3">
                             <Calendar className="w-4 h-4 text-slate-400" />
                             <span className="text-xs text-slate-400 uppercase tracking-wide">Period:</span>
                             <div className="flex space-x-2 flex-wrap gap-2">
-                                {[
-                                    { key: '30days', label: '30 Days' },
-                                    { key: '3months', label: '3 Months' },
-                                    { key: '6months', label: '6 Months' },
-                                    { key: 'ytd', label: 'YTD' },
-                                    { key: 'all', label: 'All Time' },
-                                ].map(({ key, label }) => (
+                                {dateRangeOptions.map(({ key, label }) => (
                                     <button
                                         key={key}
                                         onClick={() => setDateRange(key as DateRange)}
@@ -346,7 +377,8 @@ export function InsightsEnhanced({ transactions }: InsightsProps) {
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value as SortOption)}
-                                    className="bg-slate-700/50 text-slate-300 text-xs rounded px-3 py-1 border border-slate-600 focus:border-indigo-500 focus:outline-none"
+                                    className="bg-slate-800 text-slate-100 text-xs rounded px-3 py-1.5 border border-slate-600 focus:border-indigo-500 focus:outline-none cursor-pointer hover:bg-slate-750 transition-colors"
+                                    style={{ colorScheme: 'dark' }}
                                 >
                                     <option value="largest">Largest First</option>
                                     <option value="smallest">Smallest First</option>
