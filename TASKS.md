@@ -103,12 +103,15 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [ ] **TASK-005**: Add "Cancel All" automated helper flow for common merchants.
 - [ ] **TASK-019**: Refine Transaction History UI (Ensure it scales well on mobile).
 
+
 - [x] **TASK-006**: Strip Phone Numbers/Category Prefixes from descriptions (Improve Normalizer).
   - Implemented aggressive phone number stripping.
   - Added support for payment processor prefixes (SQ, TST, PAYPAL).
   - Fixed regression where years (2025) triggered zip code truncation.
   - Implemented 'Early Exit' overrides to protect known brands (Netflix, YouTube TV) from aggressive cleaning.
-- [ ] **TASK-007**: Handle Pending Transaction Markers ("PENDING", "*").
+- [x] **TASK-007**: Handle Pending Transaction Markers ("PENDING", "*").
+  - Added support for leading "PENDING", "* PENDING", and suffix " - PENDING".
+  - Created `tests/pending_markers.test.ts` to verify 10+ variations.
 - [ ] **TASK-008**: Strip City/State Suffixes.
 - [ ] **TASK-009**: Expand `subs.json` Merchant Alias Map (Add more keywords for NYT, etc).
 

@@ -141,6 +141,21 @@ if (keyword.length <= 5) {
 
 **Lesson Learned**: Short keywords should use word boundaries to prevent false substring matches.
 
+
+**Lesson Learned**: Short keywords should use word boundaries to prevent false substring matches.
+
+---
+
+### 🟢 Feature: Enhanced Normalizer (TASK-006)
+- **Problem**: Phone numbers, payment processor prefixes (`SQ *`, `TST*`), and zip codes were preventing clean grouping of transactions.
+- **Resolution**:
+  - **Phone Numbers**: Added aggressive regex for dashed, dotted, and spaced formats.
+  - **Prefixes**: Added stripping for `SQ`, `TST`, `PAYPAL`, `PYPL`, `TOAST`.
+  - **Zip Codes**: Implemented smart truncation (remove everything after a standalone 4-6 digit number at the end).
+  - **Regression Fix**: Fixed a bug where years (e.g., "2025") were triggering zip code truncation by ensuring date removal runs first.
+- **Tests**: `tests/normalizer_improvements.test.ts`.
+- **Status**: Deployed and verified.
+
 ---
 
 #### [Issue #20] DOMMatrix Not Defined in Node.js CI
