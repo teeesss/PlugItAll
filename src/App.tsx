@@ -232,12 +232,11 @@ function App() {
                 <p className="text-xs text-slate-400 font-medium mt-0.5">Finding leaks in your bank account</p>
               )}
             </div>
-            {/* Show Privacy Engine text only if data exists (header mode), otherwise it's in Hero */}
-            {hasData && (
-              <p className="text-xs text-slate-500 font-mono tracking-wide">
-                {isProcessing ? 'SCANNING STATEMENTS...' : 'CLIENT-SIDE PRIVACY ENGINE'}
-              </p>
-            )}
+
+            {/* Show Privacy Engine text always in header */}
+            <p className="text-xs text-slate-500 font-mono tracking-wide">
+              {isProcessing ? 'SCANNING STATEMENTS...' : 'CLIENT-SIDE PRIVACY ENGINE'}
+            </p>
           </div>
         </div>
 
