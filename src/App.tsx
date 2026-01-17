@@ -240,12 +240,20 @@ function App() {
 
   const handleClearData = () => {
     if (confirm('Are you sure you want to clear all data?')) {
+      // Close explorer first
+      setIsExplorerOpen(false);
+
+      // Clear all data
       setAllTransactions([]);
       setCandidates([]);
+      setManualSubs([]);
+
+      // Clear localStorage for manual subscriptions
+      localStorage.removeItem('manual_subscriptions');
+      localStorage.removeItem('ignored_items');
+
       // Force FileUpload reset with a new key
       setUploadKey(prev => prev + 1);
-      // Close explorer if open
-      setIsExplorerOpen(false);
 
       showToast('All data cleared.');
     }
