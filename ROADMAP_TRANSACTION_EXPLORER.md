@@ -144,41 +144,43 @@ Adding a Transaction Explorer feature that gives users the ability to search, fi
 
 ---
 
-## Phase 4: Insights & Visualization
+## Phase 4: Insights & Visualization ✅ **COMPLETED (Partial)**
 **Analytics - Charts and Summaries**
 
-### Task 4.1: Spending Summary Component
-- [ ] Total spent (debits) for uploaded period
-- [ ] Total income (credits) for uploaded period
-- [ ] Net change
-- [ ] Date range covered
+### Task 4.1: Spending Summary Component ✅
+- [x] Total spent (debits) for uploaded period
+- [x] Total income (credits) for uploaded period
+- [x] Net change
+- [x] Date range covered
 
 ### Task 4.2: Spending by Category Bar Chart
 - [ ] Horizontal bar chart
 - [ ] Categories sorted by amount (highest first)
 - [ ] Click bar to filter explorer to that category
 - [ ] Use recharts library
+**Note**: Requires Phase 3 (Categorization) to be completed first.
 
-### Task 4.3: Spending Over Time Line Chart
-- [ ] Monthly spending trend
-- [ ] X-axis: months, Y-axis: total spent
-- [ ] Optional: overlay income line
-- [ ] Handles partial months gracefully
+### Task 4.3: Spending Over Time Line Chart ✅
+- [x] Monthly spending trend
+- [x] X-axis: months, Y-axis: total spent
+- [x] Optional: overlay income line
+- [x] Handles partial months gracefully
 
 ### Task 4.4: Category Breakdown Donut Chart
 - [ ] Visual percentage breakdown
 - [ ] Legend with amounts
 - [ ] "Other/Uncategorized" grouped if small
+**Note**: Requires Phase 3 (Categorization) to be completed first.
 
-### Task 4.5: Top Merchants List
-- [ ] "You spent the most at:" section
-- [ ] Top 5-10 merchants by total amount
-- [ ] Shows count of transactions + total
+### Task 4.5: Top Merchants List ✅
+- [x] "You spent the most at:" section
+- [x] Top 5-10 merchants by total amount
+- [x] Shows count of transactions + total
 
-### Task 4.6: Insights Section Layout
-- [ ] Collapsible section below subscriptions (or tab)
-- [ ] Only shows after file upload
-- [ ] Clean card-based layout for each chart/summary
+### Task 4.6: Insights Section Layout ✅
+- [x] Collapsible section below subscriptions (or tab)
+- [x] Only shows after file upload
+- [x] Clean card-based layout for each chart/summary
 
 ---
 

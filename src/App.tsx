@@ -24,6 +24,7 @@ import { TransactionExplorer } from './components/TransactionExplorer';
 import { Toast } from './components/Toast';
 import { PrivacyBanner } from './components/PrivacyBanner';
 import { BillView } from './components/BillView';
+import { Insights } from './components/Insights';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -361,6 +362,11 @@ function App() {
             {/* Stats Banner */}
             <Stats totalMonthly={totals.monthly} totalYearly={totals.yearly} />
 
+            {/* Insights Section - TASK 4.1, 4.3, 4.5, 4.6 */}
+            {allTransactions.length > 0 && (
+              <Insights transactions={allTransactions} />
+            )}
+
             {/* Grid & Sidebar Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               {/* Left: Input (Collapsed) */}
@@ -548,7 +554,7 @@ function App() {
 
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/5 text-xs text-slate-500">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2 animate-pulse" />
-            System Secure & Encrypted • v1.1.5a
+            System Secure & Encrypted • v1.1.6
           </div>
         </div>
       </main>

@@ -1,5 +1,18 @@
 # TASKS
 
+## 🟢 Completed (Session 2026-01-17)
+
+- [x] **TASK-083**: Implement Insights Dashboard (Phase 4: Charts & Visualization)
+  - Created `Insights.tsx` component with collapsible panel.
+  - **Task 4.1**: Spending Summary Component (Total Spent, Total Income, Net Change, Date Range).
+  - **Task 4.3**: Spending Over Time Line Chart (Monthly trend with recharts).
+  - **Task 4.5**: Top Merchants List (Top 10 by total spend).
+  - **Task 4.6**: Insights Section Layout (Clean card-based UI, placed below Stats).
+  - Installed `recharts` library for charting.
+  - Integrated into `App.tsx` dashboard.
+  - Created `tests/insights.test.tsx` for component testing.
+  - Deployed to production (v1.1.6).
+
 ## 🟢 Completed (Session 2026-01-16)
 
 - [x] **TASK-071**: Export/Import manual subscriptions (JSON format)
