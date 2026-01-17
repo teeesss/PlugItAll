@@ -277,8 +277,8 @@ function App() {
         subscriptionCount={foundSubscriptions}
         currentStep={processingStep}
         onComplete={() => {
-          // Overlay will auto-close after minimum display time
-          console.log('Processing overlay completed');
+          // Reset processing state so overlay disappears
+          setProcessingStep('parsing');
         }}
       />
 
