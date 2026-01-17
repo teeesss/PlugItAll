@@ -1,6 +1,34 @@
-# Project: Plug It All - Subscription Detection Engine
+# Project Status: Plug It All
 
 ## Recent Major Updates (Jan 16, 2026)
+
+### 🟢 Feature: Bill View / Linear List (TASK-017)
+- **Goal**: Provide a compact, table-based alternative to the card view.
+- **Resolution**: 
+  - Implemented `BillView.tsx` with a sortable table layout (Service, Amount, Frequency, Confidence).
+  - Added a "Cards/List" toggle next to the Download report button.
+  - Included a summary footer with total subscription counts and monthly costs.
+- **Status**: Production-ready and deployed.
+
+### 🟢 Feature: New Discovery Highlight (TASK-078)
+- **Goal**: Visually emphasize new subscriptions immediately after a file upload.
+- **Resolution**:
+  - Implemented a pulsing green glow highlight for new subscription cards.
+  - **Fixed Timing Bug**: Moved timer logic to a `useEffect` hook in `App.tsx` to ensure reliable 7-second auto-fade.
+  - Added debug logs to track highlight lifecycle.
+- **Status**: Verified and working in production.
+
+### 🟢 Normalizer: City/State Stripping (TASK-008)
+- **Problem**: Transactions like "NETFLIX SAN FRANCISCO CA" often failed to match due to location suffixes.
+- **Resolution**: Enhanced `normalizeDescription` to detect and strip common US state codes and 2-3 word city patterns.
+- **Tests**: `tests/city_state.test.ts` (14 tests).
+
+### 🟢 Database: Merchant Alias Expansion (TASK-009)
+- **Goal**: Improve matching coverage for popular services with varied transaction names.
+- **Resolution**: Added 35+ new `regex_keywords` across 9 categories (Netflix, Spotify, GitHub, etc.) in `subs.json`.
+- **Status**: Matching accuracy significantly improved for top-tier merchants.
+
+## Recent Major Updates (Jan 15-16, 2026)
 
 ### 🟢 Discovery: USAA PDF Parsing (SUCCESS)
 - **Problem**: `pdfs/USAA-*.pdf` were initially difficult to parse due to multi-column layouts (separate Debit/Credit) and multi-line descriptions.

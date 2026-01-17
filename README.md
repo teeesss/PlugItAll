@@ -12,6 +12,7 @@ A privacy-first, client-side subscription detection tool that analyzes bank stat
 - 🌍 **Robust Parsing** - Handles European/US date formats, `CR`/`DR` markers, and varied number formats automatically.
 
 - ✅ **Verified vs Review** - Known subscriptions are marked "Verified". **3+ consistent charges** from any merchant are automatically promoted to Verified.
+- 📋 **Flexible Views** - Toggle between **Card View** and a detailed **Bill View (List)** layout.
 - 🚫 **False Positive Filtering** - Extensive blacklist (eBay, Amazon, restaurants) with **fuzzy matching** for variations (e.g., 'Taco Bell' vs 'TACOBELL').
 - 💰 **Price Validation** - High-risk merchants (Amazon, Walmart, Fabletics) require exact price match or known subscription markers.
 - 🏦 **Bank Support** - Specialized parsers for **USAA** and **Citibank** and **E*TRADE**.

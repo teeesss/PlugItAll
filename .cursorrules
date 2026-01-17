@@ -260,10 +260,11 @@ Run `node scripts/migrate_master_data.cjs` to:
 ### UI & State Management (Lessons Learned)
 - **0-Subscription State**: ALWAYS handle the empty state gracefully. If a process (like parsing) completes but returns 0 results, the UI MUST provide feedback (e.g., transition to dashboard with "0 Found") rather than staying on the input screen.
 - **Use REPLACE instead of MERGE** when processing new uploads to avoid stale data persistence.
+- **Timed UI Effects (Timers)**: Centralize logic in `useEffect` at the parent level (e.g. `App.tsx`). Use a dedicated state trigger (e.g. `newSubIds.size`). ALWAYS return cleanup function (`clearTimeout`) to prevent memory leaks. Parent controls the `isNew` prop lifecycle.
 
 ### Current Stats (Update as needed)
-- **Tests**: 142/142 passing across 25 test suites
+- **Tests**: 187/187 passing across 32 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
-- **Version**: v1.1.4-FINAL
+- **Version**: v1.1.7-TRANSITION
 - **Live URL**: https://plugitall.com/

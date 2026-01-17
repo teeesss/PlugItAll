@@ -1,14 +1,13 @@
 # Project Status Summary
-> **Current Version:** v1.1.6-BRANDING
+> **Current Version:** v1.1.7-TRANSITION
 > **Last Updated:** 2026-01-16
-> **Deployment Status:** LIVE (plugitall.com)
+> **Last Deployment:** LIVE (plugitall.com)
 
 ## 🚀 Recent Achievements
+- **TASK-017: Bill View**: Implemented a linear list/table view toggle for subscriptions with detailed breakdown.
+- **TASK-078: New Discovery Highlight**: Added pulsing green glow for newly detected subscriptions (7s duration).
+- **Normalizer Refinement**: Enhanced city/state stripping and merchant alias coverage (TASK-008, TASK-009).
 - **Brand Overhaul**: Implemented new "Plug Shield" logo, updated gradients, and polished header UI.
-- **Logo Fixes**: Scripted fix for 28 broken/missing logo paths in `subs.json`.
-- **UI Polish**: Cleaned up duplicated text in Header/Hero.
-- **Critical Fixes**: Resolved "Clear Data" state bug (TASK-080).
-- **Toast Feedback**: Added comprehensive user feedback system for file actions.
 
 ## 📋 CURRENT TASK TRACKING FILES
 

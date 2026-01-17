@@ -35,7 +35,8 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 1. Open the app.
 2. Drag and drop your bank CSV or PDF statements.
 3. Observe the "Active Subscriptions" dashboard.
-4. Verify "Verified" vs "Review" status.
+4. Toggle between **Card View** and **List View** for different information densities.
+5. Verify "Verified" vs "Review" status.
 
 ## Running Automated Tests
 
@@ -43,7 +44,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 npm run test:run
 ```
 
-This runs all 140 unit and integration tests across 24 test suites.
+This runs all **187** unit and integration tests across **32** test suites.
 
 ## Running Pre-Commit Checks
 
