@@ -218,7 +218,7 @@ function App() {
         <div className="flex items-center space-x-4">
           <div className="relative group">
             {/* Logo Image */}
-            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
+            <div className="w-24 h-24 rounded-2xl overflow-hidden bg-[#0f172a] shadow-lg shadow-blue-500/20 border border-white/10 flex items-center justify-center">
               <img
                 src="/logo_icon.png"
                 alt="Plug It All Logo"
