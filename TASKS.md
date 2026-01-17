@@ -1,7 +1,20 @@
 # TASKS
 
-## 🟢 Completed (Session 2026-01-17)
+## � In Progress (Session 2026-01-17)
 
+- [ ] **TASK-085**: Comprehensive Insights Filtering & Interactivity (v1.2.0)
+  - Add transaction type filter: All | Purchases | Credits
+  - Add date range filter: 30d, 3m, 6m, YTD, All
+  - Add sort options: Largest, Smallest, Most Frequent, Alphabetical
+  - Add merchant search/filter box
+  - Create "Top Credits" section (mirror of Top Merchants)
+  - Make merchant rows clickable → opens detail modal with all transactions
+  - Add filter badges showing active filters
+  - Integrate all filters to work together dynamically
+
+## �🟢 Completed (Session 2026-01-17)
+
+- [x] **TASK-084**: Fix Insights Double-Counting Issue (v1.1.7)
 - [x] **TASK-083**: Implement Insights Dashboard (Phase 4: Charts & Visualization)
   - Created `Insights.tsx` component with collapsible panel.
   - **Task 4.1**: Spending Summary Component (Total Spent, Total Income, Net Change, Date Range).
