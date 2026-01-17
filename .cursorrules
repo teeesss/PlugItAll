@@ -263,8 +263,9 @@ Run `node scripts/migrate_master_data.cjs` to:
 - **Timed UI Effects (Timers)**: Centralize logic in `useEffect` at the parent level (e.g. `App.tsx`). Use a dedicated state trigger (e.g. `newSubIds.size`). ALWAYS return cleanup function (`clearTimeout`) to prevent memory leaks. Parent controls the `isNew` prop lifecycle.
 
 ### Current Stats (Update as needed)
-- **Tests**: 187/187 passing across 32 test suites
+- **Tests**: 217/224 passing across 36 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
-- **Version**: v1.1.7-TRANSITION
+- **Version**: v1.2.1
 - **Live URL**: https://plugitall.com/
+- **Roadmaps**: ROADMAP_TRANSACTION_EXPLORER.md, ROADMAP_MOBILE_ADVANCED_FILTERS.md

@@ -75,7 +75,7 @@ Hooks include: **Prettier**, **ESLint**, **Gitleaks** (secret detection), **Chec
 npm test
 ```
 
-26 test suites with 143 tests covering analyzer, normalizer, matcher, Transaction Explorer, dismissal logic, and real-world scenarios.
+36 test suites with 217 passing tests covering analyzer, normalizer, matcher, Transaction Explorer, Insights Dashboard, processing overlay, dismissal logic, and real-world scenarios.
 
 ## License
 
