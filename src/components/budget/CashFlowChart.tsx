@@ -16,6 +16,7 @@ import { cn } from '../../utils/cn';
 
 interface CashFlowChartProps {
     summary: BudgetSummary;
+    onCategoryClick?: (category: string) => void;
 }
 
 const CustomTooltip = ({
@@ -23,24 +24,24 @@ const CustomTooltip = ({
     payload,
 }: {
     active?: boolean;
-    payload?: { name: string; value: number; payload: { positive: boolean } }[];
+    payload?: { value: number; payload: { full: string } }[];
 }) => {
     if (active && payload && payload.length) {
         const item = payload[0];
-        const isPositive = item.payload.positive;
         return (
             <div className="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm shadow-xl">
-                <p className="text-slate-200 font-medium">{item.name}</p>
-                <p className={isPositive ? 'text-emerald-400' : 'text-red-400'}>
-                    {isPositive ? '+' : '-'}{formatDollar(item.value)}
+                <p className="text-slate-200 font-medium">{item.payload.full}</p>
+                <p className="text-emerald-400 font-mono">
+                    {formatDollar(item.value)}
                 </p>
+                <p className="text-[10px] text-slate-500 mt-1 italic">Click to view details</p>
             </div>
         );
     }
     return null;
 };
 
-export function CashFlowChart({ summary }: CashFlowChartProps) {
+export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) {
     const {
         monthlyGross,
         monthlyFederal,
@@ -59,15 +60,7 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
     // Key stat cards
     const stats = [
         {
-            label: 'Monthly Gross',
-            value: formatDollar(monthlyGross),
-            sub: 'Before deductions',
-            color: 'text-slate-200',
-            icon: TrendingUp,
-            iconColor: 'text-emerald-400',
-        },
-        {
-            label: 'Take-Home Pay',
+            label: 'Net Take-Home',
             value: formatDollar(monthlyNetPay),
             sub: `${monthlyGross > 0 ? formatPercent(((monthlyNetPay / monthlyGross) * 100)) : '—'} of gross`,
             color: 'text-emerald-400',
@@ -75,30 +68,41 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
             iconColor: 'text-emerald-400',
         },
         {
-            label: 'Monthly Expenses',
+            label: 'Total Expenses',
             value: formatDollar(monthlyExpenses),
-            sub: `${monthlyNetPay > 0 ? formatPercent((monthlyExpenses / monthlyNetPay) * 100) : '—'} of take-home`,
+            sub: `${monthlyNetPay > 0 ? formatPercent((monthlyExpenses / monthlyNetPay) * 100) : '—'} of net`,
             color: 'text-red-400',
             icon: TrendingDown,
             iconColor: 'text-red-400',
         },
         {
-            label: 'Monthly Remaining',
+            label: 'Savings Rate',
+            value: formatPercent(savingsRate),
+            sub: 'Of take-home pay',
+            color: 'text-indigo-400',
+            icon: TrendingUp,
+            iconColor: 'text-indigo-400',
+        },
+        {
+            label: 'Carry Over',
             value: formatDollar(Math.max(monthlyRemaining, 0)),
-            sub: `${formatPercent(savingsRate)} savings rate`,
+            sub: monthlyRemaining >= 0 ? 'Monthly surplus' : 'Monthly deficit',
             color: monthlyRemaining >= 0 ? 'text-blue-400' : 'text-red-400',
             icon: ArrowRight,
             iconColor: monthlyRemaining >= 0 ? 'text-blue-400' : 'text-red-400',
         },
     ];
 
-    // Top expense categories for bar chart
-    const topExpenses = useMemo(() => {
+    // All categories with spending, sorted
+    const categoryBars = useMemo(() => {
         return Object.entries(categoryTotals)
             .filter(([, v]) => v > 0)
             .sort(([, a], [, b]) => b - a)
-            .slice(0, 8)
-            .map(([cat, val]) => ({ name: cat.split(' & ')[0].split(' ')[0], full: cat, value: Math.round(val) }));
+            .map(([cat, val]) => ({
+                name: cat.length > 20 ? cat.substring(0, 17) + '...' : cat,
+                full: cat,
+                value: Math.round(val)
+            }));
     }, [categoryTotals]);
 
     const isConfigured = monthlyGross > 0;
@@ -109,26 +113,22 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {stats.map((stat, idx) => {
                     const Icon = stat.icon;
-                    const dimmed = !isConfigured && stat.label !== 'Monthly Expenses';
                     return (
                         <motion.div
                             key={stat.label}
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.07 }}
-                            className={cn(
-                                'glass-panel rounded-2xl p-4 border border-white/8',
-                                dimmed && 'opacity-40'
-                            )}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: idx * 0.05 }}
+                            className="glass-panel rounded-2xl p-5 border border-white/8 bg-slate-800/20 hover:bg-slate-800/30 transition-all group"
                         >
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs text-slate-500 uppercase tracking-wider">{stat.label}</span>
-                                <Icon className={cn('w-4 h-4', stat.iconColor)} />
+                                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{stat.label}</span>
+                                <Icon className={cn('w-3.5 h-3.5 transition-transform group-hover:scale-110', stat.iconColor)} />
                             </div>
                             <p className={cn('text-2xl font-bold font-mono', stat.color)}>
-                                {dimmed ? '—' : stat.value}
+                                {stat.value}
                             </p>
-                            <p className="text-xs text-slate-600 mt-1">{dimmed ? 'Set up income to unlock' : stat.sub}</p>
+                            <p className="text-[10px] text-slate-500 mt-1">{stat.sub}</p>
                         </motion.div>
                     );
                 })}
@@ -136,66 +136,66 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
 
             {/* Income flow visualization (only if income is set) */}
             {isConfigured && (
-                <div className="glass-panel rounded-2xl p-5 border border-white/8">
-                    <h4 className="text-sm font-semibold text-slate-300 mb-1">Monthly Money Flow</h4>
-                    <p className="text-xs text-slate-500 mb-4">Where each dollar of your paycheck goes</p>
+                <div className="glass-panel rounded-2xl p-6 border border-white/8 bg-slate-800/10">
+                    <h4 className="text-sm font-bold text-slate-300 mb-1 flex items-center gap-2">
+                        <ArrowRight className="w-4 h-4 text-emerald-400" />
+                        <span>Monthly Money Flow</span>
+                    </h4>
+                    <p className="text-xs text-slate-500 mb-6">Visualizing where your paycheck is allocated</p>
 
-                    <div className="flex flex-wrap items-center gap-2 text-sm">
-                        {/* Gross */}
-                        <div className="bg-emerald-500/15 border border-emerald-500/25 rounded-xl px-4 py-2.5 text-emerald-300 font-mono font-semibold">
+                    <div className="flex flex-wrap items-center gap-3 text-sm">
+                        <div className="bg-emerald-500/15 border border-emerald-500/25 rounded-xl px-4 py-3 text-emerald-300 font-mono font-bold shadow-sm">
                             {formatDollar(monthlyGross)} Gross
                         </div>
 
-                        <ArrowRight className="w-4 h-4 text-slate-600" />
+                        <ArrowRight className="w-4 h-4 text-slate-700" />
 
-                        {/* Deductions block */}
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-2">
                             {monthlyFederal > 0 && (
-                                <span className="text-xs bg-red-500/10 border border-red-500/20 text-red-400 px-2.5 py-1.5 rounded-lg">
+                                <span className="text-[11px] bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-2 rounded-xl font-medium">
                                     −{formatDollar(monthlyFederal)} Fed
                                 </span>
                             )}
                             {monthlyState > 0 && (
-                                <span className="text-xs bg-orange-500/10 border border-orange-500/20 text-orange-400 px-2.5 py-1.5 rounded-lg">
+                                <span className="text-[11px] bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-2 rounded-xl font-medium">
                                     −{formatDollar(monthlyState)} State
                                 </span>
                             )}
                             {(monthlySocialSecurity + monthlyMedicare) > 0 && (
-                                <span className="text-xs bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-2.5 py-1.5 rounded-lg">
+                                <span className="text-[11px] bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-2 rounded-xl font-medium">
                                     −{formatDollar(monthlySocialSecurity + monthlyMedicare)} FICA
                                 </span>
                             )}
                             {monthlyPreTaxDeductions > 0 && (
-                                <span className="text-xs bg-blue-500/10 border border-blue-500/20 text-blue-400 px-2.5 py-1.5 rounded-lg">
+                                <span className="text-[11px] bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-2 rounded-xl font-medium">
                                     −{formatDollar(monthlyPreTaxDeductions)} Pre-Tax
                                 </span>
                             )}
                             {monthlyPostTaxDeductions > 0 && (
-                                <span className="text-xs bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1.5 rounded-lg">
+                                <span className="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-2 rounded-xl font-medium">
                                     −{formatDollar(monthlyPostTaxDeductions)} Post-Tax
                                 </span>
                             )}
                         </div>
 
-                        <ArrowRight className="w-4 h-4 text-slate-600" />
+                        <ArrowRight className="w-4 h-4 text-slate-700" />
 
-                        {/* Take-home */}
-                        <div className="bg-blue-500/15 border border-blue-500/25 rounded-xl px-4 py-2.5 text-blue-300 font-mono font-semibold">
-                            {formatDollar(monthlyNetPay)} Take-Home
+                        <div className="bg-blue-500/15 border border-blue-500/25 rounded-xl px-4 py-3 text-blue-300 font-mono font-bold shadow-sm">
+                            {formatDollar(monthlyNetPay)} Net
                         </div>
 
                         {monthlyExpenses > 0 && (
                             <>
-                                <ArrowRight className="w-4 h-4 text-slate-600" />
-                                <div className="bg-slate-700/50 border border-white/8 rounded-xl px-4 py-2.5 text-slate-300 font-mono font-semibold">
+                                <ArrowRight className="w-4 h-4 text-slate-700" />
+                                <div className="bg-slate-700/50 border border-white/10 rounded-xl px-4 py-3 text-slate-200 font-mono font-bold">
                                     −{formatDollar(monthlyExpenses)} Expenses
                                 </div>
-                                <ArrowRight className="w-4 h-4 text-slate-600" />
+                                <ArrowRight className="w-4 h-4 text-slate-700" />
                                 <div className={cn(
-                                    'rounded-xl px-4 py-2.5 font-mono font-semibold border',
+                                    'rounded-xl px-4 py-3 font-mono font-bold border shadow-sm',
                                     monthlyRemaining >= 0
-                                        ? 'bg-indigo-500/15 border-indigo-500/25 text-indigo-300'
-                                        : 'bg-red-500/15 border-red-500/25 text-red-300'
+                                        ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-300'
+                                        : 'bg-red-500/20 border-red-500/30 text-red-300'
                                 )}>
                                     {monthlyRemaining >= 0 ? '+' : ''}{formatDollar(monthlyRemaining)} {monthlyRemaining >= 0 ? 'Left' : 'Deficit'}
                                 </div>
@@ -206,21 +206,55 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
             )}
 
             {/* Top Expenses Bar Chart */}
-            {topExpenses.length > 0 && (
-                <div className="glass-panel rounded-2xl p-5 border border-white/8">
-                    <h4 className="text-sm font-semibold text-slate-300 mb-1">Top Spending Categories</h4>
-                    <p className="text-xs text-slate-500 mb-4">Monthly average spend</p>
-                    <div className="h-52 min-h-[200px]">
-                        <ResponsiveContainer width="100%" height="100%" minHeight={200} debounce={50}>
-                            <BarChart data={topExpenses} layout="vertical" margin={{ top: 0, right: 60, left: 0, bottom: 0 }}>
-                                <XAxis type="number" tickFormatter={v => `$${v}`} tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                <YAxis type="category" dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} width={70} />
-                                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
-                                <Bar dataKey="value" radius={[0, 6, 6, 0]} maxBarSize={22}>
-                                    {topExpenses.map((entry, index) => (
+            {categoryBars.length > 0 && (
+                <div className="glass-panel rounded-2xl p-6 border border-white/8 bg-slate-900/40">
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h4 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+                                <TrendingDown className="w-4 h-4 text-indigo-400" />
+                                <span>Categorized Spending</span>
+                            </h4>
+                            <p className="text-xs text-slate-500 mt-1">Click any category bar to filter the transaction list</p>
+                        </div>
+                    </div>
+
+                    <div className="h-[450px] min-h-[300px]">
+                        <ResponsiveContainer width="100%" height="100%" debounce={50}>
+                            <BarChart
+                                data={categoryBars}
+                                layout="vertical"
+                                margin={{ top: 0, right: 80, left: 20, bottom: 0 }}
+                                onClick={(data: any) => {
+                                    if (data && data.activePayload && data.activePayload.length > 0 && onCategoryClick) {
+                                        const category = data.activePayload[0].payload.full;
+                                        onCategoryClick(category);
+                                    }
+                                }}
+                            >
+                                <XAxis type="number" hide />
+                                <YAxis
+                                    type="category"
+                                    dataKey="name"
+                                    tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                    width={120}
+                                />
+                                <Tooltip
+                                    content={<CustomTooltip />}
+                                    cursor={{ fill: 'white', opacity: 0.05, radius: 4 }}
+                                />
+                                <Bar
+                                    dataKey="value"
+                                    radius={[0, 4, 4, 0]}
+                                    maxBarSize={32}
+                                    className="cursor-pointer"
+                                >
+                                    {categoryBars.map((entry, index) => (
                                         <Cell
                                             key={entry.full}
-                                            fill={`hsl(${220 + index * 20}, 70%, 60%)`}
+                                            fill={`hsl(${220 + (index % 12) * 20}, 65%, 60%)`}
+                                            className="hover:opacity-80 transition-opacity"
                                         />
                                     ))}
                                 </Bar>

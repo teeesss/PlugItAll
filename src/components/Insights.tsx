@@ -18,6 +18,8 @@ export function Insights({ transactions }: InsightsProps) {
 
         // Filter out transfers/payments to avoid double-counting
         const realTransactions = filterRealTransactions(transactions);
+        if (realTransactions.length === 0) return null;
+
         const filteredCount = transactions.length - realTransactions.length;
 
         const purchases = realTransactions.filter(t => t.amount < 0);

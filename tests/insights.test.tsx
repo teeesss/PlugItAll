@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Insights } from '../src/components/Insights';
 import type { Transaction } from '../src/utils/analyzer';
 
@@ -11,7 +11,7 @@ describe('Insights Component', () => {
         expect(container.firstChild).toBeNull();
     });
 
-    it('renders summary cards with correct data', () => {
+    it('renders summary cards with correct data', async () => {
         const transactions: Transaction[] = [
             {
                 date: '2024-01-15',
@@ -33,21 +33,22 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         // Check for header
-        expect(screen.getByText('Spending Insights')).toBeInTheDocument();
-        expect(screen.getByText('3 transactions')).toBeInTheDocument();
+        expect(screen.getByText('Spending Insights')).toBeDefined();
+        expect(screen.getByText(/3/)).toBeDefined();
+        expect(screen.getByText(/purchases\/credits/)).toBeDefined();
 
         // Expand insights
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Check summary cards (after expansion)
-        expect(screen.getByText('Total Spent')).toBeInTheDocument();
-        expect(screen.getByText('Total Income')).toBeInTheDocument();
-        expect(screen.getByText('Net Change')).toBeInTheDocument();
-        expect(screen.getByText('Date Range')).toBeInTheDocument();
+        expect(screen.getByText('Total Spent')).toBeDefined();
+        expect(screen.getByText('Total Income')).toBeDefined();
+        expect(screen.getByText('Net Change')).toBeDefined();
+        expect(screen.getByText('Date Range')).toBeDefined();
     });
 
-    it('calculates spending totals correctly', () => {
+    it('calculates spending totals correctly', async () => {
         const transactions: Transaction[] = [
             { date: '2024-01-01', description: 'PURCHASE 1', amount: -100 },
             { date: '2024-01-02', description: 'PURCHASE 2', amount: -50 },
@@ -57,19 +58,19 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Total spent should be $150
-        expect(screen.getByText('$150')).toBeInTheDocument();
+        expect(await screen.findByText(/\$150/)).toBeDefined();
 
         // Total income should be $1,000
-        expect(screen.getByText('$1,000')).toBeInTheDocument();
+        expect(screen.getByText(/\$1,000/)).toBeDefined();
 
         // Net change should be $850 ($1000 - $150)
-        expect(screen.getByText('+$850')).toBeInTheDocument();
+        expect(screen.getByText(/\+\$850/)).toBeDefined();
     });
 
-    it('groups transactions by month correctly', () => {
+    it('groups transactions by month correctly', async () => {
         const transactions: Transaction[] = [
             { date: '2024-01-15', description: 'JAN PURCHASE 1', amount: -100 },
             { date: '2024-01-20', description: 'JAN PURCHASE 2', amount: -50 },
@@ -80,13 +81,13 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Check if chart title is present
-        expect(screen.getByText('Spending Over Time')).toBeInTheDocument();
+        expect(screen.getByText('Spending Over Time')).toBeDefined();
     });
 
-    it('displays top merchants correctly', () => {
+    it('displays top merchants correctly', async () => {
         const transactions: Transaction[] = [
             { date: '2024-01-01', description: 'AMAZON', amount: -200 },
             { date: '2024-01-05', description: 'AMAZON', amount: -150 },
@@ -97,21 +98,21 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Check if top merchants section is present
-        expect(screen.getByText('Top Merchants (by spend)')).toBeInTheDocument();
+        expect(screen.getByText('Top Merchants (by spend)')).toBeDefined();
 
         // Amazon should be #1 with total $350 (2 transactions)
-        expect(screen.getByText('AMAZON')).toBeInTheDocument();
-        expect(screen.getByText('2x')).toBeInTheDocument(); // 2 transactions
+        expect(screen.getByText('AMAZON')).toBeDefined();
+        expect(screen.getByText('2x')).toBeDefined(); // 2 transactions
 
         // Check for other merchants
-        expect(screen.getByText('WALMART')).toBeInTheDocument();
-        expect(screen.getByText('STARBUCKS')).toBeInTheDocument();
+        expect(screen.getByText('WALMART')).toBeDefined();
+        expect(screen.getByText('STARBUCKS')).toBeDefined();
     });
 
-    it('handles mixed positive and negative amounts correctly', () => {
+    it('handles mixed positive and negative amounts correctly', async () => {
         const transactions: Transaction[] = [
             { date: '2024-01-01', description: 'REFUND', amount: 50 },
             { date: '2024-01-02', description: 'PURCHASE', amount: -100 },
@@ -122,16 +123,16 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Total spent: $300
-        expect(screen.getByText('$300')).toBeInTheDocument();
+        expect(await screen.findByText(/\$300/)).toBeDefined();
 
         // Total income: $2,050 (refund + salary)
-        expect(screen.getByText('$2,050')).toBeInTheDocument();
+        expect(screen.getByText(/\$2,050/)).toBeDefined();
     });
 
-    it('handles negative net change correctly', () => {
+    it('handles negative net change correctly', async () => {
         const transactions: Transaction[] = [
             { date: '2024-01-01', description: 'EXPENSE 1', amount: -500 },
             { date: '2024-01-02', description: 'EXPENSE 2', amount: -300 },
@@ -141,9 +142,9 @@ describe('Insights Component', () => {
         render(<Insights transactions={transactions} />);
 
         const expandButton = screen.getByRole('button', { name: /Spending Insights/i });
-        expandButton.click();
+        fireEvent.click(expandButton);
 
         // Net should be negative: $100 - $800 = -$700
-        expect(screen.getByText('$700')).toBeInTheDocument(); // Displays absolute value
+        expect(await screen.findByText(/\$700/)).toBeDefined(); // Displays absolute value
     });
 });

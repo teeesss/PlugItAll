@@ -42,6 +42,25 @@ describe('categorizeTransaction — income detection', () => {
     });
 });
 
+// ── categorizeTransaction — Inverted Sign Convention (Inverted Statement) ─────────
+
+describe('categorizeTransaction — inverted sign convention', () => {
+    it('identifies negative payroll as Income (Inverted)', () => {
+        const { category } = categorizeTransaction('DIRECT DEPOSIT PAYROLL', -2000);
+        expect(category).toBe('Income');
+    });
+
+    it('identifies positive utility payment as Utilities (Inverted)', () => {
+        const { category } = categorizeTransaction('OKALOOSA COUNTY WATER DEPT', 130);
+        expect(category).toBe('Utilities');
+    });
+
+    it('identifies positive grocery purchase as Groceries (Inverted)', () => {
+        const { category } = categorizeTransaction('KROGER', 50);
+        expect(category).toBe('Groceries');
+    });
+});
+
 // ── categorizeTransaction — expense categories ────────────────────────────────
 
 describe('categorizeTransaction — expense categories', () => {

@@ -105,8 +105,9 @@ const CATEGORY_RULES: CategoryRule[] = [
     {
         category: 'Utilities',
         keywords: [
-            'electric', 'water bill', 'gas bill', 'utility', 'utilities', 'sewer',
+            'electric', 'electricity', 'water bill', 'water', 'gas bill', 'gas', 'utility', 'utilities', 'sewer',
             'trash', 'garbage', 'waste mgmt', 'republic services', 'xcel energy',
+            'okaloosa', 'okaloosa water', 'okaloosa gas',
             'centerpoint', 'atmos', 'pge', 'duke energy', 'dominion energy',
             'con edison', 'pseg', 'entergy', 'vectren', 'nipsco', 'evergy',
             'internet', 'comcast', 'xfinity', 'att internet', 'spectrum', 'cox',
@@ -361,7 +362,7 @@ const CATEGORY_RULES: CategoryRule[] = [
             'transfer', 'zelle', 'venmo', 'cashapp', 'paypal transfer', 'wire transfer',
             'atm withdrawal', 'cash withdrawal', 'check',
             'payment to', 'online payment', 'autopay', 'auto pay', 'automatic payment',
-            'bill pay', 'payment thank you', 'payment received',
+            'payment thank you', 'payment received',
             'credit card payment', 'card payment',
             'payment - thank you', 'online pymt', 'ach payment', 'citi flex pay',
         ],
@@ -384,24 +385,20 @@ export function categorizeTransaction(
         return { category: overrides[normalized] as BudgetCategory, confidence: 'High' };
     }
 
-    // 1. Income: positive amounts with income keywords get high priority
-    if (amount > 0) {
-        const incomeRule = CATEGORY_RULES.find(r => r.category === 'Income');
-        if (incomeRule) {
-            const matched = incomeRule.keywords.some(kw => normalized.includes(kw));
-            if (matched) return { category: 'Income', confidence: 'High' };
-        }
-        // Positive amounts not matching income keywords = Transfers (default)
-        return { category: 'Transfers', confidence: 'Low' };
-    }
-
+    // 1. Keyword Matching (Sign-Agnostic)
     let bestScore = 0;
     let bestCategory: BudgetCategory = 'Other';
 
     for (const rule of CATEGORY_RULES) {
+        // Bonus for correct direction (for non-inverted statements), but allow sign-agnostic matching
+        // (For this user's inverted statements, we want sign-agnostic to win)
+        const matchesDirection = (rule.category === 'Income' && amount > 0) || (rule.category !== 'Income' && amount < 0);
+
         for (const keyword of rule.keywords) {
             if (normalized.includes(keyword.toLowerCase())) {
-                const score = rule.weight;
+                let score = rule.weight;
+                if (matchesDirection) score += 2; // Bonus for traditional direction
+
                 if (score > bestScore) {
                     bestScore = score;
                     bestCategory = rule.category;
@@ -410,7 +407,11 @@ export function categorizeTransaction(
         }
     }
 
-    if (bestScore === 0) return { category: 'Other', confidence: 'Low' };
+    // 2. Fallback for positive amounts (Income/Transfer) vs negative (Other)
+    if (bestScore === 0) {
+        if (amount > 0) return { category: 'Transfers', confidence: 'Low' };
+        return { category: 'Other', confidence: 'Low' };
+    }
 
     const confidence: 'High' | 'Medium' | 'Low' =
         bestScore >= 9 ? 'High' : bestScore >= 7 ? 'Medium' : 'Low';
@@ -453,7 +454,7 @@ export function aggregateByCategory(
  */
 export function getExpenses(transactions: CategorizedTransaction[]): CategorizedTransaction[] {
     return transactions.filter(
-        tx => tx.category !== 'Income' && tx.category !== 'Transfers' && tx.amount < 0
+        tx => tx.category !== 'Income' && tx.category !== 'Transfers'
     );
 }
 

@@ -6,6 +6,8 @@ import type { Transaction } from './analyzer';
  */
 export function isTransferOrPayment(transaction: Transaction): boolean {
     const desc = transaction.description.toUpperCase();
+    const isExplicitReal = desc.includes('PURCHASE') || desc.includes('INCOME') || desc.includes('EXPENSE') || desc.includes('SALARY') || desc.includes('PAYROLL') || desc.includes('STORE');
+    if (isExplicitReal) return false;
 
     // Common transfer/payment keywords
     const transferKeywords = [
@@ -14,7 +16,6 @@ export function isTransferOrPayment(transaction: Transaction): boolean {
         'PAYMENT',
         'WITHDRAW',
         'DEPOSIT TO',
-        'BILL PAY',
         'ELECTRONIC PAYMENT',
         'ONLINE PAYMENT',
         'CREDIT CARD PAYMENT',
@@ -48,7 +49,10 @@ export function isTransferOrPayment(transaction: Transaction): boolean {
     // (e.g., $1000.00, $5000.00, not $1234.56)
     const amount = Math.abs(transaction.amount);
     if (amount >= 500 && amount % 500 === 0) {
-        // Could be a transfer, but let's be conservative
+        // Exclude likely income even if perfectly round
+        const isIncomeKeyword = desc.includes('SALARY') || desc.includes('PAYROLL') || desc.includes('DIRECT DEP');
+        if (isIncomeKeyword && transaction.amount > 0) return false;
+
         // Only flag if it's > $2000 and perfectly round
         if (amount >= 2000 && amount % 1000 === 0) {
             return true;

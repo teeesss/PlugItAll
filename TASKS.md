@@ -251,4 +251,24 @@ _Full roadmap: [ROADMAP_TRANSACTION_EXPLORER.md](./ROADMAP_TRANSACTION_EXPLORER.
 - [ ] **TASK-078**: Highlight Newly Discovered Subscriptions.
   - Temporarily highlight (red glow/border) new cards when they first appear from a fresh upload for 5s.
 
+## 🟢 Completed (Session 2026-02-25)
+
+- [x] **TASK-090**: Multi-Account Budgeting & Tracking (v1.6.0)
+  - ✅ Created `BudgetDashboard.tsx` with high-premium design
+  - ✅ Implemented `categorizer.ts` with 20+ budget categories and weights
+  - ✅ Added "Cash Flow Audit" for 100% data transparency
+  - ✅ Multi-column sorting and transaction persistence
+  - ✅ Integrated `BudgetGoals.tsx` for monthly target tracking
+  - ✅ Manual categorization overrides with JSON export for persistence
+
+- [x] **TASK-091**: Sign-Agnostic Processing & Robustness (v1.6.3)
+  - ✅ Fixed "Inverted Sign" bug (spending as positive numbers, income as negative)
+  - ✅ Sign-agnostic income detection (handles negative payroll/dividends)
+  - ✅ Refined transfer filters (removed ambiguous 'Bill Pay', whitelisted 'PAYROLL')
+  - ✅ Improved utility classification (standalone 'water', 'gas', 'electric' keywords)
+  - ✅ Fixed flaky `insights.test.tsx` and added inverted logic tests in `categorizer.test.ts`
+  - ✅ Added `ProcessingOverlay` crash protection for empty datasets
+  - ✅ Updated unit test suites and verified logic integrity
+  - Deployed to production.
+
 _See `PROJECT_STATUS.md` and `issues.md` for historical log._

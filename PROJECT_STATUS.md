@@ -1,5 +1,30 @@
 # Project Status: Plug It All
 
+## Recent Major Updates (Feb 25, 2026)
+
+### 🟢 Feature: Budgeting Dashboard & Goal Tracking (v1.6.0)
+- **Goal**: Expand from subscription tracking to full monthly budgeting.
+- **Resolution**:
+  - Created `BudgetDashboard.tsx` with high-premium animations and 20+ categories.
+  - Implemented `BudgetGoals.tsx` for target vs. actual spending visualization.
+  - Added "Cash Flow Audit" for total data transparency.
+  - **Manual Overrides**: Users can now re-categorize and export their rules.
+- **Status**: Deployed.
+
+### 🟢 Bug Fix: Sign-Agnostic Processing & Robustness (v1.6.3)
+- **Goal**: Handle statements where spending is positive and income is negative (Inverted Convention).
+- **Problem**: 
+  - Credit card spending was being treated as "Income" or "Transfers" due to positive signs.
+  - Large salary deposits were being filtered as "Transfers" or categorized as "Other" because they were negative.
+  - "Bill Pay" for utilities was being misclassified as an account transfer.
+- **Resolution**:
+  - **Sign-Agnostic Categorizer**: Now allows `Income` keywords to match regardless of amount sign.
+  - **Transfer Filter Refinement**: Removed ambiguous `BILL PAY` from auto-filter, letting the categorizer handle it.
+  - **Expanded Utility Keywords**: Added specific county-level (Okaloosa) and generic utility markers.
+  - **Whitelisted Real Transactions**: Added `PAYROLL` to explicit real whitelist.
+  - **Async Test Fix**: Updated `insights.test.tsx` and added inverted sign tests to `categorizer.test.ts`.
+- **Status**: Production-ready and verified.
+
 ## Recent Major Updates (Jan 17, 2026)
 
 ### 🟢 Feature: Processing Overlay (v1.2.1e)

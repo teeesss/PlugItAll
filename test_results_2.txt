@@ -1,0 +1,4 @@
+
+> plug-it-all@0.0.0 test
+> vitest --run tests/insights.test.tsx tests/categorizer.test.ts
+

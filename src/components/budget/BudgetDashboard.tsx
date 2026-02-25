@@ -63,6 +63,28 @@ export function BudgetDashboard({
     const [uploadKey, setUploadKey] = useState(0);
     const [activeView, setActiveView] = useState<BudgetView>('overview');
     const [overrides, setOverrides] = useState(() => getCategoryOverrides());
+    const [selectedMonth, setSelectedMonth] = useState<string>('all');
+    const [auditFilter, setAuditFilter] = useState<'all' | 'expenses' | 'transfers' | 'income'>('all');
+    const [auditCategory, setAuditCategory] = useState<string | null>(null);
+
+    const handleCategoryDrilldown = (category: string) => {
+        if (category === 'Income') {
+            setAuditFilter('income');
+            setAuditCategory(null);
+        } else if (category === 'Transfers') {
+            setAuditFilter('transfers');
+            setAuditCategory(null);
+        } else {
+            setAuditFilter('expenses');
+            setAuditCategory(category);
+        }
+        setActiveView('reconciliation');
+
+        // Use a slight delay to allow the tab to switch before scrolling
+        setTimeout(() => {
+            document.getElementById('cash-flow-audit')?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    };
 
     // Merge shared + budget-specific transactions, deduplicate
     const allTransactions = useMemo(() => {
@@ -85,13 +107,34 @@ export function BudgetDashboard({
     // Categorize all transactions
     const categorized = useMemo(() => categorizeAll(allTransactions, overrides), [allTransactions, overrides]);
 
-    // Estimate months of data
-    const monthsOfData = useMemo(() => estimateMonthsOfData(allTransactions), [allTransactions]);
+    // Available months for filtering
+    const availableMonths = useMemo(() => {
+        const months = new Set<string>();
+        categorized.forEach(tx => {
+            const date = new Date(tx.date);
+            if (!isNaN(date.getTime())) {
+                months.add(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`);
+            }
+        });
+        return Array.from(months).sort((a, b) => b.localeCompare(a));
+    }, [categorized]);
 
-    // Compute budget summary
+    // Apply monthly filtering
+    const displayTransactions = useMemo(() => {
+        if (selectedMonth === 'all') return categorized;
+        return categorized.filter(tx => tx.date.startsWith(selectedMonth));
+    }, [categorized, selectedMonth]);
+
+    // Estimate months of data (based on filtered view)
+    const monthsOfData = useMemo(() => {
+        if (selectedMonth !== 'all') return 1;
+        return estimateMonthsOfData(allTransactions);
+    }, [allTransactions, selectedMonth]);
+
+    // Compute budget summary (based on filtered view)
     const summary = useMemo(
-        () => computeBudgetSummary(incomeProfile, categorized, budgetGoals, monthsOfData),
-        [incomeProfile, categorized, budgetGoals, monthsOfData]
+        () => computeBudgetSummary(incomeProfile, displayTransactions, budgetGoals, monthsOfData),
+        [incomeProfile, displayTransactions, budgetGoals, monthsOfData]
     );
 
     // Handle file uploads specific to Budget tab
@@ -286,6 +329,40 @@ export function BudgetDashboard({
                         })}
                     </div>
 
+                    {/* Month Selector */}
+                    <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-white/5">
+                        <button
+                            onClick={() => setSelectedMonth('all')}
+                            className={cn(
+                                "px-4 py-2 rounded-xl text-xs font-bold transition-all",
+                                selectedMonth === 'all'
+                                    ? "bg-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]"
+                                    : "bg-slate-800/50 text-slate-400 hover:text-slate-200"
+                            )}
+                        >
+                            All Time
+                        </button>
+                        {availableMonths.map(month => {
+                            const [year, mm] = month.split('-');
+                            const monthDate = new Date(parseInt(year), parseInt(mm) - 1);
+                            const monthName = monthDate.toLocaleString('default', { month: 'short' });
+                            return (
+                                <button
+                                    key={month}
+                                    onClick={() => setSelectedMonth(month)}
+                                    className={cn(
+                                        "px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap",
+                                        selectedMonth === month
+                                            ? "bg-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]"
+                                            : "bg-slate-800/50 text-slate-400 hover:text-slate-200"
+                                    )}
+                                >
+                                    {monthName} {year}
+                                </button>
+                            );
+                        })}
+                    </div>
+
                     {/* View Panels */}
                     <AnimatePresence mode="wait">
                         {activeView === 'overview' && (
@@ -297,9 +374,12 @@ export function BudgetDashboard({
                                 transition={{ duration: 0.2 }}
                                 className="space-y-6"
                             >
-                                <CashFlowChart summary={summary} />
+                                <CashFlowChart
+                                    summary={summary}
+                                    onCategoryClick={handleCategoryDrilldown}
+                                />
                                 <SpendingBreakdown
-                                    transactions={categorized}
+                                    transactions={displayTransactions}
                                     monthsOfData={monthsOfData}
                                     budgetGoals={budgetGoals}
                                     onCategoryChange={handleOverride}
@@ -317,7 +397,7 @@ export function BudgetDashboard({
                                 transition={{ duration: 0.2 }}
                             >
                                 <SpendingBreakdown
-                                    transactions={categorized}
+                                    transactions={displayTransactions}
                                     monthsOfData={monthsOfData}
                                     budgetGoals={budgetGoals}
                                     onCategoryChange={handleOverride}
@@ -336,59 +416,120 @@ export function BudgetDashboard({
                                 transition={{ duration: 0.2 }}
                                 className="space-y-6"
                             >
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-slate-900/40">
-                                        <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Total Cash Outflow</p>
-                                        <p className="text-2xl font-bold text-slate-100">
-                                            {formatDollar(categorized.filter(tx => tx.amount < 0).reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <button
+                                        onClick={() => setAuditFilter('all')}
+                                        className={cn(
+                                            "glass-panel p-5 rounded-2xl border transition-all text-left",
+                                            auditFilter === 'all' ? "border-indigo-500/50 bg-indigo-500/5 ring-1 ring-indigo-500/20" : "border-white/8 bg-slate-900/40 hover:border-white/20"
+                                        )}
+                                    >
+                                        <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Total Volume</p>
+                                        <p className="text-2xl font-bold text-slate-100 font-mono">
+                                            {formatDollar(displayTransactions.reduce((s, tx) => s + Math.abs(tx.amount), 0))}
                                         </p>
-                                        <p className="text-[10px] text-slate-600 mt-1">Total money leaving your accounts</p>
-                                    </div>
-                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-emerald-500/5">
-                                        <p className="text-[10px] text-emerald-500/70 uppercase font-bold mb-1">Categorized Expenses</p>
-                                        <p className="text-2xl font-bold text-emerald-400">
-                                            {formatDollar(categorized.filter(tx => tx.category !== 'Transfers' && tx.category !== 'Income' && tx.amount < 0).reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        <p className="text-[10px] text-slate-600 mt-1">Total activity</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => setAuditFilter('expenses')}
+                                        className={cn(
+                                            "glass-panel p-5 rounded-2xl border transition-all text-left",
+                                            auditFilter === 'expenses' ? "border-emerald-500/50 bg-emerald-500/5 ring-1 ring-emerald-500/20" : "border-white/8 bg-slate-900/40 hover:border-white/20"
+                                        )}
+                                    >
+                                        <p className="text-[10px] text-emerald-500/70 uppercase font-bold mb-1">Expenses</p>
+                                        <p className="text-2xl font-bold text-emerald-400 font-mono">
+                                            {formatDollar(displayTransactions.filter(tx => tx.category !== 'Transfers' && tx.category !== 'Income').reduce((s, tx) => s + Math.abs(tx.amount), 0))}
                                         </p>
-                                        <p className="text-[10px] text-slate-600 mt-1">Budgetable spending</p>
-                                    </div>
-                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-indigo-500/5">
-                                        <p className="text-[10px] text-indigo-400 uppercase font-bold mb-1">Transfers & Hidden</p>
-                                        <p className="text-2xl font-bold text-indigo-300">
-                                            {formatDollar(categorized.filter(tx => tx.category === 'Transfers').reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        <p className="text-[10px] text-slate-600 mt-1">Real spending</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => setAuditFilter('transfers')}
+                                        className={cn(
+                                            "glass-panel p-5 rounded-2xl border transition-all text-left",
+                                            auditFilter === 'transfers' ? "border-indigo-500/50 bg-indigo-500/5 ring-1 ring-indigo-500/20" : "border-white/8 bg-slate-900/40 hover:border-white/20"
+                                        )}
+                                    >
+                                        <p className="text-[10px] text-indigo-400 uppercase font-bold mb-1">Transfers</p>
+                                        <p className="text-2xl font-bold text-indigo-300 font-mono">
+                                            {formatDollar(displayTransactions.filter(tx => tx.category === 'Transfers').reduce((s, tx) => s + Math.abs(tx.amount), 0))}
                                         </p>
-                                        <p className="text-[10px] text-slate-600 mt-1">Credit card payments, transfers, etc.</p>
-                                    </div>
+                                        <p className="text-[10px] text-slate-600 mt-1">Internal moves</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => setAuditFilter('income')}
+                                        className={cn(
+                                            "glass-panel p-5 rounded-2xl border transition-all text-left",
+                                            auditFilter === 'income' ? "border-green-500/50 bg-green-500/5 ring-1 ring-green-500/20" : "border-white/8 bg-slate-900/40 hover:border-white/20"
+                                        )}
+                                    >
+                                        <p className="text-[10px] text-emerald-400 uppercase font-bold mb-1">Income</p>
+                                        <p className="text-2xl font-bold text-emerald-300 font-mono">
+                                            {formatDollar(displayTransactions.filter(tx => tx.category === 'Income').reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        </p>
+                                        <p className="text-[10px] text-slate-600 mt-1">Deposits</p>
+                                    </button>
                                 </div>
 
-                                <div className="glass-panel rounded-2xl border border-white/8 overflow-hidden">
-                                    <div className="p-5 border-b border-white/6 bg-slate-800/20">
-                                        <h3 className="font-bold text-slate-100">Cash Flow Audit</h3>
-                                        <p className="text-xs text-slate-500 mt-1">
-                                            Reviewing all non-expense transactions to ensure 100% data integrity.
-                                        </p>
+                                <div id="cash-flow-audit" className="glass-panel rounded-2xl border border-white/8 overflow-hidden">
+                                    <div className="p-5 border-b border-white/6 bg-slate-800/20 flex items-center justify-between">
+                                        <div>
+                                            <h3 className="font-bold text-slate-100 flex items-center gap-2">
+                                                <span>Cash Flow Audit</span>
+                                                <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 uppercase font-bold">
+                                                    Showing: {auditCategory || auditFilter}
+                                                </span>
+                                            </h3>
+                                            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">
+                                                Reviewing {selectedMonth === 'all' ? 'All Time' : selectedMonth} transactions
+                                            </p>
+                                        </div>
+                                        {(auditFilter !== 'all' || auditCategory) && (
+                                            <button
+                                                onClick={() => {
+                                                    setAuditFilter('all');
+                                                    setAuditCategory(null);
+                                                }}
+                                                className="text-[10px] px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all uppercase font-bold"
+                                            >
+                                                Reset Filters
+                                            </button>
+                                        )}
                                     </div>
-                                    <div className="p-0 max-h-[400px] overflow-y-auto">
+                                    <div className="p-0 max-h-[500px] overflow-y-auto custom-scrollbar">
                                         <table className="w-full text-left border-collapse">
-                                            <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-md text-[10px] text-slate-500 uppercase tracking-wider z-10 p-3">
+                                            <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-md text-[10px] text-slate-500 uppercase tracking-wider z-10 transition-colors shadow-sm">
                                                 <tr>
-                                                    <th className="px-5 py-3">Date</th>
-                                                    <th className="px-5 py-3">Description</th>
-                                                    <th className="px-5 py-3">Category</th>
-                                                    <th className="px-5 py-3 text-right">Amount</th>
+                                                    <th className="px-5 py-3 font-semibold">Date</th>
+                                                    <th className="px-5 py-3 font-semibold">Description</th>
+                                                    <th className="px-5 py-3 font-semibold">Category</th>
+                                                    <th className="px-5 py-3 font-semibold text-right">Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="text-[11px]">
-                                                {categorized
-                                                    .filter(tx => tx.category === 'Transfers' || tx.category === 'Other')
+                                                {displayTransactions
+                                                    .filter(tx => {
+                                                        if (auditCategory) return tx.category === auditCategory;
+                                                        if (auditFilter === 'all') return true;
+                                                        if (auditFilter === 'expenses') return tx.category !== 'Transfers' && tx.category !== 'Income';
+                                                        if (auditFilter === 'transfers') return tx.category === 'Transfers';
+                                                        if (auditFilter === 'income') return tx.category === 'Income';
+                                                        return true;
+                                                    })
                                                     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                     .map((tx, i) => (
-                                                        <tr key={i} className="border-b border-white/[0.03] hover:bg-white/[0.04] transition-colors">
+                                                        <tr key={i} className="border-b border-white/[0.03] hover:bg-white/[0.04] transition-colors group">
                                                             <td className="px-5 py-3 text-slate-500 font-mono">{tx.date}</td>
-                                                            <td className="px-5 py-3 text-slate-200">{tx.description}</td>
+                                                            <td className="px-5 py-3 text-slate-200 group-hover:text-white transition-colors">{tx.description}</td>
                                                             <td className="px-5 py-3">
                                                                 <span className={cn(
-                                                                    "px-2 py-0.5 rounded-full",
-                                                                    tx.category === 'Transfers' ? "bg-indigo-500/10 text-indigo-400" : "bg-slate-500/10 text-slate-400"
+                                                                    "px-2 py-0.5 rounded-full text-[9px] font-bold uppercase",
+                                                                    tx.category === 'Transfers' ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" :
+                                                                        tx.category === 'Income' ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" :
+                                                                            "bg-slate-500/10 text-slate-400 border border-white/5"
                                                                 )}>
                                                                     {tx.category}
                                                                 </span>
