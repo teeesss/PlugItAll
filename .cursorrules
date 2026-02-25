@@ -204,13 +204,15 @@ Run `node scripts/migrate_master_data.cjs` to:
 
 ## 10. Uploading to Web Server
 
-
 - **MANDATORY**: After every successful local logic/UI verification, you **MUST** deploy to the live server.
 - **PROCESS**:
     1. **UPDATE VERSION**: Bump the version in `App.tsx` (Footer) and `PROJECT_STATUS_SUMMARY.md`. Use letter suffixes for small iterations (e.g., `v1.1.4a`, `v1.1.4b`) to avoid rapid number inflation.
     2. Run `npm run build` to generate the production bundle.
     3. Run `npm run deploy` to sync the `dist` folder to the FTP server.
-    4. **ONLY upload modified files**: Never upload static image files (especially in `logos/`) unless they are new or modified. Use size-based or name-based comparison to skip existing files.
+    4. **DEPLOYMENT SAFETY**: 
+       - **NEVER** wipe the remote `assets/` folder. This causes 404s for users with cached `index.html`.
+       - **ONLY upload modified files**: Skip static image files (especially in `logos/`) if the size matches exactly. 
+       - **INDEX**: Always upload `index.html` last or as part of the sync to ensure it points to existing assets.
     5. Don't use && with powershell commands. Use ; instead.
 - **VERIFICATION**: Always check the live URL (`https://plugitall.com/`) after deployment to ensure the **version number in the footer** matches your update.
 
@@ -219,9 +221,9 @@ Run `node scripts/migrate_master_data.cjs` to:
 ## 11. Deployment & Asset Logic (Lessons Learned)
 
 ### Sync Engine (`scripts/deploy.js`)
-- **CLEAN ASSETS**: Always call `cleanRemoteAssets()` to remove the remote `assets/` directory before syncing. This prevents stale, hashed JS/CSS bundles from lingering and causing "ghost" bugs.
-- **FORCE UPLOAD**: Always force upload `index.html` and any files in `assets/`. Content-hashed assets change names frequently, and `index.html` must always point to the newest bundle.
-- **SKIP LOGOS**: Skip re-uploading the `logos/` directory if files already exist remotely to save time/bandwidth.
+- **DEPLOYMENT SAFETY**: **DO NOT** call `cleanRemoteAssets()` to remove the remote `assets/` directory before syncing. This causes 404 errors for users with cached HTML files. Orphaned assets are better than a broken site.
+- **INTELLIGENT SYNC**: Use name and size comparison to skip unchanged assets (Vite hashes already handle versioning). Always ensure `index.html` is uploaded successfully as it's the entry point.
+- **SKIP LOGOS**: Skip re-uploading the `logos/` directory if files already exist remotely with the same size.
 
 ### PDF Generation (`src/utils/pdfGenerator.ts`)
 - **USE `doc.save()`**: For triggering downloads, always prefer `jsPDF.save('filename.pdf')` over manual blob creation (`URL.createObjectURL`). Standard blob triggers are frequently blocked or renamed to random GUID hashes by browser security policies on production domains.
