@@ -586,9 +586,15 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
 }
 
 /**
- * Specialized parser for Citibank Statements.
+ * Specialized parser for Citibank Credit Card Statements.
  * Uses a simpler regex-based logic to maintain stability for existing formats.
  * "Never touched" by USAA specific changes.
+ *
+ * IMPORTANT: Credit card statements use opposite sign convention from bank statements.
+ * On a credit card statement:
+ *   - Positive amounts = charges (money you owe / spent) → should be NEGATIVE in our system
+ *   - Negative amounts / credits = payments/refunds → should be POSITIVE in our system
+ * We negate all amounts so that our standard convention (negative = expense) is maintained.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
@@ -613,13 +619,15 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
 
       if (dateMatch && amountMatch) {
         const dateObj = parseDate(dateMatch[0]);
-        const amount = parseAmount(amountMatch[0]);
-        if (dateObj && amount !== null) {
+        const rawAmount = parseAmount(amountMatch[0]);
+        if (dateObj && rawAmount !== null) {
           let description = fullLine.replace(dateMatch[0], '').replace(amountMatch[0], '').trim();
           description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '');
           description = description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
           if (description.length > 2 && !description.toLowerCase().includes('beginning balance')) {
-            transactions.push({ date: dateObj.toLocaleDateString(), description, amount: amount });
+            // Negate: CC charges (positive on statement) become negative (expense);
+            //         CC payments/refunds (negative on statement) become positive (income/credit).
+            transactions.push({ date: dateObj.toLocaleDateString(), description, amount: -rawAmount });
           }
         }
       }

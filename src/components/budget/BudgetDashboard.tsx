@@ -13,17 +13,14 @@ import { categorizeAll } from '../../utils/categorizer';
 import {
     computeBudgetSummary,
     estimateMonthsOfData,
-    loadIncomeProfile,
-    loadBudgetGoals,
     saveBudgetGoals,
-    defaultIncomeProfile,
 } from '../../utils/budgetEngine';
 import type { IncomeProfile, BudgetGoal } from '../../utils/budgetEngine';
 import type { BudgetCategory } from '../../utils/categorizer';
 import { IncomeSetup } from './IncomeSetup';
 import { SpendingBreakdown } from './SpendingBreakdown';
 import { BudgetGoals } from './BudgetGoals';
-import { LeakDetector } from './LeakDetector';
+
 import { CashFlowChart } from './CashFlowChart';
 import { FileUpload } from '../FileUpload';
 import { PrivacyBanner } from '../PrivacyBanner';
@@ -33,6 +30,10 @@ import { cn } from '../../utils/cn';
 interface BudgetDashboardProps {
     /** Transactions already loaded in the Subscriptions tab (shared pool) */
     sharedTransactions: Transaction[];
+    incomeProfile: IncomeProfile;
+    budgetGoals: BudgetGoal[];
+    onUpdateIncome: (profile: IncomeProfile) => void;
+    onUpdateGoals: (goals: BudgetGoal[]) => void;
     onShowToast: (message: string) => void;
 }
 
@@ -45,17 +46,14 @@ const TAB_VIEWS = [
     { id: 'setup' as BudgetView, label: 'Income Setup', icon: Sparkles },
 ];
 
-export function BudgetDashboard({ sharedTransactions, onShowToast }: BudgetDashboardProps) {
-    // Income profile — load from localStorage on mount
-    const [incomeProfile, setIncomeProfile] = useState<IncomeProfile>(
-        () => loadIncomeProfile() ?? defaultIncomeProfile()
-    );
-
-    // Budget goals — load from localStorage on mount
-    const [budgetGoals, setBudgetGoals] = useState<BudgetGoal[]>(
-        () => loadBudgetGoals()
-    );
-
+export function BudgetDashboard({
+    sharedTransactions,
+    incomeProfile,
+    budgetGoals,
+    onUpdateIncome,
+    onUpdateGoals,
+    onShowToast
+}: BudgetDashboardProps) {
     // Budget-specific transactions (in addition to shared)
     const [budgetTransactions, setBudgetTransactions] = useState<Transaction[]>([]);
     const [isUploading, setIsUploading] = useState(false);
@@ -278,7 +276,10 @@ export function BudgetDashboard({ sharedTransactions, onShowToast }: BudgetDashb
                                 className="space-y-6"
                             >
                                 <CashFlowChart summary={summary} />
-                                <LeakDetector leaks={summary.leaks} monthlyNetPay={summary.monthlyNetPay} />
+                                <SpendingBreakdown
+                                    transactions={categorized}
+                                    monthsOfData={monthsOfData}
+                                />
                             </motion.div>
                         )}
 
@@ -308,7 +309,7 @@ export function BudgetDashboard({ sharedTransactions, onShowToast }: BudgetDashb
                                 <BudgetGoals
                                     goals={budgetGoals}
                                     onUpdate={(updated) => {
-                                        setBudgetGoals(updated);
+                                        onUpdateGoals(updated);
                                         saveBudgetGoals(updated);
                                     }}
                                     categoryActuals={summary.categoryTotals as Partial<Record<BudgetCategory, number>>}
@@ -324,7 +325,7 @@ export function BudgetDashboard({ sharedTransactions, onShowToast }: BudgetDashb
                                 exit={{ opacity: 0, y: -8 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <IncomeSetup profile={incomeProfile} onUpdate={setIncomeProfile} />
+                                <IncomeSetup profile={incomeProfile} onUpdate={onUpdateIncome} />
                             </motion.div>
                         )}
                     </AnimatePresence>

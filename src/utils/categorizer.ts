@@ -309,14 +309,23 @@ const CATEGORY_RULES: CategoryRule[] = [
         weight: 8,
     },
 
-    // --- TRANSFERS ---
+    // --- TRANSFERS (inter-account payments, ATM, peer-to-peer) ---
+    // These are NOT expenses — they represent money moving between accounts.
+    // High weight to ensure "PAYMENT TO CITI" from a bank statement doesn't
+    // get counted as an expense alongside the actual credit card charges.
     {
         category: 'Transfers',
         keywords: [
             'transfer', 'zelle', 'venmo', 'cashapp', 'paypal transfer', 'wire transfer',
-            'atm withdrawal', 'cash withdrawal', 'check', 'payment to',
+            'atm withdrawal', 'cash withdrawal', 'check',
+            // Inter-account / credit card payments (bank side)
+            'payment to', 'online payment', 'autopay', 'auto pay', 'automatic payment',
+            'bill pay', 'payment thank you', 'payment received',
+            'credit card payment', 'card payment',
+            // Credit card payment received (credit card side)
+            'payment - thank you', 'online pymt', 'ach payment',
         ],
-        weight: 4, // Low weight — easily overridden by more specific categories
+        weight: 6, // Higher than generic 'Other' to ensure payments are classified as Transfers
     },
 ];
 

@@ -28,6 +28,16 @@ import { ProcessingOverlay } from './components/ProcessingOverlay';
 import { TabNavigation } from './components/TabNavigation';
 import type { AppTab } from './components/TabNavigation';
 import { BudgetDashboard } from './components/budget/BudgetDashboard';
+import { LeakDetector } from './components/budget/LeakDetector';
+import {
+  loadIncomeProfile,
+  loadBudgetGoals,
+  computeBudgetSummary,
+  estimateMonthsOfData,
+  defaultIncomeProfile
+} from './utils/budgetEngine';
+import type { IncomeProfile, BudgetGoal } from './utils/budgetEngine';
+import { categorizeAll } from './utils/categorizer';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -47,6 +57,14 @@ function App() {
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
   const [manualSubs, setManualSubs] = useState<EnrichedSubscription[]>(getManualSubscriptions() as EnrichedSubscription[]);
   const [uploadKey, setUploadKey] = useState(0);
+
+  // Budget State (shared between tabs)
+  const [incomeProfile, setIncomeProfile] = useState<IncomeProfile>(
+    () => loadIncomeProfile() ?? defaultIncomeProfile()
+  );
+  const [budgetGoals, setBudgetGoals] = useState<BudgetGoal[]>(
+    () => loadBudgetGoals()
+  );
 
   // TASK-078: Track newly discovered subscription IDs
   const [newSubIds, setNewSubIds] = useState<Set<string>>(new Set());
@@ -98,6 +116,14 @@ function App() {
       yearly: monthly * 12,
     };
   }, [visibleCandidates]);
+
+  // CATEGORIZATION & BUDGET SUMMARY (for Leak Detector)
+  const categorizedTransactions = useMemo(() => categorizeAll(allTransactions), [allTransactions]);
+  const monthsOfData = useMemo(() => estimateMonthsOfData(allTransactions), [allTransactions]);
+  const budgetSummary = useMemo(() =>
+    computeBudgetSummary(incomeProfile, categorizedTransactions, budgetGoals, monthsOfData),
+    [incomeProfile, categorizedTransactions, budgetGoals, monthsOfData]
+  );
 
   const showToast = (message: string) => {
     setToastState({ message, visible: true });
@@ -394,6 +420,10 @@ function App() {
             <BudgetDashboard
               key="budget"
               sharedTransactions={allTransactions}
+              incomeProfile={incomeProfile}
+              budgetGoals={budgetGoals}
+              onUpdateIncome={setIncomeProfile}
+              onUpdateGoals={setBudgetGoals}
               onShowToast={showToast}
             />
           )}
@@ -436,6 +466,11 @@ function App() {
 
                 {/* Stats Banner */}
                 <Stats totalMonthly={totals.monthly} totalYearly={totals.yearly} />
+
+                {/* Leak Detector (moved from Budget tab) */}
+                {budgetSummary.leaks.length > 0 && (
+                  <LeakDetector leaks={budgetSummary.leaks} monthlyNetPay={budgetSummary.monthlyNetPay} />
+                )}
 
                 {/* Insights Section - TASK-085: Comprehensive Filtering */}
                 {allTransactions.length > 0 && (
