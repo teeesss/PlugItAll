@@ -112,7 +112,7 @@ const CATEGORY_RULES: CategoryRule[] = [
             'longhorn steakhouse', 'texas roadhouse', 'restaurant', 'grubhub', 'doordash',
             'uber eats', 'instacart restaurant', 'postmates', 'eatstreet', 'seamless',
             'tst*', 'sq *', 'toast', 'olo*', 'cafe', 'diner', 'grill', 'bistro',
-            'sushi', 'ramen', 'pho', 'thai', 'chinese', 'mexican food', 'barbecue',
+            'sushi', 'ramen', 'pho restaurant', 'pho noodle', 'thai restaurant', 'chinese food', 'mexican food', 'barbecue',
         ],
         weight: 8,
     },
@@ -211,7 +211,7 @@ const CATEGORY_RULES: CategoryRule[] = [
             'bowling', 'golf', 'topgolf', 'mini golf', 'arcade', 'dave & buster',
             'escape room', 'museum', 'zoo', 'aquarium', 'theme park', 'six flags',
             'disneyland', 'disneyworld', 'seaworld', 'universal studios',
-            'bar', 'nightclub', 'comedy club', 'casino', 'lottery',
+            'bar tab', 'nightclub', 'comedy club', 'casino', 'lottery',
             'steam games', 'playstation', 'xbox', 'nintendo', 'apple arcade',
             'google play games', 'gamestop', 'game stop',
         ],
@@ -291,7 +291,7 @@ const CATEGORY_RULES: CategoryRule[] = [
     {
         category: 'Personal Care',
         keywords: [
-            'salon', 'barber', 'hair cut', 'great clips', 'supercuts', 'sport clips',
+            'salon', 'barber', 'hair cut', 'haircut', 'great clips', 'supercuts', 'sport clips',
             'nail salon', 'spa', 'massage', 'beauty supply', 'ulta', 'sephora',
             'bath body works', 'lush', 'skincare',
         ],
