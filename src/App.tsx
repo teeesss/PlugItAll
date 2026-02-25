@@ -1,5 +1,4 @@
 
-
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Settings, RefreshCcw, Download, LayoutGrid, List } from 'lucide-react';
@@ -26,6 +25,9 @@ import { PrivacyBanner } from './components/PrivacyBanner';
 import { BillView } from './components/BillView';
 import { InsightsEnhanced } from './components/InsightsEnhanced';
 import { ProcessingOverlay } from './components/ProcessingOverlay';
+import { TabNavigation } from './components/TabNavigation';
+import type { AppTab } from './components/TabNavigation';
+import { BudgetDashboard } from './components/budget/BudgetDashboard';
 
 function App() {
   const [candidates, setCandidates] = useState<EnrichedSubscription[]>([]);
@@ -33,6 +35,9 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+
+  // App-level tab state
+  const [activeTab, setActiveTab] = useState<AppTab>('subscriptions');
 
   // Toast State
   const [toastState, setToastState] = useState<{ message: string; visible: boolean }>({ message: '', visible: false });
@@ -302,7 +307,7 @@ function App() {
       />
 
       {/* Header */}
-      <header className="flex items-center justify-between mb-12">
+      <header className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-4">
           <div className="relative group">
             {/* Logo Image */}
@@ -338,41 +343,43 @@ function App() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          {/* Only show controls if there is data */}
-          {allTransactions.length > 0 && (
-            <>
-              {/* Transaction Search */}
-              <TransactionSearch
-                transactions={allTransactions}
-                onOpenExplorer={(searchTerm) => {
-                  setExplorerInitialSearch(searchTerm);
-                  setIsExplorerOpen(true);
-                }}
-              />
-
-              {/* Clear Data Button */}
-              <button
-                onClick={handleClearData}
-                type="button"
-                className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
-                title="Clear All Data"
-              >
-                <RefreshCcw className="w-6 h-6" />
-              </button>
-
-              {/* Settings Toggle */}
-              <button
-                onClick={() => setIsSettingsOpen(true)}
-                className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
-                title="Manage Hidden Items"
-              >
-                <Settings className="w-6 h-6" />
-              </button>
-            </>
-          )}
-        </div>
+        {/* Right side controls — only subscriptions tab shows action buttons */}
+        {activeTab === 'subscriptions' && allTransactions.length > 0 && (
+          <div className="flex items-center space-x-2">
+            <TransactionSearch
+              transactions={allTransactions}
+              onOpenExplorer={(searchTerm) => {
+                setExplorerInitialSearch(searchTerm);
+                setIsExplorerOpen(true);
+              }}
+            />
+            <button
+              onClick={handleClearData}
+              type="button"
+              className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-red-400 transition-colors"
+              title="Clear All Data"
+            >
+              <RefreshCcw className="w-6 h-6" />
+            </button>
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              className="p-2 rounded-full hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+              title="Manage Hidden Items"
+            >
+              <Settings className="w-6 h-6" />
+            </button>
+          </div>
+        )}
       </header>
+
+      {/* Tab Navigation — full width, below header */}
+      <div className="mb-6">
+        <TabNavigation
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          hasData={hasData}
+        />
+      </div>
 
       <SettingsModal
         isOpen={isSettingsOpen}
@@ -381,226 +388,242 @@ function App() {
       />
 
       <main className="space-y-12">
-        {/* State 1: Empty / Hero */}
-        {visibleCandidates.length === 0 && candidates.length === 0 && allTransactions.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto text-center space-y-8 mt-20"
-          >
-            <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-100 tracking-tight">
-                Find the leaks in <br />
-                <span className="gradient-text">your bank account.</span>
-              </h2>
-              <div className="text-lg text-slate-400 space-y-2">
-                <p>
-                  Securely identify recurring subscriptions from your bank statements.
-                </p>
-                <PrivacyBanner />
-              </div>
-            </div>
+        {/* BUDGET TAB */}
+        <AnimatePresence mode="wait">
+          {activeTab === 'budget' && (
+            <BudgetDashboard
+              key="budget"
+              sharedTransactions={allTransactions}
+              onShowToast={showToast}
+            />
+          )}
+        </AnimatePresence>
 
-            <div className="glass-panel p-1 rounded-2xl shadow-2xl shadow-indigo-500/10">
-              <FileUpload key={uploadKey} onFilesSelected={handleFiles} />
-            </div>
-          </motion.div>
-        )}
-
-        {/* State 2: Dashboard (Using visibleCandidates OR existing transactions) */}
-        {(visibleCandidates.length > 0 || candidates.length > 0 || allTransactions.length > 0) && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
-            {/* Privacy Notice Banner */}
-            <PrivacyBanner className="mb-4" />
-
-            {/* Stats Banner */}
-            <Stats totalMonthly={totals.monthly} totalYearly={totals.yearly} />
-
-            {/* Insights Section - TASK-085: Comprehensive Filtering */}
-            {allTransactions.length > 0 && (
-              <InsightsEnhanced transactions={allTransactions} />
-            )}
-
-            {/* Grid & Sidebar Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Left: Input (Collapsed) */}
-              <div className="lg:col-span-1 space-y-6">
-                <div className="glass-panel rounded-xl p-6">
-                  <h3 className="font-semibold text-slate-200 mb-4 flex items-center">
-                    <Plus className="w-4 h-4 mr-2" /> Add More Data
-                  </h3>
-                  <FileUpload
-                    key={uploadKey}
-                    onFilesSelected={handleFiles}
-                    className="opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                </div>
-                <div className="p-6 rounded-xl border border-white/5 bg-white/5 text-sm text-slate-400">
-                  <p>
-                    Tip: You can drag multiple CSV or PDF files at once to analyze your entire
-                    financial year.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right: subscriptions Grid */}
-              <div className="lg:col-span-3 space-y-12">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-slate-100 flex items-center">
-                    Active Subscriptions
-                    {visibleCandidates.length > 0 ? (
-                      <span className="ml-3 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30">
-                        {visibleCandidates.filter(s => s.confidence === 'High').length} Verified
-                      </span>
-                    ) : (
-                      <span className="ml-3 bg-slate-500/20 text-slate-400 text-xs px-2 py-1 rounded-full border border-slate-500/30">
-                        0 Found
-                      </span>
-                    )}
+        {/* SUBSCRIPTIONS TAB */}
+        {activeTab === 'subscriptions' && (
+          <>
+            {/* State 1: Empty / Hero */}
+            {visibleCandidates.length === 0 && candidates.length === 0 && allTransactions.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="max-w-2xl mx-auto text-center space-y-8 mt-20"
+              >
+                <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-bold text-slate-100 tracking-tight">
+                    Find the leaks in <br />
+                    <span className="gradient-text">your bank account.</span>
                   </h2>
-                  <div className="flex items-center space-x-4">
-                    {/* TASK-017: View Mode Toggle */}
-                    <div className="flex items-center space-x-1 bg-slate-800/50 rounded-lg p-1">
-                      <button
-                        onClick={() => setViewMode('card')}
-                        className={cn(
-                          "flex items-center space-x-1 px-3 py-1.5 rounded text-xs transition-all",
-                          viewMode === 'card'
-                            ? "bg-indigo-500 text-white"
-                            : "text-slate-400 hover:text-white"
-                        )}
-                        title="Card View"
-                      >
-                        <LayoutGrid className="w-3.5 h-3.5" />
-                        <span>Cards</span>
-                      </button>
-                      <button
-                        onClick={() => setViewMode('bill')}
-                        className={cn(
-                          "flex items-center space-x-1 px-3 py-1.5 rounded text-xs transition-all",
-                          viewMode === 'bill'
-                            ? "bg-indigo-500 text-white"
-                            : "text-slate-400 hover:text-white"
-                        )}
-                        title="Bill View"
-                      >
-                        <List className="w-3.5 h-3.5" />
-                        <span>List</span>
-                      </button>
-                    </div>
-
-                    <button
-                      onClick={() => generatePDF(visibleCandidates)}
-                      className="flex items-center space-x-2 text-sm text-slate-400 hover:text-white transition-colors"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span>Download Report</span>
-                    </button>
+                  <div className="text-lg text-slate-400 space-y-2">
+                    <p>
+                      Securely identify recurring subscriptions from your bank statements.
+                    </p>
+                    <PrivacyBanner />
                   </div>
                 </div>
 
-                {/* TASK-017: Conditional View Rendering */}
-                {viewMode === 'bill' ? (
-                  /* Bill View - Single table with all subscriptions */
-                  <BillView
-                    subscriptions={visibleCandidates}
-                    onDismiss={(id) => {
-                      const sub = visibleCandidates.find(s => s.id === id);
-                      if (sub?.isManual) handleManualDelete(id);
-                      else handleDismiss(id);
-                    }}
-                  />
-                ) : (
-                  /* Card View - Original grid layout */
-                  <>
-                    {/* VERIFIED SECTION */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                      <AnimatePresence>
-                        {visibleCandidates
-                          .filter(s => s.confidence === 'High')
-                          .map((sub, i) => (
-                            <SubscriptionCard
-                              key={`${sub.name}-${i}`}
-                              subscription={sub}
-                              index={i}
-                              isNew={newSubIds.has(sub.id)}
-                              onDismiss={(idOrName) => {
-                                const sub = visibleCandidates.find(s => s.id === idOrName || s.name === idOrName);
-                                if (sub?.isManual) handleManualDelete(idOrName);
-                                else handleDismiss(idOrName);
-                              }}
-                            />
-                          ))}
-                      </AnimatePresence>
-                      {visibleCandidates.length === 0 && (
-                        <div className="col-span-full py-12 text-center border-2 border-dashed border-white/5 rounded-2xl">
-                          <p className="text-slate-400 mb-2">No subscriptions detected automatically.</p>
-                          <p className="text-sm text-slate-500">
-                            Try adding one manually or check 'Items for Review' below.
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                <div className="glass-panel p-1 rounded-2xl shadow-2xl shadow-indigo-500/10">
+                  <FileUpload key={uploadKey} onFilesSelected={handleFiles} />
+                </div>
+              </motion.div>
+            )}
 
-                    {/* REVIEW SECTION */}
-                    {visibleCandidates.some(s => s.confidence !== 'High') && (
-                      <div className="space-y-6 pt-8 border-t border-white/5">
-                        <div className="flex items-center justify-between">
-                          <div className="space-y-1">
-                            <h3 className="text-lg font-medium text-slate-300">Items for Review</h3>
-                            <p className="text-sm text-slate-500">
-                              These items appeared only once or have uncertain frequencies.
-                            </p>
-                          </div>
+            {/* State 2: Dashboard (Using visibleCandidates OR existing transactions) */}
+            {(visibleCandidates.length > 0 || candidates.length > 0 || allTransactions.length > 0) && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
+                {/* Privacy Notice Banner */}
+                <PrivacyBanner className="mb-4" />
+
+                {/* Stats Banner */}
+                <Stats totalMonthly={totals.monthly} totalYearly={totals.yearly} />
+
+                {/* Insights Section - TASK-085: Comprehensive Filtering */}
+                {allTransactions.length > 0 && (
+                  <InsightsEnhanced transactions={allTransactions} />
+                )}
+
+                {/* Grid & Sidebar Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                  {/* Left: Input (Collapsed) */}
+                  <div className="lg:col-span-1 space-y-6">
+                    <div className="glass-panel rounded-xl p-6">
+                      <h3 className="font-semibold text-slate-200 mb-4 flex items-center">
+                        <Plus className="w-4 h-4 mr-2" /> Add More Data
+                      </h3>
+                      <FileUpload
+                        key={uploadKey}
+                        onFilesSelected={handleFiles}
+                        className="opacity-80 hover:opacity-100 transition-opacity"
+                      />
+                    </div>
+                    <div className="p-6 rounded-xl border border-white/5 bg-white/5 text-sm text-slate-400">
+                      <p>
+                        Tip: You can drag multiple CSV or PDF files at once to analyze your entire
+                        financial year.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right: subscriptions Grid */}
+                  <div className="lg:col-span-3 space-y-12">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-slate-100 flex items-center">
+                        Active Subscriptions
+                        {visibleCandidates.length > 0 ? (
+                          <span className="ml-3 bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full border border-green-500/30">
+                            {visibleCandidates.filter(s => s.confidence === 'High').length} Verified
+                          </span>
+                        ) : (
+                          <span className="ml-3 bg-slate-500/20 text-slate-400 text-xs px-2 py-1 rounded-full border border-slate-500/30">
+                            0 Found
+                          </span>
+                        )}
+                      </h2>
+                      <div className="flex items-center space-x-4">
+                        {/* TASK-017: View Mode Toggle */}
+                        <div className="flex items-center space-x-1 bg-slate-800/50 rounded-lg p-1">
                           <button
-                            onClick={() => {
-                              visibleCandidates
-                                .filter(s => s.confidence !== 'High')
-                                .forEach(s => handleDismiss(s.name));
-                            }}
-                            className="text-xs font-medium text-slate-400 hover:text-red-400 transition-colors uppercase tracking-wider"
+                            onClick={() => setViewMode('card')}
+                            className={cn(
+                              "flex items-center space-x-1 px-3 py-1.5 rounded text-xs transition-all",
+                              viewMode === 'card'
+                                ? "bg-indigo-500 text-white"
+                                : "text-slate-400 hover:text-white"
+                            )}
+                            title="Card View"
                           >
-                            Ignore All
+                            <LayoutGrid className="w-3.5 h-3.5" />
+                            <span>Cards</span>
+                          </button>
+                          <button
+                            onClick={() => setViewMode('bill')}
+                            className={cn(
+                              "flex items-center space-x-1 px-3 py-1.5 rounded text-xs transition-all",
+                              viewMode === 'bill'
+                                ? "bg-indigo-500 text-white"
+                                : "text-slate-400 hover:text-white"
+                            )}
+                            title="Bill View"
+                          >
+                            <List className="w-3.5 h-3.5" />
+                            <span>List</span>
                           </button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 opacity-80">
+
+                        <button
+                          onClick={() => generatePDF(visibleCandidates)}
+                          className="flex items-center space-x-2 text-sm text-slate-400 hover:text-white transition-colors"
+                        >
+                          <Download className="w-4 h-4" />
+                          <span>Download Report</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* TASK-017: Conditional View Rendering */}
+                    {viewMode === 'bill' ? (
+                      /* Bill View - Single table with all subscriptions */
+                      <BillView
+                        subscriptions={visibleCandidates}
+                        onDismiss={(id) => {
+                          const sub = visibleCandidates.find(s => s.id === id);
+                          if (sub?.isManual) handleManualDelete(id);
+                          else handleDismiss(id);
+                        }}
+                      />
+                    ) : (
+                      /* Card View - Original grid layout */
+                      <>
+                        {/* VERIFIED SECTION */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                           <AnimatePresence>
                             {visibleCandidates
-                              .filter(s => s.confidence !== 'High')
+                              .filter(s => s.confidence === 'High')
                               .map((sub, i) => (
                                 <SubscriptionCard
-                                  key={`${sub.name}-${i}-review`}
+                                  key={`${sub.name}-${i}`}
                                   subscription={sub}
                                   index={i}
                                   isNew={newSubIds.has(sub.id)}
                                   onDismiss={(idOrName) => {
-                                    const s = visibleCandidates.find(item => item.id === idOrName || item.name === idOrName);
-                                    if (s?.isManual) handleManualDelete(idOrName);
+                                    const sub = visibleCandidates.find(s => s.id === idOrName || s.name === idOrName);
+                                    if (sub?.isManual) handleManualDelete(idOrName);
                                     else handleDismiss(idOrName);
                                   }}
                                 />
                               ))}
                           </AnimatePresence>
+                          {visibleCandidates.length === 0 && (
+                            <div className="col-span-full py-12 text-center border-2 border-dashed border-white/5 rounded-2xl">
+                              <p className="text-slate-400 mb-2">No subscriptions detected automatically.</p>
+                              <p className="text-sm text-slate-500">
+                                Try adding one manually or check 'Items for Review' below.
+                              </p>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    )}
 
-                    {visibleCandidates.length === 0 && candidates.length > 0 && (
-                      <div className="text-center py-12 border border-dashed border-slate-700 rounded-xl">
-                        <p className="text-slate-500">All detected items have been hidden.</p>
-                        <button
-                          onClick={() => setIsSettingsOpen(true)}
-                          className="text-indigo-400 hover:underline mt-2 text-sm"
-                        >
-                          Review Hidden Items
-                        </button>
-                      </div>
+                        {/* REVIEW SECTION */}
+                        {visibleCandidates.some(s => s.confidence !== 'High') && (
+                          <div className="space-y-6 pt-8 border-t border-white/5">
+                            <div className="flex items-center justify-between">
+                              <div className="space-y-1">
+                                <h3 className="text-lg font-medium text-slate-300">Items for Review</h3>
+                                <p className="text-sm text-slate-500">
+                                  These items appeared only once or have uncertain frequencies.
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => {
+                                  visibleCandidates
+                                    .filter(s => s.confidence !== 'High')
+                                    .forEach(s => handleDismiss(s.name));
+                                }}
+                                className="text-xs font-medium text-slate-400 hover:text-red-400 transition-colors uppercase tracking-wider"
+                              >
+                                Ignore All
+                              </button>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 opacity-80">
+                              <AnimatePresence>
+                                {visibleCandidates
+                                  .filter(s => s.confidence !== 'High')
+                                  .map((sub, i) => (
+                                    <SubscriptionCard
+                                      key={`${sub.name}-${i}-review`}
+                                      subscription={sub}
+                                      index={i}
+                                      isNew={newSubIds.has(sub.id)}
+                                      onDismiss={(idOrName) => {
+                                        const s = visibleCandidates.find(item => item.id === idOrName || item.name === idOrName);
+                                        if (s?.isManual) handleManualDelete(idOrName);
+                                        else handleDismiss(idOrName);
+                                      }}
+                                    />
+                                  ))}
+                              </AnimatePresence>
+                            </div>
+                          </div>
+                        )}
+
+                        {visibleCandidates.length === 0 && candidates.length > 0 && (
+                          <div className="text-center py-12 border border-dashed border-slate-700 rounded-xl">
+                            <p className="text-slate-500">All detected items have been hidden.</p>
+                            <button
+                              onClick={() => setIsSettingsOpen(true)}
+                              className="text-indigo-400 hover:underline mt-2 text-sm"
+                            >
+                              Review Hidden Items
+                            </button>
+                          </div>
+                        )}
+                      </>
                     )}
-                  </>
-                )}
-              </div>
-            </div>
-          </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </>
         )}
 
         {/* Footer / Version Marker */}
@@ -613,13 +636,6 @@ function App() {
         </div>
       </main>
 
-      {/* Settings Modal */}
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onUpdate={handleSettingsUpdate}
-      />
-
       {/* Transaction Explorer */}
       <TransactionExplorer
         key={explorerInitialSearch}
@@ -631,7 +647,7 @@ function App() {
         onRemoveSubscription={handleManualDelete}
         existingSubscriptionIds={new Set(visibleCandidates.map(c => c.id))}
       />
-    </div>
+    </div >
   );
 }
 

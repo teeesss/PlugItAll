@@ -6,9 +6,11 @@ import { cn } from '../utils/cn';
 interface FileUploadProps {
   onFilesSelected: (files: File[]) => void;
   className?: string;
+  /** Renders a compact icon-button instead of the full drop zone */
+  compact?: boolean;
 }
 
-export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, className }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, className, compact = false }) => {
   const [isDragActive, setIsDragActive] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -60,6 +62,27 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, classNa
     // Note: We aren't bubbling the 'remove' up yet because App.tsx accumulates parsers.
     // This is primarily a UI feedback mechanism for now.
   };
+
+  if (compact) {
+    return (
+      <div className={cn('relative', className)}>
+        <input
+          type="file"
+          multiple
+          onChange={handleFileInput}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        />
+        <button
+          type="button"
+          className="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl bg-slate-800/60 border border-white/10
+                     text-slate-400 hover:text-white hover:border-indigo-500/50 transition-all text-xs font-medium"
+        >
+          <UploadCloud className="w-4 h-4" />
+          <span>Load More Statements</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={cn('w-full space-y-4', className)}>
