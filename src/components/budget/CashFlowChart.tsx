@@ -259,9 +259,10 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                                 data={categoryBars}
                                 layout="vertical"
                                 margin={{ top: 0, right: 80, left: 20, bottom: 0 }}
-                                onClick={(data) => {
-                                    if (data && data.activePayload && data.activePayload.length > 0 && onCategoryClick) {
-                                        const payload = data.activePayload[0].payload as { full: string };
+                                onClick={(data: unknown) => {
+                                    const d = data as { activePayload?: { payload: { full: string } }[] };
+                                    if (d && d.activePayload && d.activePayload.length > 0 && onCategoryClick) {
+                                        const payload = d.activePayload[0].payload;
                                         onCategoryClick(payload.full);
                                     }
                                 }}

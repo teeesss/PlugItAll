@@ -67,7 +67,9 @@ export function BudgetDashboard({
     const [auditFilter, setAuditFilter] = useState<'all' | 'expenses' | 'transfers' | 'income'>('all');
     const [auditCategory, setAuditCategory] = useState<string | null>(null);
 
+    // FORCE REBUILD: 2026-02-25-1720
     const handleCategoryDrilldown = (category: string) => {
+        console.log('[DEBUG] Drilling down to:', category);
         if (category === 'Income') {
             setAuditFilter('income');
             setAuditCategory(null);
