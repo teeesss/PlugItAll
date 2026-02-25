@@ -74,6 +74,9 @@ export function BudgetDashboard({
         } else if (category === 'Transfers') {
             setAuditFilter('transfers');
             setAuditCategory(null);
+        } else if (category === 'expenses') {
+            setAuditFilter('expenses');
+            setAuditCategory(null);
         } else {
             setAuditFilter('expenses');
             setAuditCategory(category);
@@ -122,7 +125,18 @@ export function BudgetDashboard({
     // Apply monthly filtering
     const displayTransactions = useMemo(() => {
         if (selectedMonth === 'all') return categorized;
-        return categorized.filter(tx => tx.date.startsWith(selectedMonth));
+        return categorized.filter(tx => {
+            try {
+                const date = new Date(tx.date);
+                if (isNaN(date.getTime())) return false;
+                // Use a consistent format: YYYY-MM
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                return `${y}-${m}` === selectedMonth;
+            } catch {
+                return false;
+            }
+        });
     }, [categorized, selectedMonth]);
 
     // Estimate months of data (based on filtered view)

@@ -415,7 +415,7 @@ export function SpendingBreakdown({
                             {/* Pie Chart */}
                             <div className="w-full lg:w-80 h-72 min-h-[280px] relative">
                                 <ResponsiveContainer width="100%" height="100%" minHeight={280} debounce={50}>
-                                    <PieChart>
+                                    <PieChart style={{ outline: 'none' }}>
                                         <Pie
                                             data={monthlyByCategory}
                                             cx="50%"

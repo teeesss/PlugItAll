@@ -119,7 +119,15 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="glass-panel rounded-2xl p-5 border border-white/8 bg-slate-800/20 hover:bg-slate-800/30 transition-all group"
+                            onClick={() => {
+                                if (stat.label === 'Net Take-Home') onCategoryClick?.('Income');
+                                else if (stat.label === 'Total Expenses') onCategoryClick?.('expenses');
+                                else if (stat.label === 'Carry Over') onCategoryClick?.('Transfers');
+                            }}
+                            className={cn(
+                                "glass-panel rounded-2xl p-5 border border-white/8 bg-slate-800/20 hover:bg-slate-800/30 transition-all group cursor-pointer",
+                                (stat.label === 'Savings Rate') && "cursor-default hover:bg-slate-800/20"
+                            )}
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{stat.label}</span>
@@ -144,35 +152,53 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                     <p className="text-xs text-slate-500 mb-6">Visualizing where your paycheck is allocated</p>
 
                     <div className="flex flex-wrap items-center gap-3 text-sm">
-                        <div className="bg-emerald-500/15 border border-emerald-500/25 rounded-xl px-4 py-3 text-emerald-300 font-mono font-bold shadow-sm">
+                        <div
+                            onClick={() => onCategoryClick?.('Income')}
+                            className="bg-emerald-500/15 border border-emerald-500/25 rounded-xl px-4 py-3 text-emerald-300 font-mono font-bold shadow-sm cursor-pointer hover:bg-emerald-500/25 transition-colors"
+                        >
                             {formatDollar(monthlyGross)} Gross
                         </div>
 
                         <ArrowRight className="w-4 h-4 text-slate-700" />
 
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 text-[11px] font-medium">
                             {monthlyFederal > 0 && (
-                                <span className="text-[11px] bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-2 rounded-xl font-medium">
+                                <span
+                                    onClick={() => onCategoryClick?.('Fees & Interest')}
+                                    className="bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-2 rounded-xl cursor-pointer hover:bg-red-500/20 transition-colors"
+                                >
                                     −{formatDollar(monthlyFederal)} Fed
                                 </span>
                             )}
                             {monthlyState > 0 && (
-                                <span className="text-[11px] bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-2 rounded-xl font-medium">
+                                <span
+                                    onClick={() => onCategoryClick?.('Fees & Interest')}
+                                    className="bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-2 rounded-xl cursor-pointer hover:bg-orange-500/20 transition-colors"
+                                >
                                     −{formatDollar(monthlyState)} State
                                 </span>
                             )}
                             {(monthlySocialSecurity + monthlyMedicare) > 0 && (
-                                <span className="text-[11px] bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-2 rounded-xl font-medium">
+                                <span
+                                    onClick={() => onCategoryClick?.('Fees & Interest')}
+                                    className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-2 rounded-xl cursor-pointer hover:bg-yellow-500/20 transition-colors"
+                                >
                                     −{formatDollar(monthlySocialSecurity + monthlyMedicare)} FICA
                                 </span>
                             )}
                             {monthlyPreTaxDeductions > 0 && (
-                                <span className="text-[11px] bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-2 rounded-xl font-medium">
+                                <span
+                                    onClick={() => onCategoryClick?.('Savings & Investments')}
+                                    className="bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-2 rounded-xl cursor-pointer hover:bg-blue-500/20 transition-colors"
+                                >
                                     −{formatDollar(monthlyPreTaxDeductions)} Pre-Tax
                                 </span>
                             )}
                             {monthlyPostTaxDeductions > 0 && (
-                                <span className="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-2 rounded-xl font-medium">
+                                <span
+                                    onClick={() => onCategoryClick?.('Other')}
+                                    className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-2 rounded-xl cursor-pointer hover:bg-purple-500/20 transition-colors"
+                                >
                                     −{formatDollar(monthlyPostTaxDeductions)} Post-Tax
                                 </span>
                             )}
@@ -180,23 +206,32 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
 
                         <ArrowRight className="w-4 h-4 text-slate-700" />
 
-                        <div className="bg-blue-500/15 border border-blue-500/25 rounded-xl px-4 py-3 text-blue-300 font-mono font-bold shadow-sm">
+                        <div
+                            onClick={() => onCategoryClick?.('Income')}
+                            className="bg-blue-500/15 border border-blue-500/25 rounded-xl px-4 py-3 text-blue-300 font-mono font-bold shadow-sm cursor-pointer hover:bg-blue-500/25 transition-colors"
+                        >
                             {formatDollar(monthlyNetPay)} Net
                         </div>
 
                         {monthlyExpenses > 0 && (
                             <>
                                 <ArrowRight className="w-4 h-4 text-slate-700" />
-                                <div className="bg-slate-700/50 border border-white/10 rounded-xl px-4 py-3 text-slate-200 font-mono font-bold">
+                                <div
+                                    onClick={() => onCategoryClick?.('expenses')}
+                                    className="bg-slate-700/50 border border-white/10 rounded-xl px-4 py-3 text-slate-200 font-mono font-bold cursor-pointer hover:bg-slate-700/70 transition-colors"
+                                >
                                     −{formatDollar(monthlyExpenses)} Expenses
                                 </div>
                                 <ArrowRight className="w-4 h-4 text-slate-700" />
-                                <div className={cn(
-                                    'rounded-xl px-4 py-3 font-mono font-bold border shadow-sm',
-                                    monthlyRemaining >= 0
-                                        ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-300'
-                                        : 'bg-red-500/20 border-red-500/30 text-red-300'
-                                )}>
+                                <div
+                                    onClick={() => onCategoryClick?.('Transfers')}
+                                    className={cn(
+                                        'rounded-xl px-4 py-3 font-mono font-bold border shadow-sm cursor-pointer transition-colors',
+                                        monthlyRemaining >= 0
+                                            ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/30'
+                                            : 'bg-red-500/20 border-red-500/30 text-red-300 hover:bg-red-500/30'
+                                    )}
+                                >
                                     {monthlyRemaining >= 0 ? '+' : ''}{formatDollar(monthlyRemaining)} {monthlyRemaining >= 0 ? 'Left' : 'Deficit'}
                                 </div>
                             </>
@@ -224,12 +259,13 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                                 data={categoryBars}
                                 layout="vertical"
                                 margin={{ top: 0, right: 80, left: 20, bottom: 0 }}
-                                onClick={(data: any) => {
+                                onClick={(data) => {
                                     if (data && data.activePayload && data.activePayload.length > 0 && onCategoryClick) {
-                                        const category = data.activePayload[0].payload.full;
-                                        onCategoryClick(category);
+                                        const payload = data.activePayload[0].payload as { full: string };
+                                        onCategoryClick(payload.full);
                                     }
                                 }}
+                                style={{ outline: 'none' }}
                             >
                                 <XAxis type="number" hide />
                                 <YAxis
