@@ -64,12 +64,12 @@ export function parseDate(dateStr: string): Date | null {
             }
           }
 
-          // Handle Year Rollover: If no explicit year was provided and the date is > 1 month 
+          // Handle Year Rollover: If no explicit year was provided and the date is > 2 days 
           // in the future relative to "now", it's likely from last year (e.g. Dec in Jan).
           if (date && !explicitYear) {
             const now = new Date();
-            const oneMonthFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-            if (date > oneMonthFromNow) {
+            const threshold = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000); // 2 days
+            if (date > threshold) {
               date.setFullYear(y - 1);
             }
           }
@@ -624,7 +624,16 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
           let description = fullLine.replace(dateMatch[0], '').replace(amountMatch[0], '').trim();
           description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '');
           description = description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
-          if (description.length > 2 && !description.toLowerCase().includes('beginning balance')) {
+          if (description.length > 2 &&
+            !description.toLowerCase().includes('beginning balance') &&
+            !description.toLowerCase().includes('new balance as of') &&
+            !description.toLowerCase().includes('payment tracker') &&
+            !description.toLowerCase().includes('thankyou points on') &&
+            !description.toLowerCase().includes('thankyou points earned')) {
+
+            // Clean up common Citi OCR noise
+            description = description.replace(/#\d+/g, '').replace(/\d{8,}/g, '').trim();
+
             // Negate: CC charges (positive on statement) become negative (expense);
             //         CC payments/refunds (negative on statement) become positive (income/credit).
             transactions.push({ date: dateObj.toLocaleDateString(), description, amount: -rawAmount });

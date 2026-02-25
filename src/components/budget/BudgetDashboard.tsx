@@ -141,6 +141,12 @@ export function BudgetDashboard({
         onShowToast(`Updated category for ${description}`);
     }, [onShowToast]);
 
+    const handleBulkOverride = useCallback((descriptions: string[], category: BudgetCategory) => {
+        descriptions.forEach(desc => saveCategoryOverride(desc, category));
+        setOverrides(getCategoryOverrides());
+        onShowToast(`Updated ${descriptions.length} transactions to ${category}`);
+    }, [onShowToast]);
+
     const hasTransactions = allTransactions.length > 0;
     const isIncomeSetup = incomeProfile.grossPayPerPeriod > 0;
 
@@ -289,6 +295,7 @@ export function BudgetDashboard({
                                     monthsOfData={monthsOfData}
                                     budgetGoals={budgetGoals}
                                     onCategoryChange={handleOverride}
+                                    onBulkCategoryChange={handleBulkOverride}
                                 />
                             </motion.div>
                         )}
@@ -306,6 +313,7 @@ export function BudgetDashboard({
                                     monthsOfData={monthsOfData}
                                     budgetGoals={budgetGoals}
                                     onCategoryChange={handleOverride}
+                                    onBulkCategoryChange={handleBulkOverride}
                                     defaultShowList={true}
                                 />
                             </motion.div>

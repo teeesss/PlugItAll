@@ -15,9 +15,12 @@ import {
     Filter,
     AlertCircle,
     ChevronRight,
+    CheckSquare,
+    Square,
+    Zap
 } from 'lucide-react';
 import type { BudgetCategory, CategorizedTransaction } from '../../utils/categorizer';
-import { aggregateByCategory, getExpenses } from '../../utils/categorizer';
+import { aggregateByCategory, getExpenses, ALL_CATEGORIES, CATEGORY_COLORS } from '../../utils/categorizer';
 import { formatDollar } from '../../utils/budgetEngine';
 import type { BudgetGoal } from '../../utils/budgetEngine';
 
@@ -26,42 +29,9 @@ interface SpendingBreakdownProps {
     monthsOfData: number;
     budgetGoals?: BudgetGoal[];
     onCategoryChange?: (description: string, category: BudgetCategory) => void;
+    onBulkCategoryChange?: (descriptions: string[], category: BudgetCategory) => void;
     defaultShowList?: boolean;
 }
-
-// Curated color palette for categories
-export const CATEGORY_COLORS: Partial<Record<BudgetCategory, string>> = {
-    Housing: '#6366f1',
-    Utilities: '#8b5cf6',
-    Groceries: '#22c55e',
-    'Dining & Restaurants': '#f59e0b',
-    Transportation: '#3b82f6',
-    'Fuel & Gas': '#ef4444',
-    Healthcare: '#ec4899',
-    Insurance: '#14b8a6',
-    'Subscriptions & Streaming': '#a855f7',
-    'Shopping & Retail': '#f97316',
-    Entertainment: '#eab308',
-    Travel: '#06b6d4',
-    Education: '#84cc16',
-    'Savings & Investments': '#10b981',
-    'Fees & Interest': '#dc2626',
-    Childcare: '#fb7185',
-    Pets: '#fbbf24',
-    'Personal Care': '#c084fc',
-    'Gifts & Donations': '#34d399',
-    Transfers: '#64748b',
-    Income: '#4ade80',
-    Other: '#475569',
-};
-
-const ALL_CATEGORIES: BudgetCategory[] = [
-    'Housing', 'Utilities', 'Groceries', 'Dining & Restaurants', 'Transportation',
-    'Fuel & Gas', 'Healthcare', 'Insurance', 'Subscriptions & Streaming',
-    'Shopping & Retail', 'Entertainment', 'Travel', 'Education',
-    'Savings & Investments', 'Fees & Interest', 'Childcare', 'Pets',
-    'Personal Care', 'Gifts & Donations', 'Transfers', 'Income', 'Other'
-];
 
 const DEFAULT_COLOR = '#475569';
 
@@ -69,8 +39,19 @@ function getColor(cat: string): string {
     return CATEGORY_COLORS[cat as BudgetCategory] ?? DEFAULT_COLOR;
 }
 
+interface TooltipProps {
+    active?: boolean;
+    payload?: Array<{
+        name: string;
+        value: number;
+        payload: {
+            color: string;
+        };
+    }>;
+}
+
 // Custom tooltip for pie chart
-const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
+const CustomTooltip = ({ active, payload }: TooltipProps) => {
     if (active && payload && payload.length) {
         const item = payload[0];
         return (
@@ -97,11 +78,13 @@ export function SpendingBreakdown({
     monthsOfData,
     budgetGoals = [],
     onCategoryChange,
+    onBulkCategoryChange,
     defaultShowList = false
 }: SpendingBreakdownProps) {
     const [showList, setShowList] = useState(defaultShowList);
     const [selectedCategory, setSelectedCategory] = useState<BudgetCategory | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedTransactions, setSelectedTransactions] = useState<Set<string>>(new Set());
 
     const expenses = useMemo(() => getExpenses(transactions), [transactions]);
 
@@ -110,7 +93,7 @@ export function SpendingBreakdown({
         const result: { name: string; value: number; color: string; goal?: number }[] = [];
         for (const [cat, total] of Object.entries(raw)) {
             const monthly = total / Math.max(monthsOfData, 1);
-            if (monthly >= 1) {
+            if (monthly >= 0.01) {
                 const goal = budgetGoals.find(g => g.category === cat)?.monthlyLimit;
                 result.push({
                     name: cat,
@@ -125,7 +108,6 @@ export function SpendingBreakdown({
 
     const totalMonthly = monthlyByCategory.reduce((s, c) => s + c.value, 0);
 
-    // Drill-down logic: transactions for a specific category
     const categoryTransactions = useMemo(() => {
         if (!selectedCategory) return [];
         return expenses.filter(tx => tx.category === selectedCategory)
@@ -140,6 +122,32 @@ export function SpendingBreakdown({
             tx.amount.toString().includes(q)
         );
     }, [categoryTransactions, searchQuery]);
+
+    const toggleSelect = (desc: string) => {
+        const next = new Set(selectedTransactions);
+        if (next.has(desc)) next.delete(desc);
+        else next.add(desc);
+        setSelectedTransactions(next);
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedTransactions.size === filteredCategoryTxs.length) {
+            setSelectedTransactions(new Set());
+        } else {
+            setSelectedTransactions(new Set(filteredCategoryTxs.map(tx => tx.description)));
+        }
+    };
+
+    const handleBulkApply = (category: BudgetCategory) => {
+        if (onBulkCategoryChange) {
+            onBulkCategoryChange(Array.from(selectedTransactions), category);
+            setSelectedTransactions(new Set());
+        } else if (onCategoryChange) {
+            // Fallback to individual updates if bulk not available
+            Array.from(selectedTransactions).forEach(desc => onCategoryChange(desc, category));
+            setSelectedTransactions(new Set());
+        }
+    };
 
     if (monthlyByCategory.length === 0 && !selectedCategory) {
         return (
@@ -167,13 +175,15 @@ export function SpendingBreakdown({
 
     return (
         <div className="glass-panel rounded-2xl border border-white/8 overflow-hidden">
-            {/* Header */}
             <div className="p-5 border-b border-white/6 bg-slate-800/20 backdrop-blur-sm">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                         {selectedCategory && (
                             <button
-                                onClick={() => setSelectedCategory(null)}
+                                onClick={() => {
+                                    setSelectedCategory(null);
+                                    setSelectedTransactions(new Set());
+                                }}
                                 className="p-2 -ml-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
                             >
                                 <ChevronLeft className="w-5 h-5" />
@@ -217,7 +227,7 @@ export function SpendingBreakdown({
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        className="flex flex-col h-[400px]"
+                        className="flex flex-col h-[450px]"
                     >
                         {/* Search & Stats Bar */}
                         <div className="px-5 py-3 bg-slate-900/40 border-b border-white/4 flex items-center justify-between gap-4">
@@ -240,9 +250,18 @@ export function SpendingBreakdown({
                         {/* Transaction Table */}
                         <div className="flex-1 overflow-y-auto custom-scrollbar">
                             <table className="w-full text-left border-collapse">
-                                <thead className="sticky top-0 bg-slate-900/90 backdrop-blur-md text-[10px] text-slate-500 uppercase tracking-wider">
+                                <thead className="sticky top-0 bg-slate-900/90 backdrop-blur-md text-[10px] text-slate-500 uppercase tracking-wider z-10">
                                     <tr>
-                                        <th className="px-5 py-2.5 font-semibold">Date</th>
+                                        <th className="px-5 py-2.5 font-semibold w-12">
+                                            <button onClick={toggleSelectAll} className="p-1 hover:text-indigo-400">
+                                                {selectedTransactions.size === filteredCategoryTxs.length && filteredCategoryTxs.length > 0 ? (
+                                                    <CheckSquare className="w-3.5 h-3.5 text-indigo-400" />
+                                                ) : (
+                                                    <Square className="w-3.5 h-3.5" />
+                                                )}
+                                            </button>
+                                        </th>
+                                        <th className="px-2 py-2.5 font-semibold w-24">Date</th>
                                         <th className="px-2 py-2.5 font-semibold">Description</th>
                                         <th className="px-5 py-2.5 font-semibold text-right">Amount</th>
                                         <th className="px-5 py-2.5 font-semibold w-24">Action</th>
@@ -252,9 +271,18 @@ export function SpendingBreakdown({
                                     {filteredCategoryTxs.map((tx, i) => (
                                         <tr
                                             key={`${tx.date}-${i}`}
-                                            className="border-b border-white/[0.03] hover:bg-white/[0.02] group transition-colors"
+                                            className={`border-b border-white/[0.03] hover:bg-white/[0.02] group transition-colors ${selectedTransactions.has(tx.description) ? 'bg-indigo-500/5' : ''}`}
                                         >
-                                            <td className="px-5 py-3 text-slate-500 font-mono">{tx.date}</td>
+                                            <td className="px-5 py-3">
+                                                <button onClick={() => toggleSelect(tx.description)} className="p-1 text-slate-600 group-hover:text-slate-400 hover:text-indigo-400">
+                                                    {selectedTransactions.has(tx.description) ? (
+                                                        <CheckSquare className="w-3.5 h-3.5 text-indigo-400" />
+                                                    ) : (
+                                                        <Square className="w-3.5 h-3.5" />
+                                                    )}
+                                                </button>
+                                            </td>
+                                            <td className="px-2 py-3 text-slate-500 font-mono">{tx.date}</td>
                                             <td className="px-2 py-3">
                                                 <div className="text-slate-200 truncate max-w-xs group-hover:max-w-none transition-all" title={tx.description}>
                                                     {tx.description}
@@ -278,7 +306,7 @@ export function SpendingBreakdown({
                                     ))}
                                     {filteredCategoryTxs.length === 0 && (
                                         <tr>
-                                            <td colSpan={4} className="py-12 text-center text-slate-600 italic">
+                                            <td colSpan={5} className="py-12 text-center text-slate-600 italic">
                                                 No transactions matching your search.
                                             </td>
                                         </tr>
@@ -286,6 +314,41 @@ export function SpendingBreakdown({
                                 </tbody>
                             </table>
                         </div>
+
+                        {/* Bulk Action Footer */}
+                        {selectedTransactions.size > 0 && (
+                            <motion.div
+                                initial={{ y: 50 }}
+                                animate={{ y: 0 }}
+                                className="px-5 py-3 bg-indigo-600/90 backdrop-blur-md flex items-center justify-between border-t border-indigo-400/30"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                        <Zap className="w-4 h-4 text-white" />
+                                    </div>
+                                    <span className="text-sm text-white font-medium">{selectedTransactions.size} items selected</span>
+                                </div>
+                                <div className="flex items-center space-x-3">
+                                    <span className="text-[10px] text-indigo-100 uppercase tracking-wider font-bold">Categorize as:</span>
+                                    <select
+                                        className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-white/40 cursor-pointer"
+                                        onChange={(e) => handleBulkApply(e.target.value as BudgetCategory)}
+                                        value=""
+                                    >
+                                        <option value="" disabled>Select category...</option>
+                                        {ALL_CATEGORIES.map(cat => (
+                                            <option key={cat} value={cat} className="text-slate-900">{cat}</option>
+                                        ))}
+                                    </select>
+                                    <button
+                                        onClick={() => setSelectedTransactions(new Set())}
+                                        className="text-white/60 hover:text-white text-[10px] font-bold uppercase"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
                     </motion.div>
                 ) : !showList ? (
                     <motion.div
@@ -297,8 +360,8 @@ export function SpendingBreakdown({
                     >
                         <div className="flex flex-col lg:flex-row gap-8 items-center">
                             {/* Pie Chart */}
-                            <div className="w-full lg:w-80 h-72 relative">
-                                <ResponsiveContainer width="100%" height="100%">
+                            <div className="w-full lg:w-80 h-72 min-h-[280px] relative">
+                                <ResponsiveContainer width="100%" height="100%" minHeight={280} debounce={50}>
                                     <PieChart>
                                         <Pie
                                             data={monthlyByCategory}
@@ -451,21 +514,6 @@ export function SpendingBreakdown({
                             <span>Click any category to drill down</span>
                         </div>
                     </div>
-                    {totalMonthly > 0 && (
-                        <div className="flex items-center space-x-2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                            <span>Analysis complete</span>
-                            <div className="flex items-center space-x-1">
-                                {[1, 2, 3].map(i => (
-                                    <motion.div
-                                        key={i}
-                                        animate={{ opacity: [0.2, 1, 0.2] }}
-                                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
-                                        className="w-1 h-1 rounded-full bg-indigo-400"
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
             )}
         </div>

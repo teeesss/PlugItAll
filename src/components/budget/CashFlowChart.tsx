@@ -210,8 +210,8 @@ export function CashFlowChart({ summary }: CashFlowChartProps) {
                 <div className="glass-panel rounded-2xl p-5 border border-white/8">
                     <h4 className="text-sm font-semibold text-slate-300 mb-1">Top Spending Categories</h4>
                     <p className="text-xs text-slate-500 mb-4">Monthly average spend</p>
-                    <div className="h-52">
-                        <ResponsiveContainer width="100%" height="100%">
+                    <div className="h-52 min-h-[200px]">
+                        <ResponsiveContainer width="100%" height="100%" minHeight={200} debounce={50}>
                             <BarChart data={topExpenses} layout="vertical" margin={{ top: 0, right: 60, left: 0, bottom: 0 }}>
                                 <XAxis type="number" tickFormatter={v => `$${v}`} tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                                 <YAxis type="category" dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} width={70} />
