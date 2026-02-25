@@ -14,6 +14,7 @@ import {
     computeBudgetSummary,
     estimateMonthsOfData,
     saveBudgetGoals,
+    formatDollar,
 } from '../../utils/budgetEngine';
 import type { IncomeProfile, BudgetGoal } from '../../utils/budgetEngine';
 import type { BudgetCategory } from '../../utils/categorizer';
@@ -38,13 +39,14 @@ interface BudgetDashboardProps {
     onShowToast: (message: string) => void;
 }
 
-type BudgetView = 'overview' | 'spending' | 'goals' | 'setup';
+type BudgetView = 'overview' | 'spending' | 'reconciliation' | 'goals' | 'setup';
 
 const TAB_VIEWS = [
     { id: 'overview' as BudgetView, label: 'Overview', icon: BarChart2 },
     { id: 'spending' as BudgetView, label: 'Spending', icon: PieChart },
-    { id: 'goals' as BudgetView, label: 'Budget Goals', icon: Edit3 },
-    { id: 'setup' as BudgetView, label: 'Income Setup', icon: Sparkles },
+    { id: 'reconciliation' as BudgetView, label: 'Audit / Reconciliation', icon: RefreshCcw },
+    { id: 'goals' as BudgetView, label: 'Goals', icon: Edit3 },
+    { id: 'setup' as BudgetView, label: 'Setup', icon: Sparkles },
 ];
 
 export function BudgetDashboard({
@@ -67,7 +69,13 @@ export function BudgetDashboard({
         const combined = [...sharedTransactions, ...budgetTransactions];
         const seen = new Set<string>();
         return combined.filter(tx => {
-            const key = `${tx.date}-${tx.amount.toFixed(2)}-${tx.description.substring(0, 20).toUpperCase().trim()}`;
+            // Highly specific key: Date, Amount, First 40 chars of Desc, and a unique hash
+            const key = `${tx.date}-${tx.amount.toFixed(2)}-${tx.description.substring(0, 40).toUpperCase().trim()}`;
+
+            // To allow legitimate duplicates (e.g. 2 x $5 coffee), we'd need a way to distinguish them.
+            // Since banks don't always provide IDs, if we see the EXACT same key twice, 
+            // it's likely a duplicate from DIFFERENT files, BUT it could be a real double purchase.
+            // For budget tracking, we use the seen set to prevent multi-file overlap.
             if (seen.has(key)) return false;
             seen.add(key);
             return true;
@@ -316,6 +324,113 @@ export function BudgetDashboard({
                                     onBulkCategoryChange={handleBulkOverride}
                                     defaultShowList={true}
                                 />
+                            </motion.div>
+                        )}
+
+                        {activeView === 'reconciliation' && (
+                            <motion.div
+                                key="reconciliation"
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -8 }}
+                                transition={{ duration: 0.2 }}
+                                className="space-y-6"
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-slate-900/40">
+                                        <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Total Cash Outflow</p>
+                                        <p className="text-2xl font-bold text-slate-100">
+                                            {formatDollar(categorized.filter(tx => tx.amount < 0).reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        </p>
+                                        <p className="text-[10px] text-slate-600 mt-1">Total money leaving your accounts</p>
+                                    </div>
+                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-emerald-500/5">
+                                        <p className="text-[10px] text-emerald-500/70 uppercase font-bold mb-1">Categorized Expenses</p>
+                                        <p className="text-2xl font-bold text-emerald-400">
+                                            {formatDollar(categorized.filter(tx => tx.category !== 'Transfers' && tx.category !== 'Income' && tx.amount < 0).reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        </p>
+                                        <p className="text-[10px] text-slate-600 mt-1">Budgetable spending</p>
+                                    </div>
+                                    <div className="glass-panel p-5 rounded-2xl border border-white/8 bg-indigo-500/5">
+                                        <p className="text-[10px] text-indigo-400 uppercase font-bold mb-1">Transfers & Hidden</p>
+                                        <p className="text-2xl font-bold text-indigo-300">
+                                            {formatDollar(categorized.filter(tx => tx.category === 'Transfers').reduce((s, tx) => s + Math.abs(tx.amount), 0))}
+                                        </p>
+                                        <p className="text-[10px] text-slate-600 mt-1">Credit card payments, transfers, etc.</p>
+                                    </div>
+                                </div>
+
+                                <div className="glass-panel rounded-2xl border border-white/8 overflow-hidden">
+                                    <div className="p-5 border-b border-white/6 bg-slate-800/20">
+                                        <h3 className="font-bold text-slate-100">Cash Flow Audit</h3>
+                                        <p className="text-xs text-slate-500 mt-1">
+                                            Reviewing all non-expense transactions to ensure 100% data integrity.
+                                        </p>
+                                    </div>
+                                    <div className="p-0 max-h-[400px] overflow-y-auto">
+                                        <table className="w-full text-left border-collapse">
+                                            <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-md text-[10px] text-slate-500 uppercase tracking-wider z-10 p-3">
+                                                <tr>
+                                                    <th className="px-5 py-3">Date</th>
+                                                    <th className="px-5 py-3">Description</th>
+                                                    <th className="px-5 py-3">Category</th>
+                                                    <th className="px-5 py-3 text-right">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-[11px]">
+                                                {categorized
+                                                    .filter(tx => tx.category === 'Transfers' || tx.category === 'Other')
+                                                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                                                    .map((tx, i) => (
+                                                        <tr key={i} className="border-b border-white/[0.03] hover:bg-white/[0.04] transition-colors">
+                                                            <td className="px-5 py-3 text-slate-500 font-mono">{tx.date}</td>
+                                                            <td className="px-5 py-3 text-slate-200">{tx.description}</td>
+                                                            <td className="px-5 py-3">
+                                                                <span className={cn(
+                                                                    "px-2 py-0.5 rounded-full",
+                                                                    tx.category === 'Transfers' ? "bg-indigo-500/10 text-indigo-400" : "bg-slate-500/10 text-slate-400"
+                                                                )}>
+                                                                    {tx.category}
+                                                                </span>
+                                                            </td>
+                                                            <td className="px-5 py-3 text-right font-mono font-bold text-slate-200">
+                                                                {formatDollar(tx.amount)}
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                {/* Rule Management Persistence Section */}
+                                <div className="glass-panel p-6 rounded-2xl border border-white/8 bg-slate-800/20">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="font-bold text-slate-100 flex items-center space-x-2">
+                                                <RefreshCcw className="w-4 h-4 text-indigo-400" />
+                                                <span>Rule Persistence</span>
+                                            </h4>
+                                            <p className="text-xs text-slate-500 mt-1">
+                                                You have {Object.keys(overrides).length} manual overrides saved for this browser.
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                const snippet = JSON.stringify(overrides, null, 2);
+                                                navigator.clipboard.writeText(snippet);
+                                                onShowToast('Override snippet copied to clipboard!');
+                                            }}
+                                            className="px-4 py-2 bg-indigo-500/20 border border-indigo-500/30 rounded-xl text-xs text-indigo-400 hover:bg-indigo-500/30 transition-all font-bold"
+                                        >
+                                            Export Rules for Permanent Integration
+                                        </button>
+                                    </div>
+                                    <p className="text-[10px] text-slate-600 mt-4 leading-relaxed italic">
+                                        Manual categorizations are currently stored in your browser's local storage. To make them part of the permanent
+                                        system code (surviving cache clears or updates), use the Export button above and share the snippet with the development team.
+                                    </p>
+                                </div>
                             </motion.div>
                         )}
 

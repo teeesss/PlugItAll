@@ -477,3 +477,18 @@ export function totalIncome(transactions: CategorizedTransaction[]): number {
 export function totalExpenses(transactions: CategorizedTransaction[]): number {
     return getExpenses(transactions).reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
 }
+
+/**
+ * Returns all transfer transactions.
+ */
+export function getTransfers(transactions: CategorizedTransaction[]): CategorizedTransaction[] {
+    return transactions.filter(tx => tx.category === 'Transfers');
+}
+
+/**
+ * Returns all Other (uncategorized) transactions that aren't expenses or income.
+ * Usually expenses with low confidence or missed rules.
+ */
+export function getUncategorized(transactions: CategorizedTransaction[]): CategorizedTransaction[] {
+    return transactions.filter(tx => tx.category === 'Other');
+}
