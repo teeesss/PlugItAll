@@ -20,6 +20,7 @@ import type { BudgetCategory } from '../../utils/categorizer';
 import { IncomeSetup } from './IncomeSetup';
 import { SpendingBreakdown } from './SpendingBreakdown';
 import { BudgetGoals } from './BudgetGoals';
+import { getCategoryOverrides, saveCategoryOverride } from '../../utils/categoryStorage';
 
 import { CashFlowChart } from './CashFlowChart';
 import { FileUpload } from '../FileUpload';
@@ -59,6 +60,7 @@ export function BudgetDashboard({
     const [isUploading, setIsUploading] = useState(false);
     const [uploadKey, setUploadKey] = useState(0);
     const [activeView, setActiveView] = useState<BudgetView>('overview');
+    const [overrides, setOverrides] = useState(() => getCategoryOverrides());
 
     // Merge shared + budget-specific transactions, deduplicate
     const allTransactions = useMemo(() => {
@@ -73,7 +75,7 @@ export function BudgetDashboard({
     }, [sharedTransactions, budgetTransactions]);
 
     // Categorize all transactions
-    const categorized = useMemo(() => categorizeAll(allTransactions), [allTransactions]);
+    const categorized = useMemo(() => categorizeAll(allTransactions, overrides), [allTransactions, overrides]);
 
     // Estimate months of data
     const monthsOfData = useMemo(() => estimateMonthsOfData(allTransactions), [allTransactions]);
@@ -132,6 +134,12 @@ export function BudgetDashboard({
             onShowToast('Budget transaction data cleared.');
         }
     };
+
+    const handleOverride = useCallback((description: string, category: BudgetCategory) => {
+        saveCategoryOverride(description, category);
+        setOverrides(getCategoryOverrides());
+        onShowToast(`Updated category for ${description}`);
+    }, [onShowToast]);
 
     const hasTransactions = allTransactions.length > 0;
     const isIncomeSetup = incomeProfile.grossPayPerPeriod > 0;
@@ -279,6 +287,8 @@ export function BudgetDashboard({
                                 <SpendingBreakdown
                                     transactions={categorized}
                                     monthsOfData={monthsOfData}
+                                    budgetGoals={budgetGoals}
+                                    onCategoryChange={handleOverride}
                                 />
                             </motion.div>
                         )}
@@ -294,6 +304,9 @@ export function BudgetDashboard({
                                 <SpendingBreakdown
                                     transactions={categorized}
                                     monthsOfData={monthsOfData}
+                                    budgetGoals={budgetGoals}
+                                    onCategoryChange={handleOverride}
+                                    defaultShowList={true}
                                 />
                             </motion.div>
                         )}

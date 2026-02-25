@@ -197,7 +197,8 @@ const CATEGORY_RULES: CategoryRule[] = [
             'gap', 'old navy', 'banana republic', 'h&m', 'zara', 'forever 21',
             'ross', 'tjmaxx', 'tj maxx', 'marshalls', 'burlington', 'tuesday morning',
             'dollar general', 'dollar tree', 'five below', 'big lots', 'overstock',
-            'paypal', 'shopify', 'square', 'retail', 'store',
+            'paypal', 'shopify', 'square', 'retail', 'store', 'marketplace',
+            'temu.com', 'ali express', 'wal-mart', 'wm supercenter', 'tgt',
         ],
         weight: 6,
     },
@@ -310,22 +311,17 @@ const CATEGORY_RULES: CategoryRule[] = [
     },
 
     // --- TRANSFERS (inter-account payments, ATM, peer-to-peer) ---
-    // These are NOT expenses — they represent money moving between accounts.
-    // High weight to ensure "PAYMENT TO CITI" from a bank statement doesn't
-    // get counted as an expense alongside the actual credit card charges.
     {
         category: 'Transfers',
         keywords: [
             'transfer', 'zelle', 'venmo', 'cashapp', 'paypal transfer', 'wire transfer',
             'atm withdrawal', 'cash withdrawal', 'check',
-            // Inter-account / credit card payments (bank side)
             'payment to', 'online payment', 'autopay', 'auto pay', 'automatic payment',
             'bill pay', 'payment thank you', 'payment received',
             'credit card payment', 'card payment',
-            // Credit card payment received (credit card side)
             'payment - thank you', 'online pymt', 'ach payment',
         ],
-        weight: 6, // Higher than generic 'Other' to ensure payments are classified as Transfers
+        weight: 6,
     },
 ];
 
@@ -334,11 +330,17 @@ const CATEGORY_RULES: CategoryRule[] = [
  */
 export function categorizeTransaction(
     description: string,
-    amount: number
+    amount: number,
+    overrides: Record<string, string> = {}
 ): { category: BudgetCategory; confidence: 'High' | 'Medium' | 'Low' } {
     const normalized = description.toLowerCase().trim();
 
-    // Income: positive amounts with income keywords get high priority
+    // 0. Manual Override Priority
+    if (overrides[normalized]) {
+        return { category: overrides[normalized] as BudgetCategory, confidence: 'High' };
+    }
+
+    // 1. Income: positive amounts with income keywords get high priority
     if (amount > 0) {
         const incomeRule = CATEGORY_RULES.find(r => r.category === 'Income');
         if (incomeRule) {
@@ -351,7 +353,6 @@ export function categorizeTransaction(
 
     let bestScore = 0;
     let bestCategory: BudgetCategory = 'Other';
-    let matchCount = 0;
 
     for (const rule of CATEGORY_RULES) {
         for (const keyword of rule.keywords) {
@@ -360,9 +361,6 @@ export function categorizeTransaction(
                 if (score > bestScore) {
                     bestScore = score;
                     bestCategory = rule.category;
-                    matchCount = 1;
-                } else if (score === bestScore && rule.category === bestCategory) {
-                    matchCount++;
                 }
             }
         }
@@ -380,10 +378,11 @@ export function categorizeTransaction(
  * Categorizes an array of raw transactions.
  */
 export function categorizeAll(
-    transactions: Array<{ date: string; description: string; amount: number }>
+    transactions: Array<{ date: string; description: string; amount: number }>,
+    overrides: Record<string, string> = {}
 ): CategorizedTransaction[] {
     return transactions.map(tx => {
-        const { category, confidence } = categorizeTransaction(tx.description, tx.amount);
+        const { category, confidence } = categorizeTransaction(tx.description, tx.amount, overrides);
         return { ...tx, category, confidence };
     });
 }
