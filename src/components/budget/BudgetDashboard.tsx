@@ -66,6 +66,7 @@ export function BudgetDashboard({
     const [selectedMonth, setSelectedMonth] = useState<string>('all');
     const [auditFilter, setAuditFilter] = useState<'all' | 'expenses' | 'transfers' | 'income'>('all');
     const [auditCategory, setAuditCategory] = useState<string | null>(null);
+    const [sourceFilter, setSourceFilter] = useState<string>('all');
 
     // FORCE REBUILD: 2026-02-25-1720
     const handleCategoryDrilldown = (category: string) => {
@@ -122,13 +123,21 @@ export function BudgetDashboard({
         return Array.from(months).sort((a, b) => b.localeCompare(a));
     }, [categorized]);
 
-    // Apply monthly filtering
+    // Apply monthly + source filtering
     const displayTransactions = useMemo(() => {
-        if (selectedMonth === 'all') return categorized;
-        return categorized.filter(tx => {
-            return tx.date.startsWith(selectedMonth);
-        });
-    }, [categorized, selectedMonth]);
+        let txs = selectedMonth === 'all' ? categorized : categorized.filter(tx => tx.date.startsWith(selectedMonth));
+        if (sourceFilter !== 'all') {
+            txs = txs.filter(tx => (tx.source ?? 'Unknown') === sourceFilter);
+        }
+        return txs;
+    }, [categorized, selectedMonth, sourceFilter]);
+
+    // Derive unique source files from all transactions
+    const availableSources = useMemo(() => {
+        const sources = new Set<string>();
+        categorized.forEach(tx => sources.add(tx.source ?? 'Unknown'));
+        return Array.from(sources).sort();
+    }, [categorized]);
 
     // Estimate months of data (based on filtered view)
     const monthsOfData = useMemo(() => {
@@ -492,16 +501,42 @@ export function BudgetDashboard({
                                                 Reviewing {selectedMonth === 'all' ? 'All Time' : selectedMonth} transactions
                                             </p>
                                         </div>
-                                        {(auditFilter !== 'all' || auditCategory) && (
+                                        {(auditFilter !== 'all' || auditCategory || sourceFilter !== 'all') && (
                                             <button
                                                 onClick={() => {
                                                     setAuditFilter('all');
                                                     setAuditCategory(null);
+                                                    setSourceFilter('all');
                                                 }}
                                                 className="text-[10px] px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all uppercase font-bold"
                                             >
                                                 Reset Filters
                                             </button>
+                                        )}
+                                    </div>
+                                    <div className="px-5 py-3 border-b border-white/5 flex flex-wrap gap-3 items-center bg-slate-900/20">
+                                        {/* Source / Bank filter */}
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Source:</span>
+                                            <select
+                                                value={sourceFilter}
+                                                onChange={e => setSourceFilter(e.target.value)}
+                                                className="text-[10px] bg-slate-800/60 border border-white/10 rounded-lg px-2 py-1 text-slate-300 hover:border-white/20 focus:outline-none focus:border-indigo-500/50 transition-colors cursor-pointer max-w-[200px] truncate"
+                                            >
+                                                <option value="all">All Sources</option>
+                                                {availableSources.map(src => (
+                                                    <option key={src} value={src}>{src}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Sort:</span>
+                                            <span className="text-[10px] text-slate-400">Newest first</span>
+                                        </div>
+                                        {sourceFilter !== 'all' && (
+                                            <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">
+                                                Filtered: {displayTransactions.length} txns from {sourceFilter}
+                                            </span>
                                         )}
                                     </div>
                                     <div className="p-0 max-h-[500px] overflow-y-auto custom-scrollbar">

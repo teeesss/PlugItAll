@@ -1,5 +1,35 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-02-26 (SoFi Parser + Categorizer + Date Fix)
+
+### 🔴 Bug: Future Dates on Citi / SoFi Statements (e.g. "Feb 28" parsed as 2026-02-28)
+- **Problem**: Transactions from prior-year statements appeared with a date 1-2 days in the future (e.g. "Feb 28" showing as 2026-02-28 when today is Feb 26, 2026). This skewed all "All Time" views and could cause phantom future transactions to appear.
+- **Root Cause**: `parseDate()` in `parser.ts` uses a year-rollover heuristic for dates with no explicit year (e.g. `MMM DD` from Citi, or `MM/DD` from SoFi). The rollover threshold was **30 days** for the `MMM DD YYYY` fmt and **2 days** for `MM/DD`. Both were too large. "Feb 28" parsed on Feb 26 is only 2 days in the future — under the 30-day threshold — so it stayed as the **current year** instead of rolling back to the prior year.
+- **Resolution**: Changed both rollover thresholds to **1 day** (24 hours). Any date parsed without an explicit year that is more than 1 day in the future is assigned to the prior calendar year.
+- **Lesson**: Never use > 1-day future tolerance for year inference on statement dates. Statements are always historical. Even end-of-month edge cases (Feb 28 = 2 days out) break a 2-day window.
+- **Status**: Fixed. Tests updated in `tests/date_parsing.test.ts`.
+
+### 🔴 Bug: SoFi PDF Parser — 0 Transactions Due to Leading Space on Each Row
+- **Problem**: After rewriting `parseSofiSpecific` to use a `^`-anchored regex for date detection, ALL 72 SoFi PDFs returned 0 transactions. Previously returned 1,466 transactions.
+- **Root Cause**: SoFi's PDF text items prepend a leading space (` Dec 31, 2020`) to every row. The `^` anchor requires the line to start with a letter, but with a leading space it never matched.
+- **Resolution**: Added `const trimmedLine = fullLine.trimStart()` before the date regex match.
+- **Lesson**: Always `trimStart()` before applying a `^`-anchored line regex to PDF text content. PDF items frequently have invisible leading/trailing spaces.
+- **Status**: Fixed. Verified: 1,466 transactions across 72 SoFi PDFs, 0 balance-sweep / reward-redemption leaks.
+
+### 🔴 Bug: SoFi PDF Parser — Boilerplate Pages Blocked ALL Pages ("Important Information")
+- **Problem**: Added a page-level skip for boilerplate (`BOILERPLATE_MARKERS` list). Result: 0 transactions from all PDFs because the markers (`deposit agreement`, `sofi insured deposit program`, etc.) appeared in the footer text on EVERY page, not just the legal pages.
+- **Root Cause**: Page-level full-text scan matched footer boilerplate present on every page, causing all pages to be skipped.
+- **Resolution**: Replaced page-level skip with **row-level** `inBoilerplateSection` flag. Only skip remaining rows on a page AFTER a boilerplate section heading is encountered (using `^` regex on `fullLine.trim()`).
+- **Lesson**: Never skip an entire PDF page based on a substring search of all its text. Use row-level markers anchored to the start of lines.
+- **Status**: Fixed.
+
+### 🟡 Categorizer Gap: 300+ Transactions Falling Into "Other"
+- **Problem**: FID BKG SVC LLC MONEYLINE (Fidelity), STASH CAPITAL, SWAN RAYMOND JO (Bitcoin), DOLLAR-GE / DOLLARTRE / FIVE BELO (abbreviated store names), ATM FLFWNB, CARDMEMBER SERV WEB PYMT, OUR FAMILY WIZARD, HSMV CRASH REPORT, OBERLIESEN LAW FIRM, and ~30 other merchants/patterns were uncategorized.
+- **Root Cause**: Categorizer keyword list didn't account for SoFi's abbreviated vendor names (truncated to fit column width), or the specific Fidelity MoneyLine payment pattern, or local FL merchants.
+- **Resolution**: Added 60+ new keywords across all categories. Added high-priority weight-12 override rule for `acctverify`/`trialdebit` so bank verification micro-deposits always categorize as Transfers regardless of bank name in description.
+- **Tests**: Created `tests/user_labeled_categories.test.ts` with 39 tests covering every labeled merchant.
+- **Status**: Fixed.
+
 ## Session: 2026-02-26 (Performance & UX Polish)
 
 ### 🔴 Bug: Vite Manual Chunks Breaking React Execution Order (Production Crash)

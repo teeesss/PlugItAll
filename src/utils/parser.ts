@@ -71,12 +71,12 @@ export function parseDate(dateStr: string): Date | null {
             }
           }
 
-          // Handle Year Rollover: If no explicit year was provided and the date is > 2 days 
-          // in the future relative to "now", it's likely from last year (e.g. Dec in Jan).
+          // Handle Year Rollover: If no explicit year and the date is in the future,
+          // it's from last year's statement (e.g. "Feb 28" parsed on "Feb 26" -> last year).
           if (date && !explicitYear) {
             const now = new Date();
-            const threshold = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000); // 2 days
-            if (date > threshold) {
+            // Use 1-day tolerance (same-day or next-day POST only; everything else = prior year)
+            if (date.getTime() > now.getTime() + 24 * 60 * 60 * 1000) {
               date.setFullYear(y - 1);
             }
           }
@@ -91,8 +91,8 @@ export function parseDate(dateStr: string): Date | null {
           date = new Date(`${match[1]} ${match[2]}, ${year}`);
           if (date && !hasYear) {
             const now = new Date();
-            const oneMonthFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-            if (date > oneMonthFromNow) {
+            // 1-day tolerance: anything more than 1 day in the future must be from last year
+            if (date.getTime() > now.getTime() + 24 * 60 * 60 * 1000) {
               date.setFullYear(year - 1);
             }
           }
@@ -418,7 +418,7 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
     reader.onload = () => {
       const content = reader.result as string;
       try {
-        const transactions = parseCSVString(content);
+        const transactions = parseCSVString(content).map(t => ({ ...t, source: file.name }));
         resolve(transactions);
       } catch (e) {
         reject(e);
@@ -438,7 +438,8 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
 export const parsePDF = async (file: File): Promise<Transaction[]> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    return await parsePDFBuffer(arrayBuffer);
+    const txs = await parsePDFBuffer(arrayBuffer);
+    return txs.map(t => ({ ...t, source: file.name }));
   } catch (e) {
     console.error('PDF Parse Error in Browser', e);
     return [];

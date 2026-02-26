@@ -2,6 +2,7 @@ export interface Transaction {
   date: string;
   description: string;
   amount: number;
+  source?: string; // Filename of the uploaded statement (e.g. "SoFi_Jan2026.pdf", "citi_2025.csv")
 }
 
 export const MOCK_CSV_CONTENT = `Date,Description,Amount
