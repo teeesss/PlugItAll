@@ -340,7 +340,7 @@ export function SpendingBreakdown({
                                             </td>
                                             <td className="px-5 py-3">
                                                 <select
-                                                    className="appearance-none bg-transparent border border-transparent group-hover:bg-slate-800 group-hover:border-white/10 rounded px-2 py-1 text-[10px] text-slate-500 group-hover:text-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500/30 transition-all cursor-pointer"
+                                                    className="appearance-none bg-transparent border border-transparent group-hover:bg-slate-800 group-hover:border-white/10 rounded px-2 py-1 text-[10px] text-slate-500 group-hover:text-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-500/30 transition-all cursor-pointer box-border"
                                                     value={tx.category}
                                                     onChange={(e) => onCategoryChange?.(tx.description, e.target.value as BudgetCategory)}
                                                 >
@@ -414,7 +414,7 @@ export function SpendingBreakdown({
                         <div className="flex flex-col lg:flex-row gap-8 items-center">
                             {/* Pie Chart */}
                             <div className="w-full lg:w-80 h-72 min-h-[280px] relative">
-                                <ResponsiveContainer width="100%" height="100%" minHeight={280} debounce={50}>
+                                <ResponsiveContainer width="100%" height="100%" minHeight={280} debounce={50} style={{ outline: 'none' }}>
                                     <PieChart style={{ outline: 'none' }}>
                                         <Pie
                                             data={monthlyByCategory}
@@ -440,7 +440,10 @@ export function SpendingBreakdown({
                                             }}
                                             stroke="rgba(0,0,0,0.1)"
                                             className="cursor-pointer"
-                                            onClick={(data) => setSelectedCategory(data.name as BudgetCategory)}
+                                            onClick={(data: unknown) => {
+                                                const d = data as { name: string };
+                                                if (d?.name) setSelectedCategory(d.name as BudgetCategory);
+                                            }}
                                         >
                                             {monthlyByCategory.map(entry => (
                                                 <Cell

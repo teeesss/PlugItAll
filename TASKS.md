@@ -1,6 +1,15 @@
 # TASKS
 
-## 🟡 In Progress (Session 2026-01-17)
+## 🟡 In Progress (Session 2026-02-26)
+
+- [x] **TASK-092**: Parsing Refinement & PDF Robustness (v1.6.5)
+  - ✅ Standardized dates to ISO (YYYY-MM-DD) for 100% consistency
+  - ✅ Improved USAA PDF parsing (multi-line table support)
+  - ✅ Enhanced Budget Dashboard interactivity (clickable stat cards)
+  - ✅ Resolved Recharts lint errors and visual focus outlines
+  - ✅ Verified USAA logic with 4 dedicated test suites
+  - ✅ Regenerated baseline snapshots for accurate subscription regression
+  - ✅ Root directory cleanup (moved junk/temp files to /tmp)
 
   - Add URL params for shareable filter states
   - Add "Clear all filters" button

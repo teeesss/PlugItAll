@@ -43,7 +43,7 @@ describe('Insights Component', () => {
 
         // Check summary cards (after expansion)
         expect(screen.getByText('Total Spent')).toBeDefined();
-        expect(screen.getByText('Total Income')).toBeDefined();
+        expect(screen.getByText('Credits/Refunds')).toBeDefined();
         expect(screen.getByText('Net Change')).toBeDefined();
         expect(screen.getByText('Date Range')).toBeDefined();
     });
@@ -63,7 +63,7 @@ describe('Insights Component', () => {
         // Total spent should be $150
         expect(await screen.findByText(/\$150/)).toBeDefined();
 
-        // Total income should be $1,000
+        // Credits/Refunds should be $1,000
         expect(screen.getByText(/\$1,000/)).toBeDefined();
 
         // Net change should be $850 ($1000 - $150)
@@ -128,7 +128,7 @@ describe('Insights Component', () => {
         // Total spent: $300
         expect(await screen.findByText(/\$300/)).toBeDefined();
 
-        // Total income: $2,050 (refund + salary)
+        // Credits/Refunds: $2,050 (refund + salary)
         expect(screen.getByText(/\$2,050/)).toBeDefined();
     });
 

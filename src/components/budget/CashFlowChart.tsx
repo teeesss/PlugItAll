@@ -66,6 +66,7 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
             color: 'text-emerald-400',
             icon: Wallet,
             iconColor: 'text-emerald-400',
+            onClick: () => onCategoryClick?.('Income'),
         },
         {
             label: 'Total Expenses',
@@ -74,6 +75,7 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
             color: 'text-red-400',
             icon: TrendingDown,
             iconColor: 'text-red-400',
+            onClick: () => onCategoryClick?.('expenses'),
         },
         {
             label: 'Savings Rate',
@@ -82,6 +84,7 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
             color: 'text-indigo-400',
             icon: TrendingUp,
             iconColor: 'text-indigo-400',
+            onClick: undefined,
         },
         {
             label: 'Carry Over',
@@ -90,6 +93,7 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
             color: monthlyRemaining >= 0 ? 'text-blue-400' : 'text-red-400',
             icon: ArrowRight,
             iconColor: monthlyRemaining >= 0 ? 'text-blue-400' : 'text-red-400',
+            onClick: () => onCategoryClick?.('Transfers'),
         },
     ];
 
@@ -119,14 +123,10 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.05 }}
-                            onClick={() => {
-                                if (stat.label === 'Net Take-Home') onCategoryClick?.('Income');
-                                else if (stat.label === 'Total Expenses') onCategoryClick?.('expenses');
-                                else if (stat.label === 'Carry Over') onCategoryClick?.('Transfers');
-                            }}
+                            onClick={stat.onClick}
                             className={cn(
-                                "glass-panel rounded-2xl p-5 border border-white/8 bg-slate-800/20 hover:bg-slate-800/30 transition-all group cursor-pointer",
-                                (stat.label === 'Savings Rate') && "cursor-default hover:bg-slate-800/20"
+                                "glass-panel rounded-2xl p-5 border border-white/8 bg-slate-800/20 transition-all group",
+                                stat.onClick ? "hover:bg-slate-800/30 hover:shadow-lg hover:shadow-indigo-500/10 cursor-pointer" : "cursor-default"
                             )}
                         >
                             <div className="flex items-center justify-between mb-2">
@@ -254,18 +254,11 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                     </div>
 
                     <div className="h-[450px] min-h-[300px]">
-                        <ResponsiveContainer width="100%" height="100%" debounce={50}>
+                        <ResponsiveContainer width="100%" height="100%" debounce={50} style={{ outline: 'none' }}>
                             <BarChart
                                 data={categoryBars}
                                 layout="vertical"
                                 margin={{ top: 0, right: 80, left: 20, bottom: 0 }}
-                                onClick={(data: unknown) => {
-                                    const d = data as { activePayload?: { payload: { full: string } }[] };
-                                    if (d && d.activePayload && d.activePayload.length > 0 && onCategoryClick) {
-                                        const payload = d.activePayload[0].payload;
-                                        onCategoryClick(payload.full);
-                                    }
-                                }}
                                 style={{ outline: 'none' }}
                             >
                                 <XAxis type="number" hide />
@@ -286,11 +279,18 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                                     radius={[0, 4, 4, 0]}
                                     maxBarSize={32}
                                     className="cursor-pointer"
+                                    onClick={(data: unknown) => {
+                                        const d = data as { full: string };
+                                        if (d?.full && onCategoryClick) {
+                                            onCategoryClick(d.full);
+                                        }
+                                    }}
                                 >
                                     {categoryBars.map((entry, index) => (
                                         <Cell
                                             key={entry.full}
                                             fill={`hsl(${220 + (index % 12) * 20}, 65%, 60%)`}
+                                            style={{ cursor: 'pointer' }}
                                             className="hover:opacity-80 transition-opacity"
                                         />
                                     ))}

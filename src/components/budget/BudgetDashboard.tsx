@@ -96,8 +96,8 @@ export function BudgetDashboard({
         const combined = [...sharedTransactions, ...budgetTransactions];
         const seen = new Set<string>();
         return combined.filter(tx => {
-            // Highly specific key: Date, Amount, First 40 chars of Desc, and a unique hash
-            const key = `${tx.date}-${tx.amount.toFixed(2)}-${tx.description.substring(0, 40).toUpperCase().trim()}`;
+            // Highly specific key: Date, Amount, Normalized Desc
+            const key = `${tx.date}-${tx.amount.toFixed(2)}-${tx.description.substring(0, 60).toUpperCase().trim()}`;
 
             // To allow legitimate duplicates (e.g. 2 x $5 coffee), we'd need a way to distinguish them.
             // Since banks don't always provide IDs, if we see the EXACT same key twice, 
@@ -116,10 +116,8 @@ export function BudgetDashboard({
     const availableMonths = useMemo(() => {
         const months = new Set<string>();
         categorized.forEach(tx => {
-            const date = new Date(tx.date);
-            if (!isNaN(date.getTime())) {
-                months.add(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`);
-            }
+            const m = tx.date.substring(0, 7); // "YYYY-MM"
+            if (m.length === 7) months.add(m);
         });
         return Array.from(months).sort((a, b) => b.localeCompare(a));
     }, [categorized]);
@@ -128,16 +126,7 @@ export function BudgetDashboard({
     const displayTransactions = useMemo(() => {
         if (selectedMonth === 'all') return categorized;
         return categorized.filter(tx => {
-            try {
-                const date = new Date(tx.date);
-                if (isNaN(date.getTime())) return false;
-                // Use a consistent format: YYYY-MM
-                const y = date.getFullYear();
-                const m = String(date.getMonth() + 1).padStart(2, '0');
-                return `${y}-${m}` === selectedMonth;
-            } catch {
-                return false;
-            }
+            return tx.date.startsWith(selectedMonth);
         });
     }, [categorized, selectedMonth]);
 
@@ -535,7 +524,7 @@ export function BudgetDashboard({
                                                         if (auditFilter === 'income') return tx.category === 'Income';
                                                         return true;
                                                     })
-                                                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                                                    .sort((a, b) => b.date.localeCompare(a.date))
                                                     .map((tx, i) => (
                                                         <tr key={i} className="border-b border-white/[0.03] hover:bg-white/[0.04] transition-colors group">
                                                             <td className="px-5 py-3 text-slate-500 font-mono">{tx.date}</td>

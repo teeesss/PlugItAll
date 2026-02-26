@@ -25,13 +25,19 @@
   },
   {
     "name": "VISIBLE",
+    "amount": 25,
+    "frequency": "Monthly",
+    "confidence": "High"
+  },
+  {
+    "name": "VISIBLE",
     "amount": 35,
     "frequency": "Monthly",
     "confidence": "High"
   },
   {
     "name": "YOUTUBE TV",
-    "amount": 80,
+    "amount": 95,
     "frequency": "Monthly",
     "confidence": "High"
   }

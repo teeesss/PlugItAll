@@ -21,6 +21,13 @@ const DATE_PATTERNS = [
   { regex: /^(\d{1,2})[./](\d{1,2})(\s+.*)?$/, format: 'MM/DD' },
 ];
 
+function formatDateISO(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 /**
  * Robustly parses various date formats.
  */
@@ -394,7 +401,7 @@ export const parseCSVString = (content: string): Transaction[] => {
       if (!dateObj || !desc || amount === null) return null;
 
       return {
-        date: dateObj.toLocaleDateString(),
+        date: formatDateISO(dateObj),
         description: desc,
         amount: amount,
       };
@@ -550,7 +557,7 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
             let description = fullLine.replace(dateMatch[0], '');
             (amountMatch || []).forEach(a => { description = description.replace(a, ''); });
             description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '').trim();
-            currentTx = { date: dateObj.toLocaleDateString(), description, amount: amount };
+            currentTx = { date: formatDateISO(dateObj), description, amount: amount };
             return;
           }
         }
@@ -636,7 +643,7 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
 
             // Negate: CC charges (positive on statement) become negative (expense);
             //         CC payments/refunds (negative on statement) become positive (income/credit).
-            transactions.push({ date: dateObj.toLocaleDateString(), description, amount: -rawAmount });
+            transactions.push({ date: formatDateISO(dateObj), description, amount: -rawAmount });
           }
         }
       }
