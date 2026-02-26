@@ -2,7 +2,8 @@ export interface Transaction {
   date: string;
   description: string;
   amount: number;
-  source?: string; // Filename of the uploaded statement (e.g. "SoFi_Jan2026.pdf", "citi_2025.csv")
+  source?: string; // Filename of the uploaded statement
+  institution?: string; // Human-readable bank name (e.g. "Citi", "SoFi", "USAA")
 }
 
 export const MOCK_CSV_CONTENT = `Date,Description,Amount

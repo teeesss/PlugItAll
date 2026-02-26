@@ -666,7 +666,7 @@ function App() {
 
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/5 text-xs text-slate-500">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2 animate-pulse" />
-            System Secure & Encrypted • v1.6.7
+            System Secure & Encrypted • v1.6.8
           </div>
         </div>
       </main>

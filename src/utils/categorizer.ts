@@ -67,6 +67,7 @@ export interface CategorizedTransaction {
     description: string;
     amount: number;
     source?: string; // Filename of originating uploaded statement
+    institution?: string; // Human-readable bank name
     category: BudgetCategory;
     confidence: 'High' | 'Medium' | 'Low';
 }
@@ -501,7 +502,7 @@ export function categorizeTransaction(
  * Categorizes an array of raw transactions.
  */
 export function categorizeAll(
-    transactions: Array<{ date: string; description: string; amount: number; source?: string }>,
+    transactions: Array<{ date: string; description: string; amount: number; source?: string; institution?: string }>,
     overrides: Record<string, string> = {}
 ): CategorizedTransaction[] {
     return transactions.map(tx => {

@@ -381,7 +381,14 @@ export function TransactionExplorer({
                                                     {formatAmount(t.amount)}
                                                 </td>
                                                 <td className="px-4 py-3 text-xs text-slate-500 truncate max-w-[120px]" title={t.source || 'Unknown'}>
-                                                    {t.source || 'Unknown'}
+                                                    <span className="text-slate-300 font-bold block">
+                                                        {t.institution || t.source || 'Unknown'}
+                                                    </span>
+                                                    {t.institution && t.source && (
+                                                        <span className="text-[10px] text-slate-600 block truncate" title={t.source}>
+                                                            {t.source}
+                                                        </span>
+                                                    )}
                                                 </td>
                                                 <td className="px-4 py-3 text-center">
                                                     <span

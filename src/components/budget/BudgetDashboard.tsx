@@ -134,9 +134,16 @@ export function BudgetDashboard({
 
     // Derive unique source files from all transactions
     const availableSources = useMemo(() => {
-        const sources = new Set<string>();
-        categorized.forEach(tx => sources.add(tx.source ?? 'Unknown'));
-        return Array.from(sources).sort();
+        const sourceMap = new Map<string, { id: string, institution?: string, filename: string }>();
+        categorized.forEach(tx => {
+            const src = tx.source ?? 'Unknown';
+            if (!sourceMap.has(src)) {
+                sourceMap.set(src, { id: src, institution: tx.institution, filename: src });
+            }
+        });
+        return Array.from(sourceMap.values()).sort((a, b) =>
+            (a.institution || a.filename).localeCompare(b.institution || b.filename)
+        );
     }, [categorized]);
 
     // Estimate months of data (based on filtered view)
@@ -388,7 +395,9 @@ export function BudgetDashboard({
                             >
                                 <option value="all">All Banks / Files</option>
                                 {availableSources.map(src => (
-                                    <option key={src} value={src}>{src}</option>
+                                    <option key={src.id} value={src.id}>
+                                        {src.institution ? `${src.institution} (${src.filename})` : src.filename}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -579,9 +588,14 @@ export function BudgetDashboard({
                                                                 </span>
                                                             </td>
                                                             <td className="px-5 py-3">
-                                                                <span className="text-[10px] text-slate-500 font-medium truncate max-w-[120px] block" title={tx.source || 'Unknown'}>
-                                                                    {tx.source || 'Unknown'}
+                                                                <span className="text-[10px] text-slate-300 font-bold truncate max-w-[120px] block" title={tx.source || 'Unknown'}>
+                                                                    {tx.institution || tx.source || 'Unknown'}
                                                                 </span>
+                                                                {tx.institution && tx.source && (
+                                                                    <span className="text-[9px] text-slate-600 block truncate max-w-[120px]" title={tx.source}>
+                                                                        {tx.source}
+                                                                    </span>
+                                                                )}
                                                             </td>
                                                             <td className="px-5 py-3 text-right font-mono font-bold text-slate-200">
                                                                 {formatDollar(tx.amount)}

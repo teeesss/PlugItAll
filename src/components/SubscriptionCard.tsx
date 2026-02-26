@@ -205,7 +205,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                         ${Math.abs(t.amount).toFixed(2)}
                       </div>
                       <div className="text-[10px] text-slate-500 font-medium truncate max-w-[100px]" title={t.source || 'Unknown'}>
-                        {t.source || 'Unknown'}
+                        {t.institution || t.source || 'Unknown'}
                       </div>
                     </div>
                   </div>

@@ -418,7 +418,12 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
     reader.onload = () => {
       const content = reader.result as string;
       try {
-        const transactions = parseCSVString(content).map(t => ({ ...t, source: file.name }));
+        const institution = detectBankFromContent(file.name, content);
+        const transactions = parseCSVString(content).map(t => ({
+          ...t,
+          source: file.name,
+          institution: institution !== 'Unknown' ? institution : undefined
+        }));
         resolve(transactions);
       } catch (e) {
         reject(e);
@@ -438,8 +443,14 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
 export const parsePDF = async (file: File): Promise<Transaction[]> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
+    const institution = await detectBank(pdf);
     const txs = await parsePDFBuffer(arrayBuffer);
-    return txs.map(t => ({ ...t, source: file.name }));
+    return txs.map(t => ({
+      ...t,
+      source: file.name,
+      institution: institution !== 'Unknown' ? institution : undefined
+    }));
   } catch (e) {
     console.error('PDF Parse Error in Browser', e);
     return [];
@@ -465,13 +476,38 @@ async function detectBank(pdf: any): Promise<string> {
 
 
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
-    if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
-    if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETRADE';
-    if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY') || text.includes('SOFI BANK') || text.includes('SOFI.COM')) return 'SOFI';
+    if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'Citi';
+    if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETrade';
+    if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY') || text.includes('SOFI BANK') || text.includes('SOFI.COM')) return 'SoFi';
+    // Generic keyword matches (lower priority)
+    if (text.includes('FIDELITY')) return 'Fidelity';
+    if (text.includes('ROBINHOOD')) return 'Robinhood';
   } catch {
     // Bank detection failed, fallback to generic
   }
-  return 'GENERIC';
+  return 'Unknown';
+}
+
+/**
+ * Detects bank from CSV filename or first few lines of content.
+ */
+function detectBankFromContent(filename: string, content: string): string {
+  const f = filename.toUpperCase();
+  if (f.includes('CITI')) return 'Citi';
+  if (f.includes('SOFI')) return 'SoFi';
+  if (f.includes('USAA')) return 'USAA';
+  if (f.includes('ETRADE')) return 'ETrade';
+  if (f.includes('FIDELITY')) return 'Fidelity';
+  if (f.includes('ROBINHOOD')) return 'Robinhood';
+
+  // Check content headers
+  const c = content.slice(0, 1000).toUpperCase();
+  if (c.includes('CITIBANK') || c.includes('CITI CARD')) return 'Citi';
+  if (c.includes('USAA FEDERAL SAVINGS BANK')) return 'USAA';
+  if (c.includes('SOFI BANK')) return 'SoFi';
+  if (c.includes('E*TRADE')) return 'ETrade';
+
+  return 'Unknown';
 }
 
 /**
@@ -856,11 +892,12 @@ export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transact
   try {
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
     const bank = await detectBank(pdf);
+    const bankUpper = bank.toUpperCase();
 
-    if (bank === 'USAA') return await parseUSAASpecific(pdf);
-    if (bank === 'CITI') return await parseCitiSpecific(pdf);
-    if (bank === 'ETRADE') return await parseEtradeSpecific(pdf);
-    if (bank === 'SOFI') return await parseSofiSpecific(pdf);
+    if (bankUpper === 'USAA') return await parseUSAASpecific(pdf);
+    if (bankUpper === 'CITI') return await parseCitiSpecific(pdf);
+    if (bankUpper === 'ETRADE') return await parseEtradeSpecific(pdf);
+    if (bankUpper === 'SOFI') return await parseSofiSpecific(pdf);
     return await parseGenericSpecific(pdf);
   } catch (e) {
     console.error('PDF Parse Error Internal', e);
