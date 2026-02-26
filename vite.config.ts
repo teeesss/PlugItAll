@@ -10,26 +10,15 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // ONLY split truly standalone, heavy libraries.
+            // DO NOT split react, react-dom, recharts, or framer-motion as it breaks contexts and module scope.
             if (id.includes('pdfjs-dist')) {
               return 'vendor-pdf';
             }
-            if (id.includes('recharts') || id.includes('framer-motion') || id.includes('d3')) {
-              return 'vendor-viz';
-            }
-            if (id.includes('jspdf') || id.includes('html2canvas')) {
-              return 'vendor-export';
-            }
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-            if (id.includes('react')) {
-              return 'vendor-react';
-            }
-            return 'vendor-others';
           }
         },
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 2000, // Supress the warning since we intentionally bundle most things together for stability
   },
 });

@@ -225,6 +225,12 @@ Run `node scripts/migrate_master_data.cjs` to:
 - **INTELLIGENT SYNC**: Use name and size comparison to skip unchanged assets (Vite hashes already handle versioning). Always ensure `index.html` is uploaded successfully as it's the entry point.
 - **SKIP LOGOS**: Skip re-uploading the `logos/` directory if files already exist remotely with the same size.
 
+### Vite Build Optimization (`vite.config.ts`) (CRITICAL 🔴)
+- **NO AGGRESSIVE CHUNKING**: Do **NOT** attempt to "fix" the large chunk size warning in Vite by aggressively splitting `react`, `react-dom`, `recharts`, or `framer-motion` via `manualChunks`.
+- **Reason**: Splitting core UI libraries breaks internal module state and React execution context when deployed to production, causing "Cannot set properties of undefined (setting 'Activity')" or similar crashes.
+- **Rule**: If a chunk exceeds 500kb, increase `chunkSizeWarningLimit: 2000` rather than attempting a risky split. Only heavy, standalone WASM/worker-based packages (e.g., `pdfjs-dist`) are safe to split explicitly.
+- **History**: We have crashed production 3-4 times attempting to optimize this. **Leave it alone.**
+
 ### PDF Generation (`src/utils/pdfGenerator.ts`)
 - **USE `doc.save()`**: For triggering downloads, always prefer `jsPDF.save('filename.pdf')` over manual blob creation (`URL.createObjectURL`). Standard blob triggers are frequently blocked or renamed to random GUID hashes by browser security policies on production domains.
 

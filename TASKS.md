@@ -5,6 +5,7 @@
 - [x] **TASK-092**: Parsing Refinement & PDF Robustness (v1.6.5)
   - ✅ Standardized dates to ISO (YYYY-MM-DD) for 100% consistency
   - ✅ Improved USAA PDF parsing (multi-line table support)
+  - ✅ Added table-aware PDF parsing logic specifically for **SoFi Bank Statements**
   - ✅ Enhanced Budget Dashboard interactivity (clickable stat cards)
   - ✅ Resolved Recharts lint errors and visual focus outlines
   - ✅ Verified USAA logic with 4 dedicated test suites

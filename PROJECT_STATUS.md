@@ -2,15 +2,15 @@
 
 ## Recent Major Updates (Feb 26, 2026)
 
-### 🟢 Refinement: Parsing Engine & UI Interactivity (v1.6.5)
+### 🟢 Refinement: Parsing Engine & UI Interactivity (v1.6.6)
 - **Goal**: Standardize data handling and improve dashboard drill-downs.
 - **Resolution**:
   - **Date Standardization**: Enforced ISO 8601 (`YYYY-MM-DD`) across all CSV and PDF parsers for consistent filtering.
-  - **USAA Table Logic**: Enhanced PDF parser with table-aware logic to handle multi-line descriptions and separate Debit/Credit columns.
+  - **Table Logic / Advanced Parsing**: Enhanced PDF parser with advanced table-aware logic to handle multi-line descriptions and separate Debit/Credit columns for **USAA** and **SoFi**.
   - **Dashboard Interactivity**:
     - Clickable Stat Cards (Net Take-Home, Expenses, etc.) linked to Audit views.
     - Category Chart Drill-down: Click any bar to instantly filter the Reconciliation table.
-  - **Bundle Optimization**: Resolved 1.9MB "Large Chunk" warning by implementing `manualChunks` strategy in Vite. Reduced largest chunk size to <600kB, improving initial load and parallel asset fetching.
+  - **Bundle Optimization**: Safely implemented code-splitting via `manualChunks` in Vite for heavy WASM libraries to reduce generic chunk sizes.
   - **Environment Audit**: Removed redundant root files and established `/tmp` for temporary test artifacts.
   - **Regression Testing**: Regenerated `baseline.json` and verified all 312 tests passing.
 - **Status**: Verified and ready for deployment.

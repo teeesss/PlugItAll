@@ -466,6 +466,7 @@ async function detectBank(pdf: any): Promise<string> {
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
     if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
     if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETRADE';
+    if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY')) return 'SOFI';
   } catch {
     // Bank detection failed, fallback to generic
   }
@@ -621,7 +622,7 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
 
     Object.values(lines).forEach((lineParts) => {
       const fullLine = lineParts.join(' ');
-      const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3}\s+\d{1,2})/);
+      const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3,9}\s+\d{1,2}(?:,?\s+\d{4})?)/);
       const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/);
 
       if (dateMatch && amountMatch) {
@@ -664,6 +665,138 @@ async function parseEtradeSpecific(pdf: any): Promise<Transaction[]> {
 }
 
 /**
+ * Specialized parser for SOFI Bank Statements.
+ * Handles table-like structure and multiline descriptions.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
+  const allTransactions: Transaction[] = [];
+  let currentColumnMap: { [key: string]: { xStart: number; xEnd: number } } | null = null;
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const items = textContent.items as TextItem[];
+    if (items.length === 0) continue;
+
+    const lineMap: { [key: number]: TextItem[] } = {};
+    const jitter = 2; // Tolerance for Y coordinate variation
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items.forEach((item: any) => {
+      if (!item.transform || typeof item.str !== 'string') return;
+      const y = Math.round(item.transform[5]);
+      // Group items on the same logical line
+      const targetYMatch = Object.keys(lineMap).find(ly => Math.abs(Number(ly) - y) <= jitter);
+      const targetY = targetYMatch ? Number(targetYMatch) : y;
+      if (!lineMap[targetY]) lineMap[targetY] = [];
+      lineMap[targetY].push(item);
+    });
+
+    const sortedYs = Object.keys(lineMap).map(Number).sort((a, b) => b - a); // Top-to-bottom reading
+    const pageTransactions: Transaction[] = [];
+    let currentTx: Transaction | null = null;
+
+    sortedYs.forEach(y => {
+      const lineItems = lineMap[y].sort((a, b) => a.transform[4] - b.transform[4]);
+      const fullLine = lineItems.map(it => it.str).join(' ');
+
+      // Sub-header lines typically have "DATE TYPE DESCRIPTION AMOUNT BALANCE"
+      if (/date.*description.*amount/i.test(fullLine)) {
+        const newMap: Record<string, { xStart: number; xEnd: number }> = {};
+        lineItems.forEach((it, idx) => {
+          const str = it.str.toLowerCase();
+          const x = it.transform[4];
+          const nextItem = lineItems[idx + 1];
+          const xEnd = nextItem ? nextItem.transform[4] - 2 : x + 200;
+          if (str.includes('date')) newMap.date = { xStart: x - 10, xEnd: xEnd };
+          else if (str.includes('description')) newMap.desc = { xStart: x - 10, xEnd: xEnd };
+          else if (str.includes('amount')) newMap.amount = { xStart: x - 20, xEnd: xEnd };
+        });
+        if (newMap.date && newMap.desc && newMap.amount) currentColumnMap = newMap;
+      }
+
+      const dateMatch = fullLine.match(/([A-Za-z]{3}\s+\d{1,2}(?:,?\s+\d{4})?)/);
+
+      if (dateMatch) {
+        const dateObj = parseDate(dateMatch[0]);
+        if (dateObj) {
+          // New transaction starts immediately when a valid Date string is found at line beginning.
+          const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/g);
+          let amount: number | null = null;
+
+          if (currentColumnMap && currentColumnMap.amount) {
+            lineItems.forEach(it => {
+              const x = it.transform[4];
+              const val = parseAmount(it.str);
+              if (val !== null) {
+                // Only trust Amount if it perfectly aligns under the Amount header, allowing some wobble leeway
+                if (currentColumnMap?.amount && x >= currentColumnMap.amount.xStart - 40 && x < currentColumnMap.amount.xEnd + 20) {
+                  amount = val;
+                }
+              }
+            });
+          }
+
+          // Fallback for SoFi if column maps drifted
+          if (amount === null && amountMatch && amountMatch.length > 0) {
+            // Takes the first matched amount if none aligned perfectly
+            amount = parseAmount(amountMatch[0]);
+          }
+
+          if (amount !== null) {
+            if (currentTx) pageTransactions.push(currentTx);
+
+            let description = "";
+            if (currentColumnMap && currentColumnMap.desc) {
+              const descItems = lineItems.filter(it => it.transform[4] >= currentColumnMap!.desc.xStart && it.transform[4] < currentColumnMap!.desc.xEnd);
+              description = descItems.map(it => it.str).join(' ').trim();
+            } else {
+              description = fullLine.replace(dateMatch[0], '');
+              (amountMatch || []).forEach(a => { description = description.replace(a, ''); });
+              description = description.trim();
+            }
+            currentTx = { date: formatDateISO(dateObj), description, amount: amount };
+            return;
+          }
+        }
+      }
+
+      // Handle multiline descriptions (e.g. "Transaction ID: 61-15...") if we are in the middle of parsing a transaction
+      if (currentTx && fullLine.length > 2) {
+        const hasAmount = /(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})/.test(fullLine);
+        const isHeader = /date.*description/i.test(fullLine);
+        if (!hasAmount && !isHeader) {
+          const descItems = currentColumnMap
+            ? lineItems.filter(it => it.transform[4] >= currentColumnMap!.desc.xStart && it.transform[4] < currentColumnMap!.desc.xEnd)
+            : lineItems;
+
+          if (descItems.length > 0) {
+            const extra = descItems.map(it => it.str).join(' ').trim();
+            if (extra && !currentTx.description.includes(extra)) currentTx.description += ' ' + extra;
+          }
+        }
+      }
+    });
+
+    if (currentTx) pageTransactions.push(currentTx);
+
+    // Final SoFi cleanup
+    pageTransactions.forEach(t => {
+      // Typically SoFi charges show as negative in the "amount" column 
+      // Payments to the user show as positive.
+      // E.g., "-$175.00" -> This represents money leaving the account (expense), so our standard is negative. 
+      // "$500.00" -> Direct deposit income, standard positive.
+      // The `parseAmount` naturally parses "-" as negative, so no flip is strictly required assuming Amount matches expectations.
+      t.description = t.description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
+    });
+
+    allTransactions.push(...pageTransactions);
+  }
+  return allTransactions;
+}
+
+/**
  * Generic PDF parser for unrecognized bank formats.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -682,6 +815,7 @@ export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transact
     if (bank === 'USAA') return await parseUSAASpecific(pdf);
     if (bank === 'CITI') return await parseCitiSpecific(pdf);
     if (bank === 'ETRADE') return await parseEtradeSpecific(pdf);
+    if (bank === 'SOFI') return await parseSofiSpecific(pdf);
     return await parseGenericSpecific(pdf);
   } catch (e) {
     console.error('PDF Parse Error Internal', e);

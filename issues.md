@@ -1,5 +1,14 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-02-26 (Performance & UX Polish)
+
+### 🔴 Bug: Vite Manual Chunks Breaking React Execution Order (Production Crash)
+- **Problem**: In production, the application crashed immediately on load throwing `Uncaught TypeError: Cannot set properties of undefined (setting 'Activity')` in `vendor-react-*.js`. The app worked perfectly in dev mode.
+- **Root Cause**: Attempting to aggressively optimize the Vite build by forcing `react` and `react-dom` into separate `manualChunks` broke the internal module scope and execution order that React relies on when combined with other libraries that assume a specific order of initialization. This has happened multiple times.
+- **Resolution**: Reverted `vite.config.ts` to use a conservative chunking strategy. Removed all aggressive `manualChunks` configurations for UI/React libraries (`react`, `react-dom`, `recharts`, `framer-motion`). Only truly standalone, heavy WASM/worker libraries like `pdfjs-dist` are permitted to be chunked. 
+- **Prevention**: Added a strict rule to `.cursorrules` immediately forbidding aggressive chunking to ensure stability. increased `chunkSizeWarningLimit: 2000` to suppress the large chunk warning that tempts this optimization.
+- **Status**: Fixed in v1.6.6.
+
 ## Session: 2026-01-17 (Processing Feedback & Filter Foundation)
 
 ### 🔴 Bug: Processing Overlay "Stuck" on Complete Step
