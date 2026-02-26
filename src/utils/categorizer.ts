@@ -77,8 +77,23 @@ interface CategoryRule {
 }
 
 const CATEGORY_RULES: CategoryRule[] = [
+    // --- HIGH-PRIORITY OVERRIDES (must come first) ---
+    // Account verification micro-deposits/debits always = Transfers regardless of bank name
+    {
+        category: 'Transfers',
+        keywords: [
+            'acctverify',       // Fidelity/brokerage account verification
+            'trialdebit',       // USAA / bank trial debit
+            'trial debit',
+            'account verify',
+            'micro deposit',
+        ],
+        weight: 12,  // Highest weight — beats everything else
+    },
+
     // --- INCOME ---
     {
+
         category: 'Income',
         keywords: [
             'payroll', 'direct dep', 'direct deposit', 'ach deposit', 'salary', 'wages',
@@ -150,6 +165,16 @@ const CATEGORY_RULES: CategoryRule[] = [
             'sushi', 'ramen', 'pho restaurant', 'pho noodle', 'thai restaurant', 'chinese food', 'mexican food', 'barbecue',
             'panda express', 'zaxby', 'shrimp basket', 'the shack', 'raising cane', 'honeybee ice cream', 'smalls sliders',
             'don cha', 'shack', 'ajs on the bayou', 'ocean buffet', 'the hudson', 'cicis pizza', 'pedros',
+            // User-labeled dining merchants
+            'buffalo wild', 'buffalo wild wngs', 'bww',
+            'the district seville', 'district seville',
+            'menchie',                  // frozen yogurt chain
+            'ara uwf concessions',     // UWF arena concessions - food
+            'ara uwf',
+            'wdw churro',              // Disney food carts
+            'jp vending',              // Orlando vending/food
+            'coca cola fossil',        // stadium vending food
+            'truvi',                   // restaurant Dover DE
         ],
         weight: 8,
     },
@@ -177,6 +202,8 @@ const CATEGORY_RULES: CategoryRule[] = [
             'car wash', 'jiffy lube', 'oil change', 'dealership', 'ford motor',
             'toyota', 'honda', 'auto repair', 'midas', 'pep boys', 'autozone',
             'parking', 'tolls', 'ezpass', 'expressway', 'turnpike',
+            'sp ulc-vh',               // SpotHero parking app
+            'ctlp*venuplus', 'venuplus', // Venue parking/ticketing pass
         ],
         weight: 8,
     },
@@ -191,6 +218,7 @@ const CATEGORY_RULES: CategoryRule[] = [
             'health', 'wellcare', 'aetna', 'cigna claim', 'humana', 'blue cross',
             'bcbs', 'united health', 'anthem', 'optum', 'kaiser', 'physical therapy',
             'chiropractic', 'mental health', 'psychiatry', 'therapy', 'wwmc pa',
+            'nhc.com', 'nhc.com 920', // National HealthCare Corp (nursing/rehab)
         ],
         weight: 9,
     },
@@ -234,12 +262,21 @@ const CATEGORY_RULES: CategoryRule[] = [
             'macy', 'nordstrom', 'bloomingdales', 'neiman marcus', 'saks',
             'gap', 'old navy', 'banana republic', 'h&m', 'zara', 'forever 21',
             'ross', 'tjmaxx', 'tj maxx', 'marshalls', 'burlington', 'tuesday morning',
-            'dollar general', 'dollar tree', 'dollartree', 'five below', 'big lots', 'overstock',
+            'dollar general', 'dollar-general', 'dollar-ge', 'dollar ge',  // all DG variants
+            'dollar tree', 'dollartree', 'dollartre',                       // Dollar Tree variants
+            'five below', 'five belo',                                      // Five Below variants
+            'big lots', 'overstock',
             'paypal', 'shopify', 'square', 'retail', 'store', 'marketplace',
             'temu.com', 'ali express', 'wal-mart', 'wm supercenter', 'tgt',
             'family dollar', 'harbor freight', 'jcpenney', 'tailored brands', 'bealls',
             'coral reef gifts', 'sugar planet', 'thrift', 'sams club',
             'mercari', 'poshmark',
+            'old time pottery',        // home decor retail
+            'tractor supply',          // farm/pet/retail supply store
+            'ft walton beach thri',    // Fort Walton Beach Thrift store
+            'gbb - valparaiso', 'gbb valparaiso', // GBB clothing store
+            'son silver west galler',  // Silver West Gallery (art/gifts retail)
+            'son silver',
         ],
         weight: 6,
     },
@@ -259,6 +296,18 @@ const CATEGORY_RULES: CategoryRule[] = [
             'busch gardens', 'wdw emporium', 'wdw landscape', 'universal aventura',
             'pink jeep tours', 'ft walton b bowl', 'bowl', 'park',
             'seatgeek',
+            // User-labeled entertainment merchants
+            'thesquadzone', 'squadzone',    // sports/gambling venue (user labeled gambling)
+            'adventures unlimited',         // kids adventure/outdoor entertainment
+            'gulf shores ol rec', 'gulf shores rec', // Gulf Shores outdoor recreation
+            'urban air',                    // trampoline park for kids
+            'dest univ orlando', 'dest univ', // Universal Studios destination tickets
+            'huraf itt', 'hurlburt itt',    // Hurlburt ITT (Tickets & Tours military)
+            'new orleans saints',           // NFL sports tickets
+            'wdw churro', 'wdw ink', 'jp vending', // Disney World experiences
+            'universals aventura',          // Universal's Aventura Hotel
+            'ctlp*venuplus', 'venuplus',    // Venue ticketing/pass
+            'coca cola fossil',             // stadium concession/entertainment
         ],
         weight: 7,
     },
@@ -274,6 +323,9 @@ const CATEGORY_RULES: CategoryRule[] = [
             'travel agency', 'trip advisor', 'seat guru', 'kayak', 'hopper',
             'baggage', 'flight', 'cruise', 'carnival', 'royal caribbean', 'ncl',
             'booking bv', 'sarazona.host',
+            'huraf itt', 'hurlburt itt',   // Hurlburt ITT travel desk (also in Entertainment, travel wins at weight 8)
+            'universals aventura', 'aventura ho', // Universal's Aventura Hotel
+            'dest univ',                    // Universal destination ticket services
         ],
         weight: 8,
     },
@@ -287,6 +339,7 @@ const CATEGORY_RULES: CategoryRule[] = [
             'bookstore', 'textbook', 'udemy', 'khan academy', 'chegg', 'college board',
             'sat', 'act test', 'daycare', 'preschool', 'montessori',
             'liza jackson', 'zeffy*', 'treering', 'scholastic education', 'studentreasures',
+            'educational products',    // Educational Products company TX
         ],
         weight: 9,
     },
@@ -300,6 +353,12 @@ const CATEGORY_RULES: CategoryRule[] = [
             'acorns', 'wealthfront', 'betterment', 'sofi invest', 'coinbase',
             'investment', 'brokerage', 'mutual fund', 'etf purchase',
             'swan.com', 'swan btc', 'prime trust', 'voyager', 'natl fin svc', 'sofi securities',
+            // User-labeled investment keywords
+            'fid bkg svc', 'fid bkg svc llc', 'fidelity bkg', 'moneyline',  // Fidelity MoneyLine = brokerage fund transfers
+            'stash capital', 'stash app',   // Stash investing app ACH pulls
+            'swan raymond',                 // Swan Bitcoin recurring purchases
+            'withdrawal to savings',        // SoFi withdrawal to savings vault
+            'idaho first bank newaccdep',   // new savings account deposit
         ],
         weight: 9,
     },
@@ -312,6 +371,11 @@ const CATEGORY_RULES: CategoryRule[] = [
             'maintenance fee', 'service charge', 'atm fee', 'wire fee', 'foreign transaction',
             'interest charge', 'finance charge', 'annual fee', 'origination fee',
             'plan fee', 'citi flex plan', 'interest',
+            // Government fees & legal
+            'dmv data', 'dmv.com',          // DMV record purchase
+            'hsmv', 'hsmv crash report',    // FL Highway Safety crash reports
+            'law firm', 'attorney',         // Legal fees
+            'oberliesen',                   // Specific attorney (Oberliesen Law Firm)
         ],
         weight: 9,
     },
@@ -322,6 +386,7 @@ const CATEGORY_RULES: CategoryRule[] = [
         keywords: [
             'daycare', 'childcare', 'babysitter', 'nanny', 'after school', 'camp',
             'summer camp', 'kids club', 'child support', 'pediatric',
+            'our family wizard', 'ofw',     // co-parenting communication app
         ],
         weight: 9,
     },
@@ -368,6 +433,15 @@ const CATEGORY_RULES: CategoryRule[] = [
             'payment thank you', 'payment received',
             'credit card payment', 'card payment',
             'payment - thank you', 'online pymt', 'ach payment', 'citi flex pay',
+            // ATM & bank-to-bank transfers
+            'atm flfwnb', 'atm fl',         // Fort Walton National Bank ATMs
+            'cardmember serv web pymt',     // Citi credit card payment
+            'cardmember serv', 'web pymt',
+            'withdrawal to other vault',    // SoFi vault transfers
+            'usaa fsb trialdebit',          // USAA bank verification micro-deposit
+            'usaa fsb trial',
+            'natl fin svc llc acctverify',  // Fidelity account verification micro-deposit
+            'acctverify',
         ],
         weight: 6,
     },
