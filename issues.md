@@ -1,5 +1,19 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-02-26 (Audit & Rollover Fix)
+
+### 🔴 Bug: Future Dates (Feb 27/28) Still Appearing
+- **Problem**: Even with the 24h rollover, dates like "Feb 27" and "Feb 28" stay as 2026 when today is Feb 26.
+- **Cause**: The 24h window (now.getTime() + 86400000) allowed transactions up to 24h+ in the future.
+- **Action**: Tightened threshold to 2h (+ 7200000) so any "future" transaction rolls back. Statement dates are never tomorrow.
+- **Status**: Fixed in v1.6.7.
+
+### 🟡 Gap: Missing Traceability in Cash Flow Audit
+- **Problem**: User cannot see which statement file a transaction came from in the audit table.
+- **Cause**: UI column was not implemented for `source` field.
+- **Action**: Added `Source` column to the reconciliation table in `BudgetDashboard.tsx`.
+- **Status**: Fixed in v1.6.7.
+
 ## Session: 2026-02-26 (SoFi Parser + Categorizer + Date Fix)
 
 ### 🔴 Bug: Future Dates on Citi / SoFi Statements (e.g. "Feb 28" parsed as 2026-02-28)

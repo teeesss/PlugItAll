@@ -546,6 +546,7 @@ export function BudgetDashboard({
                                                     <th className="px-5 py-3 font-semibold">Date</th>
                                                     <th className="px-5 py-3 font-semibold">Description</th>
                                                     <th className="px-5 py-3 font-semibold">Category</th>
+                                                    <th className="px-5 py-3 font-semibold">Source</th>
                                                     <th className="px-5 py-3 font-semibold text-right">Amount</th>
                                                 </tr>
                                             </thead>
@@ -572,6 +573,11 @@ export function BudgetDashboard({
                                                                             "bg-slate-500/10 text-slate-400 border border-white/5"
                                                                 )}>
                                                                     {tx.category}
+                                                                </span>
+                                                            </td>
+                                                            <td className="px-5 py-3">
+                                                                <span className="text-[10px] text-slate-500 font-medium truncate max-w-[120px] block" title={tx.source || 'Unknown'}>
+                                                                    {tx.source || 'Unknown'}
                                                                 </span>
                                                             </td>
                                                             <td className="px-5 py-3 text-right font-mono font-bold text-slate-200">

@@ -2,6 +2,11 @@
 
 ## 🟡 In Progress (Session 2026-02-26)
 
+- [x] **TASK-093**: Accurate Audit & Traceability (v1.6.7)
+  - ✅ Fixed future date bug by tightening rollover threshold from 24h to 2h
+  - ✅ Added "Source" column to Cash Flow Audit table for transparency
+  - ✅ Updated Audit view to explicitly show which statement each transaction belongs to
+
 - [x] **TASK-092**: Parsing Refinement & PDF Robustness (v1.6.5)
   - ✅ Standardized dates to ISO (YYYY-MM-DD) for 100% consistency
   - ✅ Improved USAA PDF parsing (multi-line table support)

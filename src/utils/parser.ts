@@ -76,7 +76,7 @@ export function parseDate(dateStr: string): Date | null {
           if (date && !explicitYear) {
             const now = new Date();
             // Use 1-day tolerance (same-day or next-day POST only; everything else = prior year)
-            if (date.getTime() > now.getTime() + 24 * 60 * 60 * 1000) {
+            if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
               date.setFullYear(y - 1);
             }
           }
@@ -92,7 +92,7 @@ export function parseDate(dateStr: string): Date | null {
           if (date && !hasYear) {
             const now = new Date();
             // 1-day tolerance: anything more than 1 day in the future must be from last year
-            if (date.getTime() > now.getTime() + 24 * 60 * 60 * 1000) {
+            if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
               date.setFullYear(year - 1);
             }
           }
