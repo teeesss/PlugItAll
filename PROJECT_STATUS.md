@@ -10,6 +10,7 @@
   - **Dashboard Interactivity**:
     - Clickable Stat Cards (Net Take-Home, Expenses, etc.) linked to Audit views.
     - Category Chart Drill-down: Click any bar to instantly filter the Reconciliation table.
+  - **Bundle Optimization**: Resolved 1.9MB "Large Chunk" warning by implementing `manualChunks` strategy in Vite. Reduced largest chunk size to <600kB, improving initial load and parallel asset fetching.
   - **Environment Audit**: Removed redundant root files and established `/tmp` for temporary test artifacts.
   - **Regression Testing**: Regenerated `baseline.json` and verified all 312 tests passing.
 - **Status**: Verified and ready for deployment.

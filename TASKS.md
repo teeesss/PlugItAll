@@ -10,6 +10,7 @@
   - ✅ Verified USAA logic with 4 dedicated test suites
   - ✅ Regenerated baseline snapshots for accurate subscription regression
   - ✅ Root directory cleanup (moved junk/temp files to /tmp)
+  - ✅ **Bundle Optimization**: Implemented code-splitting via `manualChunks` (1.9MB → <600kB chunks)
 
   - Add URL params for shareable filter states
   - Add "Clear all filters" button
