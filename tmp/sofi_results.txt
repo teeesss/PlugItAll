@@ -1,0 +1,50 @@
+
+FILE: 02be6414-0a2d-4311-95b2-4122df3ef338.pdf
+  SOFI: true | SOFI_SEC: true | SOFI_MONEY: true | SOFI_BANK: false
+  First 500: Primary Account Holder  Raymond Jones  Member since Feb 18, 2020  Address  105 COUNTRY CLUB RD  SHALIMAR, FL 32579  Account Number  410004297851  Monthly Statement Period  Dec 1, 2020 - Dec 31, 2020  Current Balance  $21,983.20  as of Dec 31, 2020  Current Interest Rate 1  0.25%  Monthly Interest Paid 1  $4.62  Beginning Balance  $21,863.98  as of Dec 1, 2020  Annual Percentage Yield Earned 1  0.25%  Year-to-date Interest Paid 1  $31.98  Current balances include the amount of interest paid.  Tra
+  PARSED: 14 transactions
+    [2020-12-31] $4.62 "Interest earned Transaction ID: 62-1"
+    [2020-12-29] $-2.08 "PRIME TRUST LLC O6QQ SWAN Transaction ID: 61-15358001"
+    [2020-12-29] $-175 "PRIME TRUST LLC RM7H SWAN Transaction ID: 60-15357001"
+    [2020-12-24] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 59-8272001"
+    [2020-12-23] $-2.08 "PRIME TRUST LLC 92SA SWAN Transaction ID: 58-11185001"
+
+FILE: 031c7415-a21b-4bbb-afcf-b0315364a398.pdf
+  SOFI: true | SOFI_SEC: false | SOFI_MONEY: false | SOFI_BANK: true
+  First 500: Primary Account Holder  Raymond Jones  Member since Feb 18, 2020  Address  105 COUNTRY CLUB RD  SHALIMAR, FL 32579  Account Number  410004297851  Monthly Statement Period  Jun 1, 2025 - Jun 30, 2025  Checking Account -   7851  Current Balance  $52.44  as of Jun 30, 2025  Current Interest Rate 1  0.50%  Monthly Interest Paid 1  $2.44  Beginning Balance  $1,998.33  as of Jun 1, 2025  Annual Percentage Yield Earned 1  0.50%  Year-to-date Interest Paid 1  $2.84  Current balances include the amount o
+  PARSED: 39 transactions
+    [2025-06-11] $2959.03 "Direct Payment WF HOME MTG AUTO PAY -$2,860.70"
+    [2025-06-11] $-2860.7 "Overdraft From savings - 6536 $0.00"
+    [2025-06-24] $-85000 "Check Deposit Mobile Check Deposit $85,000.00"
+    [2025-06-24] $4950 "Withdrawal To Savings - 6536 $80,050.00"
+    [2025-06-26] $80000 "Withdrawal To Savings - 6536 $50.00"
+
+FILE: 0e94e462-f908-4ca8-8cdf-7b059793b8ed.pdf
+  SOFI: true | SOFI_SEC: true | SOFI_MONEY: true | SOFI_BANK: false
+  First 500: Primary Account Holder  Raymond Jones  Member since Feb 18, 2020  Address  105 COUNTRY CLUB RD  SHALIMAR, FL 32579  Account Number  410004297851  Monthly Statement Period  Oct 1, 2020 - Oct 31, 2020  Current Balance  $21,036.68  as of Oct 31, 2020  Current Interest Rate 1  0.25%  Monthly Interest Paid 1  $4.23  Beginning Balance  $18,697.45  as of Oct 1, 2020  Annual Percentage Yield Earned 1  0.25%  Year-to-date Interest Paid 1  $22.98  Current balances include the amount of interest paid.  Tra
+  PARSED: 6 transactions
+    [2020-10-31] $4.23 "Interest earned Transaction ID: 44-1"
+    [2020-10-29] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 43-2645001"
+    [2020-10-15] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 42-7212001"
+    [2020-10-14] $835 "Mobile Check Deposit Transaction ID: 41-1099001"
+    [2020-10-01] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 40-3423001"
+
+FILE: 0f942711-06fe-4a13-ada9-3f3db66f8c7c.pdf
+  SOFI: true | SOFI_SEC: true | SOFI_MONEY: false | SOFI_BANK: true
+  First 500: Primary Account Holder  Raymond Jones  Member since Feb 18, 2020  Address  105 COUNTRY CLUB RD  SHALIMAR, FL 32579  Account Number  410004297851  Monthly Statement Period  Nov 1, 2022 - Nov 30, 2022  Checking Account -   7851  Current Balance  $12,209.52  as of Nov 30, 2022  Current Interest Rate 1  2.47%  Monthly Interest Paid 1  $26.04  Beginning Balance  $14,450.38  as of Nov 1, 2022  Annual Percentage Yield Earned 1  2.50%  Year-to-date Interest Paid 1  $184.05  Current balances include the 
+  PARSED: 14 transactions
+    [2022-11-30] $26.04 "Interest earned Transaction ID: 1072-1"
+    [2022-11-29] $-30 "SOFI SECURITIES ACH Transaction ID: 1071-13835001"
+    [2022-11-28] $-70.69 "SWAN.COM Raymond Jo Transaction ID: 1068-5759001"
+    [2022-11-22] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 1065-6977001"
+    [2022-11-22] $-30 "SOFI SECURITIES ACH Transaction ID: 1064-14906001"
+
+FILE: 13e02699-ace9-47bf-b9a6-b0596335b367.pdf
+  SOFI: true | SOFI_SEC: true | SOFI_MONEY: true | SOFI_BANK: false
+  First 500: Primary Account Holder  Raymond Jones  Member since Feb 18, 2020  Address  105 COUNTRY CLUB RD  SHALIMAR, FL 32579  Account Number  410004297851  Monthly Statement Period  May 1, 2021 - May 31, 2021  Current Balance  $24,350.00  as of May 31, 2021  Current Interest Rate 1  0.25%  Monthly Interest Paid 1  $5.11  Beginning Balance  $24,053.21  as of May 1, 2021  Annual Percentage Yield Earned 1  0.25%  Year-to-date Interest Paid 1  $24.00  Current balances include the amount of interest paid.  Tra
+  PARSED: 8 transactions
+    [2021-05-31] $5.11 "Interest earned Transaction ID: 115-1"
+    [2021-05-25] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 114-26742001"
+    [2021-05-25] $-177.08 "PRIME TRUST LLC T37T SWAN Transaction ID: 113-12568001"
+    [2021-05-18] $-177.08 "PRIME TRUST LLC 6FHT SWAN Transaction ID: 112-19699001"
+    [2021-05-13] $500 "ARMA GLOBAL CORP DIR DEP Transaction ID: 111-3006001"

@@ -1,0 +1,27 @@
+
+FILE: 02be6414-0a2d-4311-95b2-4122df3ef338.pdf
+  numPages: 3
+  PAGE 1:
+    [HEADER at Y:445] " DATE   TYPE   DESCRIPTION   AMOUNT   BALANCE"
+    Header found: true, Date rows in first 30: 0
+  PAGE 2:
+    Header found: false, Date rows in first 30: 0
+  PAGE 3:
+    Header found: false, Date rows in first 30: 0
+
+FILE: 031c7415-a21b-4bbb-afcf-b0315364a398.pdf
+  numPages: 6
+  PAGE 1:
+    [HEADER at Y:419] " DATE   TYPE   DESCRIPTION   AMOUNT   BALANCE"
+    Header found: true, Date rows in first 30: 0
+  PAGE 2:
+    Header found: false, Date rows in first 30: 0
+  PAGE 3:
+    Header found: false, Date rows in first 30: 0
+  PAGE 4:
+    [HEADER at Y:419] " DATE   TYPE   DESCRIPTION   AMOUNT   BALANCE"
+    Header found: true, Date rows in first 30: 0
+  PAGE 5:
+    Header found: false, Date rows in first 30: 0
+  PAGE 6:
+    Header found: false, Date rows in first 30: 0

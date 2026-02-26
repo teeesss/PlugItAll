@@ -466,7 +466,7 @@ async function detectBank(pdf: any): Promise<string> {
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
     if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'CITI';
     if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETRADE';
-    if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY')) return 'SOFI';
+    if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY') || text.includes('SOFI BANK') || text.includes('SOFI.COM')) return 'SOFI';
   } catch {
     // Bank detection failed, fallback to generic
   }
@@ -665,12 +665,14 @@ async function parseEtradeSpecific(pdf: any): Promise<Transaction[]> {
 }
 
 /**
- * Specialized parser for SOFI Bank Statements.
- * Handles table-like structure and multiline descriptions.
+ * Specialized parser for SOFI Bank / SoFi Money / SoFi Securities Statements.
+ * Handles the multi-column table layout unique to SoFi statements with coordinate-based parsing.
+ * Skips boilerplate rows/sections (FDIC disclosures, balance sweeps, rewards redemptions).
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
   const allTransactions: Transaction[] = [];
+  // Column map persists across pages (multi-page statements share structure)
   let currentColumnMap: { [key: string]: { xStart: number; xEnd: number } } | null = null;
 
   for (let i = 1; i <= pdf.numPages; i++) {
@@ -680,100 +682,129 @@ async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
     if (items.length === 0) continue;
 
     const lineMap: { [key: number]: TextItem[] } = {};
-    const jitter = 2; // Tolerance for Y coordinate variation
+    const jitter = 2;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items.forEach((item: any) => {
       if (!item.transform || typeof item.str !== 'string') return;
       const y = Math.round(item.transform[5]);
-      // Group items on the same logical line
       const targetYMatch = Object.keys(lineMap).find(ly => Math.abs(Number(ly) - y) <= jitter);
       const targetY = targetYMatch ? Number(targetYMatch) : y;
       if (!lineMap[targetY]) lineMap[targetY] = [];
       lineMap[targetY].push(item);
     });
 
-    const sortedYs = Object.keys(lineMap).map(Number).sort((a, b) => b - a); // Top-to-bottom reading
-    const pageTransactions: Transaction[] = [];
+    const sortedYs = Object.keys(lineMap).map(Number).sort((a, b) => b - a);
+    let pageTransactions: Transaction[] = [];
     let currentTx: Transaction | null = null;
+    // Track whether we've entered the "Important Information" section within this page
+    let inBoilerplateSection = false;
 
     sortedYs.forEach(y => {
+      if (inBoilerplateSection) return; // Skip rest of page once we hit boilerplate
+
       const lineItems = lineMap[y].sort((a, b) => a.transform[4] - b.transform[4]);
       const fullLine = lineItems.map(it => it.str).join(' ');
 
-      // Sub-header lines typically have "DATE TYPE DESCRIPTION AMOUNT BALANCE"
-      if (/date.*description.*amount/i.test(fullLine)) {
+      // Detect when we've entered the boilerplate footer section and stop processing
+      if (/^(important information|sofi insured deposit program|how to contact us|deposit agreement|for participants in the sofi)/i.test(fullLine.trim())) {
+        if (currentTx) { pageTransactions.push(currentTx); currentTx = null; }
+        inBoilerplateSection = true;
+        return;
+      }
+
+      // Detect column header row: "DATE TYPE DESCRIPTION AMOUNT BALANCE"
+      if (/date.*description.*(amount|balance)/i.test(fullLine)) {
         const newMap: Record<string, { xStart: number; xEnd: number }> = {};
         lineItems.forEach((it, idx) => {
-          const str = it.str.toLowerCase();
+          const str = it.str.toLowerCase().trim();
           const x = it.transform[4];
           const nextItem = lineItems[idx + 1];
           const xEnd = nextItem ? nextItem.transform[4] - 2 : x + 200;
-          if (str.includes('date')) newMap.date = { xStart: x - 10, xEnd: xEnd };
-          else if (str.includes('description')) newMap.desc = { xStart: x - 10, xEnd: xEnd };
-          else if (str.includes('amount')) newMap.amount = { xStart: x - 20, xEnd: xEnd };
+          if (str === 'date') newMap.date = { xStart: x - 10, xEnd: xEnd };
+          else if (str === 'type') newMap.type = { xStart: x - 5, xEnd: xEnd };
+          else if (str === 'description') newMap.desc = { xStart: x - 10, xEnd: xEnd };
+          else if (str === 'amount') newMap.amount = { xStart: x - 30, xEnd: xEnd + 30 };
+          else if (str === 'balance') newMap.balance = { xStart: x - 10, xEnd: xEnd + 100 };
         });
-        if (newMap.date && newMap.desc && newMap.amount) currentColumnMap = newMap;
+        if (newMap.date && newMap.desc) currentColumnMap = newMap;
+        return;
       }
 
-      const dateMatch = fullLine.match(/([A-Za-z]{3}\s+\d{1,2}(?:,?\s+\d{4})?)/);
+      // Try to parse a date at the start of the line (transaction row detection)
+      // NOTE: SoFi PDF text items often have leading spaces; trimStart before matching
+      const trimmedLine = fullLine.trimStart();
+      const dateMatch = trimmedLine.match(/^([A-Za-z]{3}\s+\d{1,2}(?:,?\s+\d{4})?)/);
 
       if (dateMatch) {
         const dateObj = parseDate(dateMatch[0]);
         if (dateObj) {
-          // New transaction starts immediately when a valid Date string is found at line beginning.
-          const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/g);
           let amount: number | null = null;
 
-          if (currentColumnMap && currentColumnMap.amount) {
+          if (currentColumnMap?.amount) {
+            // STRICT: Only accept amounts within the AMOUNT column boundaries
             lineItems.forEach(it => {
               const x = it.transform[4];
               const val = parseAmount(it.str);
-              if (val !== null) {
-                // Only trust Amount if it perfectly aligns under the Amount header, allowing some wobble leeway
-                if (currentColumnMap?.amount && x >= currentColumnMap.amount.xStart - 40 && x < currentColumnMap.amount.xEnd + 20) {
-                  amount = val;
-                }
+              if (val !== null && x >= currentColumnMap!.amount.xStart && x <= currentColumnMap!.amount.xEnd) {
+                amount = val;
               }
             });
-          }
-
-          // Fallback for SoFi if column maps drifted
-          if (amount === null && amountMatch && amountMatch.length > 0) {
-            // Takes the first matched amount if none aligned perfectly
-            amount = parseAmount(amountMatch[0]);
+          } else {
+            // No column map yet — use first amount found (older SoFi Money format fallback)
+            const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))/);
+            if (amountMatch) amount = parseAmount(amountMatch[0]);
           }
 
           if (amount !== null) {
             if (currentTx) pageTransactions.push(currentTx);
 
-            let description = "";
-            if (currentColumnMap && currentColumnMap.desc) {
-              const descItems = lineItems.filter(it => it.transform[4] >= currentColumnMap!.desc.xStart && it.transform[4] < currentColumnMap!.desc.xEnd);
-              description = descItems.map(it => it.str).join(' ').trim();
+            // Build description from TYPE + DESCRIPTION columns (or full line fallback)
+            let description = '';
+            if (currentColumnMap) {
+              let typeStr = '';
+              let descStr = '';
+              if (currentColumnMap.type) {
+                const typeItems = lineItems.filter(it => it.transform[4] >= currentColumnMap!.type.xStart && it.transform[4] < currentColumnMap!.type.xEnd);
+                typeStr = typeItems.map(it => it.str).join(' ').trim();
+              }
+              if (currentColumnMap.desc) {
+                const descItems = lineItems.filter(it => it.transform[4] >= currentColumnMap!.desc.xStart && it.transform[4] < currentColumnMap!.desc.xEnd);
+                descStr = descItems.map(it => it.str).join(' ').trim();
+              }
+              if (typeStr && descStr && !descStr.toLowerCase().includes(typeStr.toLowerCase())) {
+                description = `${typeStr} ${descStr}`.trim();
+              } else {
+                description = descStr || typeStr;
+              }
             } else {
+              // Fallback: strip date and amount from the line
+              const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))/g);
               description = fullLine.replace(dateMatch[0], '');
               (amountMatch || []).forEach(a => { description = description.replace(a, ''); });
               description = description.trim();
             }
-            currentTx = { date: formatDateISO(dateObj), description, amount: amount };
+
+            currentTx = { date: formatDateISO(dateObj), description, amount };
             return;
           }
         }
       }
 
-      // Handle multiline descriptions (e.g. "Transaction ID: 61-15...") if we are in the middle of parsing a transaction
+      // Append continuation lines (e.g. Transaction ID lines)
       if (currentTx && fullLine.length > 2) {
         const hasAmount = /(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})/.test(fullLine);
         const isHeader = /date.*description/i.test(fullLine);
-        if (!hasAmount && !isHeader) {
-          const descItems = currentColumnMap
-            ? lineItems.filter(it => it.transform[4] >= currentColumnMap!.desc.xStart && it.transform[4] < currentColumnMap!.desc.xEnd)
-            : lineItems;
-
+        const isFooter = /^(sofi (bank|securities|money)|member fdic|page \d+ of|www\.sofi)/i.test(fullLine.trim());
+        if (!hasAmount && !isHeader && !isFooter) {
+          const descStart = currentColumnMap?.desc.xStart ?? 0;
+          const descEnd = currentColumnMap?.desc.xEnd ?? 600;
+          const descItems = lineItems.filter(it => it.transform[4] >= descStart && it.transform[4] < descEnd);
           if (descItems.length > 0) {
             const extra = descItems.map(it => it.str).join(' ').trim();
-            if (extra && !currentTx.description.includes(extra)) currentTx.description += ' ' + extra;
+            if (extra && !currentTx.description.includes(extra) && extra.length < 120) {
+              currentTx.description += ' ' + extra;
+            }
           }
         }
       }
@@ -781,14 +812,27 @@ async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
 
     if (currentTx) pageTransactions.push(currentTx);
 
-    // Final SoFi cleanup
+    // --- Final SoFi cleanup ---
     pageTransactions.forEach(t => {
-      // Typically SoFi charges show as negative in the "amount" column 
-      // Payments to the user show as positive.
-      // E.g., "-$175.00" -> This represents money leaving the account (expense), so our standard is negative. 
-      // "$500.00" -> Direct deposit income, standard positive.
-      // The `parseAmount` naturally parses "-" as negative, so no flip is strictly required assuming Amount matches expectations.
-      t.description = t.description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
+      t.description = t.description
+        .replace(/Mailing Address SoFi (Securities|Bank).*$/i, '')
+        .replace(/^\s*-\s*/, '')
+        .replace(/[|]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    });
+
+    pageTransactions = pageTransactions.filter(t => {
+      const d = t.description.toLowerCase();
+      // Filter FDIC balance sweep notices (legal disclosures, not real transactions)
+      if (d.includes('we moved balances over') || d.includes('participating banks') || d.includes('breakdown of how those funds')) return false;
+      // Filter SoFi Rewards Redemption interest entries
+      if (d.includes('sofi rewards redemption')) return false;
+      // Filter zero and near-zero amounts
+      if (Math.abs(t.amount) < 0.01) return false;
+      // Filter very short or empty descriptions
+      if (t.description.length < 3) return false;
+      return true;
     });
 
     allTransactions.push(...pageTransactions);

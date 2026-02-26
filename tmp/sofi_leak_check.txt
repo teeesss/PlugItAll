@@ -1,0 +1,8 @@
+Checking 72 SoFi PDFs...
+
+
+=== SUMMARY ===
+Total tx: 1466
+Balance sweep leaks: 0
+Reward redemption leaks: 0
+Zero amount leaks: 0
