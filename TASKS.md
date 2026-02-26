@@ -2,9 +2,10 @@
 
 ## 🟡 In Progress (Session 2026-02-26)
 
-- [x] **TASK-093**: Accurate Audit & Pervasive Traceability (v1.6.8)
+- [x] **TASK-093**: Accurate Audit & Pervasive Traceability (v1.6.9)
   - ✅ Fixed future date bug by tightening rollover threshold from 24h to 2h
-  - ✅ Added "Source" column to Cash Flow Audit table and Transaction Explorer
+  - ✅ Implemented **Pretty Sources** (Citi, SoFi, ETrade, USAA, etc.) instead of random filenames
+  - ✅ Added "Institution" column to Audit table and Transaction Explorer
   - ✅ Added statement source info to Subscription Card history modal
   - ✅ Promoted Source Filter to global budget toolbar for easier bank-level auditing
 
