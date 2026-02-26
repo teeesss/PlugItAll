@@ -49,3 +49,11 @@ body {
 @utility animate-pulse-slow {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Remove white border when clicking on graphs (Recharts) or images */
+.recharts-wrapper *:focus, 
+.recharts-surface *:focus,
+img:focus,
+svg:focus {
+  outline: none !important;
+}
