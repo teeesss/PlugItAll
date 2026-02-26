@@ -346,6 +346,9 @@ export function TransactionExplorer({
                                                 Amount <SortIcon field="amount" sortField={sortField} sortDirection={sortDirection} />
                                             </div>
                                         </th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">
+                                            Source
+                                        </th>
                                         <th className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase">
                                             Type
                                         </th>
@@ -376,6 +379,9 @@ export function TransactionExplorer({
                                                 </td>
                                                 <td className="px-4 py-3 text-sm text-right font-mono">
                                                     {formatAmount(t.amount)}
+                                                </td>
+                                                <td className="px-4 py-3 text-xs text-slate-500 truncate max-w-[120px]" title={t.source || 'Unknown'}>
+                                                    {t.source || 'Unknown'}
                                                 </td>
                                                 <td className="px-4 py-3 text-center">
                                                     <span

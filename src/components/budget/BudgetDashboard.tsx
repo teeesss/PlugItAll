@@ -375,6 +375,23 @@ export function BudgetDashboard({
                                 </button>
                             );
                         })}
+
+                        <div className="h-4 w-px bg-white/10 mx-1 hidden sm:block" />
+
+                        {/* Source / Bank filter (Global for Budget Tab) */}
+                        <div className="flex items-center gap-2">
+                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Source:</span>
+                            <select
+                                value={sourceFilter}
+                                onChange={e => setSourceFilter(e.target.value)}
+                                className="text-[10px] bg-slate-800/60 border border-white/10 rounded-xl px-3 py-2 text-slate-300 hover:border-white/20 focus:outline-none focus:border-indigo-500/50 transition-colors cursor-pointer max-w-[180px] truncate font-bold"
+                            >
+                                <option value="all">All Banks / Files</option>
+                                {availableSources.map(src => (
+                                    <option key={src} value={src}>{src}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
 
                     {/* View Panels */}
@@ -515,20 +532,6 @@ export function BudgetDashboard({
                                         )}
                                     </div>
                                     <div className="px-5 py-3 border-b border-white/5 flex flex-wrap gap-3 items-center bg-slate-900/20">
-                                        {/* Source / Bank filter */}
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Source:</span>
-                                            <select
-                                                value={sourceFilter}
-                                                onChange={e => setSourceFilter(e.target.value)}
-                                                className="text-[10px] bg-slate-800/60 border border-white/10 rounded-lg px-2 py-1 text-slate-300 hover:border-white/20 focus:outline-none focus:border-indigo-500/50 transition-colors cursor-pointer max-w-[200px] truncate"
-                                            >
-                                                <option value="all">All Sources</option>
-                                                {availableSources.map(src => (
-                                                    <option key={src} value={src}>{src}</option>
-                                                ))}
-                                            </select>
-                                        </div>
                                         <div className="flex items-center gap-2">
                                             <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Sort:</span>
                                             <span className="text-[10px] text-slate-400">Newest first</span>

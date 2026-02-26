@@ -200,9 +200,12 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                         {t.description}
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex flex-col items-end">
                       <div className="text-sm font-bold text-slate-100">
                         ${Math.abs(t.amount).toFixed(2)}
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-medium truncate max-w-[100px]" title={t.source || 'Unknown'}>
+                        {t.source || 'Unknown'}
                       </div>
                     </div>
                   </div>
