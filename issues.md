@@ -13,6 +13,18 @@
 - **Tests**: `tests/transfer_netting.test.ts` — 24 tests: keyword routing, pair detection, real-world Jan 2026 data validation.
 - **Status**: Fixed. All 378 tests passing. Deployed.
 
+### 🔴 Bug: Year-less Dates Parsing Incorrectly as Current Year (v1.6.9)
+- **Problem**: Transactions from "2025 March 05 Citi.pdf" with year-less dates (e.g., "02/27") were parsing as 2026-02-27 because 2026 is the current year. The 2-day future-date safeguard failed to catch this because Feb 27, 2026 is exactly today (not in the future).
+- **Root Cause**: `parseDate()` defaulted to `new Date().getFullYear()` when a string lacked an explicit year. This inherently breaks when processing historical statements (e.g., last year's files) unless the date lands explicitly in the future relative to the *upload day*.
+- **Resolution**:
+  1. Implemented `extractYearFromFilename(filename)` to extract 4-digit years from filenames.
+  2. Threaded `statementYear` through the PDF parsing stack (`parsePDFBuffer` → `parseCitiSpecific` / `parseEtradeSpecific` → `parseDate`).
+  3. Modified `parseDate(dateStr, statementYear)` to use `statementYear` as the authoritative year for year-less formats instead of guessing today's year.
+  4. Disabled the 48h future-date heuristic when `statementYear` is provided, trusting the filename as the ground truth.
+- **Lesson**: Bank statements never contain future dates. If a date looks like the present or future, the year assumption is wrong. The filename is the most reliable source for the statement period year.
+- **Tests**: `tests/statement_year_date_parsing.test.ts` — 41 tests: filename extraction, year threading, exact data validation.
+- **Status**: Fixed. All 419 tests passing. Deployed.
+
 ---
 
 ## Session: 2026-02-26 (Audit & Rollover Fix)
