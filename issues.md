@@ -1,5 +1,20 @@
 # Known Issues & Debugging Log
 
+## Session: 2026-02-27 (Transfer Netting & Overdraft Fix)
+
+### 🔴 Bug: Overdraft From/To Transfers Appearing in Fees & Interest ($5,918 phantom inflation)
+- **Problem**: "Overdraft From Savings - 6536" (+$2,959) and "Overdraft To Checking - 7851" (-$2,959) are balance sweeps between accounts (nets to $0). They were appearing in the Fees & Interest drill-down, inflating the monthly total by ~$5,918.
+- **Root Cause**: The keyword `overdraft` in the `Fees & Interest` rule (weight 9) matched both descriptions. `aggregateByCategory()` uses `Math.abs(amount)` so both the +$2,959 and -$2,959 were summed as positive expenses.
+- **Resolution**:
+  1. Added `'overdraft from savings'`, `'overdraft to checking'`, `'overdraft from'`, `'overdraft to'` to the **weight-12 Transfers priority block** in `categorizer.ts`. This beats the Fees & Interest weight-9 match.
+  2. Added `netMatchedTransferPairs()` export function as a safety net: post-processes categorized transactions, groups by date, finds same-date exact-opposite-amount pairs in Fees & Interest / Transfers and re-categorizes both as Transfers.
+  3. `categorizeAll()` now automatically calls `netMatchedTransferPairs()`.
+- **Lesson**: Any transaction that says "Overdraft FROM X TO Y" is a **funds transfer sweep**, not a fee. The actual overdraft fee is always labeled "OVERDRAFT FEE" or "NSF FEE" — those still route to Fees & Interest correctly.
+- **Tests**: `tests/transfer_netting.test.ts` — 24 tests: keyword routing, pair detection, real-world Jan 2026 data validation.
+- **Status**: Fixed. All 378 tests passing. Deployed.
+
+---
+
 ## Session: 2026-02-26 (Audit & Rollover Fix)
 
 ### 🔴 Bug: Future Dates (Feb 27/28) Still Appearing
