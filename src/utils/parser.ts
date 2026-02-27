@@ -108,6 +108,12 @@ export function parseDate(dateStr: string): Date | null {
 
       // Final validation to catch overflow from Date constructor
       if (date && !isNaN(date.getTime())) {
+        const now = new Date();
+        // Global safeguard: If date is more than 2 days in the future, it's likely a year rollover error.
+        // This handles both explicit year matches and guessed years.
+        if (date.getTime() > now.getTime() + 48 * 60 * 60 * 1000) {
+          date.setFullYear(date.getFullYear() - 1);
+        }
         return date;
       }
       return null;
@@ -443,13 +449,12 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
 export const parsePDF = async (file: File): Promise<Transaction[]> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
-    const institution = await detectBank(pdf);
-    const txs = await parsePDFBuffer(arrayBuffer);
-    return txs.map(t => ({
+    // parsePDFBuffer now handles both loading and institution detection
+    const transactions = await parsePDFBuffer(arrayBuffer);
+
+    return transactions.map(t => ({
       ...t,
-      source: file.name,
-      institution: institution !== 'Unknown' ? institution : undefined
+      source: file.name
     }));
   } catch (e) {
     console.error('PDF Parse Error in Browser', e);
@@ -476,7 +481,7 @@ async function detectBank(pdf: any): Promise<string> {
 
 
     if (text.includes('USAA FEDERAL SAVINGS BANK') || text.includes('USAA CLASSIC')) return 'USAA';
-    if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD')) return 'Citi';
+    if (text.includes('CITI ') || text.includes('CITIBANK') || text.includes('CITI CARD') || text.includes('COSTCO ANYWHERE')) return 'Citi';
     if (text.includes('E*TRADE') || text.includes('MORGAN STANLEY')) return 'ETrade';
     if (text.includes('SOFI SECURITIES') || text.includes('SOFI MONEY') || text.includes('SOFI BANK') || text.includes('SOFI.COM')) return 'SoFi';
     // Generic keyword matches (lower priority)
@@ -890,15 +895,29 @@ async function parseGenericSpecific(pdf: any): Promise<Transaction[]> {
  */
 export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transaction[]> => {
   try {
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 }).promise;
+    // Wrap in Uint8Array to prevent PDF.js from detaching/transferring the raw ArrayBuffer
+    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer), verbosity: 0 }).promise;
     const bank = await detectBank(pdf);
     const bankUpper = bank.toUpperCase();
 
-    if (bankUpper === 'USAA') return await parseUSAASpecific(pdf);
-    if (bankUpper === 'CITI') return await parseCitiSpecific(pdf);
-    if (bankUpper === 'ETRADE') return await parseEtradeSpecific(pdf);
-    if (bankUpper === 'SOFI') return await parseSofiSpecific(pdf);
-    return await parseGenericSpecific(pdf);
+    let transactions: Transaction[] = [];
+    if (bankUpper === 'USAA') {
+      transactions = await parseUSAASpecific(pdf);
+    } else if (bankUpper === 'CITI') {
+      transactions = await parseCitiSpecific(pdf);
+    } else if (bankUpper === 'ETRADE') {
+      transactions = await parseEtradeSpecific(pdf);
+    } else if (bankUpper === 'SOFI') {
+      transactions = await parseSofiSpecific(pdf);
+    } else {
+      transactions = await parseGenericSpecific(pdf);
+    }
+
+    // Attach institution to each transaction
+    return transactions.map(t => ({
+      ...t,
+      institution: bank !== 'Unknown' ? bank : undefined
+    }));
   } catch (e) {
     console.error('PDF Parse Error Internal', e);
     return [];

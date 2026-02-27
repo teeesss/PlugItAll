@@ -2,12 +2,18 @@
 
 ## 🟡 In Progress (Session 2026-02-26)
 
-- [x] **TASK-093**: Accurate Audit & Pervasive Traceability (v1.6.9)
+- [x] **TASK-093**: Accurate Audit & Pervasive Traceability (v1.6.9a)
   - ✅ Fixed future date bug by tightening rollover threshold from 24h to 2h
   - ✅ Implemented **Pretty Sources** (Citi, SoFi, ETrade, USAA, etc.) instead of random filenames
   - ✅ Added "Institution" column to Audit table and Transaction Explorer
   - ✅ Added statement source info to Subscription Card history modal
   - ✅ Promoted Source Filter to global budget toolbar for easier bank-level auditing
+
+- [x] **TASK-094**: Parser Robustness & Impossible Dates (v1.6.9a)
+  - ✅ Fixed **Detached ArrayBuffer** crash in PDF.js by removal of redundant loading
+  - ✅ Implemented **Global Future-Date Safeguard** (rollback if >2 days future)
+  - ✅ Standardized institution keywords in `detectBank` (case-robustness)
+  - ✅ Secured CI/CD pipeline by adding existence checks to diagnostic tests
 
 - [x] **TASK-092**: Parsing Refinement & PDF Robustness (v1.6.5)
   - ✅ Standardized dates to ISO (YYYY-MM-DD) for 100% consistency

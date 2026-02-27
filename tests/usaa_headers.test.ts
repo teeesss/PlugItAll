@@ -6,6 +6,7 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 describe('USAA Header Detection Diagnostic', () => {
     it('should detect header positions in USAA-20251011.pdf', async () => {
         const pdfPath = path.resolve(process.cwd(), 'pdfs/USAA-20251011.pdf');
+        if (!fs.existsSync(pdfPath)) return;
         const buffer = fs.readFileSync(pdfPath);
 
         const loadingTask = pdfjsLib.getDocument({

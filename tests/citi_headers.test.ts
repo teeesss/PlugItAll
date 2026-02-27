@@ -6,6 +6,7 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 describe('Citi Header Detection Diagnostic', () => {
     it('should detect header positions on page 3 in citi.pdf', async () => {
         const pdfPath = path.resolve(process.cwd(), 'pdfs/citi.pdf');
+        if (!fs.existsSync(pdfPath)) return;
         const buffer = fs.readFileSync(pdfPath);
 
         const loadingTask = pdfjsLib.getDocument({

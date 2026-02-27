@@ -14,7 +14,17 @@
 - **Action**: Added `Source` column to the reconciliation table in `BudgetDashboard.tsx`.
 - **Status**: Fixed in v1.6.7.
 
-## Session: 2026-02-26 (SoFi Parser + Categorizer + Date Fix)
+### 🔴 Bug: PDF Parser Crash — Detached ArrayBuffer (TASK-094)
+- **Problem**: In v1.6.9, some PDF uploads triggered a `TypeError: Cannot perform Construct on a detached ArrayBuffer` in the console, resulting in 0 transactions found.
+- **Root Cause**: `parsePDF()` was calling `getDocument()` and `detectBank()` separately, then passing the same `ArrayBuffer` to `parsePDFBuffer()`. PDF.js workers often "transfer" (detach) the buffer on the first call, making it inaccessible for the second.
+- **Resolution**: Consolidated loading into `parsePDFBuffer`. The `ArrayBuffer` is now loaded exactly once.
+- **Status**: Fixed in v1.6.9a.
+
+### 🔴 Bug: Future Dates (e.g. Feb 28) on Feb 26
+- **Problem**: Transactions like "Feb 28" were parsed as 2026-02-28 even when today is Feb 26.
+- **Root Cause**: Trusting explicit years even if in the future, or guessing the current year for `MM/DD` formats with too much forward tolerance.
+- **Resolution**: Added a global safeguard in `parseDate`. Any date more than 2 days in the future is automatically rolled back 1 year. This is safe because bank statements never contain future-dated transactions from tomorrow or beyond.
+- **Status**: Fixed in v1.6.9a.
 
 ### 🔴 Bug: Future Dates on Citi / SoFi Statements (e.g. "Feb 28" parsed as 2026-02-28)
 - **Problem**: Transactions from prior-year statements appeared with a date 1-2 days in the future (e.g. "Feb 28" showing as 2026-02-28 when today is Feb 26, 2026). This skewed all "All Time" views and could cause phantom future transactions to appear.
