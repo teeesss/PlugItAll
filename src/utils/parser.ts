@@ -29,11 +29,44 @@ function formatDateISO(date: Date): string {
 }
 
 /**
- * Robustly parses various date formats.
+ * Extracts a 4-digit year from a filename string.
+ * Supports patterns like:
+ *   "2025 March 05 Citi.pdf"   → 2025
+ *   "2024-12-31 SoFi.pdf"      → 2024
+ *   "statement_2025_03.pdf"    → 2025
+ *   "CitiStatement_Jan2023.pdf" → 2023
+ * Returns null if no plausible year is found.
  */
-export function parseDate(dateStr: string): Date | null {
+export function extractYearFromFilename(filename: string): number | null {
+  // Use negative lookbehind/lookahead instead of \b because underscore IS a word
+  // character, so "statement_2025_03" won't match with \b boundaries.
+  // (?<!\d) = not preceded by a digit  |  (?!\d) = not followed by a digit
+  const matches = filename.match(/(?<!\d)(20\d{2}|19\d{2})(?!\d)/g);
+  if (!matches || matches.length === 0) return null;
+  // If multiple years found, pick the earliest (most likely the statement period year,
+  // not the download year)
+  const years = matches.map(Number);
+  return Math.min(...years);
+}
+
+/**
+ * Robustly parses various date formats.
+ *
+ * @param dateStr     - The raw date string from the statement
+ * @param statementYear - Optional: explicit year from the filename (e.g. 2025 from
+ *                        "2025 March 05 Citi.pdf"). When provided, year-less formats
+ *                        (MM/DD, MMM DD) default to this year instead of today's year.
+ *                        This prevents "Feb 27" from becoming 2026 when the statement
+ *                        is clearly from 2025.
+ */
+export function parseDate(dateStr: string, statementYear?: number): Date | null {
   if (!dateStr) return null;
   const trimmed = dateStr.trim();
+
+  // Determine the baseline year for year-less date strings.
+  // Priority: statementYear from filename > today's year (fallback).
+  const baseYear = statementYear ?? new Date().getFullYear();
+  const hasStatementYear = statementYear !== undefined;
 
   for (const { regex, format } of DATE_PATTERNS) {
     const match = trimmed.match(regex);
@@ -56,7 +89,7 @@ export function parseDate(dateStr: string): Date | null {
             y = yy > 50 ? 1900 + yy : 2000 + yy;
             explicitYear = true;
           } else if (format === 'MM/DD') {
-            y = new Date().getFullYear();
+            y = baseYear;
           }
 
           // Try MM/DD first
@@ -71,11 +104,12 @@ export function parseDate(dateStr: string): Date | null {
             }
           }
 
-          // Handle Year Rollover: If no explicit year and the date is in the future,
-          // it's from last year's statement (e.g. "Feb 28" parsed on "Feb 26" -> last year).
-          if (date && !explicitYear) {
+          // Year correction logic:
+          // Case A: statementYear provided → trust it. No future-date heuristic needed.
+          //         The year in the filename IS the correct year for this statement.
+          // Case B: No statementYear → fall back to "future date = prior year" heuristic.
+          if (date && !explicitYear && !hasStatementYear) {
             const now = new Date();
-            // Use 1-day tolerance (same-day or next-day POST only; everything else = prior year)
             if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
               date.setFullYear(y - 1);
             }
@@ -87,11 +121,11 @@ export function parseDate(dateStr: string): Date | null {
           break;
         case 'MMM DD YYYY': {
           const hasYear = !!match[3];
-          const year = match[3] ? +match[3] : new Date().getFullYear();
+          const year = match[3] ? +match[3] : baseYear;
           date = new Date(`${match[1]} ${match[2]}, ${year}`);
-          if (date && !hasYear) {
+          // Same year correction logic — only use heuristic when no statementYear
+          if (date && !hasYear && !hasStatementYear) {
             const now = new Date();
-            // 1-day tolerance: anything more than 1 day in the future must be from last year
             if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
               date.setFullYear(year - 1);
             }
@@ -106,13 +140,15 @@ export function parseDate(dateStr: string): Date | null {
           return null;
       }
 
-      // Final validation to catch overflow from Date constructor
+      // Final validation to catch overflow from Date constructor.
+      // Global safeguard: only apply when NO statementYear was provided
+      // (if we have a statementYear, it's intentionally set and should not be rolled back).
       if (date && !isNaN(date.getTime())) {
-        const now = new Date();
-        // Global safeguard: If date is more than 2 days in the future, it's likely a year rollover error.
-        // This handles both explicit year matches and guessed years.
-        if (date.getTime() > now.getTime() + 48 * 60 * 60 * 1000) {
-          date.setFullYear(date.getFullYear() - 1);
+        if (!hasStatementYear) {
+          const now = new Date();
+          if (date.getTime() > now.getTime() + 48 * 60 * 60 * 1000) {
+            date.setFullYear(date.getFullYear() - 1);
+          }
         }
         return date;
       }
@@ -449,8 +485,9 @@ export const parseCSV = (file: File): Promise<Transaction[]> => {
 export const parsePDF = async (file: File): Promise<Transaction[]> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    // parsePDFBuffer now handles both loading and institution detection
-    const transactions = await parsePDFBuffer(arrayBuffer);
+    // parsePDFBuffer now handles both loading and institution detection.
+    // Pass the filename so it can extract the statement year from it.
+    const transactions = await parsePDFBuffer(arrayBuffer, file.name);
 
     return transactions.map(t => ({
       ...t,
@@ -645,9 +682,13 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
  *   - Positive amounts = charges (money you owe / spent) → should be NEGATIVE in our system
  *   - Negative amounts / credits = payments/refunds → should be POSITIVE in our system
  * We negate all amounts so that our standard convention (negative = expense) is maintained.
+ *
+ * @param pdf           - The loaded PDF.js document
+ * @param statementYear - Year extracted from filename (e.g. 2025). When provided,
+ *                        year-less dates like "02/27" resolve to that year instead of today.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
+async function parseCitiSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
   const transactions: Transaction[] = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -668,7 +709,8 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
       const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/);
 
       if (dateMatch && amountMatch) {
-        const dateObj = parseDate(dateMatch[0]);
+        // Pass statementYear so year-less dates (02/27) resolve to the correct statement year
+        const dateObj = parseDate(dateMatch[0], statementYear);
         const rawAmount = parseAmount(amountMatch[0]);
         if (dateObj && rawAmount !== null) {
           let description = fullLine.replace(dateMatch[0], '').replace(amountMatch[0], '').trim();
@@ -701,9 +743,9 @@ async function parseCitiSpecific(pdf: any): Promise<Transaction[]> {
  * Added to support future specific tweaks for Etrade garbage removal.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseEtradeSpecific(pdf: any): Promise<Transaction[]> {
+async function parseEtradeSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
   // Reuse the regex-based line parser as it effectively handles Etrade's standard statements
-  return parseCitiSpecific(pdf);
+  return parseCitiSpecific(pdf, statementYear);
 }
 
 /**
@@ -886,15 +928,24 @@ async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
  * Generic PDF parser for unrecognized bank formats.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseGenericSpecific(pdf: any): Promise<Transaction[]> {
-  return parseCitiSpecific(pdf); // Fallback to classic regex-based parser
+async function parseGenericSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
+  return parseCitiSpecific(pdf, statementYear); // Fallback to classic regex-based parser
 }
 
 /**
  * Core PDF Parsing Logic (Buffer-based for easier testing)
+ *
+ * @param arrayBuffer  - Raw PDF bytes
+ * @param filename     - Optional: the original filename (e.g. "2025 March 05 Citi.pdf").
+ *                       Used to extract the statement year so that year-less dates in
+ *                       the PDF resolve to the correct year instead of today's year.
  */
-export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transaction[]> => {
+export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer, filename?: string): Promise<Transaction[]> => {
   try {
+    // Extract the statement year from the filename for accurate year-less date resolution.
+    // e.g. "2025 March 05 Citi.pdf" → statementYear = 2025
+    const statementYear = filename ? extractYearFromFilename(filename) ?? undefined : undefined;
+
     // Wrap in Uint8Array to prevent PDF.js from detaching/transferring the raw ArrayBuffer
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer), verbosity: 0 }).promise;
     const bank = await detectBank(pdf);
@@ -904,13 +955,13 @@ export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer): Promise<Transact
     if (bankUpper === 'USAA') {
       transactions = await parseUSAASpecific(pdf);
     } else if (bankUpper === 'CITI') {
-      transactions = await parseCitiSpecific(pdf);
+      transactions = await parseCitiSpecific(pdf, statementYear);
     } else if (bankUpper === 'ETRADE') {
-      transactions = await parseEtradeSpecific(pdf);
+      transactions = await parseEtradeSpecific(pdf, statementYear);
     } else if (bankUpper === 'SOFI') {
       transactions = await parseSofiSpecific(pdf);
     } else {
-      transactions = await parseGenericSpecific(pdf);
+      transactions = await parseGenericSpecific(pdf, statementYear);
     }
 
     // Attach institution to each transaction
