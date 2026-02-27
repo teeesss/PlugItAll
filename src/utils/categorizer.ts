@@ -80,15 +80,23 @@ interface CategoryRule {
 
 const CATEGORY_RULES: CategoryRule[] = [
     // --- HIGH-PRIORITY OVERRIDES (must come first) ---
-    // Account verification micro-deposits/debits always = Transfers regardless of bank name
+    // Account verification micro-deposits/debits always = Transfers regardless of bank name.
+    // Overdraft FROM/TO = inter-account fund move (nets to $0), NOT an overdraft fee.
+    // These MUST be weight 12 to beat the 'overdraft' keyword in Fees & Interest (weight 9).
     {
         category: 'Transfers',
         keywords: [
-            'acctverify',       // Fidelity/brokerage account verification
-            'trialdebit',       // USAA / bank trial debit
+            'acctverify',                // Fidelity/brokerage account verification
+            'trialdebit',                // USAA / bank trial debit
             'trial debit',
             'account verify',
             'micro deposit',
+            // Overdraft inter-account transfers (checking ↔ savings sweeps)
+            // These are balance sweeps that net to $0 — NOT overdraft fee charges.
+            'overdraft from savings',    // e.g. "Overdraft From Savings - 6536"
+            'overdraft to checking',     // e.g. "Overdraft To Checking - 7851"
+            'overdraft from',            // generic pattern (must come after more specific)
+            'overdraft to',              // generic pattern
         ],
         weight: 12,  // Highest weight — beats everything else
     },
@@ -500,15 +508,87 @@ export function categorizeTransaction(
 
 /**
  * Categorizes an array of raw transactions.
+ * Also applies post-processing to detect zero-net matched transfer pairs
+ * (e.g. Overdraft From Savings / Overdraft To Checking on the same date).
  */
 export function categorizeAll(
     transactions: Array<{ date: string; description: string; amount: number; source?: string; institution?: string }>,
     overrides: Record<string, string> = {}
 ): CategorizedTransaction[] {
-    return transactions.map(tx => {
+    const categorized = transactions.map(tx => {
         const { category, confidence } = categorizeTransaction(tx.description, tx.amount, overrides);
         return { ...tx, category, confidence };
     });
+    return netMatchedTransferPairs(categorized);
+}
+
+/**
+ * Post-processing pass: detects same-date, exact-opposite-amount pairs within the
+ * Fees & Interest or Transfers categories and re-categorizes both as Transfers.
+ *
+ * This handles cases like:
+ *   2026-01-22  Overdraft From Savings - 6536   +$2,959  → Transfers
+ *   2026-01-22  Overdraft To Checking  - 7851   -$2,959  → Transfers
+ *
+ * Both transactions already land in Transfers via keyword priority, but this function
+ * provides a safety net for any pair that slips through as Fees & Interest.
+ *
+ * Rules for a valid zero-net pair:
+ *   1. Same calendar date
+ *   2. Amounts are exact opposites: a.amount + b.amount === 0
+ *   3. Both are currently in 'Fees & Interest' or 'Transfers'
+ *   4. Neither is already a legitimate single-sided fee (only pairs cancel)
+ *
+ * @param transactions - Already-categorized transactions
+ * @returns Transactions with any zero-net pairs re-categorized as Transfers
+ */
+export function netMatchedTransferPairs(
+    transactions: CategorizedTransaction[]
+): CategorizedTransaction[] {
+    // Index by date → list of [index, tx]
+    const byDate = new Map<string, Array<{ idx: number; tx: CategorizedTransaction }>>();
+
+    transactions.forEach((tx, idx) => {
+        if (!byDate.has(tx.date)) byDate.set(tx.date, []);
+        byDate.get(tx.date)!.push({ idx, tx });
+    });
+
+    // Indices that should be re-categorized to Transfers
+    const toRetype = new Set<number>();
+
+    for (const entries of byDate.values()) {
+        // Only look at Fees & Interest entries (Transfers already correct)
+        const feeTxs = entries.filter(
+            ({ tx }) => tx.category === 'Fees & Interest' || tx.category === 'Transfers'
+        );
+
+        // Find pairs that sum to zero
+        const used = new Set<number>();
+        for (let i = 0; i < feeTxs.length; i++) {
+            if (used.has(i)) continue;
+            const a = feeTxs[i];
+            for (let j = i + 1; j < feeTxs.length; j++) {
+                if (used.has(j)) continue;
+                const b = feeTxs[j];
+                // Exact zero-net: a + b = 0
+                if (Math.abs(a.tx.amount + b.tx.amount) < 0.01) {
+                    toRetype.add(a.idx);
+                    toRetype.add(b.idx);
+                    used.add(i);
+                    used.add(j);
+                    break;
+                }
+            }
+        }
+    }
+
+    if (toRetype.size === 0) return transactions;
+
+    return transactions.map((tx, idx) =>
+        toRetype.has(idx)
+            ? { ...tx, category: 'Transfers' as BudgetCategory, confidence: 'High' as const }
+            : tx
+    );
 }
 
 /**

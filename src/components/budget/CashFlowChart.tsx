@@ -254,7 +254,7 @@ export function CashFlowChart({ summary, onCategoryClick }: CashFlowChartProps) 
                     </div>
 
                     <div className="h-[450px] min-h-[300px]">
-                        <ResponsiveContainer width="100%" height="100%" debounce={50} style={{ outline: 'none' }}>
+                        <ResponsiveContainer width="100%" height="100%" minHeight={300} debounce={50} style={{ outline: 'none' }}>
                             <BarChart
                                 data={categoryBars}
                                 layout="vertical"

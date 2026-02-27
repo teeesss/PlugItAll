@@ -9,7 +9,6 @@ export function getManualSubscriptions(): SubscriptionCandidate[] {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         const parsed = stored ? JSON.parse(stored) : [];
-        console.log('[DEBUG STORAGE] Loading:', parsed.length, 'subs');
         return parsed;
     } catch (err) {
         console.error('Failed to load manual subscriptions:', err);
@@ -22,7 +21,6 @@ export function getManualSubscriptions(): SubscriptionCandidate[] {
  */
 export function saveManualSubscriptions(subs: SubscriptionCandidate[]): void {
     try {
-        console.log('[DEBUG STORAGE] Saving:', subs.length, 'subs');
         localStorage.setItem(STORAGE_KEY, JSON.stringify(subs));
     } catch (err) {
         console.error('Failed to save manual subscriptions:', err);

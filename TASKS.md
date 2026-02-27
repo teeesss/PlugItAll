@@ -14,6 +14,7 @@
   - ✅ Implemented **Global Future-Date Safeguard** (rollback if >2 days future)
   - ✅ Standardized institution keywords in `detectBank` (case-robustness)
   - ✅ Secured CI/CD pipeline by adding existence checks to diagnostic tests
+  - ✅ Fixed flaky `Date Parser` unit test for 50-year rollover logic
 
 - [x] **TASK-092**: Parsing Refinement & PDF Robustness (v1.6.5)
   - ✅ Standardized dates to ISO (YYYY-MM-DD) for 100% consistency

@@ -1,17 +1,13 @@
 # Project Status Summary
-> **Current Version:** v1.2.1e
-> **Last Updated:** 2026-01-17
+> **Current Version:** v1.6.9b
+> **Last Updated:** 2026-02-27
 > **Last Deployment:** LIVE (plugitall.com)
 
-## 🚀 Recent Achievements (Session 2026-01-17)
-- **v1.2.0**: Comprehensive Insights Filtering - Type filters, date ranges, sorting, merchant search, clickable merchants with detail modal
-- **v1.2.0a**: Dynamic date ranges + improved dropdown contrast
-- **v1.2.1e** (NEW): Processing overlay duration increased to 4s + Logic fix for stuck overlay
-- **TASK-089**: Statement processing overlay with guaranteed 4-second minimum display time
-- **UI Refresh**: Swapped Search/Reset buttons to prevent dropdown overlap (v1.2.1e)
-- **v1.2.1d**: Fixed critical logic bug where `isProcessing` blocked the completion timer
-- **Test Suite**: Expanded to 217 passing tests (added ProcessingOverlay + FilterState tests)
-- **Foundation Built**: Advanced filter utilities (TASK-086 - 40% complete)
+## 🚀 Recent Achievements (Session 2026-02-27)
+- **v1.6.9b**: Removed console noise ([DEBUG STORAGE]) and fixed Recharts `width(-1)` warnings.
+- **v1.6.9a**: Resolved critical **Detached ArrayBuffer** crash in PDF.js and implemented **Global Future-Date Safeguard**.
+- **v1.6.7**: Fixed future date bug by tightening rollover threshold to 2h and implemented **Pretty Sources** for bank traceability.
+- **Test Suite**: 100% Pass Rate (354/354 tests passing).
 
 ## 📋 CURRENT TASK TRACKING FILES
 

@@ -33,6 +33,18 @@
 - **Lesson**: Never use > 1-day future tolerance for year inference on statement dates. Statements are always historical. Even end-of-month edge cases (Feb 28 = 2 days out) break a 2-day window.
 - **Status**: Fixed. Tests updated in `tests/date_parsing.test.ts`.
 
+### 🟡 Warning: Recharts Chart Dimensions Error (v1.6.9b)
+- **Problem**: "The width(-1) and height(-1) of chart should be greater than 0" in console.
+- **Root Cause**: `ResponsiveContainer` rendered inside a hidden or transitioning parent before dimensions were calculated.
+- **Resolution**: Added `minHeight={300}` and ensured container has stable min-height in CSS classes.
+- **Status**: Fixed in v1.6.9b.
+
+### 🟡 Noise: Excessive [DEBUG STORAGE] Logs (v1.6.9b)
+- **Problem**: LocalStorage calls were spamming the console 10+ times per interaction.
+- **Root Cause**: `console.log` left in `storage.ts` logic.
+- **Resolution**: Removed debug logs.
+- **Status**: Fixed in v1.6.9b.
+
 ### 🔴 Bug: SoFi PDF Parser — 0 Transactions Due to Leading Space on Each Row
 - **Problem**: After rewriting `parseSofiSpecific` to use a `^`-anchored regex for date detection, ALL 72 SoFi PDFs returned 0 transactions. Previously returned 1,466 transactions.
 - **Root Cause**: SoFi's PDF text items prepend a leading space (` Dec 31, 2020`) to every row. The `^` anchor requires the line to start with a letter, but with a leading space it never matched.

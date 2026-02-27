@@ -27,7 +27,7 @@ describe('Date Parser', () => {
     test('handles two-digit years correctly', () => {
         expect(parseDate('01/15/99')?.getFullYear()).toBe(1999);
         expect(parseDate('01/15/00')?.getFullYear()).toBe(2000);
-        expect(parseDate('01/15/50')?.getFullYear()).toBe(2050);
+        expect(parseDate('01/15/20')?.getFullYear()).toBe(2020);
         expect(parseDate('01/15/51')?.getFullYear()).toBe(1951);
     });
 

@@ -265,17 +265,23 @@ Run `node scripts/migrate_master_data.cjs` to:
 - Archive old documentation to `docs/archive/` (don't delete, they have historical value)
 - Update `docs/DOCUMENTATION_GUIDE.md` if file structure changes
 
-### UI & State Management (Lessons Learned)
+### PDF & Statement Parsing (Lessons Learned)
+- **DETACHED ARRAYBUFFER (TASK-094)**: Never call multiple asynchronous detection functions (like `detectBank`) sequentially on the same `ArrayBuffer` when using PDF.js. Workers "transfer" (detach) the buffer on the first call. Always consolidate loading into a single entry point or pass a copy.
+- **FUTURE DATE SAFEGUARD**: Always implement a global rollback for dates > 2 days in the future. Financial statements are strictly historical.
+- **TRIED START**: Always `trimStart()` PDF lines before matching `^`-anchored regexes.
+- **SOFI BOILERPLATE**: Use row-level "Important Information" markers rather than page-skipping to avoid losing valid data from footer noise.
+
+### UI & Charting (Lessons Learned)
+- **RECHARTS DIMENSIONS**: To avoid "width(-1) and height(-1)" warnings, always provide a `minHeight` prop to `ResponsiveContainer` and a `debounce` (>0) for resize stability.
 - **0-Subscription State**: ALWAYS handle the empty state gracefully. If a process (like parsing) completes but returns 0 results, the UI MUST provide feedback (e.g., transition to dashboard with "0 Found") rather than staying on the input screen.
 - **Use REPLACE instead of MERGE** when processing new uploads to avoid stale data persistence.
 - **Timed UI Effects (Timers)**: Centralize logic in `useEffect` at the parent level (e.g. `App.tsx`) or specialized component. Use a dedicated state trigger (e.g. `newSubIds.size`). ALWAYS return cleanup function (`clearTimeout`) to prevent memory leaks.
-- **Overlay State Timing**: If a component's timer depends on a "processing is over" state, ensure the state transition happens in the correct order. (e.g., `setIsProcessing(false)` MUST happen before setting the 'complete' status if the timer is gated by `isProcessing === false`).
 - **UI Interaction Safety**: Watch for dropdowns or absolute-positioned elements overlapping buttons. If a button requires "double clicks" to work, it's often because a nearby interactive element's dropdown/hitbox is intercepting the first click. Swap layout positions to ensure clear hit targets.
 
 ### Current Stats (Update as needed)
-- **Tests**: 217/224 passing across 36 test suites
+- **Tests**: 354/354 passing across 42 test suites
 - **Subscriptions**: 292 in database
 - **Pricing Entries**: 193
-- **Version**: v1.2.1e
+- **Version**: v1.6.9b
 - **Live URL**: https://plugitall.com/
 - **Roadmaps**: ROADMAP_TRANSACTION_EXPLORER.md, ROADMAP_MOBILE_ADVANCED_FILTERS.md
