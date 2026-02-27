@@ -37,7 +37,7 @@ function formatDateISO(date: Date): string {
  *   "CitiStatement_Jan2023.pdf" → 2023
  * Returns null if no plausible year is found.
  */
-export function extractYearFromFilename(filename: string): number | null {
+export function extractStatementContext(filename: string): { year: number; month: number | null } | null {
   // Use negative lookbehind/lookahead instead of \b because underscore IS a word
   // character, so "statement_2025_03" won't match with \b boundaries.
   // (?<!\d) = not preceded by a digit  |  (?!\d) = not followed by a digit
@@ -46,20 +46,65 @@ export function extractYearFromFilename(filename: string): number | null {
   // If multiple years found, pick the earliest (most likely the statement period year,
   // not the download year)
   const years = matches.map(Number);
-  return Math.min(...years);
+  const year = Math.min(...years);
+
+  let month: number | null = null;
+  const lower = filename.toLowerCase();
+
+  const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+  const shortMonths = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+  // 1. Try explicit full/short month names
+  let earliestMonthIndex = -1;
+  let earliestMonthPos = Infinity;
+
+  for (let i = 0; i < 12; i++) {
+    const fullPos = lower.indexOf(monthNames[i]);
+    if (fullPos !== -1 && fullPos < earliestMonthPos) {
+      earliestMonthPos = fullPos;
+      earliestMonthIndex = i;
+    }
+
+    // Check short month with word boundaries
+    const shortRegex = new RegExp(`(?<![a-z])${shortMonths[i]}(?![a-z])`);
+    const shortMatch = lower.match(shortRegex);
+    if (shortMatch && shortMatch.index !== undefined && shortMatch.index < earliestMonthPos) {
+      earliestMonthPos = shortMatch.index;
+      earliestMonthIndex = i;
+    }
+  }
+
+  if (earliestMonthIndex !== -1) {
+    month = earliestMonthIndex + 1;
+  }
+
+  // 2. Try YYYY-MM or YYYY_MM or YYYY.MM
+  if (!month) {
+    const mmMatch = filename.match(/(?<!\d)(?:20\d{2}|19\d{2})[-_.](0[1-9]|1[0-2])(?!\d)/);
+    if (mmMatch) {
+      month = parseInt(mmMatch[1], 10);
+    }
+  }
+
+  // 3. Try MM-YYYY or MM_YYYY
+  if (!month) {
+    const mmMatch2 = filename.match(/(?<!\d)(0[1-9]|1[0-2])[-_.](?:20\d{2}|19\d{2})(?!\d)/);
+    if (mmMatch2) {
+      month = parseInt(mmMatch2[1], 10);
+    }
+  }
+
+  return { year, month };
 }
 
 /**
  * Robustly parses various date formats.
  *
  * @param dateStr     - The raw date string from the statement
- * @param statementYear - Optional: explicit year from the filename (e.g. 2025 from
- *                        "2025 March 05 Citi.pdf"). When provided, year-less formats
- *                        (MM/DD, MMM DD) default to this year instead of today's year.
- *                        This prevents "Feb 27" from becoming 2026 when the statement
- *                        is clearly from 2025.
+ * @param statementYear - Optional: explicit year from the filename
+ * @param statementMonth - Optional: explicit month (1-12) from the filename
  */
-export function parseDate(dateStr: string, statementYear?: number): Date | null {
+export function parseDate(dateStr: string, statementYear?: number, statementMonth?: number | null): Date | null {
   if (!dateStr) return null;
   const trimmed = dateStr.trim();
 
@@ -104,13 +149,24 @@ export function parseDate(dateStr: string, statementYear?: number): Date | null 
             }
           }
 
-          // Year correction logic:
-          // Case A: statementYear provided → trust it. No future-date heuristic needed.
-          //         The year in the filename IS the correct year for this statement.
-          // Case B: No statementYear → fall back to "future date = prior year" heuristic.
-          if (date && !explicitYear && !hasStatementYear) {
-            const now = new Date();
-            if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
+          // Year correction logic for year-less formats:
+          if (date && !explicitYear) {
+            let needsRollback = false;
+            // 1. Rigorous cross-year statement window check
+            if (hasStatementYear && statementMonth) {
+              const txMonth = date.getMonth() + 1;
+              if (txMonth > statementMonth + 1) {
+                needsRollback = true;
+              }
+            } else {
+              // 2. Fallback: physical future date check
+              const now = new Date();
+              if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
+                needsRollback = true;
+              }
+            }
+
+            if (needsRollback) {
               date.setFullYear(y - 1);
             }
           }
@@ -123,10 +179,20 @@ export function parseDate(dateStr: string, statementYear?: number): Date | null 
           const hasYear = !!match[3];
           const year = match[3] ? +match[3] : baseYear;
           date = new Date(`${match[1]} ${match[2]}, ${year}`);
-          // Same year correction logic — only use heuristic when no statementYear
-          if (date && !hasYear && !hasStatementYear) {
-            const now = new Date();
-            if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
+          if (date && !hasYear) {
+            let needsRollback = false;
+            if (hasStatementYear && statementMonth) {
+              const txMonth = date.getMonth() + 1;
+              if (txMonth > statementMonth + 1) {
+                needsRollback = true;
+              }
+            } else {
+              const now = new Date();
+              if (date.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
+                needsRollback = true;
+              }
+            }
+            if (needsRollback) {
               date.setFullYear(year - 1);
             }
           }
@@ -502,6 +568,7 @@ export const parsePDF = async (file: File): Promise<Transaction[]> => {
 /**
  * Core PDF Parsing Logic (Buffer-based for easier testing)
  */
+
 /**
  * Detects the bank by scanning keywords on the first page.
  */
@@ -585,9 +652,9 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
 
     sortedYs.forEach(y => {
       const lineItems = lineMap[y].sort((a, b) => a.transform[4] - b.transform[4]);
-      const lineText = lineItems.map(it => it.str).join(' ');
+      const fullLine = lineItems.map(it => it.str).join(' ');
 
-      if (/date.*description.*(debit|credit|amount|balance)/i.test(lineText)) {
+      if (/date.*description.*(debit|credit|amount|balance)/i.test(fullLine)) {
         const newMap: Record<string, { xStart: number; xEnd: number }> = {};
         lineItems.forEach((it, idx) => {
           const str = it.str.toLowerCase();
@@ -614,7 +681,6 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
         const dateObj = parseDate(dateMatch[0]);
         if (dateObj) {
           const amountRegex = /(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/g;
-          const amountMatch = fullLine.match(amountRegex);
           let amount: number | null = null;
 
           if (currentColumnMap && (currentColumnMap.debit || currentColumnMap.credit || currentColumnMap.amount)) {
@@ -630,12 +696,16 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
             });
             if (amount === null && (debit !== 0 || credit !== 0)) amount = Math.abs(credit) - Math.abs(debit);
           }
-          if (amount === null && amountMatch) amount = parseAmount(amountMatch[0]);
+          if (amount === null) { // Fallback if column map didn't yield amount
+            const amountMatch = fullLine.match(amountRegex);
+            if (amountMatch) amount = parseAmount(amountMatch[0]);
+          }
+
 
           if (amount !== null) {
             if (currentTx) pageTransactions.push(currentTx);
             let description = fullLine.replace(dateMatch[0], '');
-            (amountMatch || []).forEach(a => { description = description.replace(a, ''); });
+            (fullLine.match(amountRegex) || []).forEach(a => { description = description.replace(a, ''); });
             description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '').trim();
             currentTx = { date: formatDateISO(dateObj), description, amount: amount };
             return;
@@ -674,8 +744,7 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
 
 /**
  * Specialized parser for Citibank Credit Card Statements.
- * Uses a simpler regex-based logic to maintain stability for existing formats.
- * "Never touched" by USAA specific changes.
+ * Handles multi-line descriptions and uses section-based amount sign logic.
  *
  * IMPORTANT: Credit card statements use opposite sign convention from bank statements.
  * On a credit card statement:
@@ -686,66 +755,247 @@ async function parseUSAASpecific(pdf: any): Promise<Transaction[]> {
  * @param pdf           - The loaded PDF.js document
  * @param statementYear - Year extracted from filename (e.g. 2025). When provided,
  *                        year-less dates like "02/27" resolve to that year instead of today.
+ * @param statementMonth - Month extracted from filename (e.g. 3 for March). Used for year-less date resolution.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseCitiSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
+async function parseCitiSpecific(pdf: any, statementYear?: number, statementMonth?: number | null): Promise<Transaction[]> {
   const transactions: Transaction[] = [];
+  const creditStartRegex = /Payments,\s*credits\s*and\s*adjustments/i;
+  const standardPurchaseStartRegex = /Standard\s*purchases/i;
+  const genericRowRegex = /^(\d{2}\/\d{2})\s+(.+?)\s+(-?\$?\d{1,3}(?:,\d{3})*\.\d{2})(-)?$/;
+
+  let inCreditSection = false;
+  let inPurchaseSection = false;
+
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const textContent = await page.getTextContent();
-    const items = textContent.items as TextItem[];
-    const lines: { [key: number]: string[] } = {};
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    items.forEach((item: any) => {
-      if (!item.transform || typeof item.str !== 'string') return;
-      const y = Math.round(item.transform[5]);
-      if (!lines[y]) lines[y] = [];
-      lines[y].push(item.str);
-    });
+    const items = textContent.items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .filter((item: any) => item.str && item.str.trim() !== '')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((item: any) => ({
+        str: item.str.trim(),
+        x: item.transform[4],
+        y: item.transform[5],
+      }));
 
-    Object.values(lines).forEach((lineParts) => {
-      const fullLine = lineParts.join(' ');
-      const dateMatch = fullLine.match(/(\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)|(\d{4}-\d{2}-\d{2})|([A-Za-z]{3,9}\s+\d{1,2}(?:,?\s+\d{4})?)/);
-      const amountMatch = fullLine.match(/(-?\$?\d{1,3}(?:,?\d{3})*\.\d{2})|(\(\$?\d{1,3}(?:,?\d{3})*\.\d{2}\))|(\$\d{1,3}(?:,?\d{3})*)/);
+    let j = 0;
+    while (j < items.length) {
+      const text = items[j].str;
 
-      if (dateMatch && amountMatch) {
-        // Pass statementYear so year-less dates (02/27) resolve to the correct statement year
-        const dateObj = parseDate(dateMatch[0], statementYear);
-        const rawAmount = parseAmount(amountMatch[0]);
-        if (dateObj && rawAmount !== null) {
-          let description = fullLine.replace(dateMatch[0], '').replace(amountMatch[0], '').trim();
-          description = description.replace(/\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g, '');
-          description = description.replace(/^\s*-\s*/, '').replace(/[|]/g, ' ').replace(/\s+/g, ' ').trim();
-          if (description.length > 2 &&
-            !description.toLowerCase().includes('beginning balance') &&
-            !description.toLowerCase().includes('new balance as of') &&
-            !description.toLowerCase().includes('payment tracker') &&
-            !description.toLowerCase().includes('thankyou points on') &&
-            !description.toLowerCase().includes('thankyou points earned')) {
+      if (creditStartRegex.test(text)) {
+        inCreditSection = true;
+        inPurchaseSection = false;
+        j++;
+        continue;
+      }
 
-            // Clean up common Citi OCR noise
-            description = description.replace(/#\d+/g, '').replace(/\d{8,}/g, '').trim();
+      if (standardPurchaseStartRegex.test(text)) {
+        inPurchaseSection = true;
+        inCreditSection = false;
+        j++;
+        continue;
+      }
 
-            // Negate: CC charges (positive on statement) become negative (expense);
-            //         CC payments/refunds (negative on statement) become positive (income/credit).
-            transactions.push({ date: formatDateISO(dateObj), description, amount: -rawAmount });
+      // ──────────────────────────────────────────────────────────────────
+      // FIX: CITI MULTI-LINE ROW RECONSTRUCTION
+      // Multi-line descriptions occur when the description wraps.
+      // E.g.
+      //  [Date] [Date] [Desc Pt 1]
+      //  [Desc Pt 2]                      [Amount]
+      // ──────────────────────────────────────────────────────────────────
+      if (/^\d{2}\/\d{2}$/.test(text)) {
+        const dateStr = text;
+        let descStr = '';
+        let amountStr = '';
+        let isNegative = false;
+
+        let k = j + 1;
+        // Check if next item is also a date (Post Date)
+        if (k < items.length && /^\d{2}\/\d{2}$/.test(items[k].str)) {
+          k++;
+        }
+
+        // Gather description pieces until we hit an amount
+        const amountRegex = /^-?\$?\d{1,3}(?:,\d{3})*\.\d{2}-?$/;
+        while (k < items.length) {
+          if (amountRegex.test(items[k].str)) {
+            amountStr = items[k].str;
+            if (k + 1 < items.length && items[k + 1].str === '-') {
+              isNegative = true;
+              k++;
+            } else if (amountStr.endsWith('-') || amountStr.startsWith('-')) {
+              isNegative = true;
+              amountStr = amountStr.replace('-', '');
+            }
+            break;
+          } else {
+            descStr += (descStr ? ' ' : '') + items[k].str;
+          }
+          k++;
+        }
+
+        if (amountStr && descStr) {
+          const rawAmount = parseAmount(amountStr);
+          if (rawAmount !== null) {
+            let finalAmount = isNegative ? -rawAmount : rawAmount;
+            if (inCreditSection) {
+              finalAmount = Math.abs(rawAmount);
+            } else if (inPurchaseSection) {
+              finalAmount = -Math.abs(rawAmount);
+            } else if (finalAmount > 0) { // Default to negative for charges if no section detected
+              finalAmount = -finalAmount;
+            }
+
+            const parsedDate = parseDate(dateStr, statementYear, statementMonth);
+            if (parsedDate) {
+              transactions.push({
+                date: formatDateISO(parsedDate),
+                description: descStr.replace(/\s+/g, ' ').trim(),
+                amount: finalAmount,
+              });
+            }
+          }
+          j = k; // Advance past all items consumed for this transaction
+          continue;
+        }
+      }
+
+      // Fallback to single-line regex if multi-line reconstruction fails
+      const match = text.match(genericRowRegex);
+      if (match) {
+        const dateStr = match[1];
+        let description = match[2];
+        const amountStr = match[3];
+        const hasMinusSuffix = match[4] === '-';
+
+        const rawAmount = parseAmount(amountStr);
+        if (rawAmount !== null) {
+          let finalAmount = rawAmount;
+          if (hasMinusSuffix && finalAmount > 0) finalAmount = -finalAmount;
+
+          if (inCreditSection) {
+            finalAmount = Math.abs(finalAmount);
+          } else if (inPurchaseSection) {
+            finalAmount = -Math.abs(finalAmount);
+          } else if (finalAmount > 0) { // Default to negative for charges if no section detected
+            finalAmount = -finalAmount;
+          }
+
+          const parsedDate = parseDate(dateStr, statementYear, statementMonth);
+          if (parsedDate) {
+            description = description.replace(/\s+/g, ' ').trim();
+            if (description.length > 2 &&
+              !description.toLowerCase().includes('beginning balance') &&
+              !description.toLowerCase().includes('new balance as of') &&
+              !description.toLowerCase().includes('payment tracker') &&
+              !description.toLowerCase().includes('thankyou points on') &&
+              !description.toLowerCase().includes('thankyou points earned')) {
+              transactions.push({ date: formatDateISO(parsedDate), description, amount: finalAmount });
+            }
           }
         }
       }
-    });
+      j++;
+    }
   }
   return transactions;
 }
 
 /**
  * Specialized parser for E*TRADE formatted PDFs.
- * Currently reuses the robust Citi/Generic regex logic which works well for line-by-line statements.
- * Added to support future specific tweaks for Etrade garbage removal.
+ * Handles multi-line descriptions and uses section-based amount sign logic.
+ *
+ * @param pdf           - The loaded PDF.js document
+ * @param statementYear - Year extracted from filename (e.g. 2025). When provided,
+ *                        year-less dates like "02/27" resolve to that year instead of today.
+ * @param statementMonth - Month extracted from filename (e.g. 3 for March). Used for year-less date resolution.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseEtradeSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
-  // Reuse the regex-based line parser as it effectively handles Etrade's standard statements
-  return parseCitiSpecific(pdf, statementYear);
+async function parseEtradeSpecific(pdf: any, statementYear?: number, statementMonth?: number | null): Promise<Transaction[]> {
+  const transactions: Transaction[] = [];
+  const checkingActivityRegex = /CHECKING\s*ACTIVITY/i;
+  const atmDebitRegex = /ATM\s*&\s*Debit\s*Card\s*Withdrawals/i;
+
+  let inCheckingActivity = false;
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const items = textContent.items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .filter((item: any) => item.str && item.str.trim() !== '')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((item: any) => ({
+        str: item.str.trim(),
+        x: item.transform[4],
+        y: item.transform[5],
+      }));
+
+    let j = 0;
+    while (j < items.length) {
+      const text = items[j].str;
+
+      if (checkingActivityRegex.test(text) || atmDebitRegex.test(text)) {
+        inCheckingActivity = true;
+        j++;
+        continue;
+      }
+
+      if (inCheckingActivity) {
+        if (/^\d{2}\/\d{2}$/.test(text)) {
+          const dateStr = text;
+          let descStr = '';
+          let amountStr = '';
+          let isNegative = false;
+          let isIncoming = false;
+
+          let k = j + 1;
+          const amountRegex = /^-?\$?(?:\d{1,3}(?:,\d{3})*|\d+)\.\d{2}$/;
+          while (k < items.length) {
+            if (amountRegex.test(items[k].str)) {
+              amountStr = items[k].str;
+              if (amountStr.startsWith('-')) {
+                isNegative = true;
+                amountStr = amountStr.replace('-', '');
+              }
+              break;
+            } else {
+              descStr += (descStr ? ' ' : '') + items[k].str;
+            }
+            k++;
+          }
+
+          if (descStr.toLowerCase().includes('deposit') || descStr.toLowerCase().includes('credit')) {
+            isIncoming = true;
+          }
+
+          if (amountStr && descStr) {
+            const rawAmount = parseAmount(amountStr);
+            if (rawAmount !== null) {
+              let finalAmount = isNegative ? -rawAmount : rawAmount;
+              if (isIncoming && finalAmount < 0) finalAmount = Math.abs(finalAmount);
+              if (!isIncoming && finalAmount > 0) finalAmount = -Math.abs(finalAmount);
+
+              const parsedDate = parseDate(dateStr, statementYear, statementMonth);
+              if (parsedDate) {
+                transactions.push({
+                  date: formatDateISO(parsedDate),
+                  description: descStr.replace(/\s+/g, ' ').trim(),
+                  amount: finalAmount,
+                });
+              }
+            }
+            j = k; // Advance past all items consumed for this transaction
+            continue;
+          }
+        }
+      }
+      j++;
+    }
+  }
+  return transactions;
 }
 
 /**
@@ -926,10 +1176,55 @@ async function parseSofiSpecific(pdf: any): Promise<Transaction[]> {
 
 /**
  * Generic PDF parser for unrecognized bank formats.
+ * Uses a simpler regex-based logic to maintain stability for existing formats.
+ *
+ * @param pdf           - The loaded PDF.js document
+ * @param statementYear - Year extracted from filename (e.g. 2025). When provided,
+ *                        year-less dates like "02/27" resolve to that year instead of today.
+ * @param statementMonth - Month extracted from filename (e.g. 3 for March). Used for year-less date resolution.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function parseGenericSpecific(pdf: any, statementYear?: number): Promise<Transaction[]> {
-  return parseCitiSpecific(pdf, statementYear); // Fallback to classic regex-based parser
+async function parseGenericSpecific(pdf: any, statementYear?: number, statementMonth?: number | null): Promise<Transaction[]> {
+  const transactions: Transaction[] = [];
+  const genericRowRegex = /^(\d{2}\/\d{2}(?:\/\d{2,4})?)\s+(.+?)\s+(-?\$?\d{1,3}(?:,\d{3})*\.\d{2})(-)?$/;
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lines = textContent.items.map((item: any) => item.str).join(' ').split('\n');
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) continue;
+
+      const match = trimmedLine.match(genericRowRegex);
+      if (match) {
+        const dateStr = match[1];
+        let description = match[2];
+        const amountStr = match[3];
+        const hasMinusSuffix = match[4] === '-';
+
+        const rawAmount = parseAmount(amountStr);
+        if (rawAmount !== null && rawAmount !== 0) {
+          let finalAmount = rawAmount;
+          if (hasMinusSuffix && finalAmount > 0) finalAmount = -finalAmount;
+          if (description.toLowerCase().includes('refund') || description.toLowerCase().includes('credit')) {
+            if (finalAmount < 0) finalAmount = Math.abs(finalAmount);
+          } else {
+            if (finalAmount > 0) finalAmount = -Math.abs(finalAmount);
+          }
+
+          const parsedDate = parseDate(dateStr, statementYear, statementMonth);
+          if (parsedDate) {
+            description = description.replace(/\s+/g, ' ').trim();
+            transactions.push({ date: formatDateISO(parsedDate), description, amount: finalAmount });
+          }
+        }
+      }
+    }
+  }
+  return transactions;
 }
 
 /**
@@ -942,26 +1237,27 @@ async function parseGenericSpecific(pdf: any, statementYear?: number): Promise<T
  */
 export const parsePDFBuffer = async (arrayBuffer: ArrayBuffer, filename?: string): Promise<Transaction[]> => {
   try {
-    // Extract the statement year from the filename for accurate year-less date resolution.
-    // e.g. "2025 March 05 Citi.pdf" → statementYear = 2025
-    const statementYear = filename ? extractYearFromFilename(filename) ?? undefined : undefined;
-
     // Wrap in Uint8Array to prevent PDF.js from detaching/transferring the raw ArrayBuffer
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer), verbosity: 0 }).promise;
-    const bank = await detectBank(pdf);
-    const bankUpper = bank.toUpperCase();
-
     let transactions: Transaction[] = [];
-    if (bankUpper === 'USAA') {
+
+    const bank = await detectBank(pdf);
+
+    // Extract year and month context from filename if provided (e.g. "2025 March 05 Citi.pdf")
+    const context = filename ? extractStatementContext(filename) : null;
+    const stmtYear = context?.year;
+    const stmtMonth = context?.month;
+
+    if (bank.toUpperCase() === 'USAA') { // Use .toUpperCase() for consistency
       transactions = await parseUSAASpecific(pdf);
-    } else if (bankUpper === 'CITI') {
-      transactions = await parseCitiSpecific(pdf, statementYear);
-    } else if (bankUpper === 'ETRADE') {
-      transactions = await parseEtradeSpecific(pdf, statementYear);
-    } else if (bankUpper === 'SOFI') {
+    } else if (bank.toUpperCase() === 'CITI') {
+      transactions = await parseCitiSpecific(pdf, stmtYear, stmtMonth);
+    } else if (bank.toUpperCase() === 'ETRADE') {
+      transactions = await parseEtradeSpecific(pdf, stmtYear, stmtMonth);
+    } else if (bank.toUpperCase() === 'SOFI') {
       transactions = await parseSofiSpecific(pdf);
     } else {
-      transactions = await parseGenericSpecific(pdf, statementYear);
+      transactions = await parseGenericSpecific(pdf, stmtYear, stmtMonth);
     }
 
     // Attach institution to each transaction
