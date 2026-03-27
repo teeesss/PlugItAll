@@ -1,6 +1,6 @@
 # TASKS
 
-## 🟡 In Progress (Session 2026-02-26)
+## 🟢 Completed (Session 2026-02-27)
 
 - [x] **TASK-093**: Accurate Audit & Pervasive Traceability (v1.6.9a)
   - ✅ Fixed future date bug by tightening rollover threshold from 24h to 2h
@@ -27,6 +27,9 @@
   - ✅ Root directory cleanup (moved junk/temp files to /tmp)
   - ✅ **Bundle Optimization**: Implemented code-splitting via `manualChunks` (1.9MB → <600kB chunks)
 
+## 🟡 In Progress (Session 2026-02-27)
+
+- [ ] **TASK-086**: Advanced Filter UX Enhancements (v1.7.0)
   - Add URL params for shareable filter states
   - Add "Clear all filters" button
   - Add filter history (recent filter combinations)

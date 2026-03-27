@@ -266,10 +266,14 @@ Run `node scripts/migrate_master_data.cjs` to:
 - Update `docs/DOCUMENTATION_GUIDE.md` if file structure changes
 
 ### PDF & Statement Parsing (Lessons Learned)
+- **STATEMENT YEAR INFERENCE**: Bank statements never contain future dates. If a date looks like the present or future, the year assumption is wrong. ALWAYS extract the 4-digit year from the incoming filename (e.g. `2025 March 05.pdf`) and pass `statementYear` down the parsing stack to prevent historical edge-case year rollovers (e.g. `parseDate` guessing current year). Trust the filename over today's date context.
 - **DETACHED ARRAYBUFFER (TASK-094)**: Never call multiple asynchronous detection functions (like `detectBank`) sequentially on the same `ArrayBuffer` when using PDF.js. Workers "transfer" (detach) the buffer on the first call. Always consolidate loading into a single entry point or pass a copy.
 - **FUTURE DATE SAFEGUARD**: Always implement a global rollback for dates > 2 days in the future. Financial statements are strictly historical.
 - **TRIED START**: Always `trimStart()` PDF lines before matching `^`-anchored regexes.
 - **SOFI BOILERPLATE**: Use row-level "Important Information" markers rather than page-skipping to avoid losing valid data from footer noise.
+
+### Categorization & Budgeting (Lessons Learned)
+- **FUNDS TRANSFER SWEEPS**: Any transaction mapping to "Overdraft FROM X TO Y" is a funds transfer sweep between linked accounts, not a fee. Real fees are labeled "OVERDRAFT FEE" or "NSF FEE". Ensure intra-bank sweep pairs are routed to `Transfers` and strictly netted to $0 (e.g. using `netMatchedTransferPairs()`) so they do not artificially inflate cash flow metrics or expenses.
 
 ### UI & Charting (Lessons Learned)
 - **RECHARTS DIMENSIONS**: To avoid "width(-1) and height(-1)" warnings, always provide a `minHeight` prop to `ResponsiveContainer` and a `debounce` (>0) for resize stability.
